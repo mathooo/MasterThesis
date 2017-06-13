@@ -1,0 +1,166 @@
+\documentclass{elsarticle}
+\usepackage[utf8]{inputenc}
+\usepackage{kpfonts}
+\usepackage[labelfont=bf]{caption}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{stmaryrd}
+\captionsetup[figure]{name=Fig. ,labelsep=period}
+
+\newcommand{\choice}{|}
+\newdefinition{definition}{Definition}
+\newtheorem{notation}{Notation}
+\newtheorem{theorem}{Theorem}
+\newdefinition{example}{Example}
+\newdefinition{running_example}{Running example}
+
+\begin{document}
+
+\section{Objects definition}
+
+Let $\mathcal{N}_{A},~\mathcal{N}_{T},~\mathcal{N}_{\delta},~\mathcal{N}_{c}$ be mutually exclusive finite sets of atomic, structure, state names, and compartments, respectively.
+
+\begin{definition}{Signature}
+
+\begin{itemize} 
+\item Atomic signature $\Sigma_{\mathtt{A}} \subseteq \mathcal{N}_{A} \times 2^{\mathcal{N}_{\delta}}$ represents allowed atomic names with association to state names. 
+\item Structure signature $\Sigma_{\mathtt{T}} \subseteq \mathcal{N}_{T} \times 2^{\mathcal{N}_{A}}$ represents allowed structure names with association to atomic names. 
+\end{itemize}
+\end{definition}
+
+\begin{example}
+\item Atomic signature $(S, \{u, p\})$
+\item Structure signature $(KaiC, \{S, T\})$
+\end{example}
+
+\begin{definition}{Atomic agent}
+
+\begin{itemize}
+\item Atomic agent $\mathtt{A}$ is a pair $(\mu, \delta)$ where $\mu \in \mathcal{N}_{A}$ is a name and $\delta \in \mathcal{N}_{\delta}$ is a state.
+
+\item Equivalence: $\mathtt{A} \equiv \mathtt{A}' \Leftrightarrow \mu(\mathtt{A}) \equiv \mu(\mathtt{A}') \wedge \delta(\mathtt{A}) \equiv \delta(\mathtt{A}')$
+\end{itemize}
+\end{definition}
+
+\begin{notation}
+Let $\mathcal{A}$ be universe of all possible atomic agents.
+\end{notation}
+
+\begin{definition}{Structure agent}
+
+\begin{itemize}
+\item Structure agent $\mathtt{T}$ is a pair $(\mu, \gamma)$ where $\mu \in \mathcal{N}_{T}$ is a name and $\gamma \subseteq \mathcal{A}$ is a set of atomic agents call partial composition.
+
+\item Equivalence: $\mathtt{T} \equiv \mathtt{T}' \Leftrightarrow \mu(\mathtt{T}) \equiv \mu(\mathtt{T}') \wedge \forall \mathtt{A} \in \gamma(\mathtt{T}) \exists \mathtt{A}' \in \gamma(\mathtt{T}') : \mathtt{A} \equiv \mathtt{A}' \wedge \\ \wedge \forall \mathtt{A}' \in \gamma(\mathtt{T}') \exists \mathtt{A} \in \gamma(\mathtt{T}) : \mathtt{A}' \equiv \mathtt{A}$.
+\end{itemize}
+\end{definition}
+
+\begin{notation}
+Let $\mathcal{T}$ be universe of all possible structure agents.
+\end{notation}
+
+\begin{definition}{Complex}
+
+\begin{itemize}
+\item Complex $\mathtt{X}$ is a pair $(\mu, \mathtt{com})$ where $\mu \in (\mathcal{A} \cup \mathcal{T})^n$ is a sequence and $\mathtt{com} \in \mathcal{N}_{c}$ is a compartment.
+
+\item Let $\mathtt{X}, \mathtt{X}'$ be complexes. We denote length of sequence $\mu$ as $n = \mu(\mathtt{X})$ and $m = \mu(\mathtt{X}')$. 
+
+\item Equivalence: $\mathtt{X} \equiv \mathtt{X}' \Leftrightarrow n \equiv m \wedge \exists $ permutation $ \mu'(\mathtt{X}')$ of $\mu(\mathtt{X}')$ such that $\forall i~\in~[1,~n]: \mu(\mathtt{X})_i \equiv \mu'(\mathtt{X}')_i$.
+\end{itemize}
+\end{definition}
+
+\begin{notation}
+Let $\mathcal{X}$ be universe of all possible complexes.
+\end{notation}
+
+\begin{definition}{Rule}
+
+Rule $\mathtt{R}$ is a 5-tuple $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$ where:
+
+\begin{itemize}
+\item $\chi \in \mathcal{X}^n$ is a sequence of complexes,
+\item $\omega \in (\mathcal{A} \cup \mathcal{T})^m$ is a sequence of atomic and structure agents,
+\item $\mathtt{I} \in \{ 1, \ldots, n \}$ is an index determining start of right-hand-side,
+\item $\mathtt{map} \in \mathbb{N}^m$ is an index map between $\omega$ and $\chi$,
+\item $\mathtt{Indices} \subseteq (\{-\} \cup \mathbb{N})^2$ is an index map between agents from left- and right-hand side
+\end{itemize}
+
+where $n, m \in \mathbb{N}$.
+\end{definition}
+
+\begin{definition}{Reaction}
+
+Reaction $\mathtt{r}$ is a pair $(\chi, \mathtt{I})$ where:
+
+\begin{itemize}
+\item $\chi \in \mathcal{X}^n$ is a sequence of complexes,
+\item $\mathtt{I} \in \{ 1, \ldots, n \}$ is an index determining start of right-hand-side
+\end{itemize}
+
+where $n, m \in \mathbb{N}$.
+\end{definition}
+
+\section{Syntax}
+
+\begin{definition}
+\textit{Grammar.}
+
+\begin{center}
+\begin{tabular}{ l l }
+atomic expression & $\mathtt{a} ::= \mu\{s\} ~|~ ? \mu$\\
+ & $\mu ::= n \in \mathcal{N}_{A}$ \\
+ & $s ::= n \in \mathcal{N}_{\delta}$\\
+ & \\
+structure expression & $\mathtt{t} ::= \mu(\gamma) ~|~ \mu$\\
+ & $\gamma ::= \mathtt{a}_1, \ldots, \mathtt{a}_m$ \\
+ & $\mu ::= n \in \mathcal{N}_{T}$\\
+ & \\
+complex expression & $\Gamma ::= \alpha_1~.~\ldots~.~\alpha_k :: c$\\
+ & $\alpha_i ::= \mathtt{a} ~|~ \mathtt{t}$\\
+ & $c ::= n \in \mathcal{N}_{c}$\\
+ & \\
+rule & $\mathtt{R} ::= \Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \ldots + \Gamma_m $
+\end{tabular}
+
+\end{center}
+where $m,n \in \mathbb{N}_0 \wedge m + n \neq 0$ and $k \in \mathbb{N}$.
+\end{definition}
+
+\section{Semantic function}
+
+Semantic function $\mathtt{F}$ gives semantical meaning to rules and objects written in BCSL syntax. It is defined recursivelly according to context given as argument:
+
+\begin{center}
+\begin{tabular}{ r c l}
+$\mathtt{F} \llbracket ~\mu~ \rrbracket$ & = &
+		$\begin{cases}
+		\mathtt{A}(\mu, \emptyset) ~\ldots~ \mu \in \Sigma_{A}\\
+		\mathtt{T}(\mu, \epsilon) ~\ldots~ \mu \in \Sigma_{T}\\
+		\end{cases}
+		$\\
+ & & \\
+$\mathtt{F} \llbracket ~\mu\{s\}~ \rrbracket$ & = & $\mathtt{A}(\mu, s)$\\
+ & & \\
+$\mathtt{F} \llbracket ~\mu(\mathtt{a}_1, \ldots, \mathtt{a}_n)~ \rrbracket$ & = &
+$\mathtt{T}(\mu, \{ \mathtt{F} \llbracket \mathtt{a}_1 \rrbracket, \ldots, \mathtt{F} \llbracket \mathtt{a}_n \rrbracket \})$\\
+ & & \\
+$\mathtt{F} \llbracket ~\alpha_1~.~\ldots~.~\alpha_n :: c~ \rrbracket$ & = &
+$\mathtt{X}((\mathtt{F} \llbracket ~\alpha_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\alpha_n~ \rrbracket), c)$\\
+ & & \\
+$\mathtt{F} \llbracket ~\Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \ldots + \Gamma_m~ \rrbracket$ & = &
+$(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$~ such that:\\
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{itemize}
+\item $\chi = (\mathtt{F} \llbracket ~\Gamma_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_n~ \rrbracket, \mathtt{F} \llbracket ~\Gamma_{n+1}~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_m~ \rrbracket)$,
+\item $\omega = \bullet_{\mathtt{X} \in \chi} ~\mu(\mathtt{X})$ !!!
+\item $\mathtt{I} = n$
+\item $\mathtt{map} = (J_1, \ldots, J_m): J_i = \sum_{y=1}^{i} | \mu(\chi_i) |$
+\item $\mathtt{Indices} = \{~ (i,j) ~|~ i \in [1, \mathtt{map}(\mathtt{I})] \wedge j \in [\mathtt{map}(\mathtt{I}), |\omega|] \wedge |i-j| \equiv \mathtt{map}(\mathtt{I})~\}\cup \{~ (i, -) ~|~ i \in [k, \mathtt{map}(\mathtt{I})] \wedge k = |~ \{ \mathtt{map}(\mathtt{I}) + 1, \ldots, | \alpha | \} ~| ~\} \cup \{~ (-, j) ~|~ j \in [k, |\alpha|] \wedge k = 2 * \mathtt{map}(\mathtt{I}) ~\}$
+\end{itemize}
+\end{center}
+
+\end{document}
