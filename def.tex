@@ -49,7 +49,7 @@ Let $\mathcal{A}$ be universe of all possible atomic agents.
 \begin{definition}{Structure agent}
 
 \begin{itemize}
-\item Structure agent $\mathtt{T}$ is a pair $(\mu, \gamma)$ where $\mu \in \mathcal{N}_{T}$ is a name and $\gamma \subseteq \mathcal{A}$ is a set of atomic agents call partial composition.
+\item Structure agent $\mathtt{T}$ is a pair $(\mu, \gamma)$ where $\mu \in \mathcal{N}_{T}$ is a name and $\gamma \subseteq \mathcal{A}$ is a set of atomic agents called partial composition.
 
 \item Equivalence: $\mathtt{T} \equiv \mathtt{T}' \Leftrightarrow \mu(\mathtt{T}) \equiv \mu(\mathtt{T}') \wedge \forall \mathtt{A} \in \gamma(\mathtt{T}) \exists \mathtt{A}' \in \gamma(\mathtt{T}') : \mathtt{A} \equiv \mathtt{A}' \wedge \\ \wedge \forall \mathtt{A}' \in \gamma(\mathtt{T}') \exists \mathtt{A} \in \gamma(\mathtt{T}) : \mathtt{A}' \equiv \mathtt{A}$.
 \end{itemize}
@@ -91,10 +91,10 @@ where $n, m \in \mathbb{N}$.
 
 \begin{definition}{Reaction}
 
-Reaction $\mathtt{r}$ is a pair $(\chi, \mathtt{I})$ where:
+Reaction $\mathtt{r}$ is a pair $(\mathtt{seq}, \mathtt{I})$ where:
 
 \begin{itemize}
-\item $\chi \in \mathcal{X}^n$ is a sequence of complexes,
+\item $\mathtt{seq} \in \mathcal{X}^n$ is a sequence of complexes,
 \item $\mathtt{I} \in \{ 1, \ldots, n \}$ is an index determining start of right-hand-side
 \end{itemize}
 
@@ -156,11 +156,109 @@ $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$~ such that:\\
 \begin{center}
 \begin{itemize}
 \item $\chi = (\mathtt{F} \llbracket ~\Gamma_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_n~ \rrbracket, \mathtt{F} \llbracket ~\Gamma_{n+1}~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_m~ \rrbracket)$,
-\item $\omega = \bullet_{\mathtt{X} \in \chi} ~\mu(\mathtt{X})$ !!!
+\item $\omega = \bullet_{\mathtt{X} \in \chi} (\mu(\mathtt{X}))$ !!!
 \item $\mathtt{I} = n$
 \item $\mathtt{map} = (J_1, \ldots, J_m): J_i = \sum_{y=1}^{i} | \mu(\chi_i) |$
-\item $\mathtt{Indices} = \{~ (i,j) ~|~ i \in [1, \mathtt{map}(\mathtt{I})] \wedge j \in [\mathtt{map}(\mathtt{I}), |\omega|] \wedge |i-j| \equiv \mathtt{map}(\mathtt{I})~\}\cup \{~ (i, -) ~|~ i \in [k, \mathtt{map}(\mathtt{I})] \wedge k = |~ \{ \mathtt{map}(\mathtt{I}) + 1, \ldots, | \alpha | \} ~| ~\} \cup \{~ (-, j) ~|~ j \in [k, |\alpha|] \wedge k = 2 * \mathtt{map}(\mathtt{I}) ~\}$
+\item $\mathtt{Indices} = \{~ (i,j) ~|~ i \in [1, \mathtt{map}(\mathtt{I})] \wedge j \in [\mathtt{map}(\mathtt{I}), |\omega|] \wedge |i-j| \equiv \mathtt{map}(\mathtt{I})~\}\cup \{~ (i, -) ~|~ i \in [k, \mathtt{map}(\mathtt{I})] \wedge k = |~ \{ \mathtt{map}(\mathtt{I}) + 1, \ldots, | \alpha | \} ~| ~\} \cup \{~ (-, j) ~|~ j \in [k, |\alpha|] \wedge k = 2 * \mathtt{map}(\mathtt{I}) ~\}$ !!! ordered set
 \end{itemize}
 \end{center}
+
+\section{Additional definitons}
+
+\begin{definition}{Tuples concatenation}
+
+Let $T = (\tau_1, \ldots, \tau_n)$ be sequence of tuples where $\tau_i = (x_1^i, \ldots, x_m^i)$. Concatenation of sequence of tuples $\bullet_{\tau \in T} (\tau)$ is defined as:
+
+\begin{center}
+$\bullet_{\tau \in T} (\tau) = (x_1^1, \ldots, x_m^1, x_1^2, \ldots, x_l^2, \ldots \ldots, x_1^n, \ldots, x_k^n)$.
+\end{center}
+\end{definition}
+
+\begin{definition}{Difference of partial compositions}
+
+Let $\gamma, \gamma'$ be two partial compositions. We define difference of these two sets on names of its atomic agents as following:
+
+\begin{center}
+$\gamma \ominus \gamma' \Leftrightarrow \{ \mu_\alpha ~|~ \exists \mathtt{A}: (\mathtt{A} \in \gamma \wedge \mu(\mathtt{A}) \equiv \mu_\alpha ) \wedge \not\exists \mathtt{A}': (\mathtt{A}' \in \gamma' \wedge \mu(\mathtt{A}') \equiv \mu_\alpha)\}$
+\end{center}
+\end{definition}
+
+\begin{definition}{Difference of partial composition and structure signature}
+
+Let $\mathtt{T}$ be a structure agent. Next, let $\gamma(\mathtt{T})$ be its partial composition and $\Sigma_T(\mathtt{T})$ appropriate signature. We define difference of these two sets on names of atomic agents as following:
+
+\begin{center}
+$\gamma(\mathtt{T}) \ominus \Sigma_T(\mathtt{T}) \Leftrightarrow \{ \mu_\Sigma ~|~ \mu_\Sigma \in \Sigma_T(\mathtt{T}) \wedge \not\exists \mathtt{A}: (\mathtt{A} \in \gamma(\mathtt{T}) \wedge \mu(\mathtt{A}) \equiv \mu_\Sigma)\}$
+\end{center}
+\end{definition}
+
+\section{Ground forms}
+
+Ground form represents appending context to agents according to signature (we assume signature is always available and therefor we omit it in ground form function arguments).
+
+Objects are transformed to their ground forms by ground form function $\mathcal{G}$ defined as following:
+
+
+\begin{center}
+\begin{tabular}{ r c l }
+Object & basic form & ground form \\
+\hline
+ & & \\
+$\mathtt{A}$ & $\mathcal{G}((\mu, \epsilon))$ & $\{~ (\mu, \delta) ~|~ \delta \in \Sigma_A(\mu) ~\}$\\
+ & $\mathcal{G}((\mu, \delta))$ & $\{~(\mu, \delta) ~\}$\\
+ & & \\
+ \hline
+ & & \\
+$\mathtt{T}$ & $\mathcal{G}((\mu, \gamma))$ & $\{~ (\mu, \gamma_\alpha) ~|~ \gamma_\alpha \equiv \gamma \cup \gamma_\Sigma \wedge \gamma_\Sigma = \{~ \mathtt{A}_1, \ldots, \mathtt{A}_n ~\} \wedge$\\
+ & & $\wedge~ \mathtt{A}_i \in \mathcal{G}((\mu, \emptyset)) \wedge \mu \in \gamma \ominus \Sigma_T(\mathtt{T}) ~\}$ \\
+ & & \\
+ \hline
+ & & \\
+pair of & $\mathcal{G}((\beta, \beta'))$ & $\{~ (\beta_\alpha, \beta_\alpha') ~|~ \beta_\alpha \in \mathcal{G}(\beta) \wedge \beta'_\alpha \in \mathcal{G}(\beta') \wedge$\\
+agents & & $\wedge~ \gamma(\beta_\alpha) \ominus \gamma(\beta) \equiv \gamma(\beta'_\alpha) \ominus \gamma(\beta') ~\} $ \\
+ & & \\
+ \hline
+ & & \\
+$\mathtt{R}$ & $\mathcal{G}(\mathtt{R})$ & $\{~ \bigotimes \mathcal{G}(\mathtt{Indices})^* ~\}$ \\
+ & $\mathcal{G}(\mathtt{Indices})$ & $(~\mathcal{G}(\alpha(i), \alpha(j)) ~|~ (i,j) \in \mathtt{Indices})$\\
+ 
+\end{tabular}
+\end{center}
+
+Next, we need reassemble produced tuples by concantenation.
+
+\begin{center}
+$\mathtt{reassemble}(\mathcal{G}(\mathtt{R})) = \{~  T ~|~ T = \bullet_{\tau \in \iota} (\tau) \wedge \iota \in \mathcal{G}(\mathtt{R}) ~\}$
+\end{center}
+
+\section{Generating reactions}
+
+Given a rule $\mathtt{R}$, we can produce appropriate reactions using ground forms and reassembly:
+
+\begin{center}
+$\mathtt{Reactions} = \{~ \mathtt{r}(\mathtt{seq}, \mathtt{I}) ~|~ T \in \mathtt{reassemble}(\mathcal{G}(\mathtt{R})) \wedge seq = (\mathtt{X}(T(1, \ldots, i_1), \mathtt{com}(\chi(i_1))), \mathtt{X}(T(i_1 + 1, \ldots, i_2), \mathtt{com}(\chi(i_2))), \ldots, \mathtt{X}(T(i_{n-1}+1, \ldots, i_n), \mathtt{com}(\chi(i_n)))) \wedge \mathtt{I} \in \mathtt{R} \wedge \chi \in \mathtt{R} ~\}$
+\end{center}
+
+\section{Vectorized model}
+
+\begin{definition}{Vectorized model}
+
+Vectorized model $\mathcal{M}$ is a triple $(\mathcal{R}, \nu, \pi)$ such that $\mathcal{R} \subseteq \mathbb{Z}^n$ is set of vector reactions, $\nu \in \mathbb{N}_0^n$ is initial vector state, and $\pi \in \chi^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
+\end{definition}
+
+\begin{notation}
+We denote $N(\nu) ~\emph{iff}~ \forall i \in \nu: i \in \mathbb{N}_0$.
+\end{notation}
+
+\begin{definition}{Vector reaction application}
+
+Vector reaction application $\rho \subseteq \mathbb{N}_0^n \times \mathbb{Z}^n \times \mathbb{N}_0^n$ such that $(\upsilon, \mathtt{r}, \mathtt{u}) \in \rho$ $\Leftrightarrow$ $result = \{~ u ~|~ u \equiv \upsilon + \mathtt{r} \wedge N(u) \wedge  ~\}$
+\end{definition}
+
+\section{Production of model}
+
++ unique complexes
+
+Let $(\mathtt{S}, \mathtt{R}, \Sigma)$ be a rule-based model.
 
 \end{document}
