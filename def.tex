@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage{subfig}
 \usepackage{stmaryrd}
+\usepackage{esvect}
 \captionsetup[figure]{name=Fig. ,labelsep=period}
 
 \newcommand{\choice}{|}
@@ -232,6 +233,7 @@ $\mathtt{reassemble}(\mathcal{G}(\mathtt{R})) = \{~  T ~|~ T = \bullet_{\tau \in
 \end{center}
 
 \section{Generating reactions}
+\label{Generating reactions}
 
 Given a rule $\mathtt{R}$, we can produce appropriate reactions using ground forms and reassembly:
 
@@ -252,13 +254,54 @@ We denote $N(\nu) ~\emph{iff}~ \forall i \in \nu: i \in \mathbb{N}_0$.
 
 \begin{definition}{Vector reaction application}
 
-Vector reaction application $\rho \subseteq \mathbb{N}_0^n \times \mathbb{Z}^n \times \mathbb{N}_0^n$ such that $(\upsilon, \mathtt{r}, \mathtt{u}) \in \rho$ $\Leftrightarrow$ $result = \{~ u ~|~ u \equiv \upsilon + \mathtt{r} \wedge N(u) \wedge  ~\}$
+Vector reaction application $\rho \subseteq \mathbb{N}_0^n \times \mathbb{Z}^n \times \mathbb{N}_0^n$ such that 
+\begin{center}
+$(\upsilon, \mathtt{r}, \mathtt{u}) \in \rho$ $\Leftrightarrow$ $u = \upsilon + \mathtt{r} \wedge N(u)$.
+\end{center}
 \end{definition}
+
+By iterative application of reaction application we obtain LTS (which can be bounded by a global bound).
 
 \section{Production of model}
 
-+ unique complexes
+\begin{definition}{Reference vector}
 
-Let $(\mathtt{S}, \mathtt{R}, \Sigma)$ be a rule-based model.
+Reference vector $\pi$ is a tuple of all possible unique complexes constructed from reactions as following:
+
+\begin{center}
+$\mathcal{U}(\mathtt{Reactions}) = \{~ \mathtt{X} ~|~ \mathtt{X} \in \mathtt{seq}(\mathtt{r}) \wedge \mathtt{r} \in \mathtt{Reactions} ~\} $.
+\end{center}
+
+Then, we just choose a random order of the set.
+\end{definition}
+
+\begin{definition}{State to vector translation}
+
+Translation of state $\mathtt{S}$ to vector is defined as following:
+\begin{center}
+$\lambda(\mathtt{S}, \pi) = (a_1, a_2, \ldots, a_n)$ such that 
+$a_i$ =
+	$\begin{cases}
+	|\mathtt{S}(\pi_i)| ~\ldots~ \pi_i \in \mathtt{S}\\
+	0 ~\ldots~ \pi_i \not\in \mathtt{S}\\
+	\end{cases}
+	$
+\end{center}
+\end{definition}
+
+Let $(\mathtt{S}, \mathtt{R}, \Sigma)$ be a rule-based model. In order to construct vectorized model $\mathcal{M} = (\nu, \mathcal{R}, \pi)$, we need to do following steps:
+
+\begin{enumerate}
+\item generate $\mathtt{Reactions}$ as defined in section~\ref{Generating reactions},
+\item construct reference vector $\pi$ from $\mathtt{Reactions}$,
+\item create $\nu$ as $\lambda(\mathtt{S}, \pi)$,
+\item construct set of vector reactions $\mathcal{R}$ from set of $\mathtt{Reactions}$, where individual vector reaction $\vv{r}$ are created from $\mathtt{r}$ as following:
+
+\begin{center}
+$\vv{r} = \lambda(RHS(\mathtt{r}), \pi) - \lambda(LHS(\mathtt{r}), \pi)$
+\end{center}
+
+\item resulting triple $(\nu, \mathcal{R}, \pi)$ is desired model $\mathcal{M}$.
+\end{enumerate}
 
 \end{document}
