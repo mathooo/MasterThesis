@@ -1,0 +1,105 @@
+\documentclass[12pt]{fithesis2}
+
+% ===== LOADING PACKAGES =====
+% language settings, main documnet language last
+\usepackage[english]{babel}
+% enabling new fonts support (nicer)
+\usepackage{lmodern}
+% setting input encoding
+\usepackage[utf8]{inputenc}
+% setting output encoding
+\usepackage[T1]{fontenc}
+% fithesis2 requires csquotes
+\usepackage{csquotes}
+
+\usepackage[
+    backend=biber,      % use biber as backend instead of BiBTeX
+    style=alphabetic,   % citation style
+	url=true,           % display urls in bibliography
+	hyperref=auto,      % detect hyperref and create links
+    firstinits=true,    % abbreviate first names to initials
+    maxbibnames=5,      % maxiumim number of authors before making 'et al.'
+    alldates=iso8601,   % set date format to ISO 8601
+]{biblatex}
+\addbibresource{thesis.bib}
+% setting custom colors for l
+
+% FI THESIS settings
+\thesistitle{Something with BCS}
+\thesissubtitle{Master thesis}
+\thesisstudent{Matej Troják}
+\thesiswoman{false}
+\thesisfaculty{fi}
+\thesisyear{autumn 2017}
+\thesisadvisor{RNDr.\ David Šafránek,\ Ph.D.}
+\thesislang{en}
+
+% ===== BEGIN DOCUMENT =====
+\begin{document}
+
+\FrontMatter
+\ThesisTitlePage
+
+\begin{ThesisDeclaration}
+\DeclarationText
+\AdvisorName
+\end{ThesisDeclaration}
+
+\begin{ThesisThanks}
+Many thanks to you all.
+
+\vspace{1em}
+\noindent
+There would be much less
+algebra,        % advancements, art, adrenaline, archery, astrophotography, algebra
+board gaming,   % beauty, baking, beer, board gaming
+curiosity,      % courage, contemplation, cooking, cakes, curiosity
+drama,          % discipline, devotion, drama
+experience,     % empathy, experience
+functional programmig,  % fun, friendliness, faith, functional programmig
+geekiness,      % GEB, good books, geekiness
+honesty,        % humour, honesty
+inspiration,    % improvements, ideas, idealisms, inspiration
+joy,            % jokes, joy
+knowledge,      % knowledge
+learning,       % learning, love
+magic,          % meaning, magic, miracles, meta, moose
+nighttime walks,    % nighttime walks, Norway
+OpenLabs,       % organization, openness, optimism, OpenLabs
+puzzle hunts,   % peace, patience, procrastination, puzzle hunts
+quiet,          % quiet
+respect,        % research, respect
+surprises,      % spontaneity, silence, security, stories, star gazing, surprises
+trust,          % typographic correctness, tolerance, trust
+unpredictability,   % understanding, unity, unpredictability
+vigilance,      % vigilance
+Wachumba,       % wisdom, Wachumba
+xylophone,      % xylophone
+yummies         % yellow, you, yummies
+and
+zeal            % Zendo, Zen, zeal
+in the world for me without you.
+
+\vspace{0.65\textheight}
+\noindent
+Access to computing and storage facilities owned by parties and projects contributing to the National Grid Infrastructure MetaCentrum, provided under the programme Projects of Large Infrastructure for Research, Development, and Innovations(LM2010005), is greatly appreciated.
+\end{ThesisThanks}
+
+\begin{ThesisAbstract}
+This thesis explores the randomness of outputs created by authenticated encryption schemes submitted to the  competition. Tested scenarios included three different modes of public message numbers. For the assessment, four different software tools were used: three common statistical batteries and a novel genetically inspired framework. The obtained results are interpreted in two ways: Firstly, to gain insights into the quality of the proposed  candidates. Secondly, to compare and contrast the used randomness testing tools. Directions for future research are proposed based on the obtained conclusions.
+\end{ThesisAbstract}
+
+\begin{ThesisKeyWords}
+statistical randomness, authenticated encryption, CAESAR, evolutionary algorithms, genetic programming
+\end{ThesisKeyWords}
+
+\MainMatter
+\tableofcontents
+
+\chapter{First one}
+
+here we go
+
+\printbibliography
+
+\end{document}
