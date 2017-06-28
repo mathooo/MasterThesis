@@ -30,7 +30,7 @@ Let $\mathcal{N}_{A},~\mathcal{N}_{T},~\mathcal{N}_{\delta},~\mathcal{N}_{c}$ be
 \end{itemize}
 \end{definition}
 
-\begin{example}{Signature}
+\begin{example}{Signature}\label{example:signature}
 
 \begin{itemize}
 \item An atomic signature $(S, \{u, p\})$, $(Q, \{a, i\})$
@@ -53,11 +53,11 @@ Let $\mathcal{N}_{A},~\mathcal{N}_{T},~\mathcal{N}_{\delta},~\mathcal{N}_{c}$ be
 Let $\mathcal{A}$ be universe of all possible atomic agents.
 \end{notation}
 
-\begin{example}{Atomic agent}
+\begin{example}{Atomic agent}\label{example:atomic}
 
 \begin{itemize}
 \item An atomic agent $\mathtt{A}_1 = (S, u)$
-\item An atomic agent $\mathtt{A}_2 = (Q, i)$
+\item An atomic agent $\mathtt{A}_2 = (Q, \varepsilon)$
 \end{itemize}
 \end{example}
 
@@ -76,7 +76,7 @@ Let $\mathcal{A}$ be universe of all possible atomic agents.
 Let $\mathcal{T}$ be universe of all possible structure agents.
 \end{notation}
 
-\begin{example}{Structure agent}
+\begin{example}{Structure agent}\label{example:structure}
 
 \begin{itemize}
 \item A structure agent $\mathtt{T}_1 = (K, \textcolor{red}{\{}(S, p), (Q, i)\textcolor{red}{\}})$
@@ -102,7 +102,7 @@ Let $\mathcal{X}$ be universe of all possible complexes.
 \end{notation}
 
 
-\begin{example}{Complex}
+\begin{example}{Complex}\label{example:complex}
 
 \begin{itemize}
 \item A complex $\mathtt{X} = (\textcolor{green}{(}(K, \textcolor{red}{\{}(S, p), (Q, i)\textcolor{red}{\}}), (S, p)\textcolor{green}{)}, cytosol)$
@@ -126,15 +126,31 @@ Rule $\mathtt{R}$ is a 5-tuple $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt
 where $n, m \in \mathbb{N}$.
 \end{definition}
 
-
-\begin{example}{Rule}
+\begin{example}{Rule}\label{example:rule}
 
 \begin{itemize}
-\item $\chi = \textcolor{cyan}{[} (\textcolor{green}{(}  \textcolor{green}{)}), (), (), (), () \textcolor{cyan}{]}$
 \item 
-\item 
-\item 
-\item 
+$\chi = \begin{bmatrix}
+(\textcolor{green}{(} (K, \textcolor{red}{\{}(S, u)\textcolor{red}{\}}), (B, \textcolor{red}{\emptyset}) \textcolor{green}{)}, cyt),\\
+
+(\textcolor{green}{(} (C, \textcolor{red}{\emptyset}), (D, i) \textcolor{green}{)}, cyt),\\
+
+(\textcolor{green}{(} (A, \varepsilon) \textcolor{green}{)}, cyt),\\
+
+(\textcolor{green}{(} (K, \textcolor{red}{\{}(S, p)\textcolor{red}{\}}), (B, \textcolor{red}{\emptyset}), (C, \textcolor{red}{\emptyset}) \textcolor{green}{)}, cyt),\\
+
+(\textcolor{green}{(} (D, a), (A, \varepsilon) \textcolor{green}{)}, cyt) 
+\end{bmatrix}$
+
+\item $\omega = \begin{bmatrix}
+(K, \textcolor{red}{\{}(S, u)\textcolor{red}{\}}), (B, \textcolor{red}{\emptyset}), (C, \textcolor{red}{\emptyset}), \\
+(D, i), (A, \varepsilon), (K, \textcolor{red}{\{}(S, p)\textcolor{red}{\}}), \\
+(B, \textcolor{red}{\emptyset}), (C, \textcolor{red}{\emptyset}), (D, a), (A, \varepsilon)
+\end{bmatrix}$
+
+\item $\mathtt{I} = 3$
+\item $\mathtt{map} = (2,4,5,8,10,11)$
+\item $\mathtt{Indices} = [ (1,6) ; (2,7) ; (3,8) ; (4,9) ; (5,10) ; (-,11) ] $
 \end{itemize}
 \end{example}
 
@@ -180,6 +196,23 @@ rule & $\mathtt{R} ::= \Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \
 where $m,n \in \mathbb{N}_0 \wedge m + n \neq 0$ and $k \in \mathbb{N}$.
 \end{definition}
 
+\begin{example}{Syntax}\label{example:syntax}
+
+In following goes examples of agents, complexes and rules given in previous examples:
+
+\begin{itemize}
+\item $\mathtt{A}_1$ is written as $S\{u\}$, $\mathtt{A}_2$ is written as $Q$ (Example~\ref{example:atomic}),
+
+\item $\mathtt{T}_1$ is written as $K(S\{p\}, Q\{i\})$, $\mathtt{T}_2$ is written as $K(Q\{A\})$ (Example~\ref{example:structure}),
+
+\item $\mathtt{X}$ is written as $K(S\{p\}, Q\{i\}).S\{p\}::cytosol$ (Example~\ref{example:complex}),
+
+\item rule $\mathtt{R}$ is written as (Example~\ref{example:rule}):
+\end{itemize}
+
+\noindent {\small $K(S\{u\}).B::cyt + C.D\{i\}::cyt + A::cyt \Rightarrow K(S\{p\}.B.C::cyt + D\{a\}.A::cyt + H\{u\}::cyt$}
+\end{example}
+
 \noindent\rule{\textwidth}{1pt}
 
 \section{Semantic function}
@@ -220,7 +253,7 @@ $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$~ such that:\\
 
 \noindent\rule{\textwidth}{1pt}
 
-\section{Additional definitons}
+\section{Additional definitions}
 
 \begin{definition}{Tuples concatenation}
 
