@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage{subfig}
 \usepackage{stmaryrd}
+\usepackage[usenames, dvipsnames]{color}
 \usepackage{esvect}
 \captionsetup[figure]{name=Fig. ,labelsep=period}
 
@@ -29,15 +30,20 @@ Let $\mathcal{N}_{A},~\mathcal{N}_{T},~\mathcal{N}_{\delta},~\mathcal{N}_{c}$ be
 \end{itemize}
 \end{definition}
 
-\begin{example}
-\item Atomic signature $(S, \{u, p\})$
-\item Structure signature $(KaiC, \{S, T\})$
+\begin{example}{Signature}
+
+\begin{itemize}
+\item An atomic signature $(S, \{u, p\})$, $(Q, \{a, i\})$
+\item A structure signature $(KaiC, \{S, Q\})$
+\end{itemize}
 \end{example}
+
+\noindent\rule{\textwidth}{1pt}
 
 \begin{definition}{Atomic agent}
 
 \begin{itemize}
-\item Atomic agent $\mathtt{A}$ is a pair $(\mu, \delta)$ where $\mu \in \mathcal{N}_{A}$ is a name and $\delta \in \mathcal{N}_{\delta}$ is a state.
+\item Atomic agent $\mathtt{A}$ is a pair $(\mu, \delta)$ where $\mu \in \mathcal{N}_{A}$ is a name and $\delta \in \mathcal{N}_{\delta} \cup \{ \varepsilon \}$ is a state.
 
 \item Equivalence: $\mathtt{A} \equiv \mathtt{A}' \Leftrightarrow \mu(\mathtt{A}) \equiv \mu(\mathtt{A}') \wedge \delta(\mathtt{A}) \equiv \delta(\mathtt{A}')$
 \end{itemize}
@@ -47,18 +53,38 @@ Let $\mathcal{N}_{A},~\mathcal{N}_{T},~\mathcal{N}_{\delta},~\mathcal{N}_{c}$ be
 Let $\mathcal{A}$ be universe of all possible atomic agents.
 \end{notation}
 
+\begin{example}{Atomic agent}
+
+\begin{itemize}
+\item An atomic agent $\mathtt{A}_1 = (S, u)$
+\item An atomic agent $\mathtt{A}_2 = (Q, i)$
+\end{itemize}
+\end{example}
+
+\noindent\rule{\textwidth}{1pt}
+
 \begin{definition}{Structure agent}
 
 \begin{itemize}
 \item Structure agent $\mathtt{T}$ is a pair $(\mu, \gamma)$ where $\mu \in \mathcal{N}_{T}$ is a name and $\gamma \subseteq \mathcal{A}$ is a set of atomic agents called partial composition.
 
-\item Equivalence: $\mathtt{T} \equiv \mathtt{T}' \Leftrightarrow \mu(\mathtt{T}) \equiv \mu(\mathtt{T}') \wedge \forall \mathtt{A} \in \gamma(\mathtt{T}) \exists \mathtt{A}' \in \gamma(\mathtt{T}') : \mathtt{A} \equiv \mathtt{A}' \wedge \\ \wedge \forall \mathtt{A}' \in \gamma(\mathtt{T}') \exists \mathtt{A} \in \gamma(\mathtt{T}) : \mathtt{A}' \equiv \mathtt{A}$.
+\item Equivalence: $\mathtt{T} \equiv \mathtt{T}' \Leftrightarrow \mu(\mathtt{T}) \equiv \mu(\mathtt{T}') \wedge \forall \mathtt{A} \in \gamma(\mathtt{T}) \exists \mathtt{A}' \in \gamma(\mathtt{T}') : \mathtt{A} \equiv \mathtt{A}' \wedge \\ \wedge \forall \mathtt{A}' \in \gamma(\mathtt{T}') ~\exists \mathtt{A} \in \gamma(\mathtt{T}) : \mathtt{A}' \equiv \mathtt{A}$.
 \end{itemize}
 \end{definition}
 
 \begin{notation}
 Let $\mathcal{T}$ be universe of all possible structure agents.
 \end{notation}
+
+\begin{example}{Structure agent}
+
+\begin{itemize}
+\item A structure agent $\mathtt{T}_1 = (K, \textcolor{red}{\{}(S, p), (Q, i)\textcolor{red}{\}})$
+\item A structure agent $\mathtt{T}_2 = (K, \textcolor{red}{\{}(Q, a)\textcolor{red}{\}})$
+\end{itemize}
+\end{example}
+
+\noindent\rule{\textwidth}{1pt}
 
 \begin{definition}{Complex}
 
@@ -75,6 +101,16 @@ Let $\mathcal{T}$ be universe of all possible structure agents.
 Let $\mathcal{X}$ be universe of all possible complexes.
 \end{notation}
 
+
+\begin{example}{Complex}
+
+\begin{itemize}
+\item A complex $\mathtt{X} = (\textcolor{green}{(}(K, \textcolor{red}{\{}(S, p), (Q, i)\textcolor{red}{\}}), (S, p)\textcolor{green}{)}, cytosol)$
+\end{itemize}
+\end{example}
+
+\noindent\rule{\textwidth}{1pt}
+
 \begin{definition}{Rule}
 
 Rule $\mathtt{R}$ is a 5-tuple $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$ where:
@@ -90,6 +126,20 @@ Rule $\mathtt{R}$ is a 5-tuple $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt
 where $n, m \in \mathbb{N}$.
 \end{definition}
 
+
+\begin{example}{Rule}
+
+\begin{itemize}
+\item $\chi = \textcolor{cyan}{[} (\textcolor{green}{(}  \textcolor{green}{)}), (), (), (), () \textcolor{cyan}{]}$
+\item 
+\item 
+\item 
+\item 
+\end{itemize}
+\end{example}
+
+\noindent\rule{\textwidth}{1pt}
+
 \begin{definition}{Reaction}
 
 Reaction $\mathtt{r}$ is a pair $(\mathtt{seq}, \mathtt{I})$ where:
@@ -101,6 +151,8 @@ Reaction $\mathtt{r}$ is a pair $(\mathtt{seq}, \mathtt{I})$ where:
 
 where $n, m \in \mathbb{N}$.
 \end{definition}
+
+\noindent\rule{\textwidth}{2pt}
 
 \section{Syntax}
 
@@ -128,6 +180,8 @@ rule & $\mathtt{R} ::= \Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \
 where $m,n \in \mathbb{N}_0 \wedge m + n \neq 0$ and $k \in \mathbb{N}$.
 \end{definition}
 
+\noindent\rule{\textwidth}{1pt}
+
 \section{Semantic function}
 
 Semantic function $\mathtt{F}$ gives semantical meaning to rules and objects written in BCSL syntax. It is defined recursivelly according to context given as argument:
@@ -136,8 +190,8 @@ Semantic function $\mathtt{F}$ gives semantical meaning to rules and objects wri
 \begin{tabular}{ r c l}
 $\mathtt{F} \llbracket ~\mu~ \rrbracket$ & = &
 		$\begin{cases}
-		\mathtt{A}(\mu, \emptyset) ~\ldots~ \mu \in \Sigma_{A}\\
-		\mathtt{T}(\mu, \epsilon) ~\ldots~ \mu \in \Sigma_{T}\\
+		\mathtt{A}(\mu, \epsilon) ~\ldots~ \mu \in \Sigma_{A}\\
+		\mathtt{T}(\mu, \emptyset) ~\ldots~ \mu \in \Sigma_{T}\\
 		\end{cases}
 		$\\
  & & \\
@@ -163,6 +217,8 @@ $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$~ such that:\\
 \item $\mathtt{Indices} = \{~ (i,j) ~|~ i \in [1, \mathtt{map}(\mathtt{I})] \wedge j \in [\mathtt{map}(\mathtt{I}), |\omega|] \wedge |i-j| \equiv \mathtt{map}(\mathtt{I})~\}\cup \{~ (i, -) ~|~ i \in [k, \mathtt{map}(\mathtt{I})] \wedge k = |~ \{ \mathtt{map}(\mathtt{I}) + 1, \ldots, | \alpha | \} ~| ~\} \cup \{~ (-, j) ~|~ j \in [k, |\alpha|] \wedge k = 2 * \mathtt{map}(\mathtt{I}) ~\}$ !!! ordered set
 \end{itemize}
 \end{center}
+
+\noindent\rule{\textwidth}{1pt}
 
 \section{Additional definitons}
 
@@ -193,12 +249,13 @@ $\gamma(\mathtt{T}) \ominus \Sigma_T(\mathtt{T}) \Leftrightarrow \{ \mu_\Sigma ~
 \end{center}
 \end{definition}
 
+\noindent\rule{\textwidth}{2pt}
+
 \section{Ground forms}
 
 Ground form represents appending context to agents according to signature (we assume signature is always available and therefor we omit it in ground form function arguments).
 
 Objects are transformed to their ground forms by ground form function $\mathcal{G}$ defined as following:
-
 
 \begin{center}
 \begin{tabular}{ r c l }
@@ -232,6 +289,8 @@ Next, we need reassemble produced tuples by concantenation.
 $\mathtt{reassemble}(\mathcal{G}(\mathtt{R})) = \{~  T ~|~ T = \bullet_{\tau \in \iota} (\tau) \wedge \iota \in \mathcal{G}(\mathtt{R}) ~\}$
 \end{center}
 
+\noindent\rule{\textwidth}{2pt}
+
 \section{Generating reactions}
 \label{Generating reactions}
 
@@ -240,6 +299,8 @@ Given a rule $\mathtt{R}$, we can produce appropriate reactions using ground for
 \begin{center}
 $\mathtt{Reactions} = \{~ \mathtt{r}(\mathtt{seq}, \mathtt{I}) ~|~ T \in \mathtt{reassemble}(\mathcal{G}(\mathtt{R})) \wedge seq = (\mathtt{X}(T(1, \ldots, i_1), \mathtt{com}(\chi(i_1))), \mathtt{X}(T(i_1 + 1, \ldots, i_2), \mathtt{com}(\chi(i_2))), \ldots, \mathtt{X}(T(i_{n-1}+1, \ldots, i_n), \mathtt{com}(\chi(i_n)))) \wedge \mathtt{I} \in \mathtt{R} \wedge \chi \in \mathtt{R} ~\}$
 \end{center}
+
+\noindent\rule{\textwidth}{1pt}
 
 \section{Vectorized model}
 
@@ -261,6 +322,8 @@ $(\upsilon, \mathtt{r}, \mathtt{u}) \in \rho$ $\Leftrightarrow$ $u = \upsilon + 
 \end{definition}
 
 By iterative application of reaction application we obtain LTS (which can be bounded by a global bound).
+
+\noindent\rule{\textwidth}{1pt}
 
 \section{Production of model}
 
