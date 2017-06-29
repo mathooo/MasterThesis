@@ -7,6 +7,7 @@
 \usepackage{stmaryrd}
 \usepackage[usenames, dvipsnames]{color}
 \usepackage{esvect}
+\usepackage{enumitem}
 \captionsetup[figure]{name=Fig. ,labelsep=period}
 
 \newcommand{\choice}{|}
@@ -60,6 +61,8 @@ Let $\mathcal{A}$ be universe of all possible atomic agents.
 \item An atomic agent $\mathtt{A}_2 = (Q, \varepsilon)$
 \end{itemize}
 \end{example}
+
+Please note state $\varepsilon$ does not mean the agent is in \emph{none} state, but rather the state is unknown or not important.
 
 \noindent\rule{\textwidth}{1pt}
 
@@ -217,7 +220,7 @@ In following goes examples of agents, complexes and rules given in previous exam
 
 \section{Semantic function}
 
-Semantic function $\mathtt{F}$ gives semantical meaning to rules and objects written in BCSL syntax. It is defined recursivelly according to context given as argument:
+Semantic function $\mathtt{F}$ gives semantical meaning to rules and objects written in BCSL syntax. It is defined recursively according to context given as argument:
 
 \begin{center}
 \begin{tabular}{ r c l}
@@ -242,14 +245,22 @@ $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$~ such that:\\
 \end{center}
 
 \begin{center}
-\begin{itemize}
+\begin{itemize}[leftmargin=1.5cm]
 \item $\chi = (\mathtt{F} \llbracket ~\Gamma_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_n~ \rrbracket, \mathtt{F} \llbracket ~\Gamma_{n+1}~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_m~ \rrbracket)$,
 \item $\omega = \bullet_{\mathtt{X} \in \chi} (\mu(\mathtt{X}))$ !!!
 \item $\mathtt{I} = n$
 \item $\mathtt{map} = (J_1, \ldots, J_m): J_i = \sum_{y=1}^{i} | \mu(\chi_i) |$
-\item $\mathtt{Indices} = \{~ (i,j) ~|~ i \in [1, \mathtt{map}(\mathtt{I})] \wedge j \in [\mathtt{map}(\mathtt{I}), |\omega|] \wedge |i-j| \equiv \mathtt{map}(\mathtt{I})~\}\cup \{~ (i, -) ~|~ i \in [k, \mathtt{map}(\mathtt{I})] \wedge k = |~ \{ \mathtt{map}(\mathtt{I}) + 1, \ldots, | \alpha | \} ~| ~\} \cup \{~ (-, j) ~|~ j \in [k, |\alpha|] \wedge k = 2 * \mathtt{map}(\mathtt{I}) ~\}$ !!! ordered set
+\item \begin{tabular}{c l}
+
+& $\{~ (i,j) ~|~ i \in [1, \mathtt{map}(\mathtt{I})] \wedge j \in [\mathtt{map}(\mathtt{I}), |\omega|] \wedge |i-j| \equiv \mathtt{map}(\mathtt{I})~\} ~\cup$ \\
+$\mathtt{Indices} =$ & $\{~ (i, -) ~|~ i \in [k, \mathtt{map}(\mathtt{I})] \wedge k = |~ \{ \mathtt{map}(\mathtt{I}) + 1, \ldots, | \alpha | \} ~| ~\} ~\cup$\\
+ & $ \{~ (-, j) ~|~ j \in [k, |\alpha|] \wedge k = 2 * \mathtt{map}(\mathtt{I}) ~\}$ (!!! ordered set)
+\end{tabular}
+
 \end{itemize}
 \end{center}
+
+Please note by applying semantic function $\mathtt{F}$ on examples from Example~\ref{example:syntax}, we obtain agents (resp. complex or rule) from appropriate referenced examples.
 
 \noindent\rule{\textwidth}{1pt}
 
@@ -316,7 +327,7 @@ $\mathtt{R}$ & $\mathcal{G}(\mathtt{R})$ & $\{~ \bigotimes \mathcal{G}(\mathtt{I
 \end{tabular}
 \end{center}
 
-Next, we need reassemble produced tuples by concantenation.
+Next, we need reassemble produced tuples by concatenation.
 
 \begin{center}
 $\mathtt{reassemble}(\mathcal{G}(\mathtt{R})) = \{~  T ~|~ T = \bullet_{\tau \in \iota} (\tau) \wedge \iota \in \mathcal{G}(\mathtt{R}) ~\}$
