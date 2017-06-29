@@ -321,13 +321,15 @@ agents & & $\wedge~ \gamma(\beta_\alpha) \ominus \gamma(\beta) \equiv \gamma(\be
  & & \\
  \hline
  & & \\
-$\mathtt{R}$ & $\mathcal{G}(\mathtt{R})$ & $\{~ \bigotimes \mathcal{G}(\mathtt{Indices})^* ~\}$ \\
- & $\mathcal{G}(\mathtt{Indices})$ & $(~\mathcal{G}(\alpha(i), \alpha(j)) ~|~ (i,j) \in \mathtt{Indices})$\\
+$\mathtt{R}$ & $\mathcal{G}(\mathtt{R})$ & $ \bigotimes \mathcal{G}(\mathtt{Indices})^* $ \\
+ & $\mathcal{G}(\mathtt{Indices})$ & $(~\mathcal{G}(\omega(i), \omega(j)) ~|~ (i,j) \in \mathtt{Indices})$\\
  
 \end{tabular}
 \end{center}
 
-Next, we need reassemble produced tuples by concatenation.
+where $\bigotimes \mathcal{G}(\mathtt{Indices})^*$ means cartesian product of sets inside of set $\mathcal{G}(\mathtt{Indices})$.
+
+\noindent Next, we need reassemble produced tuples by concatenation.
 
 \begin{center}
 $\mathtt{reassemble}(\mathcal{G}(\mathtt{R})) = \{~  T ~|~ T = \bullet_{\tau \in \iota} (\tau) \wedge \iota \in \mathcal{G}(\mathtt{R}) ~\}$
@@ -340,9 +342,15 @@ $\mathtt{reassemble}(\mathcal{G}(\mathtt{R})) = \{~  T ~|~ T = \bullet_{\tau \in
 
 Given a rule $\mathtt{R}$, we can produce appropriate reactions using ground forms and reassembly:
 
-\begin{center}
-$\mathtt{Reactions} = \{~ \mathtt{r}(\mathtt{seq}, \mathtt{I}) ~|~ T \in \mathtt{reassemble}(\mathcal{G}(\mathtt{R})) \wedge seq = (\mathtt{X}(T(1, \ldots, i_1), \mathtt{com}(\chi(i_1))), \mathtt{X}(T(i_1 + 1, \ldots, i_2), \mathtt{com}(\chi(i_2))), \ldots, \mathtt{X}(T(i_{n-1}+1, \ldots, i_n), \mathtt{com}(\chi(i_n)))) \wedge \mathtt{I} \in \mathtt{R} \wedge \chi \in \mathtt{R} ~\}$
-\end{center}
+\begin{tabular}{ ll }
+$\mathtt{Reactions} =$ & $\{~ \mathtt{r}(\mathtt{seq}, \mathtt{I}) ~|~ T \in \mathtt{reassemble}(\mathcal{G}(\mathtt{R})) ~\wedge$\\
+
+& $seq = (\mathtt{X}(T(1, \ldots, i_1), \mathtt{com}(\chi(i_1))), \mathtt{X}(T(i_1 + 1, \ldots, i_2), \mathtt{com}(\chi(i_2))), \ldots,$\\
+
+& $\mathtt{X}(T(i_{n-1}+1, \ldots, i_n), \mathtt{com}(\chi(i_n)))) ~\wedge$\\
+
+& $ \mathtt{I} \in \mathtt{R} \wedge \chi \in \mathtt{R} ~\}$
+\end{tabular}
 
 \noindent\rule{\textwidth}{1pt}
 
@@ -389,8 +397,8 @@ Translation of state $\mathtt{S}$ to vector is defined as following:
 $\lambda(\mathtt{S}, \pi) = (a_1, a_2, \ldots, a_n)$ such that 
 $a_i$ =
 	$\begin{cases}
-	|\mathtt{S}(\pi_i)| ~\ldots~ \pi_i \in \mathtt{S}\\
-	0 ~\ldots~ \pi_i \not\in \mathtt{S}\\
+	|\mathtt{S}(\pi_i)| & \ldots~~~~ \pi_i \in \mathtt{S}\\
+	0 & \ldots~~~~ \pi_i \not\in \mathtt{S}\\
 	\end{cases}
 	$
 \end{center}
