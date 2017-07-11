@@ -102,7 +102,10 @@ statistical randomness, authenticated encryption, CAESAR, evolutionary algorithm
 \MainMatter
 \tableofcontents
 
-\chapter{Rule-based basics}
+\chapter{Introduction}
+
+\chapter{Background}
+\section{Rule-based basics}
 
 In our last paper~\cite{Ded201627}, we defined semantics of Biochemical Space Language (BCSL) via translating to a similar language called Kappa~\cite{Kappa}. However, we realised this approach is not very beneficial since we are not fully using the expressive power of our language this way. The thing is Kappa operates purely on expressions. We want to promote our language to a higher level when it operates on objects in multisets. By translating to Kappa we loose such abstraction. 
 
@@ -191,6 +194,62 @@ Moreover, the mapping can be seen as assigning particular objects from the solut
 \end{figure}
 
 Since this kind of graphical representation is not very suitable for describing the processes and for transferring them.. ???, in next chapter(s) we define a formal language which is built on principles described in this chapter.
+
+\section{Rule-based languages}
+
+briefly explain main languages (kappa, BNGL, Recon, Chromar)
+
+show main differences
+
+\section{History of Biochemical Space}
+
+from informal BCS through definition by embedding to Kappa
+
+why not good enough
+
+\chapter{Problem formulation}
+
+why we need something new
+
+what was wrong before
+
+highlight we choose indirect definition via reactions - "practical definition"
+
+\chapter{Formal definition}
+
+\section{Syntax}
+
+\section{Semantics}
+
+\section{Syntactic extensions}
+
+\chapter{Analysis}
+
+\section{Dynamic analysis}
+
+such as simulation, model checking (reachability)
+
+\section{Static analysis}
+
+well... some algorithms are done, but this part need improvement
+
+\chapter{Implementation}
+
+BCSgen, part of a project, several iterations
+
+before it was done via Kappa, what was quite slow (direct rule-based semantics)
+
+explain why it was slow (no abstraction)
+
+\chapter{Case study}
+
+BCS used on ecyano
+
+key features
+
+who practical examples of defined objects
+
+\chapter{Conclusions}
 
 \printbibliography
 
