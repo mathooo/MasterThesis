@@ -17,6 +17,7 @@
 \usepackage{kpfonts}
 \usepackage[labelfont=bf]{caption}
 \usepackage{stmaryrd}
+\usepackage{mathtools}
 
 \usepackage[
     backend=biber,      % use biber as backend instead of BiBTeX
@@ -106,6 +107,7 @@ statistical randomness, authenticated encryption, CAESAR, evolutionary algorithm
 
 \chapter{Background}
 \section{Rule-based basics}
+\label{Rule-based basics}
 
 In our last paper~\cite{Ded201627}, we defined semantics of Biochemical Space Language (BCSL) via translating to a similar language called Kappa~\cite{Kappa}. However, we realised this approach is not very beneficial since we are not fully using the expressive power of our language this way. The thing is Kappa operates purely on expressions. We want to promote our language to a higher level when it operates on objects in multisets. By translating to Kappa we loose such abstraction. 
 
@@ -197,13 +199,67 @@ Since this kind of graphical representation is not very suitable for describing 
 
 \section{Rule-based languages}
 
-briefly explain main languages (Kappa, BNGL, Recon, Chromar, LSB, PySB)
+There are several rule-based languages dedicated for modeling of biological systems. Each of them uses different features and abstractions. In this chapter, we will try to highlight the key features for some representatives of them.
 
-mention SBML-multi package, only for description, no operational semantics
+\subsection{Kappa}
+\label{kappa}
 
-graphical represenations - hard to analyse
+This language was developed for modeling of protein-protein interactions. Therefore, the key feature of the language are it's so called \textit{agents} with \textit{binding sites}, which allow formation of bonds between the agents. Each binding site must be unique and at most one bond. Moreover, each site can occur in one of several pre-defined states.
 
-show main differences on syntactic and semantic level
+The \textit{Kappa rules} are changing properties of the agents. Particularly, it might add/delete/change a bond or a state of one or multiple agents at once. Such as all the other rule-based languages, when we do not care about some context, we simply omit it. Example of a rule is in Figure~\ref{kappa-rule}.
+
+\begin{figure}
+\begin{center}
+\begin{tabular}{c l}
+(a) & A(bsa$\sim$\{ u, p \}) ; B(bsb$\sim$\{ a, i \}) \\
+(b) & A(bsa), B(bsb$\sim$a) $\rightarrow$ A(bsa!1), B(bsb$\sim$a!1) \\
+\end{tabular}
+\end{center}
+\caption{Example of a Kappa rule. (a) Definition of associated agents. (b) The rule itself. Note the context which has no importance for the interaction is omitted.}\label{kappa-rule}
+\end{figure}
+
+The general problem we have to face with in Kappa is too detailed description. For biological systems as defined in chapter~\ref{Rule-based basics}, it might be often hard to deal with all the bonds, especially in cases when we do not need such detail.
+
+\subsection{BioNetGen Language}
+\label{bngl}
+
+BioNetGen Language (BNGL) is very similar to Kappa~\ref{kappa}. There are a few general differences: (1) it is allowed to define multiple binding sites with same name for an agent; (2) one binding site is allowed to have multiple bonds; (3) in the rules BNGL uses `+' and `.' for expressing reaction complex and complex of agents respectively. Example of a rule is in Figure~\ref{bngl-rule}.
+
+\begin{figure}
+\begin{center}
+\begin{tabular}{c l}
+(a) & A(bsa$\sim$u$\sim$p) \\
+	& B(bsb$\sim$a$\sim$i) \\
+(b) & A(bsa) + B(bsb$\sim$a) $\rightarrow$ A(bsa!1).B(bsb$\sim$a!1) \\
+\end{tabular}
+\end{center}
+\caption{Example of a BGNL rule. (a) Definition of associated agents. (b) The rule itself. Note the A and B agents must first create \emph{reaction complex} denoted with `+' (i.e., they must be close to each other) and then they create \emph{complex of agents} denoted as `.' (i.e., they are physically connected).}\label{bngl-rule}
+\end{figure}
+
+\subsection{PySB}
+
+This language works as a package to Python language. The definition of models directly in the code allows to use the full syntax of Python, what dramatically increases expression power of PySB. On the other hand, it might be hard to follow abstraction which are this way possible and models themselves are hard to analyze. Moreover, the core of the language is made by translating to BGNL~\ref{bngl}.
+
+\subsection{Chromar}
+
+The language allows to define attributes for agents and range them over pre-defined domains. The qualitative semantics are given by rule match on multisets composed from these agents producing reaction. It is followed by standard application of the reaction (in manner of multiset operations). The language is very useful when creating a model where we need to create new distinct objects and control population of these objects.
+
+Embedding this language to functional programming language Haskell increases its expressive power while making the ability of some analysis more expensive. Moreover, one needs to learn Haskell (at least it's basics) in order to use Chromar.
+
+\begin{figure}
+\begin{center}
+A(a = x), A(a = y) $\xrightarrow[]{\text{f(x,y)}}$ A(a = x + y), A(a = y - 1) [g(x, y)]
+\end{center}
+\caption{Example of a Chromar rule.}\label{chromar-rule}
+\end{figure}
+
+I would like to highlight an important feature of stochastic semantics which this language offers. Compared to other rule-based languages, it is capable of specifying rates for individual reactions inherited from the rule. This is allowed by variable value bindings and type-determination between left- and right-hand-side of the rule.
+
+However, when it comes to readability and presentation to the user, the language is not a best-fit. All the biologically relevant terms such as states must be encoded to natural numbers.
+
+\subsection{SBML-multi package}
+
+Systems biology Markup Language (SBML) is a standard established for systems biology. It is able to describe all necessary rule-based features and therefore it is possible to export each such language in this format. It is the most suitable format for exchange and storage of the models, but less for analysis and direct representation to the users (it is and XML format). It serves as intermediate language. 
 
 \section{Biochemical Space}
 
