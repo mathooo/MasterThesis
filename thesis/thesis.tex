@@ -18,6 +18,15 @@
 \usepackage[labelfont=bf]{caption}
 \usepackage{stmaryrd}
 \usepackage{mathtools}
+\usepackage[usenames, dvipsnames]{color}
+\usepackage{esvect}
+
+\newcounter{counter}[section]
+\renewcommand{\thecounter}{\thesection.\arabic{counter}}
+\newcommand{\definition}[1]{\refstepcounter{counter} \textbf{Definition \thecounter} \newline #1 }
+\newcommand{\notation}[1]{\refstepcounter{counter} \textbf{Notation \thecounter} \newline #1 }
+\newcommand{\theorem}[1]{\refstepcounter{counter} \textbf{Theorem \thecounter} \newline #1 }
+\newcommand{\example}[1]{\refstepcounter{counter} \textbf{Example \thecounter} \newline #1 }
 
 \usepackage[
     backend=biber,      % use biber as backend instead of BiBTeX
@@ -287,11 +296,411 @@ highlight we choose indirect definition via reactions - "practical definition"
 
 \chapter{Formal definition}
 
+\section{Objects definition}
+
+Let $\mathcal{N}_{A},~\mathcal{N}_{T},~\mathcal{N}_{\delta},~\mathcal{N}_{c}$ be mutually exclusive finite sets of atomic, structure, state names, and compartments, respectively.
+
+\begin{definition}{Signature}
+
+\begin{itemize} 
+\item Atomic signature $\Sigma_{\mathtt{A}} \subseteq \mathcal{N}_{A} \times 2^{\mathcal{N}_{\delta}}$ represents allowed atomic names with association to state names. 
+\item Structure signature $\Sigma_{\mathtt{T}} \subseteq \mathcal{N}_{T} \times 2^{\mathcal{N}_{A}}$ represents allowed structure names with association to atomic names. 
+\end{itemize}
+\end{definition}
+
+\begin{example}{Signature}\label{example:signature}
+
+\begin{itemize}
+\item An atomic signature $(S, \{u, p\})$, $(Q, \{a, i\})$
+\item A structure signature $(KaiC, \{S, Q\})$
+\end{itemize}
+\end{example}
+
+\noindent\rule{\textwidth}{1pt}
+
+\begin{definition}{Atomic agent}
+
+\begin{itemize}
+\item Atomic agent $\mathtt{A}$ is a pair $(\mu, \delta)$ where $\mu \in \mathcal{N}_{A}$ is a name and $\delta \in \mathcal{N}_{\delta} \cup \{ \varepsilon \}$ is a state.
+
+\item Equivalence: $\mathtt{A} \equiv \mathtt{A}' \Leftrightarrow \mu(\mathtt{A}) \equiv \mu(\mathtt{A}') \wedge \delta(\mathtt{A}) \equiv \delta(\mathtt{A}')$
+\end{itemize}
+\end{definition}
+
+Note: maybe the definitino of equivalence should be done only on names (due tu partial composition in structs).
+
+\begin{notation}
+Let $\mathcal{A}$ be universe of all possible atomic agents.
+\end{notation}
+
+\begin{example}{Atomic agent}\label{example:atomic}
+
+\begin{itemize}
+\item An atomic agent $\mathtt{A}_1 = (S, u)$
+\item An atomic agent $\mathtt{A}_2 = (Q, \varepsilon)$
+\end{itemize}
+\end{example}
+
+Please note state $\varepsilon$ does not mean the agent is in \emph{none} state, but rather the state is unknown or not important.
+
+\noindent\rule{\textwidth}{1pt}
+
+\begin{definition}{Structure agent}
+
+\begin{itemize}
+\item Structure agent $\mathtt{T}$ is a pair $(\mu, \gamma)$ where $\mu \in \mathcal{N}_{T}$ is a name and $\gamma \subseteq \mathcal{A}$ is a set of atomic agents called partial composition.
+
+\item Equivalence: $\mathtt{T} \equiv \mathtt{T}' \Leftrightarrow \mu(\mathtt{T}) \equiv \mu(\mathtt{T}') \wedge \forall \mathtt{A} \in \gamma(\mathtt{T}) \exists \mathtt{A}' \in \gamma(\mathtt{T}') : \mathtt{A} \equiv \mathtt{A}' \wedge \\ \wedge \forall \mathtt{A}' \in \gamma(\mathtt{T}') ~\exists \mathtt{A} \in \gamma(\mathtt{T}) : \mathtt{A}' \equiv \mathtt{A}$.
+\end{itemize}
+\end{definition}
+
+\begin{notation}
+Let $\mathcal{T}$ be universe of all possible structure agents.
+\end{notation}
+
+\begin{example}{Structure agent}\label{example:structure}
+
+\begin{itemize}
+\item A structure agent $\mathtt{T}_1 = (K, \textcolor{red}{\{}(S, p), (Q, i)\textcolor{red}{\}})$
+\item A structure agent $\mathtt{T}_2 = (K, \textcolor{red}{\{}(Q, a)\textcolor{red}{\}})$
+\end{itemize}
+\end{example}
+
+\noindent\rule{\textwidth}{1pt}
+
+\begin{definition}{Complex}
+
+\begin{itemize}
+\item Complex $\mathtt{X}$ is a pair $(\mu, \mathtt{com})$ where $\mu \in (\mathcal{A} \cup \mathcal{T})^n$ is a sequence and $\mathtt{com} \in \mathcal{N}_{c}$ is a compartment.
+
+\item Let $\mathtt{X}, \mathtt{X}'$ be complexes. We denote length of sequence $\mu$ as $n = \mu(\mathtt{X})$ and $m = \mu(\mathtt{X}')$. 
+
+\item Equivalence: $\mathtt{X} \equiv \mathtt{X}' \Leftrightarrow n \equiv m \wedge \exists $ permutation $ \mu'(\mathtt{X}')$ of $\mu(\mathtt{X}')$ such that $\forall i~\in~[1,~n]: \mu(\mathtt{X})_i \equiv \mu'(\mathtt{X}')_i$.
+\end{itemize}
+\end{definition}
+
+\begin{notation}
+Let $\mathcal{X}$ be universe of all possible complexes.
+\end{notation}
+
+
+\begin{example}{Complex}\label{example:complex}
+
+\begin{itemize}
+\item A complex $\mathtt{X} = (\textcolor{green}{(}(K, \textcolor{red}{\{}(S, p), (Q, i)\textcolor{red}{\}}), (S, p)\textcolor{green}{)}, cytosol)$
+\end{itemize}
+\end{example}
+
+\noindent\rule{\textwidth}{1pt}
+
+\begin{definition}{Rule}
+
+Rule $\mathtt{R}$ is a 5-tuple $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$ where:
+
+\begin{itemize}
+\item $\chi \in \mathcal{X}^n$ is a sequence of complexes,
+\item $\omega \in (\mathcal{A} \cup \mathcal{T})^m$ is a sequence of atomic and structure agents,
+\item $\mathtt{I} \in \{ 1, \ldots, n \}$ is an index determining start of right-hand-side,
+\item $\mathtt{map} \in \mathbb{N}^m$ is an index map between $\omega$ and $\chi$,
+\item $\mathtt{Indices} \subseteq (\{-\} \cup \mathbb{N})^2$ is an index map between agents from left- and right-hand side
+\end{itemize}
+
+where $n, m \in \mathbb{N}$.
+\end{definition}
+
+\begin{example}{Rule}\label{example:rule}
+
+\begin{itemize}
+\item 
+$\chi = \begin{bmatrix}
+(\textcolor{green}{(} (K, \textcolor{red}{\{}(S, u)\textcolor{red}{\}}), (B, \textcolor{red}{\emptyset}) \textcolor{green}{)}, cyt),\\
+
+(\textcolor{green}{(} (C, \textcolor{red}{\emptyset}), (D, i) \textcolor{green}{)}, cyt),\\
+
+(\textcolor{green}{(} (A, \varepsilon) \textcolor{green}{)}, cyt),\\
+
+(\textcolor{green}{(} (K, \textcolor{red}{\{}(S, p)\textcolor{red}{\}}), (B, \textcolor{red}{\emptyset}), (C, \textcolor{red}{\emptyset}) \textcolor{green}{)}, cyt),\\
+
+(\textcolor{green}{(} (D, a), (A, \varepsilon) \textcolor{green}{)}, cyt) 
+\end{bmatrix}$
+
+\item $\omega = \begin{bmatrix}
+(K, \textcolor{red}{\{}(S, u)\textcolor{red}{\}}), (B, \textcolor{red}{\emptyset}), (C, \textcolor{red}{\emptyset}), \\
+(D, i), (A, \varepsilon), (K, \textcolor{red}{\{}(S, p)\textcolor{red}{\}}), \\
+(B, \textcolor{red}{\emptyset}), (C, \textcolor{red}{\emptyset}), (D, a), (A, \varepsilon)
+\end{bmatrix}$
+
+\item $\mathtt{I} = 3$
+\item $\mathtt{map} = (2,4,5,8,10,11)$
+\item $\mathtt{Indices} = [ (1,6) ; (2,7) ; (3,8) ; (4,9) ; (5,10) ; (-,11) ] $
+\end{itemize}
+\end{example}
+
+\noindent\rule{\textwidth}{1pt}
+
+\begin{definition}{Reaction}
+
+Reaction $\mathtt{r}$ is a pair $(\mathtt{seq}, \mathtt{I})$ where:
+
+\begin{itemize}
+\item $\mathtt{seq} \in \mathcal{X}^n$ is a sequence of complexes,
+\item $\mathtt{I} \in \{ 1, \ldots, n \}$ is an index determining start of right-hand-side
+\end{itemize}
+
+where $n, m \in \mathbb{N}$.
+\end{definition}
+
+\noindent\rule{\textwidth}{2pt}
+
 \section{Syntax}
 
-\section{Semantics}
+\begin{definition}
+\textit{Grammar.}
+
+\begin{center}
+\begin{tabular}{ l l }
+atomic expression & $\mathtt{a} ::= \mu\{s\} ~|~ ? \mu$\\
+ & $\mu ::= n \in \mathcal{N}_{A}$ \\
+ & $s ::= n \in \mathcal{N}_{\delta}$\\
+ & \\
+structure expression & $\mathtt{t} ::= \mu(\gamma) ~|~ \mu$\\
+ & $\gamma ::= \mathtt{a}_1, \ldots, \mathtt{a}_m$ \\
+ & $\mu ::= n \in \mathcal{N}_{T}$\\
+ & \\
+complex expression & $\Gamma ::= \alpha_1~.~\ldots~.~\alpha_k :: c$\\
+ & $\alpha_i ::= \mathtt{a} ~|~ \mathtt{t}$\\
+ & $c ::= n \in \mathcal{N}_{c}$\\
+ & \\
+rule & $\mathtt{R} ::= \Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \ldots + \Gamma_m $
+\end{tabular}
+
+\end{center}
+where $m,n \in \mathbb{N}_0 \wedge m + n \neq 0$ and $k \in \mathbb{N}$.
+\end{definition}
+
+\begin{example}{Syntax}\label{example:syntax}
+
+In following goes examples of agents, complexes and rules given in previous examples:
+
+\begin{itemize}
+\item $\mathtt{A}_1$ is written as $S\{u\}$, $\mathtt{A}_2$ is written as $Q$ (Example~\ref{example:atomic}),
+
+\item $\mathtt{T}_1$ is written as $K(S\{p\}, Q\{i\})$, $\mathtt{T}_2$ is written as $K(Q\{A\})$ (Example~\ref{example:structure}),
+
+\item $\mathtt{X}$ is written as $K(S\{p\}, Q\{i\}).S\{p\}::cytosol$ (Example~\ref{example:complex}),
+
+\item rule $\mathtt{R}$ is written as (Example~\ref{example:rule}):
+\end{itemize}
+
+\noindent {\small $K(S\{u\}).B::cyt + C.D\{i\}::cyt + A::cyt \Rightarrow K(S\{p\}.B.C::cyt + D\{a\}.A::cyt + H\{u\}::cyt$}
+\end{example}
+
+\noindent\rule{\textwidth}{1pt}
+
+\section{Semantic function}
+
+Semantic function $\mathtt{F}$ gives semantical meaning to rules and objects written in BCSL syntax. It is defined recursively according to context given as argument:
+
+\begin{center}
+\begin{tabular}{ r c l}
+$\mathtt{F} \llbracket ~\mu~ \rrbracket$ & = &
+		$\begin{cases}
+		\mathtt{A}(\mu, \epsilon) ~\ldots~ \mu \in \Sigma_{A}\\
+		\mathtt{T}(\mu, \emptyset) ~\ldots~ \mu \in \Sigma_{T}\\
+		\end{cases}
+		$\\
+ & & \\
+$\mathtt{F} \llbracket ~\mu\{s\}~ \rrbracket$ & = & $\mathtt{A}(\mu, s)$\\
+ & & \\
+$\mathtt{F} \llbracket ~\mu(\mathtt{a}_1, \ldots, \mathtt{a}_n)~ \rrbracket$ & = &
+$\mathtt{T}(\mu, \{ \mathtt{F} \llbracket \mathtt{a}_1 \rrbracket, \ldots, \mathtt{F} \llbracket \mathtt{a}_n \rrbracket \})$\\
+ & & \\
+$\mathtt{F} \llbracket ~\alpha_1~.~\ldots~.~\alpha_n :: c~ \rrbracket$ & = &
+$\mathtt{X}((\mathtt{F} \llbracket ~\alpha_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\alpha_n~ \rrbracket), c)$\\
+ & & \\
+$\mathtt{F} \llbracket ~\Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \ldots + \Gamma_m~ \rrbracket$ & = &
+$(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$~ such that:\\
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{itemize}[leftmargin=1.5cm]
+\item $\chi = (\mathtt{F} \llbracket ~\Gamma_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_n~ \rrbracket, \mathtt{F} \llbracket ~\Gamma_{n+1}~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_m~ \rrbracket)$,
+\item $\omega = \bullet_{\mathtt{X} \in \chi} (\mu(\mathtt{X}))$ !!!
+\item $\mathtt{I} = n$
+\item $\mathtt{map} = (J_1, \ldots, J_m): J_i = \sum_{y=1}^{i} | \mu(\chi_i) |$
+\item \begin{tabular}{c l}
+
+& $\{~ (i,j) ~|~ i \in [1, \mathtt{map}(\mathtt{I})] \wedge j \in [\mathtt{map}(\mathtt{I}), |\omega|] \wedge |i-j| \equiv \mathtt{map}(\mathtt{I})~\} ~\cup$ \\
+$\mathtt{Indices} =$ & $\{~ (i, -) ~|~ i \in [k, \mathtt{map}(\mathtt{I})] \wedge k = |~ \{ \mathtt{map}(\mathtt{I}) + 1, \ldots, | \alpha | \} ~| ~\} ~\cup$\\
+ & $ \{~ (-, j) ~|~ j \in [k, |\alpha|] \wedge k = 2 * \mathtt{map}(\mathtt{I}) ~\}$ (!!! ordered set)
+\end{tabular}
+
+\end{itemize}
+\end{center}
+
+Please note by applying semantic function $\mathtt{F}$ on examples from Example~\ref{example:syntax}, we obtain agents (resp. complex or rule) from appropriate referenced examples.
+
+\noindent\rule{\textwidth}{1pt}
+
+\section{Additional definitions}
+
+\begin{definition}{Tuples concatenation}
+
+Let $T = (\tau_1, \ldots, \tau_n)$ be sequence of tuples where $\tau_i = (x_1^i, \ldots, x_m^i)$. Concatenation of sequence of tuples $\bullet_{\tau \in T} (\tau)$ is defined as:
+
+\begin{center}
+$\bullet_{\tau \in T} (\tau) = (x_1^1, \ldots, x_m^1, x_1^2, \ldots, x_l^2, \ldots \ldots, x_1^n, \ldots, x_k^n)$.
+\end{center}
+\end{definition}
+
+\begin{definition}{Difference of partial compositions}
+
+Let $\gamma, \gamma'$ be two partial compositions. We define difference of these two sets on names of its atomic agents as following:
+
+\begin{center}
+$\gamma \ominus \gamma' \Leftrightarrow \{ \mu_\alpha ~|~ \exists \mathtt{A}: (\mathtt{A} \in \gamma \wedge \mu(\mathtt{A}) \equiv \mu_\alpha ) \wedge \not\exists \mathtt{A}': (\mathtt{A}' \in \gamma' \wedge \mu(\mathtt{A}') \equiv \mu_\alpha)\}$
+\end{center}
+\end{definition}
+
+\begin{definition}{Difference of partial composition and structure signature}
+
+Let $\mathtt{T}$ be a structure agent. Next, let $\gamma(\mathtt{T})$ be its partial composition and $\Sigma_T(\mathtt{T})$ appropriate signature. We define difference of these two sets on names of atomic agents as following:
+
+\begin{center}
+$\gamma(\mathtt{T}) \ominus \Sigma_T(\mathtt{T}) \Leftrightarrow \{ \mu_\Sigma ~|~ \mu_\Sigma \in \Sigma_T(\mathtt{T}) \wedge \not\exists \mathtt{A}: (\mathtt{A} \in \gamma(\mathtt{T}) \wedge \mu(\mathtt{A}) \equiv \mu_\Sigma)\}$
+\end{center}
+\end{definition}
+
+\noindent\rule{\textwidth}{2pt}
+
+\section{Ground forms}
+
+Ground form represents appending context to agents according to signature (we assume signature is always available and therefor we omit it in ground form function arguments).
+
+Objects are transformed to their ground forms by ground form function $\mathcal{G}$ defined as following:
+
+\begin{center}
+\begin{tabular}{ r c l }
+Object & basic form & ground form \\
+\hline
+ & & \\
+$\mathtt{A}$ & $\mathcal{G}((\mu, \epsilon))$ & $\{~ (\mu, \delta) ~|~ \delta \in \Sigma_A(\mu) ~\}$\\
+ & $\mathcal{G}((\mu, \delta))$ & $\{~(\mu, \delta) ~\}$\\
+ & & \\
+ \hline
+ & & \\
+$\mathtt{T}$ & $\mathcal{G}((\mu, \gamma))$ & $\{~ (\mu, \gamma_\alpha) ~|~ \gamma_\alpha \equiv \gamma \cup \gamma_\Sigma \wedge \gamma_\Sigma = \{~ \mathtt{A}_1, \ldots, \mathtt{A}_n ~\} \wedge$\\
+ & & $\wedge~ \mathtt{A}_i \in \mathcal{G}((\mu, \emptyset)) \wedge \mu \in \gamma \ominus \Sigma_T(\mathtt{T}) ~\}$ \\
+ & & \\
+ \hline
+ & & \\
+pair of & $\mathcal{G}((\beta, \beta'))$ & $\{~ (\beta_\alpha, \beta_\alpha') ~|~ \beta_\alpha \in \mathcal{G}(\beta) \wedge \beta'_\alpha \in \mathcal{G}(\beta') \wedge$\\
+agents & & $\wedge~ \gamma(\beta_\alpha) \ominus \gamma(\beta) \equiv \gamma(\beta'_\alpha) \ominus \gamma(\beta') ~\} $ \\
+ & & \\
+ \hline
+ & & \\
+$\mathtt{R}$ & $\mathcal{G}(\mathtt{R})$ & $ \bigotimes \mathcal{G}(\mathtt{Indices})^* $ \\
+ & $\mathcal{G}(\mathtt{Indices})$ & $(~\mathcal{G}(\omega(i), \omega(j)) ~|~ (i,j) \in \mathtt{Indices})$\\
+ 
+\end{tabular}
+\end{center}
+
+where $\bigotimes \mathcal{G}(\mathtt{Indices})^*$ means cartesian product of sets inside of set $\mathcal{G}(\mathtt{Indices})$.
+
+\noindent Next, we need reassemble produced tuples by concatenation.
+
+\begin{center}
+$\mathtt{reassemble}(\mathcal{G}(\mathtt{R})) = \{~  T ~|~ T = \bullet_{\tau \in \iota} (\tau) \wedge \iota \in \mathcal{G}(\mathtt{R}) ~\}$
+\end{center}
+
+\noindent\rule{\textwidth}{2pt}
+
+\section{Generating reactions}
+\label{Generating reactions}
+
+Given a rule $\mathtt{R}$, we can produce appropriate reactions using ground forms and reassembly:
+
+\begin{tabular}{ ll }
+$\mathtt{Reactions} =$ & $\{~ \mathtt{r}(\mathtt{seq}, \mathtt{I}) ~|~ T \in \mathtt{reassemble}(\mathcal{G}(\mathtt{R})) ~\wedge$\\
+
+& $seq = (\mathtt{X}(T(1, \ldots, i_1), \mathtt{com}(\chi(i_1))), \mathtt{X}(T(i_1 + 1, \ldots, i_2), \mathtt{com}(\chi(i_2))), \ldots,$\\
+
+& $\mathtt{X}(T(i_{n-1}+1, \ldots, i_n), \mathtt{com}(\chi(i_n)))) ~\wedge$\\
+
+& $ \mathtt{I} \in \mathtt{R} \wedge \chi \in \mathtt{R} ~\}$
+\end{tabular}
+
+\noindent\rule{\textwidth}{1pt}
+
+\section{Vectorized model}
+
+\begin{definition}{Vectorized model}
+
+Vectorized model $\mathcal{M}$ is a triple $(\mathcal{R}, \nu, \pi)$ such that $\mathcal{R} \subseteq \mathbb{Z}^n$ is set of vector reactions, $\nu \in \mathbb{N}_0^n$ is initial vector state, and $\pi \in \chi^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
+\end{definition}
+
+\begin{notation}
+We denote $N(\nu) ~\emph{iff}~ \forall i \in \nu: i \in \mathbb{N}_0$.
+\end{notation}
+
+\begin{definition}{Vector reaction application}
+
+Vector reaction application $\rho \subseteq \mathbb{N}_0^n \times \mathbb{Z}^n \times \mathbb{N}_0^n$ such that 
+\begin{center}
+$(\upsilon, \mathtt{r}, \mathtt{u}) \in \rho$ $\Leftrightarrow$ $u = \upsilon + \mathtt{r} \wedge N(u)$.
+\end{center}
+\end{definition}
+
+By iterative application of reaction application we obtain LTS (which can be bounded by a global bound).
+
+\noindent\rule{\textwidth}{1pt}
+
+\section{Production of model}
+
+\begin{definition}{Reference vector}
+
+Reference vector $\pi$ is a tuple of all possible unique complexes constructed from reactions as following:
+
+\begin{center}
+$\mathcal{U}(\mathtt{Reactions}) = \{~ \mathtt{X} ~|~ \mathtt{X} \in \mathtt{seq}(\mathtt{r}) \wedge \mathtt{r} \in \mathtt{Reactions} ~\} $.
+\end{center}
+
+Then, we just choose a random order of the set.
+\end{definition}
+
+\begin{definition}{State to vector translation}
+
+Translation of state $\mathtt{S}$ to vector is defined as following:
+\begin{center}
+$\lambda(\mathtt{S}, \pi) = (a_1, a_2, \ldots, a_n)$ such that 
+$a_i$ =
+	$\begin{cases}
+	|\mathtt{S}(\pi_i)| & \ldots~~~~ \pi_i \in \mathtt{S}\\
+	0 & \ldots~~~~ \pi_i \not\in \mathtt{S}\\
+	\end{cases}
+	$
+\end{center}
+\end{definition}
+
+Let $(\mathtt{S}, \mathtt{R}, \Sigma)$ be a rule-based model. In order to construct vectorized model $\mathcal{M} = (\nu, \mathcal{R}, \pi)$, we need to do following steps:
+
+\begin{enumerate}
+\item generate $\mathtt{Reactions}$ as defined in section~\ref{Generating reactions},
+\item construct reference vector $\pi$ from $\mathtt{Reactions}$,
+\item create $\nu$ as $\lambda(\mathtt{S}, \pi)$,
+\item construct set of vector reactions $\mathcal{R}$ from set of $\mathtt{Reactions}$, where individual vector reaction $\vv{r}$ are created from $\mathtt{r}$ as following:
+
+\begin{center}
+$\vv{r} = \lambda(RHS(\mathtt{r}), \pi) - \lambda(LHS(\mathtt{r}), \pi)$
+\end{center}
+
+\item resulting triple $(\nu, \mathcal{R}, \pi)$ is desired model $\mathcal{M}$.
+\end{enumerate}
 
 \section{Syntactic extensions}
+
+TBA
 
 \chapter{Analysis}
 
