@@ -27,6 +27,7 @@
 \newcommand{\notation}[1]{\refstepcounter{counter} \textbf{Notation \thecounter} \newline #1 }
 \newcommand{\theorem}[1]{\refstepcounter{counter} \textbf{Theorem \thecounter} \newline #1 }
 \newcommand{\example}[1]{\refstepcounter{counter} \textbf{Example \thecounter} \newline #1 }
+\newcommand{\runningExample}[1]{\refstepcounter{counter} \textbf{Running Example \thecounter} \newline #1 }
 
 \usepackage[
     backend=biber,      % use biber as backend instead of BiBTeX
@@ -524,7 +525,7 @@ $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$~ such that:\\
 \end{center}
 
 \begin{center}
-\begin{itemize}[leftmargin=1.5cm]
+\begin{itemize}
 \item $\chi = (\mathtt{F} \llbracket ~\Gamma_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_n~ \rrbracket, \mathtt{F} \llbracket ~\Gamma_{n+1}~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_m~ \rrbracket)$,
 \item $\omega = \bullet_{\mathtt{X} \in \chi} (\mu(\mathtt{X}))$ !!!
 \item $\mathtt{I} = n$
@@ -700,7 +701,198 @@ $\vv{r} = \lambda(RHS(\mathtt{r}), \pi) - \lambda(LHS(\mathtt{r}), \pi)$
 
 \section{Syntactic extensions}
 
-TBA
+TWe define several syntactic extensions for better readability of the rules. Note that each rule in a extended form can be always translated to basic form defined above. All rules containing the following extensions must be converted to basic form before semantics can be applied.
+
+\begin{notation}\label{shortcut:structure}
+Since all the atomic agents have the same compartment as their structure agent, we can shorten the notation by omitting compartments in the atomic agent expressions of a partial composition expression.
+\end{notation}
+
+\begin{notation}\label{shortcut:complex}
+Since all the atomic and structure agents have the same compartment as their complex agent, we can shorten the notation by omitting compartments in the atomic and structure agent expressions of the full composition expression.
+\end{notation}
+
+Previous notations should be improved to make it clear.
+
+\begin{runningExample}\label{run1}
+$ $
+
+\noindent Definitions of signatures: 
+\begin{itemize}
+\item $KaiC3::cyt = KaiC.KaiC.KaiC::cyt$
+\item $KaiBC::cyt = KaiC.KaiB::cyt$
+\end{itemize}
+
+\noindent Definitions of rules:
+\begin{enumerate}
+\item $KaiC(S\{u\}).KaiC.KaiC::cyt \Rightarrow KaiC(S\{p\}).KaiC.KaiC::cyt$
+\item $KaiC(S\{u\}).KaiB::cyt \Rightarrow KaiC(S\{u\}).KaiB::cyt$
+\item $KaiC::cyt + KaiC::cyt + KaiC::cyt \Rightarrow KaiC.KaiC.KaiC::cyt$
+\item $KaiC.KaiC.KaiC::cyt \Rightarrow KaiC::cyt + KaiC::cyt + KaiC::cyt$
+\end{enumerate}
+\end{runningExample}
+
+\subsection{Directions}
+
+We allow rules to be bi-directional -- it is just a shortcut for two rules and it can be converted to basic rule form. A rule $\mathtt{R} = \lambda ~\Leftrightarrow~ \rho$ might be written as two rules $\mathtt{R}_1 = \lambda ~\Rightarrow~ \rho$ and $\mathtt{R}_2 = \rho ~\Rightarrow~ \lambda$.
+
+\begin{definition}\label{rules:directions}
+\emph{Extension of Definition~\ref{rules} by directions.}
+
+\begin{center}
+{\small
+\hspace*{-1cm}\begin{tabular}{ l l }
+ rule expression & $\mathtt{R} ::= \Gamma ~\Rightarrow~ \Gamma ~|~ \Gamma ~\Rightarrow ~|~ \Rightarrow~ \Gamma ~|~ \Gamma ~\Leftrightarrow~ \Gamma ~|~ \Gamma ~\Leftrightarrow ~|~ \Leftrightarrow~ \Gamma $\\
+ agent enumeration & $\Gamma ::= \mathcal{E}~ +~\Gamma ~|~ \mathcal{E}$\\
+ rule agent & $\mathcal{E} ::= n \in \mathcal{E}_\mathcal{A}~|~n \in \mathcal{E}_\mathcal{T}~|~n \in \mathcal{E}_\mathcal{X}$\\
+\end{tabular}
+}
+\end{center}
+\end{definition}
+
+\begin{runningExample}\label{run2}
+$ $
+
+\noindent Definition of rules 3 and 4 from Running example~\ref{run1} using bidirectional rule:
+\begin{enumerate}
+\item $KaiC.KaiC.KaiC::cyt \Leftrightarrow KaiC::cyt + KaiC::cyt + KaiC::cyt$
+\end{enumerate}
+\end{runningExample}
+
+\subsection{Stoichiometry}
+
+For a rule of form $(\mathcal{E}_1, \mathcal{E}_2, \ldots, \mathcal{E}_n) \Rightarrow \mathcal{E}_1.\mathcal{E}_2.~\ldots~.\mathcal{E}_n$, we might reorder both sides such that we get Noncrossing partition $\mathcal{P}([1,\ldots,n])$ from its indices such that $\forall \mathcal{P}_i: \forall x,y \in \mathcal{P}_i: \mathcal{E}_x \equiv \mathcal{E}_y$ and $\forall \mathcal{E}_x \in \mathcal{P}_i \forall \mathcal{E}_y \in \mathcal{P}_j: \mathcal{E}_x \not\equiv \mathcal{E}_y$. Each $\mathcal{P}_i$ forms equivalence groups $\mathcal{G}_\equiv$ of \textit{k} rule agents. Please note some of $\mathcal{E}_i$ might be an complex agent.
+
+Such a new rule is equivalent with the original rule since the rules equivalence is defined via rule enumerations (Definition~\ref{enumeration_equiv}).
+
+For each side $\Gamma = (\mathcal{E}_1, \mathcal{E}_2, \ldots, \mathcal{E}_n)$ of the reordered rule we enrich rule agent $\mathcal{E}$ context to pair $(\mu, \phi)$ where $\mu = 1$ and $\phi$ is the original $\mathcal{E}$. However, some rule agents in $\Gamma$ might be equivalent and then they belong to an equivalence group $\mathcal{G}_\equiv$. Each of these groups $\mathcal{G}_\equiv$ might be written as one pair $(\mu, \mathcal{E}_m)$ where $\mu = |\mathcal{G}_\equiv|$ for some $\mathcal{E}_m \in \mathcal{G}_\equiv$.
+
+Note that this process is fully reversible, so agent enumeration in basic form can be easily reconstructed.
+
+\begin{definition}\label{rules:stoichiometry}
+\emph{Extension of Definition~\ref{rules:directions} by stoichiometry.}
+
+\begin{center}
+{\small
+\hspace*{-1cm}\begin{tabular}{ l l }
+ rule expression & $\mathtt{R} ::= \Gamma ~\Rightarrow~ \Gamma ~|~ \Gamma ~\Rightarrow ~|~ \Rightarrow~ \Gamma ~|~ \Gamma ~\Leftrightarrow~ \Gamma ~|~ \Gamma ~\Leftrightarrow ~|~ \Leftrightarrow~ \Gamma $\\
+ agent enumeration & $\Gamma ::= \mathcal{E}~ +~\Gamma ~|~ \mathcal{E}$\\
+ extended rule agent & $\mathcal{E} ::= \mu ~~ \phi$\\
+ stoichiometry & $\mu ::= i \in \mathbb{N}$\\
+ rule agent & $\phi ::= n \in \mathcal{E}_\mathcal{A}~|~n \in \mathcal{E}_\mathcal{T}~|~n \in \mathcal{E}_\mathcal{X}$\\
+\end{tabular}
+}
+\end{center}
+\end{definition}
+
+\begin{runningExample}\label{run3}
+$ $
+
+\noindent Definition of rule 1 from Running example~\ref{run2} using stoichiometry:
+\begin{enumerate}
+\item $3~KaiC::cyt \Leftrightarrow KaiC.KaiC.KaiC::cyt$
+\end{enumerate}
+\end{runningExample}
+
+\subsection{Locations}
+
+\begin{definition}\label{rules:locations}
+\emph{Extension of Definition~\ref{rules:stoichiometry} by locations.}
+
+\begin{center}
+{\small
+\hspace*{-1cm}\begin{tabular}{ l l }
+ rule expression & $\mathtt{R} ::= \Gamma ~\Rightarrow~ \Gamma ~|~ \Gamma ~\Rightarrow ~|~ \Rightarrow~ \Gamma ~|~ \Gamma ~\Leftrightarrow~ \Gamma ~|~ \Gamma ~\Leftrightarrow ~|~ \Leftrightarrow~ \Gamma $\\
+ agent enumeration & $\Gamma ::= \mathcal{E}~ +~\Gamma ~|~ \mathcal{E}$\\
+ extended rule agent & $\mathcal{E} ::= \mu ~~ \phi$\\
+ stoichiometry & $\mu ::= i \in \mathbb{N}$\\
+ locations1 & $\phi ::= \beta ~|~ \mathtt{A} :: \alpha ~|~ \mathtt{T}::\mathtt{X}$\\
+ locations2 & $\alpha ::= \mathtt{T} ~|~ \mathtt{X} ~|~ \mathtt{T} :: \mathtt{X}$\\
+ rule agent & $\beta ::= \mathtt{A} ~|~ \mathtt{T} ~|~ \mathtt{X}$\\
+ atomic rule agent & $\mathtt{A} ::= n \in \mathcal{E}_\mathcal{A}$\\
+ structure rule agent & $\mathtt{T} ::= n \in \mathcal{E}_\mathcal{T}$\\
+ complex rule agent & $\mathtt{X} ::= n \in \mathcal{E}_\mathcal{X}$\\
+\end{tabular}
+}
+\end{center}
+\end{definition}
+
+According to Definition~\ref{rules:locations}, there are three cases when operator `::' might appear between two rule agents. For each such case, we define neccesary condition, when this notation is allowed.
+
+\begin{definition}\label{locations:conditions}
+\emph{Locations conditions.}
+
+\begin{enumerate}
+ \item $\mathtt{A}::\mathtt{T}$ $\Leftrightarrow$ there exists $\mathtt{A}' \in \gamma_p$ of $\mathtt{T}$ such that $\mathtt{A} \lhd \mathtt{A}'$ and $\mathtt{c}(\mathtt{A}) = \mathtt{c}(\mathtt{T})$,
+
+\item $\mathtt{A}::\mathtt{X}$ $\Leftrightarrow$ there exists $\mathtt{A}' \in \gamma_f$ of $\mathtt{X}$ such that $\mathtt{A} \lhd \mathtt{A}'$ and $\mathtt{c}(\mathtt{A}) = \mathtt{c}(\mathtt{X})$,
+
+\item $\mathtt{T}::\mathtt{X}$ $\Leftrightarrow$ there exists $\mathtt{T}' \in \gamma_f$ of $\mathtt{X}$ such that $\mathtt{T} \lhd \mathtt{T}'$ and $\mathtt{c}(\mathtt{T}) = \mathtt{c}(\mathtt{X})$.
+\end{enumerate}
+\end{definition}
+
+\begin{notation}
+Note that a compartment of all agents is restricted to be the same. Assuming this restriction, we can shorten the notation by omitting compartments in all agents except the most right one.
+\end{notation}
+
+For each pair of agents $(\alpha, \beta)$ with allowed `::' operator between them $\alpha :: \beta$, we can construct just one agent $\beta'$ without the operator by taking most-left agent $\alpha'$ from full (resp. partial) composition of the agent $\beta$ such that it is \emph{compatible with} the agent $\alpha$ ($\alpha' \lhd \alpha$). Then, agent $\alpha'$ is simply replaced by agent $\alpha$ and agent $\beta'$ is constructed.
+
+By applying previous operation, we can get rid of all locations in rules.
+
+\begin{runningExample}\label{run4}
+$ $
+
+\noindent Definition of rules 1 and 2 from Running example~\ref{run1} using locations (and defined signatures from the same example):
+\begin{enumerate}
+\item $S\{u\}::KaiC::KaiC3::cyt \Rightarrow S\{p\}::KaiC::KaiC3::cyt$
+\item $S\{u\}::KaiC::KaiBC::cyt \Rightarrow S\{p\}::KaiC::KaiBC::cyt$
+\end{enumerate}
+\end{runningExample}
+
+\subsection{Variables}
+
+\begin{definition}\label{rules:variables}
+\emph{Extension of Definition~\ref{rules:locations} by variables.}
+
+\begin{center}
+{\small
+\hspace*{-1cm}\begin{tabular}{ l l }
+rule expression & $\mathtt{R} ::= \Gamma ~\Rightarrow~ \Gamma ~\nu ~|~ \Gamma ~\Rightarrow ~\nu ~|~ \Rightarrow~ \Gamma ~\nu ~|~ \Gamma ~\Leftrightarrow~ \Gamma ~\nu ~|~ \Gamma ~\Leftrightarrow ~\nu ~|~ \Leftrightarrow~ \Gamma ~\nu $\\
+ agent enumeration & $\Gamma ::= \mathcal{E}~ +~\Gamma ~|~ \mathcal{E}$\\
+ extended rule agent & $\mathcal{E} ::= \mu ~~ \phi$\\
+ stoichiometry & $\mu ::= i \in \mathbb{N}$\\
+ locations1 & $\phi ::= \beta ~|~ \mathtt{A} :: \alpha ~|~ \mathtt{T}::\mathtt{X} ~|~ ?X::\mathtt{X} ~|~ \mathtt{T}::?X$\\
+ locations2 & $\alpha ::= \mathtt{T} ~|~ \mathtt{X} ~|~ \mathtt{T} :: \mathtt{X} ~|~ ?X ~|~ ?X::\mathtt{X} ~|~ \mathtt{T}::?X$\\
+ rule agent & $\beta ::= \mathtt{A} ~|~ \mathtt{T} ~|~ \mathtt{X} ~|~ ?X$\\
+ atomic rule agent & $\mathtt{A} ::= n \in \mathcal{E}_\mathcal{A}$\\
+ structure rule agent & $\mathtt{T} ::= n \in \mathcal{E}_\mathcal{T}$\\
+ complex rule agent & $\mathtt{X} ::= n \in \mathcal{E}_\mathcal{X}$\\
+
+& $\nu ::=~ ;~\upsilon$\\
+& $\upsilon ::=~?X = \{\phi\}$\\
+& $\phi ::=~\phi_1~|~\phi_2~|~\phi_3$\\
+& $\phi_1 ::= \mathtt{A},~\phi_1~|~\mathtt{A}$\\
+& $\phi_2 ::= \mathtt{T},~\phi_2~|~\mathtt{T}$\\
+& $\phi_3 ::= \mathtt{X},~\phi_3~|~\mathtt{X}$\\
+\end{tabular}
+}
+\end{center}
+
+\end{definition}
+
+In a rule, one rule agent might be referenced using variable $\upsilon$ as a set of agents it can be replaced with. Such a rule agent is referenced as $?X$. Moreover, in case when a $?X$ is used in a location, it must hold conditions from Definition~\ref{locations:conditions}.
+
+Once again, each rule associated with variable can be easily rewritten as several rules where variable is replaced with agent from set of agents attached to the variable. Please note, according to Definition~\ref{rules:variables}, only one variable can be used per rule.
+
+\begin{runningExample}\label{run5}
+$ $
+
+\noindent Definition of rules 1 and 2 from Running example~\ref{run4} as a single rule using a variable:
+\begin{enumerate}
+\item $S\{u\}::KaiC::~?X::cyt \Rightarrow S\{p\}::KaiC::~?X::cyt ~;~ ?X = \{KaiC3, KaiBC\} $
+\end{enumerate}
+\end{runningExample}
+
+
 
 \chapter{Analysis}
 
