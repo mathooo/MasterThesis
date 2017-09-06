@@ -119,6 +119,8 @@ statistical randomness, authenticated encryption, CAESAR, evolutionary algorithm
 \section{Rule-based basics}
 \label{Rule-based basics}
 
+bla bla rather explain difference between reaction and rule based language
+
 In our last paper~\cite{Ded201627}, we defined semantics of Biochemical Space Language (BCSL) via translating to a similar language called Kappa~\cite{Kappa}. However, we realised this approach is not very beneficial since we are not fully using the expressive power of our language this way. The thing is Kappa operates purely on expressions. We want to promote our language to a higher level when it operates on objects in multisets. By translating to Kappa we loose such abstraction. 
 
 The reason for this kind of abstraction is the way how we see the biological models. We represent model $\mathcal{M}$ as set of rules and an initial solution of interacting entities. We understand solution as a mixture of individual objects which are randomly distributed (see Fig.~\ref{solutions:fig}a). Therefore, we cannot assign them any order and we do not see them as expressions but rather as multisets. For us, this representation of solution is the closest to the reality.
@@ -893,14 +895,56 @@ $ $
 \end{runningExample}
 
 
-
 \chapter{Analysis}
+
+* discuss problems, pros and cons, etc
+
+multisets compared to graphs (isomorphisms) - other languages
 
 \section{Dynamic analysis}
 
 such as simulation, model checking (reachability)
 
-disscussion about rates and how they could be solved
+\subsection{Disscussion about rates and how they could be solved}
+
+In order to provide numerical simulation (cite), we need to assign a reaction rate to each rule. However, this is quite a challenging task and we will briefly explain why.
+
+The general problem is that typical kinetic rules in biology require usage of concentration of an agent in volume of the system. This is often solved via absolute numbers (the number of repetitions). The number might be either natural number of we are working with stochastic simulation or even real number if we compute average traces such as in deterministic simulation (make this more precise with citations!!!).
+
+Compared to reaction-based models, we work with fully defined objects which we can simply reference in the kinetics without any limitations. We can do the very same in rule-based models, but it is not desired solution. The thing is we would like to express the context of the rule also in the kinetics. That typically means when context in which the rule is being applied changes, we want appropriate change in the kinetics. To make this more clear, we provide an example.
+
+Example goes here...
+
+There are several solutions of this problem. However, none of them is an optimal one and therefore this remains an open problem. In other languages... they solved it as... finish this...
+
+Another general problem which causes issues is stoichiometry. The problem is if we refference an agent which has multiple enumeratives in the rule, it is not clear which one should be used as reference in kinetics. Therefore we distinguise two types of solutions:
+
+\textbf{Solutions with forbidden stoichiometry}:
+
+\begin{enumerate}
+\item unique agents
+
+In this case, we allow arbitrary kinetics, but with a restriction. It is not allowed to use two identical agents in the same rule (including both sides of the rule). Moreover, in kinetics it is allowed to use only agents which are already used in the rule (in the very same form). This restriction decreases the expressivity of the rules -- for example, it is not possible to define agents which are required but not consumed in the rule. However, mapping between agents in rule and kinetics are clear.
+
+\item almost optimal solution
+
+In order to make sure the agent from kinetics and rule are connected properly, we would have to extend the syntax of the language itself. For example, and agent might be enriched by `$\sim\mathbb{N}$' in both places. Then, the mapping would be unambiguous. However, such s syntax extension leads to decreases readablity of the language, which definitely not desired solution. Optionally, the numbering of agents might be implicit, what does not change syntax of the language, but makes it harder to write w.r.t. language simplicity.
+
+\end{enumerate}
+
+
+\textbf{Solutions with allowed stioichiometry}:
+
+\begin{enumerate}
+\item we allow only \emph{mass action} kinetics
+
+The possitive thing about this kinetics is that all it needs is a given paramter. The rate is computed as multiple of the parameter with all agents on the left-hand-side of the rule. Since the stoichiometry is allowed in this case, the mapping is not always clear. For this reason we multiply all possible mappings together, which gives appropriate results.
+
+\item the first left agent
+
+Arbitrary kinetics might be used, but both rule and kinetics must be defined very carefully. The method for mapping rate agent to rule agent is very simple -- whenever an agent is referenced in kinetics, first suitable rule-agent from the left is choosen. This solution is very simple to use, but rules are not that easy to write.
+
+\end{enumerate}
 
 \section{Static analysis}
 
@@ -959,8 +1003,8 @@ explain why it was slow (no abstraction)
 BCS used on ecyano
 
 key features
-
-who practical examples of defined objects
+ 
+practical examples of defined objects
 
 \chapter{Conclusions}
 
