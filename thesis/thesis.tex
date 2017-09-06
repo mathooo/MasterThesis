@@ -900,7 +900,19 @@ $ $
 
 such as simulation, model checking (reachability)
 
+disscussion about rates and how they could be solved
+
 \section{Static analysis}
+
+The language itself offers interesting capabilities in order to provide static analysis of given models. In order to provide such properties we define \emph{compatibility} operator $\lhd$ for each type of agents and complexes.
+
+\begin{definition}
+Let $\mathtt{A}_1$, $\mathtt{A}_2$ be atomic agents. Then, we say $\mathtt{A}_1$ is \emph{compatible with} $\mathtt{A}_2$, written $\mathtt{A}_1 \lhd \mathtt{A}_2$, if either $\mathtt{A}_1 \equiv \mathtt{A}_2$ or $\mu(\mathtt{A}_1) \equiv \mu(\mathtt{A}_2) \wedge \delta(\mathtt{A}_1) \equiv \varepsilon $.
+\end{definition}
+
+\begin{definition}
+Let $\mathtt{T}_1$, $\mathtt{T}_2$ be structure agents. We say $\mathtt{T}_1$ is \emph{compatible with} $\mathtt{T}_2$, written $\mathtt{T}_1 \lhd \mathtt{T}_2$, iff either $\mathtt{T}_1 \equiv \mathtt{T}_2$ or $\mu(\mathtt{T}_1) \equiv \mu(\mathtt{T}_2) \wedge \forall \mathtt{A}_1$ : $\mathtt{A}_1 \in \gamma(\mathtt{T}_1) ~\exists \mathtt{A}_2 : \mathtt{A}_2 \in \gamma(\mathtt{T}_2)$ : $\mathtt{A}_1 \lhd \mathtt{A}_2$.
+\end{definition}
 
 well... some algorithms are done, but this part need improvement
 
