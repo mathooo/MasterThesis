@@ -910,11 +910,41 @@ The language itself offers interesting capabilities in order to provide static a
 Let $\mathtt{A}_1$, $\mathtt{A}_2$ be atomic agents. Then, we say $\mathtt{A}_1$ is \emph{compatible with} $\mathtt{A}_2$, written $\mathtt{A}_1 \lhd \mathtt{A}_2$, if either $\mathtt{A}_1 \equiv \mathtt{A}_2$ or $\mu(\mathtt{A}_1) \equiv \mu(\mathtt{A}_2) \wedge \delta(\mathtt{A}_1) \equiv \varepsilon $.
 \end{definition}
 
+Note that compatibility of two atomic agents is very close to their equivalance, but the left-hand-side agent is allowed to have its state undefined. 
+
 \begin{definition}
 Let $\mathtt{T}_1$, $\mathtt{T}_2$ be structure agents. We say $\mathtt{T}_1$ is \emph{compatible with} $\mathtt{T}_2$, written $\mathtt{T}_1 \lhd \mathtt{T}_2$, iff either $\mathtt{T}_1 \equiv \mathtt{T}_2$ or $\mu(\mathtt{T}_1) \equiv \mu(\mathtt{T}_2) \wedge \forall \mathtt{A}_1$ : $\mathtt{A}_1 \in \gamma(\mathtt{T}_1) ~\exists \mathtt{A}_2 : \mathtt{A}_2 \in \gamma(\mathtt{T}_2)$ : $\mathtt{A}_1 \lhd \mathtt{A}_2$.
 \end{definition}
 
-well... some algorithms are done, but this part need improvement
+In other words, structure agents are compatible, if we can create pairs from atomic agents of left-hand-side agent's composition with the right-hand-ones such that these atomic agents are all unique. For such pairs, the agents in each pair must be compatible.
+
+\begin{definition}
+Let $\mathtt{X}_1$, $\mathtt{X}_2$ be complexes. We say $\mathtt{X}_1$ is \emph{compatible with} $\mathtt{X}_2$, written $\mathtt{X}_1 \lhd \mathtt{X}_2$, iff either $\mathtt{X}_1 \equiv \mathtt{X}_2$ or $\mu(\mathtt{T}_1) \equiv \mu(\mathtt{T}_2) \wedge \exists$ permutation $ \mu(\mathtt{X}'_2)$ of $\mu(\mathtt{X}_2)$ such that $ \forall i \in [1, n] : \mu(\mathtt{X}_1)_i \lhd \mu(\mathtt{X}'_2)_i $, where $n$ is length of sequence which is same for both sequencies.
+\end{definition}
+
+Compatibility for complexes means that every pair of agents through the sequences of complexes must be compatible.
+
+From first chapters it should be clear, that an agent (or a complex) might have its ancestors and successors. The compatibility operator formulates this relationship formally. It important to note that each successor is compatible with its ancestor, but the reverse relation does not hold. 
+
+describe this formally ? lattice (svaz) - upper
+
+Moreover, it is always possible to derive the most upper (supremum) ancestor by reducing the context of agent. (proof this) - thanks to this proof, we can create network defined next:
+
+\subsection{Context reduced network}
+
+Context reduced network (CRN) is created form given BCSL model by reducing context of all rules to maximum level (Proof XY). This procedure might produce rules with no action -- such rules might be omitted. Then, only rules creating/destroying agents and complex formation/dissotiation should remain, providing reduced network. Since we are reducing context, the resulting can be equal or smaller then the original model. Therefore, it is suitable for reachability checking. 
+
+If we are checking whether an agent is reachable for given model, we might first check whether it's super-ancestor is reachable in created CRN. If so, then we are still not certain about reachability of agent itself and it has to be checked in the original model. However, when it comes to non-reachability, agent which is non-reachable in CRN is not reachable in the original model too (proof ?).
+
+\subsection{Static reachability analysis}
+
+In case we have defined reachability operator for agents, we can apply ...
+
+mention that we can do such stuff before enumeraing state space
+
+it can tell us whether is non-reachable again
+
+we should prove this
 
 \chapter{Implementation}
 
