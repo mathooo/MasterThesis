@@ -42,7 +42,7 @@
 % setting custom colors for l
 
 % FI THESIS settings
-\thesistitle{Something with BCS}
+\thesistitle{Formal biochemical space for specification and analysis of biochemical processes}
 \thesissubtitle{Master thesis}
 \thesisstudent{Matej Troják}
 \thesiswoman{false}
@@ -1020,6 +1020,28 @@ The translation is quite straight-forward:
 Once the model is traslated, we are allowed apply all available analysis which are provides by PNs. For example, P and T invariants, deadlock detection, coverability etc. (cite material z Petri nets predmetu)
 
 \subsection{Getting signatures from the model}
+
+The BCSL model definition as given in (ref...) can be reduced by signatures. Note we do not mean extended signatures by complex names -- just the basic signatures for atomic and structure agents. These can be obatained statically from the rules (and the initial state) just in one run. The process comprises these steps:
+
+\begin{itemize}
+\item for each rule, iterare through all the atomic and structure agent expression 
+\begin{itemize}
+	\item particularly, split the rule expression by rule sides delimiter, rule agent delimiter, and finally compartment and complex delimiters respectivelly
+\end{itemize}
+\item for each found agent expression
+\begin{itemize}
+	\item if it contains round brackets, go to next step for all its atomic agent expression ans finally extend structure signature by pair name and set of atomic agent names,
+	\item if it contains curly brackets, its an atomic agent and atomic signatures can be extended by the pair name and state,
+	\item in other case, store the name in \emph{uncertain} set of names.
+\end{itemize}
+\item finally, place all uncertain names, which are not included in neither of signatures, to structure signature.
+\end{itemize}
+
+The above described procedure will create signatures in assumption all syntactic extensions (including complex signature) are removed before. We could discuss fact that desired signature might be in some manner \emph{bigger} than the collected ones. However, if for example we want to have more states defined for an atomic agent, they should be definitelly used somewhere in the model. In other case, it does not play any role in the model behaviour and therefore its definition is useless. 
+
+\begin{proof}
+Let $\mathcal{M}$ be a BCSL model and $\Sigma$ its minimal signatures (i.e., all states and partial compositions defined in the signatures are actually used in the rules). Then, signatures $\Sigma'$ obtained by procedure (ref blah) has to be equal to the original signature $\Sigma$. In case its not, it means either there is some extra data in the $\Sigma'$ or some data is missing. Since we create $\Sigma'$ by iterating through all the rules, we construct complete signature with complete states used in the model. Therefore, if some data are missing in $\Sigma'$, then it follows given signature $\Sigma$ is not minimal. On the other hand, if there are some extra data in $\Sigma'$, then given signature $\Sigma$ is incorrect -- its missing some structure details which are being used in the model.
+\end{proof}
 
 \chapter{Implementation}
 
