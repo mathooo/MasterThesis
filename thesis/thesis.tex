@@ -23,11 +23,11 @@
 
 \newcounter{counter}[section]
 \renewcommand{\thecounter}{\thesection.\arabic{counter}}
-\newcommand{\definition}[1]{\refstepcounter{counter} \textbf{Definition \thecounter} \newline #1 }
-\newcommand{\notation}[1]{\refstepcounter{counter} \textbf{Notation \thecounter} \newline #1 }
-\newcommand{\theorem}[1]{\refstepcounter{counter} \textbf{Theorem \thecounter} \newline #1 }
-\newcommand{\example}[1]{\refstepcounter{counter} \textbf{Example \thecounter} \newline #1 }
-\newcommand{\runningExample}[1]{\refstepcounter{counter} \textbf{Running Example \thecounter} \newline #1 }
+\newenvironment{definition}{\medskip\refstepcounter{counter}\textbf{Definition \thecounter}\par\nopagebreak\noindent}{\medskip}
+\newenvironment{notation}{\medskip\refstepcounter{counter}\textbf{Notation \thecounter}\par\nopagebreak\noindent}{\medskip}
+\newenvironment{proof}{\medskip\refstepcounter{counter}\textbf{Proof \thecounter}\par\nopagebreak\noindent}{\medskip}
+\newenvironment{example}{\medskip\refstepcounter{counter}\textbf{Example \thecounter}\par\nopagebreak\noindent}{\medskip}
+\newenvironment{runningExample}{\medskip\refstepcounter{counter}\textbf{Running example \thecounter}\par\nopagebreak\noindent}{\medskip}
 
 \usepackage[
     backend=biber,      % use biber as backend instead of BiBTeX
@@ -982,13 +982,44 @@ If we are checking whether an agent is reachable for given model, we might first
 
 \subsection{Static reachability analysis}
 
-In case we have defined reachability operator for agents, we can apply ...
+In case we have defined reachability operator for agents, we can apply static reachability analysis before enumerating whole state space of the model. When checking reachablity of an agent $\mathtt{A}$, we can check whether it is non-reachable (similarly as in the previous section) by the following procedure:
 
-mention that we can do such stuff before enumeraing state space
+\begin{itemize}
+\item go through all agents on the right-hand-side of all rules,
+\item check whether there exists an agent such that it is compatible with desired agent $\mathtt{A}$,
+\item if there is no such agent, agent $\mathtt{A}$ cannot be reachable.
+\end{itemize}
 
-it can tell us whether is non-reachable again
+\begin{proof}
+{paint picture where we start in init, go through random path and then we apply rule r which created the agent we want (from state $x_1$ to state $x_2$)
 
-we should prove this
+It does not matter how many rules we have to apply in order to create desired agent from the initial state. Important is that somewhere on path we have to create the very same complex (if it is a complex) and we have to change all state properties to required form. Since the language is rule-based, the change might be context-free, i.e. some context might be missing. For such situation, there was \emph{compatibility} operator defined. Therefore, there has to be at least one rule which has on its right-hand-side an agent compatible with the given agent.}
+\end{proof}
+
+This procedure can be extended for checking reachability of multiple agents, however, it does not consider stoichiometry.
+
+\subsection{Translation to Petri Net}
+
+Moreover, by generating reaction-based model from rule-based, which is always possible (ref a section), we can futhermore translate such model to Petri Net (cite).
+
+definition of petri net goes here
+
+The translation is quite straight-forward: 
+
+\begin{enumerate}
+\item as described in (section XY), we have finite number of unique agents -- these are all the places \emph{p}
+\item transitions \emph{t} are constructed as follows:
+\begin{itemize}
+	\item for each reaction, create a transition,
+	\item place input edge from each place which has label in left-hand-side of the rule (with appropriate multiplicity),
+	\item do the same for output edges for right-hand-side of the rule,
+\end{itemize}
+\item finally, we create initial marking \emph{m} from given initial state of the model by similar procedure described above.
+\end{enumerate}
+
+Once the model is traslated, we are allowed apply all available analysis which are provides by PNs. For example, P and T invariants, deadlock detection, coverability etc. (cite material z Petri nets predmetu)
+
+\subsection{Getting signatures from the model}
 
 \chapter{Implementation}
 
