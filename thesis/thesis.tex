@@ -282,11 +282,45 @@ explanation of the format, importance of annotation
 
 from informal BCS through definition by embedding to Kappa
 
-why not good enough
+why not good enough (informal)
 
 how it was evolving
 
 what it has common with rule-based languages, how it all started
+
+mention it is part of CMP, ecyano
+
+\subsection{The difference between BCS and BCSL}
+
+It is important to realise the difference between Biochemical Space Language and Biochemical Space. 
+
+The general goal of BCS is to provide knowledge base for mathematical models. In order to achieve that, Biochemical Space is formed by a database of biochemical entities. This allows us to describe particular objects with their attributes and properties and form space hierarchy. Each entity should be properly annotated by description and links to suitable external databases. However, entities are not enough for describing models since it requires also process hierarchy. Therefore, alongside with space hierarchy of entities, process hierarchy is build via interactive schemes. The hierarchy allows us to zoom on individual rules which present atomic operations happening on the entities.
+
+To improve usability and verifiability of the BCS, we defined Biochemical Space Language. The language is formally defined and serves for describing the entities and the rules. It has rule-based semantics, what allows compact description of the objects. Moreover, the syntax was designed in order to be very concise and human-readable. Hence it is very suitable for our needs.
+
+The whole BCS is defined in BCSL. This fact makes sure the entities and the rules are defined with all appropriate properties. Moreover, it helps us to relate objects from the models to BCS objects. Note that due to rule-based nature of the BCSL, in BCS there are defined only abstract objects representing types. Therefore, when relating for example an model variable to BCS entity, we might need to specify it's properties. 
+
+Once BCS is build, we can use it to reference the models. It means to relate all the variables and reactions of the model and to entities and rules of BCS. In particular, each variable should have assigned an entity for BCS. It increases information value of the variable (due to annotation of BCS entity). Since reactions of the model are composed from its variables, this way we also rewrite general reactions to reactions written in BCSL. The result of relating all the entities is model written in BCSL. 
+
+Model defined in BCSL has two main advantages -- formal analysis can be applied on the model and the biological meaning of the whole model is fully reconstructed.
+
+To sum it up, BCS serves as definition domain for models written in BCSL (so called signature). It defines what can and what cannot be written in models and also increases rule compactness due to syntactic extensions. For example, some context might be omitted from the rule because it can be reconstructed from the signature.
+
+
+\subsection{How is BCS accompanied with visualisation}
+
+Best way how to present process hierarchy of BCS is via visualisation. We have employed several interactive schemes representing chosen important processes. These schemes go through abstract "higher" process to particular rules. In a scheme, a "lower" process, rule or an entity might be showed. However, the schemes might get quite complex. For this reason, a table of complete list of entities and rules is assigned to the scheme while skipping less important ones from the visualisation.
+
+
+\subsection{The level of abstraction}
+
+When describing particular process or object, we can go almost infinitely deeper into details. Even if the depth is not infinite, it deep enough to lead into state when the description larger than object itself. Imagine that you want to describe a molecule as position of each atom. You definitely need more space to store such information than the molecule itself occupies.
+
+Therefore, when creating BCS, we choose a level of details which we do not exceed. This ensures the size of BCS will not exponentially increase with additional details. The problem might occur when we try to map a model which uses more detailed description of the system than BCS does. However, we simply allow relating multiple model objects to BCS objects and vice versa. For example, multiple model reaction might be mapped on one BCS rule denoting the fact the process represented by the rule can be described in more details by the reactions. On the other hand, model might neglect some details. Then for example, a reaction can be mapped on multiple rules with similar meaning than in previous example.
+
+\subsection{Inclusion of BCS in SBML export (annotation)}
+
+Since platform allows export of models in SBML format, we employed resolvable identifier links. These links are included in generated SBML file and point to appropriate rules/entities in BCS. 
 
 \chapter{Problem formulation}
 
@@ -297,6 +331,10 @@ other languages didnt use suitable level of abstraction (explain why)
 what was wrong before
 
 highlight we choose indirect definition via reactions - "practical definition"
+
+motivated by practical needs of ecyano (it means here it should be known from background)
+
+
 
 \chapter{Formal definition}
 
@@ -903,6 +941,15 @@ $ $
 multisets compared to graphs (isomorphisms) - other languages
 
 \section{Dynamic analysis}
+
+briefly explain how (non)deterministic simulations work, give citations
+
+ - difference, when which of them can be used, explain biological meaning behind
+ - all the distributions etc
+
+problem of model checking, why it is problem, how it works (see my BT) 
+
+ - we focus on reachability in general in this theses, later could be extended to entire model checking problem
 
 such as simulation, model checking (reachability)
 
