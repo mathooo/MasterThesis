@@ -249,6 +249,8 @@ BioNetGen Language (BNGL) is very similar to Kappa~\ref{kappa}. There are a few 
 \caption{Example of a BGNL rule. (a) Definition of associated agents. (b) The rule itself. Note the A and B agents must first create \emph{reaction complex} denoted with `+' (i.e., they must be close to each other) and then they create \emph{complex of agents} denoted as `.' (i.e., they are physically connected).}\label{bngl-rule}
 \end{figure}
 
+\subsection{Biocham}
+
 \subsection{PySB}
 
 This language works as a package to Python language. The definition of models directly in the code allows to use the full syntax of Python, what dramatically increases expression power of PySB. On the other hand, it might be hard to follow abstraction which are this way possible and models themselves are hard to analyze. Moreover, the core of the language is made by translating to BGNL~\ref{bngl}.
@@ -330,11 +332,29 @@ other languages didnt use suitable level of abstraction (explain why)
 
 what was wrong before
 
-highlight we choose indirect definition via reactions - "practical definition"
+highlight 
 
 motivated by practical needs of ecyano (it means here it should be known from background)
 
+Biochemical Space as described in (ref) is great idea. However, one must cosider the fact that the space might get quite huge. It means keep it consistent in informal form is almost impossible. It is neccesary to be able to detect inconsistency with automatic tools and enable futher analysis of the space. The anotation itself is good, but with enabled formal part with all its advantages is much better. 
 
+For this reasons we decided to improved description part of BCS by defining it formally. Many options how to define the language were available. First of all, we wanted to keep definition space as concise as is possible. Rule-based approach was the best hit, because it is capable to capture required details for biological systems while keeping the description concise. However, there are many rule-based languages and each of them is slightly different in syntactic and semantic level and also on level of abstraction. After deep research (ref prev capt), we have evaluated all existing languages as not suitable. The closest representation to the desired one (ref next section) was Kappa. That is the reason why in first iteration we have chosen translation to Kappa for definition of semantics. However, there were few aspects which were not suitable (ref).
+
+There are several aspects which must be considered when defining new language. From syntactic point of view, we were due to keep the language as simple as possible. It was supposed to be human-readable, which in this context means easy to read, write and maintain by humans even from other disciplines than computer science. From semantic point of view, we needed a straitforward definition which would have practical use in implementation. With experiences from previous iteration, it showed that direct rule-based semantics where quite complicated mechanism of mathcing and replacement is used, is not very effiecient. Therefore we chose indirect definition via reactions -- `practical definition' (ref formal). The level of abstraction point of view is discussed in next section.
+
+\section{Desired abstraction level}
+
+explain what kind of systems we need to describe
+
+which details we dont need
+
+and which we need
+
+\section{What was wrong with translation to Kappa}
+
+abstraction which were not suitable
+
+slow implementation (cross ref)
 
 \chapter{Formal definition}
 
