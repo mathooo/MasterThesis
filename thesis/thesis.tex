@@ -117,12 +117,13 @@ statistical randomness, authenticated encryption, CAESAR, evolutionary algorithm
 \chapter{Introduction}
 
 \chapter{Background}
+
+In our last paper~\cite{Ded201627}, we defined semantics of Biochemical Space Language (BCSL) via translating to a similar language called Kappa~\cite{Kappa}. However, we realised this approach is not very beneficial since we are not fully using the expressive power of our language this way. The thing is Kappa operates purely on expressions. We want to promote our language to a higher level when it operates on objects in multisets. By translating to Kappa we loose such abstraction. 
+
 \section{Rule-based basics}
 \label{Rule-based basics}
 
-bla bla rather explain difference between reaction and rule based language
-
-In our last paper~\cite{Ded201627}, we defined semantics of Biochemical Space Language (BCSL) via translating to a similar language called Kappa~\cite{Kappa}. However, we realised this approach is not very beneficial since we are not fully using the expressive power of our language this way. The thing is Kappa operates purely on expressions. We want to promote our language to a higher level when it operates on objects in multisets. By translating to Kappa we loose such abstraction. 
+bla bla some intro
 
 The reason for this kind of abstraction is the way how we see the biological models. We represent model $\mathcal{M}$ as set of rules and an initial solution of interacting entities. We understand solution as a mixture of individual objects which are randomly distributed (see Fig.~\ref{solutions:fig}a). Therefore, we cannot assign them any order and we do not see them as expressions but rather as multisets. For us, this representation of solution is the closest to the reality.
 
@@ -209,6 +210,14 @@ Moreover, the mapping can be seen as assigning particular objects from the solut
 \end{figure}
 
 Since this kind of graphical representation is not very suitable for describing the processes and for transferring them.. ???, in next chapter(s) we define a formal language which is built on principles described in this chapter.
+
+\section{Rule-based vs. reaction-based}
+
+A rule a generalized reaction. This is how the difference can be characterized. From the application point of view (ref), reaction can be applied on a solution only in a particular way whilst rule can be applied in multiple ways (see ref mapping picture). It allows to write models, where many similar processes might occur via rules, by defining a pattern (or context) in which the action can happen. Since there might be many features we need to express, there are several languages focusing on different form of details.  
+
+From practical point of view, ...
+
+focus on level of abstraction and complexity of direct analysis
 
 \section{Rule-based languages}
 
