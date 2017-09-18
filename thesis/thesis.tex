@@ -213,11 +213,13 @@ Since this kind of graphical representation is not very suitable for describing 
 
 \section{Rule-based vs. reaction-based}
 
-A rule a generalized reaction. This is how the difference can be characterized. From the application point of view (ref), reaction can be applied on a solution only in a particular way whilst rule can be applied in multiple ways (see ref mapping picture). It allows to write models, where many similar processes might occur via rules, by defining a pattern (or context) in which the action can happen. Since there might be many features we need to express, there are several languages focusing on different form of details.  
+A rule is a generalized reaction. This is how the difference can be characterized. From the application point of view (ref), reaction can be applied on a solution only in a particular way whilst rule can be applied in multiple ways (see ref mapping picture). It allows to write models, where many similar processes might occur via rules, by defining a pattern (or context) in which the action can happen. Since there might be many features we need to express, there are several languages focusing on different form of details.  
 
-From practical point of view, ...
+From static analysis point of view, using rules directly is not the best choice. The main reason is so-called side effects, which might happen during rule application. These side-effect differ from language to language, and it is a feature we tried to avoid in BCS as much as is possible. There is no such thing for reaction, because all the context is enumerated explicitly. Therefore, we cannot statically say how exactly will be the rule used.
 
-focus on level of abstraction and complexity of direct analysis
+** put picture from NFsim here
+
+The rule and reaction differ in level of abstraction. In this context we mean how stringent it is, not what sort of features particular langugage uses. This is universal attribute for all rule-based languages -- the rule is always more abstract than it's instance -- a reaction. Then, analysis such abstract object statically is a challenge. (cite ?)
 
 \section{Rule-based languages}
 
@@ -299,7 +301,25 @@ how it was evolving
 
 what it has common with rule-based languages, how it all started
 
-mention it is part of CMP, ecyano
+** short intro, mention it is part of CMP !!!
+
+BCS provides well described biological background for mathematical models of processes taking place in specific organism. Complete BCS provides a connection between existing ontologies and partial mathematical models. BCS offers a human readable format which can be easily edited in a dedicated editor and visualised on the website. First part of a BCS is represented by a set of \emph{entities} (to be compliant with process-algebraic frameworks we call entities \emph{agents}), while the second part contains \emph{rules} (abstractly represented chemical reactions defined over the set of entities). In our case study, a consortium of scientists is involved in modelling several cyanobacterial processes and in establishing of the respective BCS.
+
+When building the BCS, emphasis is put on well-defined and complete annotations. Therefore, links to relevant ontologies must be specified for each entity and rule. Unique IDs provided by ontologies can help to automatically detect duplicities. IDs are also used to create hypertext links to related ontologies on the web, thus providing a one part of the already mentioned connection between ontologies and models. At this moment, links to KEGG, ChEBI, CyanoBase (cite) and other databases are supported. A single entity or a rule can have multiple links to several external databases. An example is presence of a particular entity in ChEBI as well as in KEGG. In the case of annotating enzymatic rules, an EC number (here acting as a descriptor of the rule mechanism behind the catalytic reaction) is associated to the enzyme via a respective KEGG ID.
+
+The fact that most attributes in entity and rule definitions are tightly coupled with information from linked ontologies is the reason why we have started with describing annotation attributes. In the first place, one of these attributes is \emph{name}, which is taken from ontologies or follows the standard naming conventions. \emph{ID} of every entity is fixed by the consortium. KEGG ID, ChEBI ID or internal ID is used if no reasonable \emph{ID} is available. \emph{ID}s of rules are internal and assigned automatically.
+
+An entity in our interpretation is a bounded space (a so-called \emph{compartment}) or a structural part of a specific organism. BCS covers a hierarchy of entities ranging from small molecules (\emph{atomic entities (agents)}) through composite structures (\emph{structure entities (agents)}) to large complex molecules (\emph{complex entities (agents)}). Our goal is to make BCS as simple as possible. In existing ontologies, entities residing in several different states (oxidised, reduced, etc.) are usually treated as separate entities, thus causing the total number of entities to be enormous. To reduce this complexity, the concept of \emph{states} is defined in BCS. They allow to define allowed set of states, in which an atomic agent might occur.
+
+BCS extends the traditional concept of compartmentalisation with a hierarchy at the level of entities. A particular entity can reside in several different compartments. Additionally, \emph{classification} specifies the type of an entity in a sense of functional or structural characterisation.
+
+An entity can be a part of a structurally more complex entity. We consider two kinds of composite entities: structure and complex entities. Structure entity represents partially specified composite species, e.g. a photosystem complex partially specified with prosthetic groups of interest. Complex entity represents fully specified composite species, e.g., a homodimer of KaiC protein.
+
+Rules are specified by rule equations enriched with additional annotation information. When defining a rule equation, identifiers of substrates and products are used to make the notation of rules compact. Every entity appearing in a \emph{rule equation} has to be followed by the localisation operator associating it with a particular compartment. This is important especially for rules that act on both sides of a membrane. That way, a rule is always precisely localised in/inbetween compartments. A natural stoichiometric coefficient can be placed before any entity in a rule equation. Irreversible and reversible rules are distinguished by the operators `$\Rightarrow$', `$\Leftrightarrow$'. The `$+$' symbol is used as a separator between individual substrates and individual products. A rule can also have an assigned classification. Rule classification assigns a list of higher level biophysical processes in which the rule is involved. 
+
+In some cases, emphasis on a detailed description leads to very complex BCS models. Abstraction of some processes is therefore needed to keep BCS models as simple as possible. To this end, rules expressing enzymatic reactions are considered in a simplified form. In fact, there should be at least two different rules describing an enzymatic reaction (one for a substrate binding and another for a catalytic step). Instead, since an enzyme is not affected during the reaction, it is affiliated to the rule as a \emph{modifier}. However, it is difficult to define precise meaning of a modifier in this case. We rather treat the modifier attribute informally as an entity \textit{which has to be present} for the rule to be enabled. The exact reaction mechanism of an enzyme is not always clear and therefore it is abstracted out.
+
+Higher abstraction comes into account when several electrons play `musical chairs' inside protein complexes. The issue is that parts of processing protein complex can have different unstable states during a short period of time. When one tries to define all rules among these proteins, combinatorial explosion of the number of states of the complex arises. Not all of these combinations are biologically correct. Even when excluding biologically inadmissible cases, the number of states is still enormous. For the purpose of BCS, we introduce a solution inspired by the enzymatic rule mentioned above. We treat a protein complex as a structure entity on which structurally simpler entities change its state (not necessarily proteins) and we abstract from background processes. We can see a particular rule as a change of a state of a structure entity.
 
 \subsection{The difference between BCS and BCSL}
 
