@@ -217,9 +217,14 @@ A rule is a generalized reaction. This is how the difference can be characterize
 
 From static analysis point of view, using rules directly is not the best choice. The main reason is so-called side effects, which might happen during rule application. These side-effect differ from language to language, and it is a feature we tried to avoid in BCS as much as is possible. There is no such thing for reaction, because all the context is enumerated explicitly. Therefore, we cannot statically say how exactly will be the rule used.
 
-** put picture from NFsim here
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.5]{reaction_vs_rule}
+\end{center}
+\caption{bla}
+\end{figure}
 
-The rule and reaction differ in level of abstraction. In this context we mean how stringent it is, not what sort of features particular langugage uses. This is universal attribute for all rule-based languages -- the rule is always more abstract than it's instance -- a reaction. Then, analysis such abstract object statically is a challenge. (cite ?)
+The rule and reaction differ in level of abstraction. In this context we mean how stringent it is, not what sort of features particular langugage uses. This is universal attribute for all rule-based languages -- the rule is always more abstract than it's instance -- a reaction. Then, analysis of such abstract object statically is a challenge. (cite ?) The reason is that most of the structural information is encoded in rules implicitely. For statis analysis, explicit data are more suitable.
 
 \section{Rule-based languages}
 
