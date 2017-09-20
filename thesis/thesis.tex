@@ -1145,6 +1145,16 @@ The above described procedure will create signatures in assumption all syntactic
 Let $\mathcal{M}$ be a BCSL model and $\Sigma$ its minimal signatures (i.e., all states and partial compositions defined in the signatures are actually used in the rules). Then, signatures $\Sigma'$ obtained by procedure (ref blah) has to be equal to the original signature $\Sigma$. In case its not, it means either there is some extra data in the $\Sigma'$ or some data is missing. Since we create $\Sigma'$ by iterating through all the rules, we construct complete signature with complete states used in the model. Therefore, if some data are missing in $\Sigma'$, then it follows given signature $\Sigma$ is not minimal. On the other hand, if there are some extra data in $\Sigma'$, then given signature $\Sigma$ is incorrect -- its missing some structure details which are being used in the model.
 \end{proof}
 
+\subsection{Detection of dead rules}
+
+A rule is called dead, if there is no trace starting from the initial state in which this rule is applied. The analysis reports the list of the rules it has detected to be dead. 
+
+** define more precisely via markings -- states (lecture3, 36)
+
+\subsection{Detection of dead agents}
+
+An agent is called dead, if there is no trace starting from the initial state with at least one state in which this agent occurs. The analysis reports the list of the agents it has detected to be dead.
+
 \chapter{Implementation}
 
 In order to support usability of the BCSL language, we developed software tool BCSgen. The general goal of the tool is to provide environment suitable for editing and maintanace of the BCSL models and provide functionality to analyse the models. The software was developed in several iterations. First as independent project MUNI33/092015 in \emph{Dean's Program of the Faculty of Informatics MU for support of student research and development projects}, later as part of the project MUNI33/062017 in the same program. Finally, it was finalized to current stage in this thesis.
@@ -1166,6 +1176,14 @@ Since there are some graphs and charts generated in BCSgen, we decided to interg
 As a future work for the tool we are planning to reimplement it to web-based version. In ideal case, it should be integrated to CMP (cite or ref) to allow direct analysis of the models and appropriate Biochemical Space.  
 
 \chapter{Case study}
+
+To demonstrate Biochemical Space has practical use, we introduce an instance of CMP, where BCS is used in practise. E-cyanobacterium.org is an online platform providing tools for public sharing, annotation, analysis, and visualization of dynamical models and wet-lab experiments related to cyanobacteria. The general aim is to stimulate collaboration between experimental and computational systems biologists to achieve better understanding of cyanobacteria. As an instance of CMP, it covers all the features described in (ref, cite?).
+
+The following processes of cyanobacteria are covered in BCS: environmental processes, respiration and photosynthesis, carbon concentrating mechanism, circadian clock, and metabolism. Currently, the repository of models contains two models describing circadian clock (Miyoshi et al. 2007 (cite), Hertel et al. 2013 (cite) and a kinetic model of metabolism (Jablonsky et al. 2014 cite). Two other models present unpublished results -- dynamics of carbon fluxes (M\"{u}ller et al.) and photosynthesis (Plyusnina et al.). Each of them was properly mapped on the BCS and helped to form suitable space covering all mentioned processes.
+
+mention clock model - few rules, a lot of reactions, almost endless state space - impossible to analyse
+
+it would be great to somehow demonstrate defined statical analysis here
 
 BCS used on ecyano
 
