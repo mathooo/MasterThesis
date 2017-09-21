@@ -399,9 +399,9 @@ In this chapter, we define Biochemical Space Language formally. First, we define
 Let $\mathcal{N}_{A},~\mathcal{N}_{T},~\mathcal{N}_{\delta},~\mathcal{N}_{c}$ be mutually exclusive finite sets of atomic, structure, state names, and compartments, respectively.
 
 \begin{definition}{Signature}
-Atomic signature $\Sigma_{\mathtt{A}} \subseteq \mathcal{N}_{A} \times 2^{\mathcal{N}_{\delta}}$ associates atomic name with set of state names. 
+Atomic signature $\Sigma_{\mathtt{A}} \subseteq \mathcal{N}_{A} \times 2^{\mathcal{N}_{\delta}}$ associates atomic names with set of state names. 
 
-Structure signature $\Sigma_{\mathtt{T}} \subseteq \mathcal{N}_{T} \times 2^{\mathcal{N}_{A}}$ associates structure name with set of atomic names. 
+Structure signature $\Sigma_{\mathtt{T}} \subseteq \mathcal{N}_{T} \times 2^{\mathcal{N}_{A}}$ associates structure names with set of atomic names. 
 \end{definition}
 
 Signatures define for an atomic name allowed set of state names and for a structure name allowed set of atomic names. The deeper meaning will be revealed after next part of definitions.
@@ -487,7 +487,7 @@ Let $\mathtt{X}, \mathtt{X}'$ be complexes. $\mathtt{X}$ is \emph{equivalent} wi
 The key element of a complex agent is \emph{sequence} describing inductively constructed coexistence expressions from existing agents. In contrast to partial composition in structure agent, we allow replication at the level of sequence (an agent of a certain name can appear more than once in a sequence).
 
 \begin{notation}
-Let $\mathcal{X}$ be universe of all possible complexes.
+Let $\mathcal{X}$ be universe of all possible complex agents. Moreover, we denore $\mathcal{U} = \mathcal{A} \cup \mathcal{T} \cup \mathcal{X}$ as universe of all possible agents.
 \end{notation}
 
 \begin{example}{Complex}\label{example:complex}
@@ -592,7 +592,7 @@ where $m,n \in \mathbb{N}_0 \wedge m + n \neq 0$ and $k \in \mathbb{N}$.
 
 \begin{example}{Syntax}\label{example:syntax}
 
-In following goes examples of agents, complexes and rules given in previous examples:
+Examples of agents, complexes and rules given in previous examples:
 
 \begin{itemize}
 \item $\mathtt{A}_1$ is written as $S\{u\}$, $\mathtt{A}_2$ is written as $Q$ (Example~\ref{example:atomic}),
@@ -609,9 +609,48 @@ In following goes examples of agents, complexes and rules given in previous exam
 
 \noindent\rule{\textwidth}{1pt}
 
+\section{BCSL model}
+
+\begin{definition}{BCSL model}
+We define BCSL model $\mathtt{M}$ as 4-tuple $(\mathtt{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ where $\mathtt{R}$ is set of rules (rule expressions?), $\Sigma_\mathtt{A}$ is atomic signature, $\Sigma_\mathtt{T}$ is structure signature, and $\mathtt{init} \subseteq \mathcal{U}$ (expressions?) is a initial state (multiset).
+\end{definition}
+
+\noindent\rule{\textwidth}{1pt}
+
+\section{Additional definitions}
+
+Before we proceed, there are few neccesary definitions.
+
+\begin{definition}{Tuples concatenation}
+
+Let $T = (\tau_1, \ldots, \tau_n)$ be sequence of tuples where $\tau_i = (x_1^i, \ldots, x_m^i)$. Concatenation of sequence of tuples $\bullet_{\tau \in T} (\tau)$ is defined as:
+
+\begin{center}
+$\bullet_{\tau \in T}^n (\tau) = (x_1^1, \ldots, x_m^1, x_1^2, \ldots, x_l^2, \ldots \ldots, x_1^n, \ldots, x_k^n)$.
+\end{center}
+\end{definition}
+
+\begin{definition}{Difference of partial compositions}
+
+Let $\gamma, \gamma'$ be two partial compositions. We define difference of these two sets on names of its atomic agents as following:
+
+\begin{center}
+$\gamma \ominus \gamma' \Leftrightarrow \{ \mu_\alpha ~|~ \exists \mathtt{A}: (\mathtt{A} \in \gamma \wedge \mu(\mathtt{A}) \equiv \mu_\alpha ) \wedge \not\exists \mathtt{A}': (\mathtt{A}' \in \gamma' \wedge \mu(\mathtt{A}') \equiv \mu_\alpha)\}$
+\end{center}
+\end{definition}
+
+\begin{definition}{Difference of partial composition and structure signature}
+
+Let $\mathtt{T}$ be a structure agent. Next, let $\gamma(\mathtt{T})$ be its partial composition and $\Sigma_T(\mathtt{T})$ appropriate signature. We define difference of these two sets on names of atomic agents as following:
+
+\begin{center}
+$\gamma(\mathtt{T}) \ominus \Sigma_T(\mathtt{T}) \Leftrightarrow \{ \mu_\Sigma ~|~ \mu_\Sigma \in \Sigma_T(\mathtt{T}) \wedge \not\exists \mathtt{A}: (\mathtt{A} \in \gamma(\mathtt{T}) \wedge \mu(\mathtt{A}) \equiv \mu_\Sigma)\}$
+\end{center}
+\end{definition}
+
 \section{Semantic function}
 
-Semantic function $\mathtt{F}$ gives semantical meaning to rules and objects written in BCSL syntax. It is defined recursively according to context given as argument:
+In the previous sections, we defined BCSL objects and the syntax. Now, we need to connect these constructs and give the model $\mathtt{M}$ its semanting meaning. For this purpose, we define semantic function $\mathtt{F}$. It is defined recursively according to context given as argument:
 
 \begin{center}
 \begin{tabular}{ r c l}
@@ -651,38 +690,8 @@ $\mathtt{Indices} =$ & $\{~ (i, -) ~|~ i \in [k, \mathtt{map}(\mathtt{I})] \wedg
 \end{itemize}
 \end{center}
 
-Please note by applying semantic function $\mathtt{F}$ on examples from Example~\ref{example:syntax}, we obtain agents (resp. complex or rule) from appropriate referenced examples.
+Please note by applying semantic function $\mathtt{F}$ on examples from Example~\ref{example:syntax}, we obtain agents (resp. complex or rule) from appropriate referenced examples. Moreover, semantic funtion work \emph{only} on BCSL object and rules well-defined by the given grammar (ref).
 
-\noindent\rule{\textwidth}{1pt}
-
-\section{Additional definitions}
-
-\begin{definition}{Tuples concatenation}
-
-Let $T = (\tau_1, \ldots, \tau_n)$ be sequence of tuples where $\tau_i = (x_1^i, \ldots, x_m^i)$. Concatenation of sequence of tuples $\bullet_{\tau \in T} (\tau)$ is defined as:
-
-\begin{center}
-$\bullet_{\tau \in T} (\tau) = (x_1^1, \ldots, x_m^1, x_1^2, \ldots, x_l^2, \ldots \ldots, x_1^n, \ldots, x_k^n)$.
-\end{center}
-\end{definition}
-
-\begin{definition}{Difference of partial compositions}
-
-Let $\gamma, \gamma'$ be two partial compositions. We define difference of these two sets on names of its atomic agents as following:
-
-\begin{center}
-$\gamma \ominus \gamma' \Leftrightarrow \{ \mu_\alpha ~|~ \exists \mathtt{A}: (\mathtt{A} \in \gamma \wedge \mu(\mathtt{A}) \equiv \mu_\alpha ) \wedge \not\exists \mathtt{A}': (\mathtt{A}' \in \gamma' \wedge \mu(\mathtt{A}') \equiv \mu_\alpha)\}$
-\end{center}
-\end{definition}
-
-\begin{definition}{Difference of partial composition and structure signature}
-
-Let $\mathtt{T}$ be a structure agent. Next, let $\gamma(\mathtt{T})$ be its partial composition and $\Sigma_T(\mathtt{T})$ appropriate signature. We define difference of these two sets on names of atomic agents as following:
-
-\begin{center}
-$\gamma(\mathtt{T}) \ominus \Sigma_T(\mathtt{T}) \Leftrightarrow \{ \mu_\Sigma ~|~ \mu_\Sigma \in \Sigma_T(\mathtt{T}) \wedge \not\exists \mathtt{A}: (\mathtt{A} \in \gamma(\mathtt{T}) \wedge \mu(\mathtt{A}) \equiv \mu_\Sigma)\}$
-\end{center}
-\end{definition}
 
 \noindent\rule{\textwidth}{2pt}
 
