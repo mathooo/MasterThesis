@@ -24,11 +24,11 @@
 
 \newcounter{counter}[section]
 \renewcommand{\thecounter}{\thesection.\arabic{counter}}
-\newenvironment{definition}{\medskip\refstepcounter{counter}\textbf{Definition \thecounter}\par\nopagebreak\noindent}{\medskip}
-\newenvironment{notation}{\medskip\refstepcounter{counter}\textbf{Notation \thecounter}\par\nopagebreak\noindent}{\medskip}
-\newenvironment{proof}{\medskip\refstepcounter{counter}\textbf{Proof \thecounter}\par\nopagebreak\noindent}{\medskip}
-\newenvironment{example}{\medskip\refstepcounter{counter}\textbf{Example \thecounter}\par\nopagebreak\noindent}{\medskip}
-\newenvironment{runningExample}{\medskip\refstepcounter{counter}\textbf{Running example \thecounter}\par\nopagebreak\noindent}{\medskip}
+\newenvironment{definition}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Definition \thecounter } #1 \par\nopagebreak}{\bigskip}
+\newenvironment{example}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Example \thecounter} #1 \par\nopagebreak}{\bigskip}
+\newenvironment{notation}{\bigskip\refstepcounter{counter}\noindent\textbf{Notation \thecounter}\par\nopagebreak}{\bigskip}
+\newenvironment{proof}{\bigskip\refstepcounter{counter}\noindent\textbf{Proof \thecounter}\par\nopagebreak}{\bigskip}
+\newenvironment{runningExample}{\bigskip\refstepcounter{counter}\noindent\textbf{Running example \thecounter}\par\nopagebreak}{\bigskip}
 
 \usepackage[
     backend=biber,      % use biber as backend instead of BiBTeX
@@ -392,20 +392,21 @@ slow implementation (cross ref)
 
 \chapter{Formal definition}
 
+In this chapter, we define Biochemical Space Language formally. First, we define all the required objects, then we define syntax of the language and finally give semantics to the BCSL models.
+
 \section{Objects definition}
 
 Let $\mathcal{N}_{A},~\mathcal{N}_{T},~\mathcal{N}_{\delta},~\mathcal{N}_{c}$ be mutually exclusive finite sets of atomic, structure, state names, and compartments, respectively.
 
 \begin{definition}{Signature}
+Atomic signature $\Sigma_{\mathtt{A}} \subseteq \mathcal{N}_{A} \times 2^{\mathcal{N}_{\delta}}$ associates atomic name with set of state names. 
 
-\begin{itemize} 
-\item Atomic signature $\Sigma_{\mathtt{A}} \subseteq \mathcal{N}_{A} \times 2^{\mathcal{N}_{\delta}}$ represents allowed atomic names with association to state names. 
-\item Structure signature $\Sigma_{\mathtt{T}} \subseteq \mathcal{N}_{T} \times 2^{\mathcal{N}_{A}}$ represents allowed structure names with association to atomic names. 
-\end{itemize}
+Structure signature $\Sigma_{\mathtt{T}} \subseteq \mathcal{N}_{T} \times 2^{\mathcal{N}_{A}}$ associates structure name with set of atomic names. 
 \end{definition}
 
-\begin{example}{Signature}\label{example:signature}
+Signatures define for an atomic name allowed set of state names and for a structure name allowed set of atomic names. The deeper meaning will be revealed after next part of definitions.
 
+\begin{example}{Signature}\label{example:signature}
 \begin{itemize}
 \item An atomic signature $(S, \{u, p\})$, $(Q, \{a, i\})$
 \item A structure signature $(KaiC, \{S, Q\})$
@@ -415,21 +416,22 @@ Let $\mathcal{N}_{A},~\mathcal{N}_{T},~\mathcal{N}_{\delta},~\mathcal{N}_{c}$ be
 \noindent\rule{\textwidth}{1pt}
 
 \begin{definition}{Atomic agent}
-
-\begin{itemize}
-\item Atomic agent $\mathtt{A}$ is a pair $(\mu, \delta)$ where $\mu \in \mathcal{N}_{A}$ is a name and $\delta \in \mathcal{N}_{\delta} \cup \{ \varepsilon \}$ is a state.
-
-\item Equivalence: $\mathtt{A} \equiv \mathtt{A}' \Leftrightarrow \mu(\mathtt{A}) \equiv \mu(\mathtt{A}') \wedge \delta(\mathtt{A}) \equiv \delta(\mathtt{A}')$
-\end{itemize}
+Atomic agent $\mathtt{A}$ is a pair $(\mu, \delta)$ where $\mu \in \mathcal{N}_{A}$ is a name and $\delta~\in~\mathcal{N}_{\delta} \cup \{ \varepsilon \}$ is a state.
 \end{definition}
 
-Note: maybe the definitino of equivalence should be done only on names (due tu partial composition in structs).
+\begin{definition}{Equivalence of atomic agents}
+Let $\mathtt{A}, \mathtt{A}'$ be atomic agents. $\mathtt{A}$ is \emph{equivalent} with $\mathtt{A}'$, written $\mathtt{A} \equiv \mathtt{A}'$, iff $\mu(\mathtt{A}) \equiv \mu(\mathtt{A}') \wedge \delta(\mathtt{A}) \equiv \delta(\mathtt{A}')$.
+\end{definition}
+
+Note: maybe the definition of equivalence should be done only on names (due tu partial composition in structs).
 
 \begin{notation}
 Let $\mathcal{A}$ be universe of all possible atomic agents.
 \end{notation}
 
-\begin{example}{Atomic agent}\label{example:atomic}
+Atomic agents are the simpliest objects used for describing biological entities. An atomic signature with the same name as the atomic agent has defines allowed states for it (with additional $\varepsilon$ state).
+
+\begin{example}{Atomic agents}\label{example:atomic}
 
 \begin{itemize}
 \item An atomic agent $\mathtt{A}_1 = (S, u)$
@@ -442,20 +444,24 @@ Please note state $\varepsilon$ does not mean the agent is in \emph{none} state,
 \noindent\rule{\textwidth}{1pt}
 
 \begin{definition}{Structure agent}
-
-\begin{itemize}
-\item Structure agent $\mathtt{T}$ is a pair $(\mu, \gamma)$ where $\mu \in \mathcal{N}_{T}$ is a name and $\gamma \subseteq \mathcal{A}$ is a set of atomic agents called partial composition.
-
-\item Equivalence: $\mathtt{T} \equiv \mathtt{T}' \Leftrightarrow \mu(\mathtt{T}) \equiv \mu(\mathtt{T}') \wedge \forall \mathtt{A} \in \gamma(\mathtt{T}) \exists \mathtt{A}' \in \gamma(\mathtt{T}') : \mathtt{A} \equiv \mathtt{A}' \wedge \\ \wedge \forall \mathtt{A}' \in \gamma(\mathtt{T}') ~\exists \mathtt{A} \in \gamma(\mathtt{T}) : \mathtt{A}' \equiv \mathtt{A}$.
-\end{itemize}
+Structure agent $\mathtt{T}$ is a pair $(\mu, \gamma)$ where $\mu \in \mathcal{N}_{T}$ is a name and $\gamma \subseteq \mathcal{A}$ is a set of atomic agents called partial composition.
 \end{definition}
+
+A structure agent represents a biochemical object that is composed from several known atomic agents provided that we know that such a composition is abstract and not necessarily complete. To incorporate such an abstraction of biological structures into our language, a structure agent is defined to be labelled with a unique name and it is constructed only from atomic agents considered in the same physical compartment.
+
+\begin{definition}{Equivalence of structure agents}
+Let $\mathtt{T}, \mathtt{T}'$ be structure agents. $\mathtt{T}$ is \emph{equivalent} with $\mathtt{T}'$, written $\mathtt{T} \equiv \mathtt{T}'$, iff $\mu(\mathtt{T}) \equiv \mu(\mathtt{T}') \wedge \forall \mathtt{A} \in \gamma(\mathtt{T}) \exists \mathtt{A}' \in \gamma(\mathtt{T}') : \mathtt{A} \equiv \mathtt{A}' \wedge \forall \mathtt{A}' \in \gamma(\mathtt{T}') ~\exists \mathtt{A} \in \gamma(\mathtt{T}) : \mathtt{A}' \equiv \mathtt{A}$.
+\end{definition}
+
+The key construct of a structure agent is \emph{partial composition} defined as a list of atomic agents which are considered to be relevant parts of the structure agent. We allow this list to be empty, in that case the meaning is a biological structure for which we do not know its composition.
 
 \begin{notation}
 Let $\mathcal{T}$ be universe of all possible structure agents.
 \end{notation}
 
-\begin{example}{Structure agent}\label{example:structure}
+A typical example of a structure agent is a protein where the atomic agents are individual amino acids that are of interest in the particular setting.
 
+\begin{example}{Structure agent}\label{example:structure}
 \begin{itemize}
 \item A structure agent $\mathtt{T}_1 = (K, \textcolor{red}{\{}(S, p), (Q, i)\textcolor{red}{\}})$
 \item A structure agent $\mathtt{T}_2 = (K, \textcolor{red}{\{}(Q, a)\textcolor{red}{\}})$
@@ -464,21 +470,25 @@ Let $\mathcal{T}$ be universe of all possible structure agents.
 
 \noindent\rule{\textwidth}{1pt}
 
-\begin{definition}{Complex}
-
-\begin{itemize}
-\item Complex $\mathtt{X}$ is a pair $(\mu, \mathtt{com})$ where $\mu \in (\mathcal{A} \cup \mathcal{T})^n$ is a sequence and $\mathtt{com} \in \mathcal{N}_{c}$ is a compartment.
-
-\item Let $\mathtt{X}, \mathtt{X}'$ be complexes. We denote length of sequence $\mu$ as $n = \mu(\mathtt{X})$ and $m = \mu(\mathtt{X}')$. 
-
-\item Equivalence: $\mathtt{X} \equiv \mathtt{X}' \Leftrightarrow n \equiv m \wedge \exists $ permutation $ \mu'(\mathtt{X}')$ of $\mu(\mathtt{X}')$ such that $\forall i~\in~[1,~n]: \mu(\mathtt{X})_i \equiv \mu'(\mathtt{X}')_i$.
-\end{itemize}
+\begin{definition}{Complex agent}
+Complex agent $\mathtt{X}$ is a pair $(\mu, \mathtt{com})$ where $\mu \in (\mathcal{A} \cup \mathcal{T})^n$ is a sequence and $\mathtt{com} \in \mathcal{N}_{c}$ is a compartment.
 \end{definition}
+
+A complex agent represents a non-trivial composite biochemical object that is (inductively) constructed from already known biological objects. In common rule-based languages this is typically defined by introducing some kind of bonds between individual biochemical objects. In BCSL we abstract from detailed specification of bonds and we rather assume a complex as a coexistence of certain objects in a particular group. Moreover, a complex agent resides in a compartment, which gives it a space position. 
+
+\begin{notation}
+Let $\mathtt{X}$ be a complex agent. We denote length of sequence $\mu$ as $\mathtt{len}(\mathtt{X})$. 
+\end{notation}
+
+\begin{definition}{Equivalence of complex agents}
+Let $\mathtt{X}, \mathtt{X}'$ be complexes. $\mathtt{X}$ is \emph{equivalent} with $\mathtt{X}'$, written $\mathtt{X} \equiv \mathtt{X}'$, iff $\mathtt{len}(\mathtt{X}) \equiv \mathtt{len}(\mathtt{X'}) \wedge \exists $ permutation $ \mu'(\mathtt{X}')$ of $\mu(\mathtt{X}')$ such that $\forall i~\in~[1,~n]: \mu(\mathtt{X})_i \equiv \mu'(\mathtt{X}')_i$.
+\end{definition}
+
+The key element of a complex agent is \emph{full composition} describing inductively constructed coexistence expressions from existing agents. In contrast to partial composition in structure agent, we allow replication at the level of full composition (an agent of a certain name can appear more than once in a full composition).
 
 \begin{notation}
 Let $\mathcal{X}$ be universe of all possible complexes.
 \end{notation}
-
 
 \begin{example}{Complex}\label{example:complex}
 
@@ -550,9 +560,7 @@ where $n, m \in \mathbb{N}$.
 
 \section{Syntax}
 
-\begin{definition}
-\textit{Grammar.}
-
+\begin{definition}{Grammar}
 \begin{center}
 \begin{tabular}{ l l }
 atomic expression & $\mathtt{a} ::= \mu\{s\} ~|~ ? \mu$\\
@@ -830,7 +838,7 @@ $ $
 
 We allow rules to be bi-directional -- it is just a shortcut for two rules and it can be converted to basic rule form. A rule $\mathtt{R} = \lambda ~\Leftrightarrow~ \rho$ might be written as two rules $\mathtt{R}_1 = \lambda ~\Rightarrow~ \rho$ and $\mathtt{R}_2 = \rho ~\Rightarrow~ \lambda$.
 
-\begin{definition}\label{rules:directions}
+\begin{definition}{Rule syntax definition}\label{rules:directions}
 \emph{Extension of Definition~\ref{rules} by directions.}
 
 \begin{center}
@@ -863,7 +871,7 @@ For each side $\Gamma = (\mathcal{E}_1, \mathcal{E}_2, \ldots, \mathcal{E}_n)$ o
 
 Note that this process is fully reversible, so agent enumeration in basic form can be easily reconstructed.
 
-\begin{definition}\label{rules:stoichiometry}
+\begin{definition}{Stoichiometry}\label{rules:stoichiometry}
 \emph{Extension of Definition~\ref{rules:directions} by stoichiometry.}
 
 \begin{center}
@@ -890,7 +898,7 @@ $ $
 
 \subsection{Locations}
 
-\begin{definition}\label{rules:locations}
+\begin{definition}{Locations}\label{rules:locations}
 \emph{Extension of Definition~\ref{rules:stoichiometry} by locations.}
 
 \begin{center}
@@ -913,7 +921,7 @@ $ $
 
 According to Definition~\ref{rules:locations}, there are three cases when operator `::' might appear between two rule agents. For each such case, we define neccesary condition, when this notation is allowed.
 
-\begin{definition}\label{locations:conditions}
+\begin{definition}{conditions}\label{locations:conditions}
 \emph{Locations conditions.}
 
 \begin{enumerate}
@@ -945,7 +953,7 @@ $ $
 
 \subsection{Variables}
 
-\begin{definition}\label{rules:variables}
+\begin{definition}{variables}\label{rules:variables}
 \emph{Extension of Definition~\ref{rules:locations} by variables.}
 
 \begin{center}
@@ -1006,6 +1014,10 @@ problem of model checking, why it is problem, how it works (see my BT)
  - we focus on reachability in general in this theses, later could be extended to entire model checking problem
 
 such as simulation, model checking (reachability)
+
+explain that state space might be unbounded, disscuss what does it mean, use definition from petri net
+
+ - ref to static analysis for obtaining optimal upper bound for agents
 
 \subsection{Disscussion about rates and how they could be solved}
 
@@ -1154,6 +1166,12 @@ A rule is called dead, if there is no trace starting from the initial state in w
 \subsection{Detection of dead agents}
 
 An agent is called dead, if there is no trace starting from the initial state with at least one state in which this agent occurs. The analysis reports the list of the agents it has detected to be dead.
+
+\subsection{Optimal bound computations}
+
+explain how and why we do it
+
+define
 
 \chapter{Implementation}
 
