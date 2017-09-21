@@ -484,7 +484,7 @@ Let $\mathtt{X}$ be a complex agent. We denote length of sequence $\mu$ as $\mat
 Let $\mathtt{X}, \mathtt{X}'$ be complexes. $\mathtt{X}$ is \emph{equivalent} with $\mathtt{X}'$, written $\mathtt{X} \equiv \mathtt{X}'$, iff $\mathtt{len}(\mathtt{X}) \equiv \mathtt{len}(\mathtt{X'}) \wedge \exists $ permutation $ \mu'(\mathtt{X}')$ of $\mu(\mathtt{X}')$ such that $\forall i~\in~[1,~n]: \mu(\mathtt{X})_i \equiv \mu'(\mathtt{X}')_i$.
 \end{definition}
 
-The key element of a complex agent is \emph{full composition} describing inductively constructed coexistence expressions from existing agents. In contrast to partial composition in structure agent, we allow replication at the level of full composition (an agent of a certain name can appear more than once in a full composition).
+The key element of a complex agent is \emph{sequence} describing inductively constructed coexistence expressions from existing agents. In contrast to partial composition in structure agent, we allow replication at the level of sequence (an agent of a certain name can appear more than once in a sequence).
 
 \begin{notation}
 Let $\mathcal{X}$ be universe of all possible complexes.
@@ -496,6 +496,8 @@ Let $\mathcal{X}$ be universe of all possible complexes.
 \item A complex $\mathtt{X} = (\textcolor{green}{(}(K, \textcolor{red}{\{}(S, p), (Q, i)\textcolor{red}{\}}), (S, p)\textcolor{green}{)}, cytosol)$
 \end{itemize}
 \end{example}
+
+The complex agents have very important role in the language. In the rules defined in following, we can always use only complexes. It means, an atomic or structure agent cannot exist on its own, it must be encapsulated in a complex -- it might have only one item in its sequence. Morover, this guarantees each atomic and strucure agent has indirectly given space location -- the compartment.
 
 \noindent\rule{\textwidth}{1pt}
 
@@ -513,6 +515,8 @@ Rule $\mathtt{R}$ is a 5-tuple $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt
 
 where $n, m \in \mathbb{N}$.
 \end{definition}
+
+As can be seen, rule is quite a complicated structure. The reason is the practical definition of semantics which in following section (ref). Also, it is neccessary to capture relationship between left- and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map between the agents in $\mathtt{Indices}$. Another index map $\mathtt{map}$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, with $\mathtt{I}$ we determining the beggining of right-hand side of the rule.
 
 \begin{example}{Rule}\label{example:rule}
 
@@ -556,19 +560,23 @@ Reaction $\mathtt{r}$ is a pair $(\mathtt{seq}, \mathtt{I})$ where:
 where $n, m \in \mathbb{N}$.
 \end{definition}
 
+Reaction is similar structure than rule, but much simplier. The reaction is just mediate format for giving semantics to BCSL models and it only holds information about complex contents of the rule. 
+
 \noindent\rule{\textwidth}{2pt}
 
 \section{Syntax}
 
+In this section, we define grammar for the BCSL. As proposed in (ref), the syntax must be simple and readable. It was already defined in (cite), here we give just simplified version of the definition.
+
 \begin{definition}{Grammar}
 \begin{center}
 \begin{tabular}{ l l }
-atomic expression & $\mathtt{a} ::= \mu\{s\} ~|~ ? \mu$\\
+atomic expression & $\mathtt{a} ::= \mu\{s\} ~|~ \mu$\\
  & $\mu ::= n \in \mathcal{N}_{A}$ \\
  & $s ::= n \in \mathcal{N}_{\delta}$\\
  & \\
 structure expression & $\mathtt{t} ::= \mu(\gamma) ~|~ \mu$\\
- & $\gamma ::= \mathtt{a}_1, \ldots, \mathtt{a}_m$ \\
+ & $\gamma ::= \mathtt{a}_1, \ldots, \mathtt{a}_k$ \\
  & $\mu ::= n \in \mathcal{N}_{T}$\\
  & \\
 complex expression & $\Gamma ::= \alpha_1~.~\ldots~.~\alpha_k :: c$\\
