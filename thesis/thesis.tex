@@ -416,11 +416,11 @@ Signatures define for an atomic name allowed set of state names and for a struct
 \noindent\rule{\textwidth}{1pt}
 
 \begin{definition}{Atomic agent}
-Atomic agent $\mathtt{A}$ is a pair $(\mu, \delta)$ where $\mu \in \mathcal{N}_{A}$ is a name and $\delta~\in~\mathcal{N}_{\delta} \cup \{ \varepsilon \}$ is a state.
+Atomic agent $\mathtt{A}$ is a pair $(\eta, \delta)$ where $\eta \in \mathcal{N}_{A}$ is a name and $\delta~\in~\mathcal{N}_{\delta} \cup \{ \varepsilon \}$ is a state.
 \end{definition}
 
 \begin{definition}{Equivalence of atomic agents}
-Let $\mathtt{A}, \mathtt{A}'$ be atomic agents. $\mathtt{A}$ is \emph{equivalent} with $\mathtt{A}'$, written $\mathtt{A} \equiv \mathtt{A}'$, iff $\mu(\mathtt{A}) \equiv \mu(\mathtt{A}') \wedge \delta(\mathtt{A}) \equiv \delta(\mathtt{A}')$.
+Let $\mathtt{A}, \mathtt{A}'$ be atomic agents. $\mathtt{A}$ is \emph{equivalent} with $\mathtt{A}'$, written $\mathtt{A} \equiv \mathtt{A}'$, iff $\eta(\mathtt{A}) \equiv \eta(\mathtt{A}') \wedge \delta(\mathtt{A}) \equiv \delta(\mathtt{A}')$.
 \end{definition}
 
 Note: maybe the definition of equivalence should be done only on names (due tu partial composition in structs).
@@ -444,13 +444,13 @@ Please note state $\varepsilon$ does not mean the agent is in \emph{none} state,
 \noindent\rule{\textwidth}{1pt}
 
 \begin{definition}{Structure agent}
-Structure agent $\mathtt{T}$ is a pair $(\mu, \gamma)$ where $\mu \in \mathcal{N}_{T}$ is a name and $\gamma \subseteq \mathcal{A}$ is a set of atomic agents called partial composition.
+Structure agent $\mathtt{T}$ is a pair $(\eta, \gamma)$ where $\eta \in \mathcal{N}_{T}$ is a name and $\gamma \subseteq \mathcal{A}$ is a set of atomic agents called partial composition.
 \end{definition}
 
 A structure agent represents a biochemical object that is composed from several known atomic agents provided that we know that such a composition is abstract and not necessarily complete. To incorporate such an abstraction of biological structures into our language, a structure agent is defined to be labelled with a unique name and it is constructed only from atomic agents considered in the same physical compartment.
 
 \begin{definition}{Equivalence of structure agents}
-Let $\mathtt{T}, \mathtt{T}'$ be structure agents. $\mathtt{T}$ is \emph{equivalent} with $\mathtt{T}'$, written $\mathtt{T} \equiv \mathtt{T}'$, iff $\mu(\mathtt{T}) \equiv \mu(\mathtt{T}') \wedge \forall \mathtt{A} \in \gamma(\mathtt{T}) \exists \mathtt{A}' \in \gamma(\mathtt{T}') : \mathtt{A} \equiv \mathtt{A}' \wedge \forall \mathtt{A}' \in \gamma(\mathtt{T}') ~\exists \mathtt{A} \in \gamma(\mathtt{T}) : \mathtt{A}' \equiv \mathtt{A}$.
+Let $\mathtt{T}, \mathtt{T}'$ be structure agents. $\mathtt{T}$ is \emph{equivalent} with $\mathtt{T}'$, written $\mathtt{T} \equiv \mathtt{T}'$, iff $\eta(\mathtt{T}) \equiv \eta(\mathtt{T}') \wedge \forall \mathtt{A} \in \gamma(\mathtt{T}) \exists \mathtt{A}' \in \gamma(\mathtt{T}') : \mathtt{A} \equiv \mathtt{A}' \wedge \forall \mathtt{A}' \in \gamma(\mathtt{T}') ~\exists \mathtt{A} \in \gamma(\mathtt{T}) : \mathtt{A}' \equiv \mathtt{A}$.
 \end{definition}
 
 The key construct of a structure agent is \emph{partial composition} defined as a list of atomic agents which are considered to be relevant parts of the structure agent. We allow this list to be empty, in that case the meaning is a biological structure for which we do not know its composition.
@@ -571,13 +571,13 @@ In this section, we define grammar for the BCSL. As proposed in (ref), the synta
 \begin{definition}{Grammar}
 \begin{center}
 \begin{tabular}{ l l }
-atomic expression & $\mathtt{a} ::= \mu\{s\} ~|~ \mu$\\
- & $\mu ::= n \in \mathcal{N}_{A}$ \\
+atomic expression & $\mathtt{a} ::= \eta\{s\} ~|~ \eta$\\
+ & $\eta ::= n \in \mathcal{N}_{A}$ \\
  & $s ::= n \in \mathcal{N}_{\delta}$\\
  & \\
-structure expression & $\mathtt{t} ::= \mu(\gamma) ~|~ \mu$\\
+structure expression & $\mathtt{t} ::= \eta(\gamma) ~|~ \eta$\\
  & $\gamma ::= \mathtt{a}_1, \ldots, \mathtt{a}_k$ \\
- & $\mu ::= n \in \mathcal{N}_{T}$\\
+ & $\eta ::= n \in \mathcal{N}_{T}$\\
  & \\
 complex expression & $\Gamma ::= \alpha_1~.~\ldots~.~\alpha_k :: c$\\
  & $\alpha_i ::= \mathtt{a} ~|~ \mathtt{t}$\\
@@ -821,26 +821,11 @@ $\vv{r} = \lambda(RHS(\mathtt{r}), \pi) - \lambda(LHS(\mathtt{r}), \pi)$
 
 \section{Syntactic extensions}
 
-TWe define several syntactic extensions for better readability of the rules. Note that each rule in a extended form can be always translated to basic form defined above. All rules containing the following extensions must be converted to basic form before semantics can be applied.
+We define several syntactic extensions for better readability of the rules. Note that each rule in a extended form can be always translated to basic form defined above. All rules containing the following extensions must be converted to basic form before semantics can be applied.
 
-\begin{notation}\label{shortcut:structure}
-Since all the atomic agents have the same compartment as their structure agent, we can shorten the notation by omitting compartments in the atomic agent expressions of a partial composition expression.
-\end{notation}
-
-\begin{notation}\label{shortcut:complex}
-Since all the atomic and structure agents have the same compartment as their complex agent, we can shorten the notation by omitting compartments in the atomic and structure agent expressions of the full composition expression.
-\end{notation}
-
-Previous notations should be improved to make it clear.
+For better demonstration, we give running example, which will go through all syntactic extensions.
 
 \begin{runningExample}\label{run1}
-$ $
-
-\noindent Definitions of signatures: 
-\begin{itemize}
-\item $KaiC3::cyt = KaiC.KaiC.KaiC::cyt$
-\item $KaiBC::cyt = KaiC.KaiB::cyt$
-\end{itemize}
 
 \noindent Definitions of rules:
 \begin{enumerate}
@@ -851,23 +836,22 @@ $ $
 \end{enumerate}
 \end{runningExample}
 
+\subsection{Complex signature}
+
+We extend model definition by complex signature $\Sigma_\mathtt{X}$ on syntactic level. In this signature, there are defined aliases for valid complex agent expressions. Then, simple \emph{replace} method is used to substitute original expression by the alias.
+
+\begin{runningExample}\label{run1.1}
+
+\noindent Definitions of complex signatures:
+\begin{itemize}
+\item $KaiC3::cyt = KaiC.KaiC.KaiC::cyt$
+\item $KaiBC::cyt = KaiC.KaiB::cyt$
+\end{itemize}
+\end{runningExample}
+
 \subsection{Directions}
 
 We allow rules to be bi-directional -- it is just a shortcut for two rules and it can be converted to basic rule form. A rule $\mathtt{R} = \lambda ~\Leftrightarrow~ \rho$ might be written as two rules $\mathtt{R}_1 = \lambda ~\Rightarrow~ \rho$ and $\mathtt{R}_2 = \rho ~\Rightarrow~ \lambda$.
-
-\begin{definition}{Rule syntax definition}\label{rules:directions}
-\emph{Extension of Definition~\ref{rules} by directions.}
-
-\begin{center}
-{\small
-\hspace*{-1cm}\begin{tabular}{ l l }
- rule expression & $\mathtt{R} ::= \Gamma ~\Rightarrow~ \Gamma ~|~ \Gamma ~\Rightarrow ~|~ \Rightarrow~ \Gamma ~|~ \Gamma ~\Leftrightarrow~ \Gamma ~|~ \Gamma ~\Leftrightarrow ~|~ \Leftrightarrow~ \Gamma $\\
- agent enumeration & $\Gamma ::= \mathcal{E}~ +~\Gamma ~|~ \mathcal{E}$\\
- rule agent & $\mathcal{E} ::= n \in \mathcal{E}_\mathcal{A}~|~n \in \mathcal{E}_\mathcal{T}~|~n \in \mathcal{E}_\mathcal{X}$\\
-\end{tabular}
-}
-\end{center}
-\end{definition}
 
 \begin{runningExample}\label{run2}
 $ $
@@ -888,22 +872,6 @@ For each side $\Gamma = (\mathcal{E}_1, \mathcal{E}_2, \ldots, \mathcal{E}_n)$ o
 
 Note that this process is fully reversible, so agent enumeration in basic form can be easily reconstructed.
 
-\begin{definition}{Stoichiometry}\label{rules:stoichiometry}
-\emph{Extension of Definition~\ref{rules:directions} by stoichiometry.}
-
-\begin{center}
-{\small
-\hspace*{-1cm}\begin{tabular}{ l l }
- rule expression & $\mathtt{R} ::= \Gamma ~\Rightarrow~ \Gamma ~|~ \Gamma ~\Rightarrow ~|~ \Rightarrow~ \Gamma ~|~ \Gamma ~\Leftrightarrow~ \Gamma ~|~ \Gamma ~\Leftrightarrow ~|~ \Leftrightarrow~ \Gamma $\\
- agent enumeration & $\Gamma ::= \mathcal{E}~ +~\Gamma ~|~ \mathcal{E}$\\
- extended rule agent & $\mathcal{E} ::= \mu ~~ \phi$\\
- stoichiometry & $\mu ::= i \in \mathbb{N}$\\
- rule agent & $\phi ::= n \in \mathcal{E}_\mathcal{A}~|~n \in \mathcal{E}_\mathcal{T}~|~n \in \mathcal{E}_\mathcal{X}$\\
-\end{tabular}
-}
-\end{center}
-\end{definition}
-
 \begin{runningExample}\label{run3}
 $ $
 
@@ -915,28 +883,7 @@ $ $
 
 \subsection{Locations}
 
-\begin{definition}{Locations}\label{rules:locations}
-\emph{Extension of Definition~\ref{rules:stoichiometry} by locations.}
-
-\begin{center}
-{\small
-\hspace*{-1cm}\begin{tabular}{ l l }
- rule expression & $\mathtt{R} ::= \Gamma ~\Rightarrow~ \Gamma ~|~ \Gamma ~\Rightarrow ~|~ \Rightarrow~ \Gamma ~|~ \Gamma ~\Leftrightarrow~ \Gamma ~|~ \Gamma ~\Leftrightarrow ~|~ \Leftrightarrow~ \Gamma $\\
- agent enumeration & $\Gamma ::= \mathcal{E}~ +~\Gamma ~|~ \mathcal{E}$\\
- extended rule agent & $\mathcal{E} ::= \mu ~~ \phi$\\
- stoichiometry & $\mu ::= i \in \mathbb{N}$\\
- locations1 & $\phi ::= \beta ~|~ \mathtt{A} :: \alpha ~|~ \mathtt{T}::\mathtt{X}$\\
- locations2 & $\alpha ::= \mathtt{T} ~|~ \mathtt{X} ~|~ \mathtt{T} :: \mathtt{X}$\\
- rule agent & $\beta ::= \mathtt{A} ~|~ \mathtt{T} ~|~ \mathtt{X}$\\
- atomic rule agent & $\mathtt{A} ::= n \in \mathcal{E}_\mathcal{A}$\\
- structure rule agent & $\mathtt{T} ::= n \in \mathcal{E}_\mathcal{T}$\\
- complex rule agent & $\mathtt{X} ::= n \in \mathcal{E}_\mathcal{X}$\\
-\end{tabular}
-}
-\end{center}
-\end{definition}
-
-According to Definition~\ref{rules:locations}, there are three cases when operator `::' might appear between two rule agents. For each such case, we define neccesary condition, when this notation is allowed.
+We define neccesary condition, when this notation is allowed.
 
 \begin{definition}{conditions}\label{locations:conditions}
 \emph{Locations conditions.}
@@ -949,10 +896,6 @@ According to Definition~\ref{rules:locations}, there are three cases when operat
 \item $\mathtt{T}::\mathtt{X}$ $\Leftrightarrow$ there exists $\mathtt{T}' \in \gamma_f$ of $\mathtt{X}$ such that $\mathtt{T} \lhd \mathtt{T}'$ and $\mathtt{c}(\mathtt{T}) = \mathtt{c}(\mathtt{X})$.
 \end{enumerate}
 \end{definition}
-
-\begin{notation}
-Note that a compartment of all agents is restricted to be the same. Assuming this restriction, we can shorten the notation by omitting compartments in all agents except the most right one.
-\end{notation}
 
 For each pair of agents $(\alpha, \beta)$ with allowed `::' operator between them $\alpha :: \beta$, we can construct just one agent $\beta'$ without the operator by taking most-left agent $\alpha'$ from full (resp. partial) composition of the agent $\beta$ such that it is \emph{compatible with} the agent $\alpha$ ($\alpha' \lhd \alpha$). Then, agent $\alpha'$ is simply replaced by agent $\alpha$ and agent $\beta'$ is constructed.
 
@@ -970,35 +913,6 @@ $ $
 
 \subsection{Variables}
 
-\begin{definition}{variables}\label{rules:variables}
-\emph{Extension of Definition~\ref{rules:locations} by variables.}
-
-\begin{center}
-{\small
-\hspace*{-1cm}\begin{tabular}{ l l }
-rule expression & $\mathtt{R} ::= \Gamma ~\Rightarrow~ \Gamma ~\nu ~|~ \Gamma ~\Rightarrow ~\nu ~|~ \Rightarrow~ \Gamma ~\nu ~|~ \Gamma ~\Leftrightarrow~ \Gamma ~\nu ~|~ \Gamma ~\Leftrightarrow ~\nu ~|~ \Leftrightarrow~ \Gamma ~\nu $\\
- agent enumeration & $\Gamma ::= \mathcal{E}~ +~\Gamma ~|~ \mathcal{E}$\\
- extended rule agent & $\mathcal{E} ::= \mu ~~ \phi$\\
- stoichiometry & $\mu ::= i \in \mathbb{N}$\\
- locations1 & $\phi ::= \beta ~|~ \mathtt{A} :: \alpha ~|~ \mathtt{T}::\mathtt{X} ~|~ ?X::\mathtt{X} ~|~ \mathtt{T}::?X$\\
- locations2 & $\alpha ::= \mathtt{T} ~|~ \mathtt{X} ~|~ \mathtt{T} :: \mathtt{X} ~|~ ?X ~|~ ?X::\mathtt{X} ~|~ \mathtt{T}::?X$\\
- rule agent & $\beta ::= \mathtt{A} ~|~ \mathtt{T} ~|~ \mathtt{X} ~|~ ?X$\\
- atomic rule agent & $\mathtt{A} ::= n \in \mathcal{E}_\mathcal{A}$\\
- structure rule agent & $\mathtt{T} ::= n \in \mathcal{E}_\mathcal{T}$\\
- complex rule agent & $\mathtt{X} ::= n \in \mathcal{E}_\mathcal{X}$\\
-
-& $\nu ::=~ ;~\upsilon$\\
-& $\upsilon ::=~?X = \{\phi\}$\\
-& $\phi ::=~\phi_1~|~\phi_2~|~\phi_3$\\
-& $\phi_1 ::= \mathtt{A},~\phi_1~|~\mathtt{A}$\\
-& $\phi_2 ::= \mathtt{T},~\phi_2~|~\mathtt{T}$\\
-& $\phi_3 ::= \mathtt{X},~\phi_3~|~\mathtt{X}$\\
-\end{tabular}
-}
-\end{center}
-
-\end{definition}
-
 In a rule, one rule agent might be referenced using variable $\upsilon$ as a set of agents it can be replaced with. Such a rule agent is referenced as $?X$. Moreover, in case when a $?X$ is used in a location, it must hold conditions from Definition~\ref{locations:conditions}.
 
 Once again, each rule associated with variable can be easily rewritten as several rules where variable is replaced with agent from set of agents attached to the variable. Please note, according to Definition~\ref{rules:variables}, only one variable can be used per rule.
@@ -1011,7 +925,6 @@ $ $
 \item $S\{u\}::KaiC::~?X::cyt \Rightarrow S\{p\}::KaiC::~?X::cyt ~;~ ?X = \{KaiC3, KaiBC\} $
 \end{enumerate}
 \end{runningExample}
-
 
 \chapter{Analysis}
 
@@ -1081,20 +994,20 @@ Arbitrary kinetics might be used, but both rule and kinetics must be defined ver
 
 The language itself offers interesting capabilities in order to provide static analysis of given models. In order to provide such properties we define \emph{compatibility} operator $\lhd$ for each type of agents and complexes.
 
-\begin{definition}
-Let $\mathtt{A}_1$, $\mathtt{A}_2$ be atomic agents. Then, we say $\mathtt{A}_1$ is \emph{compatible with} $\mathtt{A}_2$, written $\mathtt{A}_1 \lhd \mathtt{A}_2$, if either $\mathtt{A}_1 \equiv \mathtt{A}_2$ or $\mu(\mathtt{A}_1) \equiv \mu(\mathtt{A}_2) \wedge \delta(\mathtt{A}_1) \equiv \varepsilon $.
+\begin{definition}{Compatiblity of atomic agents}
+Let $\mathtt{A}_1$, $\mathtt{A}_2$ be atomic agents. Then, we say $\mathtt{A}_1$ is \emph{compatible with} $\mathtt{A}_2$, written $\mathtt{A}_1 \lhd \mathtt{A}_2$, if either $\mathtt{A}_1 \equiv \mathtt{A}_2$ or $\eta(\mathtt{A}_1) \equiv \eta(\mathtt{A}_2) \wedge \delta(\mathtt{A}_1) \equiv \varepsilon $.
 \end{definition}
 
 Note that compatibility of two atomic agents is very close to their equivalance, but the left-hand-side agent is allowed to have its state undefined. 
 
-\begin{definition}
-Let $\mathtt{T}_1$, $\mathtt{T}_2$ be structure agents. We say $\mathtt{T}_1$ is \emph{compatible with} $\mathtt{T}_2$, written $\mathtt{T}_1 \lhd \mathtt{T}_2$, iff either $\mathtt{T}_1 \equiv \mathtt{T}_2$ or $\mu(\mathtt{T}_1) \equiv \mu(\mathtt{T}_2) \wedge \forall \mathtt{A}_1$ : $\mathtt{A}_1 \in \gamma(\mathtt{T}_1) ~\exists \mathtt{A}_2 : \mathtt{A}_2 \in \gamma(\mathtt{T}_2)$ : $\mathtt{A}_1 \lhd \mathtt{A}_2$.
+\begin{definition}{Compatiblity of structure agents}
+Let $\mathtt{T}_1$, $\mathtt{T}_2$ be structure agents. We say $\mathtt{T}_1$ is \emph{compatible with} $\mathtt{T}_2$, written $\mathtt{T}_1 \lhd \mathtt{T}_2$, iff either $\mathtt{T}_1 \equiv \mathtt{T}_2$ or $\eta(\mathtt{T}_1) \equiv \eta(\mathtt{T}_2) \wedge \forall \mathtt{A}_1$ : $\mathtt{A}_1 \in \gamma(\mathtt{T}_1) ~\exists \mathtt{A}_2 : \mathtt{A}_2 \in \gamma(\mathtt{T}_2)$ : $\mathtt{A}_1 \lhd \mathtt{A}_2$.
 \end{definition}
 
 In other words, structure agents are compatible, if we can create pairs from atomic agents of left-hand-side agent's composition with the right-hand-ones such that these atomic agents are all unique. For such pairs, the agents in each pair must be compatible.
 
-\begin{definition}
-Let $\mathtt{X}_1$, $\mathtt{X}_2$ be complexes. We say $\mathtt{X}_1$ is \emph{compatible with} $\mathtt{X}_2$, written $\mathtt{X}_1 \lhd \mathtt{X}_2$, iff either $\mathtt{X}_1 \equiv \mathtt{X}_2$ or $\mu(\mathtt{T}_1) \equiv \mu(\mathtt{T}_2) \wedge \exists$ permutation $ \mu(\mathtt{X}'_2)$ of $\mu(\mathtt{X}_2)$ such that $ \forall i \in [1, n] : \mu(\mathtt{X}_1)_i \lhd \mu(\mathtt{X}'_2)_i $, where $n$ is length of sequence which is same for both sequencies.
+\begin{definition}{Compatiblity of complex agents}
+Let $\mathtt{X}_1$, $\mathtt{X}_2$ be complex agents. We say $\mathtt{X}_1$ is \emph{compatible with} $\mathtt{X}_2$, written $\mathtt{X}_1 \lhd \mathtt{X}_2$, iff either $\mathtt{X}_1 \equiv \mathtt{X}_2$ or $\exists$ permutation $ \mu(\mathtt{X}'_2)$ of $\mu(\mathtt{X}_2)$ such that $ \forall i \in [1, n] : \mu(\mathtt{X}_1)_i \lhd \mu(\mathtt{X}'_2)_i $, where $n$ is length of sequence which is same for both sequencies.
 \end{definition}
 
 Compatibility for complexes means that every pair of agents through the sequences of complexes must be compatible.
