@@ -24,8 +24,8 @@
 
 \newcounter{counter}[section]
 \renewcommand{\thecounter}{\thesection.\arabic{counter}}
-\newenvironment{definition}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Definition \thecounter } #1 \par\nopagebreak}{\bigskip}
-\newenvironment{example}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Example \thecounter} #1 \par\nopagebreak}{\bigskip}
+\newenvironment{definition}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Definition \thecounter } \textit{#1} \par\nopagebreak}{\bigskip}
+\newenvironment{example}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Example \thecounter} \textit{#1} \par\nopagebreak}{\bigskip}
 \newenvironment{notation}{\bigskip\refstepcounter{counter}\noindent\textbf{Notation \thecounter}\par\nopagebreak}{\bigskip}
 \newenvironment{proof}{\bigskip\refstepcounter{counter}\noindent\textbf{Proof \thecounter}\par\nopagebreak}{\bigskip}
 \newenvironment{runningExample}{\bigskip\refstepcounter{counter}\noindent\textbf{Running example \thecounter}\par\nopagebreak}{\bigskip}
@@ -626,7 +626,7 @@ Before we proceed, there are few neccesary definitions.
 Let $T = (\tau_1, \ldots, \tau_n)$ be sequence of tuples where $\tau_i = (x_1^i, \ldots, x_m^i)$. Concatenation of sequence of tuples $\bullet_{\tau \in T} (\tau)$ is defined as:
 
 \begin{center}
-$\bullet_{\tau \in T}^n (\tau) = (x_1^1, \ldots, x_m^1, x_1^2, \ldots, x_l^2, \ldots \ldots, x_1^n, \ldots, x_k^n)$.
+$\bullet_{\tau \in T} (\tau) = (x_1^1, \ldots, x_m^1, x_1^2, \ldots, x_l^2, \ldots \ldots, x_1^n, \ldots, x_k^n)$.
 \end{center}
 \end{definition}
 
