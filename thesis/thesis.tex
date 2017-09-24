@@ -30,6 +30,8 @@
 \newenvironment{proof}{\bigskip\refstepcounter{counter}\noindent\textbf{Proof \thecounter}\par\nopagebreak}{\bigskip}
 \newenvironment{runningExample}{\bigskip\refstepcounter{counter}\noindent\textbf{Running example \thecounter}\par\nopagebreak}{\bigskip}
 
+\newcommand\mdoubleplus{\mathbin{+\mkern-7mu+}}
+
 \usepackage[
     backend=biber,      % use biber as backend instead of BiBTeX
     style=alphabetic,   % citation style
@@ -623,10 +625,19 @@ Before we proceed, there are few neccesary definitions.
 
 \begin{definition}{Tuples concatenation}
 
-Let $T = (\tau_1, \ldots, \tau_n)$ be sequence of tuples where $\tau_i = (x_1^i, \ldots, x_m^i)$. Concatenation of sequence of tuples $\bullet_{\tau \in T} (\tau)$ is defined as:
+Let $X = (x_1, \ldots, x_n), Y = (y_1, \ldots, y_m)$ be two tuples for some $n, m \in \mathbb{N}$. Concatenation of two tuples, written $X \mdoubleplus Y$, is defined as:
 
 \begin{center}
-$\bullet_{\tau \in T} (\tau) = (x_1^1, \ldots, x_m^1, x_1^2, \ldots, x_l^2, \ldots \ldots, x_1^n, \ldots, x_k^n)$.
+$X \mdoubleplus Y = (x_1, \ldots, x_n, y_1, \ldots, y_m)$.
+\end{center}
+\end{definition}
+
+\begin{definition}{Sum of concatenations}
+
+Let $T = (T_1, T_2, \ldots, T_n)$ be sequence of tuples where $\tau_i = (x_{i_1}, \ldots, x_{i_m})$. Concatenation of sequence of tuples $\Xi_{i=1}^n T_i$ is defined as:
+
+\begin{center}
+$\Xi_{i=1}^n T_i = T_1 \mdoubleplus T_2 \mdoubleplus \ldots \mdoubleplus T_n $
 \end{center}
 \end{definition}
 
@@ -677,7 +688,7 @@ $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$~ such that:\\
 \begin{center}
 \begin{itemize}
 \item $\chi = (\mathtt{F} \llbracket ~\Gamma_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_n~ \rrbracket, \mathtt{F} \llbracket ~\Gamma_{n+1}~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_m~ \rrbracket)$,
-\item $\omega = \bullet_{\mathtt{X} \in \chi} (\mu(\mathtt{X}))$ !!!
+\item $\omega = \Xi_{i=1}^{|\chi|} \mu(\chi_i)$
 \item $\mathtt{I} = n$
 \item $\mathtt{map} = (J_1, \ldots, J_m): J_i = \sum_{y=1}^{i} | \mu(\chi_i) |$
 \item \begin{tabular}{c l}
