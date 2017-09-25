@@ -755,16 +755,18 @@ $\mathtt{reassemble}(\mathcal{G}(\mathtt{R})) = \{~  \tau ~|~ \tau = \Xi_{i=1}^{
 
 Given a rule $\mathtt{R}$, we can produce appropriate reactions using ground forms and reassembly:
 
-\begin{tabular}{ ll }
-$\mathtt{Reactions}(\mathtt{R}) =$ & $\{~ \mathtt{r}(\mathtt{seq}, \mathtt{I}) ~|~ T \in \mathtt{reassemble}(\mathcal{G}(\mathtt{R})) ~\wedge$\\
+\hspace*{-0.8cm}\begin{tabular}{ r l }
+$\mathtt{Reactions}(\mathtt{R}) =$ & $\{~ \mathtt{r}(\mathtt{seq}, \mathtt{I}) ~|~ T \in \mathtt{reassemble}(\mathcal{G}(\mathtt{R})) ~\}$,\\
 
-& $seq = (\mathtt{X}(T(0, \ldots, \mathtt{map}(\mathtt{R})[0] - 1), \mathtt{com}(\chi(0))),$ \\
+where $seq =$ & $ \big(\mathtt{X}(T(0, \ldots, \mathtt{map}(0) - 1), \mathtt{com}(\chi(0))),$ \\
 
-& $\mathtt{X}(T(\mathtt{map}(\mathtt{R})[0], \ldots, \mathtt{map}(\mathtt{R})[1] - 1), \mathtt{com}(\chi(1))), \ldots,$\\
+& $\mathtt{X}(T(\mathtt{map}(0), \ldots, \mathtt{map}(1) - 1), \mathtt{com}(\chi(1))), $\\
 
-& $\mathtt{X}(T(\mathtt{map}(\mathtt{R})[|\mathtt{map}(\mathtt{R})| - 1], \ldots, \mathtt{map}(\mathtt{R})[|\mathtt{map}(\mathtt{R})|]), \mathtt{com}(\chi(|\mathtt{map}(\mathtt{R})|)))) ~\wedge$\\
+& \ldots,\\
 
-& $ \mathtt{I} \in \mathtt{R} \wedge \chi \in \mathtt{R} \wedge \mathtt{map}(\mathtt{R}) = (i_1, \ldots, i_n) ~\}$
+& $\mathtt{X}(T(\mathtt{map}(|\mathtt{map}| - 1]), \ldots, \mathtt{map}(|\mathtt{map}|) - 1, \mathtt{com}(\chi(|\mathtt{map}|)))\big) $\\
+
+and $ \mathtt{I} \in \mathtt{R}$ & and $\chi \in \mathtt{R}$ and $\mathtt{map} \in \mathtt{R}.$\\
 \end{tabular}
 
 \noindent\rule{\textwidth}{1pt}
@@ -773,7 +775,7 @@ $\mathtt{Reactions}(\mathtt{R}) =$ & $\{~ \mathtt{r}(\mathtt{seq}, \mathtt{I}) ~
 
 \begin{definition}{Vectorized model}
 
-Vectorized model $\mathcal{M}$ is a triple $(\mathcal{R}, \nu, \pi)$ such that $\mathcal{R} \subseteq \mathbb{Z}^n$ is set of vector reactions, $\nu \in \mathbb{N}_0^n$ is initial vector state, and $\pi \in \chi^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
+Vectorized model $\mathcal{M}$ is a triple $(\mathcal{R}, \nu, \pi)$ such that $\mathcal{R} \subseteq \mathbb{Z}^n$ is set of vector reactions, $\nu \in \mathbb{N}_0^n$ is initial vector state, and $\pi \in \mathcal{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
 \end{definition}
 
 \begin{notation}
@@ -817,9 +819,10 @@ $a_i$ =
 	\end{cases}
 	$
 \end{center}
+\hspace{15pt} where $n = |\pi|$.
 \end{definition}
 
-Let $(\mathtt{S}, \mathtt{R}, \Sigma)$ be a rule-based model. In order to construct vectorized model $\mathcal{M} = (\nu, \mathcal{R}, \pi)$, we need to do following steps:
+Let $\mathtt{M} = (\mathtt{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. In order to construct vectorized model $\mathcal{M} = (\nu, \mathcal{R}, \pi)$, we need to do following steps:
 
 \begin{enumerate}
 \item generate $\mathtt{Reactions}$ as defined in section~\ref{Generating reactions},
