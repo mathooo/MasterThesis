@@ -533,13 +533,15 @@ $\chi = \begin{bmatrix}
 
 (\textcolor{green}{(} (K, \textcolor{red}{\{}(S, p)\textcolor{red}{\}}), (B, \textcolor{red}{\emptyset}), (C, \textcolor{red}{\emptyset}) \textcolor{green}{)}, cyt),\\
 
-(\textcolor{green}{(} (D, a), (A, \varepsilon) \textcolor{green}{)}, cyt) 
+(\textcolor{green}{(} (D, a), (A, \varepsilon) \textcolor{green}{)}, cyt),\\
+
+(\textcolor{green}{(} (H, u) \textcolor{green}{)}, cyt)  
 \end{bmatrix}$
 
 \item $\omega = \begin{bmatrix}
 (K, \textcolor{red}{\{}(S, u)\textcolor{red}{\}}), (B, \textcolor{red}{\emptyset}), (C, \textcolor{red}{\emptyset}), \\
 (D, i), (A, \varepsilon), (K, \textcolor{red}{\{}(S, p)\textcolor{red}{\}}), \\
-(B, \textcolor{red}{\emptyset}), (C, \textcolor{red}{\emptyset}), (D, a), (A, \varepsilon)
+(B, \textcolor{red}{\emptyset}), (C, \textcolor{red}{\emptyset}), (D, a), (A, \varepsilon), (H, u)
 \end{bmatrix}$
 
 \item $\mathtt{I} = 3$
@@ -661,7 +663,7 @@ $\gamma(\mathtt{T}) \ominus \Sigma_T(\mathtt{T}) \Leftrightarrow \{ \mu_\Sigma ~
 
 \section{Semantic function}
 
-In the previous sections, we defined BCSL objects and the syntax. Now, we need to connect these constructs and give the model $\mathtt{M}$ its semanting meaning. For this purpose, we define semantic function $\mathtt{F}$. It is defined recursively according to context given as argument:
+In the previous sections, we defined BCSL objects and the syntax. Now, we need to connect these constructs and give the model $\mathtt{M}$ its semanting meaning. For this purpose, we define semantic function $\mathtt{F}$. It is defined recursively according to expression given as argument:
 
 \begin{center}
 \begin{tabular}{ r c l}
@@ -695,7 +697,7 @@ $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$~ such that:\\
 
 & $\{~ (i,j) ~|~ i \in [1, \mathtt{map}(\mathtt{I})] \wedge j \in [\mathtt{map}(\mathtt{I}), |\omega|] \wedge |i-j| \equiv \mathtt{map}(\mathtt{I})~\} ~\cup$ \\
 $\mathtt{Indices} =$ & $\{~ (i, -) ~|~ i \in [k, \mathtt{map}(\mathtt{I})] \wedge k = |~ \{ \mathtt{map}(\mathtt{I}) + 1, \ldots, | \alpha | \} ~| ~\} ~\cup$\\
- & $ \{~ (-, j) ~|~ j \in [k, |\alpha|] \wedge k = 2 * \mathtt{map}(\mathtt{I}) ~\}$ (!!! ordered set)
+ & $ \{~ (-, j) ~|~ j \in [k, |\alpha|] \wedge k = 2 * \mathtt{map}(\mathtt{I}) ~\}$ (??? ordered set)
 \end{tabular}
 
 \end{itemize}
@@ -708,7 +710,7 @@ Please note by applying semantic function $\mathtt{F}$ on examples from Example~
 
 \section{Ground forms}
 
-Ground form represents appending context to agents according to signature (we assume signature is always available and therefor we omit it in ground form function arguments).
+Ground form represents appending context to agents according to signature (we assume signature is always available and therefore we omit it in ground from function arguments).
 
 Objects are transformed to their ground forms by ground form function $\mathcal{G}$ defined as following:
 
@@ -738,12 +740,12 @@ $\mathtt{R}$ & $\mathcal{G}(\mathtt{R})$ & $ \bigotimes \mathcal{G}(\mathtt{Indi
 \end{tabular}
 \end{center}
 
-where $\bigotimes \mathcal{G}(\mathtt{Indices})^*$ means cartesian product of sets inside of set $\mathcal{G}(\mathtt{Indices})$.
+where $\bigotimes \mathcal{G}(\mathtt{Indices})^*$ means cartesian product of sets inside of tuple $\mathcal{G}(\mathtt{Indices})$.
 
 \noindent Next, we need reassemble produced tuples by concatenation.
 
 \begin{center}
-$\mathtt{reassemble}(\mathcal{G}(\mathtt{R})) = \{~  T ~|~ T = \bullet_{\tau \in \iota} (\tau) \wedge \iota \in \mathcal{G}(\mathtt{R}) ~\}$
+$\mathtt{reassemble}(\mathcal{G}(\mathtt{R})) = \{~  \tau ~|~ \tau = \Xi_{i=1}^{|\mathcal{G}(\mathtt{R})|} \mathcal{G}(\mathtt{R})_i ~\}$
 \end{center}
 
 \noindent\rule{\textwidth}{2pt}
@@ -754,13 +756,15 @@ $\mathtt{reassemble}(\mathcal{G}(\mathtt{R})) = \{~  T ~|~ T = \bullet_{\tau \in
 Given a rule $\mathtt{R}$, we can produce appropriate reactions using ground forms and reassembly:
 
 \begin{tabular}{ ll }
-$\mathtt{Reactions} =$ & $\{~ \mathtt{r}(\mathtt{seq}, \mathtt{I}) ~|~ T \in \mathtt{reassemble}(\mathcal{G}(\mathtt{R})) ~\wedge$\\
+$\mathtt{Reactions}(\mathtt{R}) =$ & $\{~ \mathtt{r}(\mathtt{seq}, \mathtt{I}) ~|~ T \in \mathtt{reassemble}(\mathcal{G}(\mathtt{R})) ~\wedge$\\
 
-& $seq = (\mathtt{X}(T(1, \ldots, i_1), \mathtt{com}(\chi(i_1))), \mathtt{X}(T(i_1 + 1, \ldots, i_2), \mathtt{com}(\chi(i_2))), \ldots,$\\
+& $seq = (\mathtt{X}(T(0, \ldots, \mathtt{map}(\mathtt{R})[0] - 1), \mathtt{com}(\chi(0))),$ \\
 
-& $\mathtt{X}(T(i_{n-1}+1, \ldots, i_n), \mathtt{com}(\chi(i_n)))) ~\wedge$\\
+& $\mathtt{X}(T(\mathtt{map}(\mathtt{R})[0], \ldots, \mathtt{map}(\mathtt{R})[1] - 1), \mathtt{com}(\chi(1))), \ldots,$\\
 
-& $ \mathtt{I} \in \mathtt{R} \wedge \chi \in \mathtt{R} ~\}$
+& $\mathtt{X}(T(\mathtt{map}(\mathtt{R})[|\mathtt{map}(\mathtt{R})| - 1], \ldots, \mathtt{map}(\mathtt{R})[|\mathtt{map}(\mathtt{R})|]), \mathtt{com}(\chi(|\mathtt{map}(\mathtt{R})|)))) ~\wedge$\\
+
+& $ \mathtt{I} \in \mathtt{R} \wedge \chi \in \mathtt{R} \wedge \mathtt{map}(\mathtt{R}) = (i_1, \ldots, i_n) ~\}$
 \end{tabular}
 
 \noindent\rule{\textwidth}{1pt}
@@ -846,6 +850,8 @@ For better demonstration, we give running example, which will go through all syn
 \item $KaiC.KaiC.KaiC::cyt \Rightarrow KaiC::cyt + KaiC::cyt + KaiC::cyt$
 \end{enumerate}
 \end{runningExample}
+
+\subsection{Omitting context in partial composition.}
 
 \subsection{Complex signature}
 
