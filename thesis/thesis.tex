@@ -28,7 +28,7 @@
 \newenvironment{example}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Example \thecounter} \textit{#1} \par\nopagebreak}{\bigskip}
 \newenvironment{notation}{\bigskip\refstepcounter{counter}\noindent\textbf{Notation \thecounter}\par\nopagebreak}{\bigskip}
 \newenvironment{proof}{\bigskip\refstepcounter{counter}\noindent\textbf{Proof \thecounter}\par\nopagebreak}{\bigskip}
-\newenvironment{runningExample}{\bigskip\refstepcounter{counter}\noindent\textbf{Running example \thecounter}\par\nopagebreak}{\bigskip}
+\newenvironment{runningExample}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Running example \thecounter} \textit{#1} \par\nopagebreak}{\bigskip}
 
 \newcommand\mdoubleplus{\mathbin{+\mkern-7mu+}}
 
@@ -482,7 +482,7 @@ A complex agent represents a non-trivial composite biochemical object that is (i
 Let $\mathtt{X}$ be a complex agent. We denote length of sequence $\mu$ as $\mathtt{len}(\mathtt{X})$. 
 \end{notation}
 
-\begin{definition}{Equivalence of complex agents}
+\begin{definition}{Equivalence of complex agents}\label{rule_equiv}
 Let $\mathtt{X}, \mathtt{X}'$ be complexes. $\mathtt{X}$ is \emph{equivalent} with $\mathtt{X}'$, written $\mathtt{X} \equiv \mathtt{X}'$, iff $\mathtt{len}(\mathtt{X}) \equiv \mathtt{len}(\mathtt{X'}) \wedge \exists $ permutation $ \mu'(\mathtt{X}')$ of $\mu(\mathtt{X}')$ such that $\forall i~\in~[1,~n]: \mu(\mathtt{X})_i \equiv \mu'(\mathtt{X}')_i$.
 \end{definition}
 
@@ -841,110 +841,186 @@ $\vv{r} = \lambda(RHS(\mathtt{r}), \pi) - \lambda(LHS(\mathtt{r}), \pi)$
 
 We define several syntactic extensions for better readability of the rules. Note that each rule in a extended form can be always translated to basic form defined above. All rules containing the following extensions must be converted to basic form before semantics can be applied.
 
-For better demonstration, we give running example, which will go through all syntactic extensions.
+For better demonstration, we give running example, which will go through all syntactic extensions. Please, do not find any sense of the model, it has really only demonstrative purpose.
 
-\begin{runningExample}\label{run1}
+\begin{runningExample}{The example model $\mathtt{M}$}
+\label{run1}
 
-\noindent Definitions of rules:
+\noindent Definition of rules $\mathtt{R}$:
+{\small
 \begin{enumerate}
-\item $KaiC(S\{u\}).KaiC.KaiC::cyt \Rightarrow KaiC(S\{p\}).KaiC.KaiC::cyt$
-\item $KaiC(S\{u\}).KaiB::cyt \Rightarrow KaiC(S\{u\}).KaiB::cyt$
-\item $KaiC::cyt + KaiC::cyt + KaiC::cyt \Rightarrow KaiC.KaiC.KaiC::cyt$
-\item $KaiC.KaiC.KaiC::cyt \Rightarrow KaiC::cyt + KaiC::cyt + KaiC::cyt$
+\item $KaiC(S\{u\}, T).KaiC(S, T).KaiC(S, T)::cyt \Rightarrow $
+
+$\Rightarrow KaiC(S\{p\}, T).KaiC(S, T).KaiC(S, T)::cyt$
+
+\item $KaiC(S\{u\}, T).KaiB::cyt \Rightarrow KaiC(S\{p\}, T).KaiB::cyt$
+\item $KaiC(S, T)::cyt + KaiC(S, T)::cyt + KaiC(S, T)::cyt \Rightarrow$ 
+
+$ \Rightarrow KaiC(S, T).KaiC(S, T).KaiC(S, T)::cyt$
+
+\item $KaiC(S, T).KaiC(S, T).KaiC(S, T)::cyt \Rightarrow $
+
+$\Rightarrow KaiC(S, T)::cyt + KaiC(S, T)::cyt + KaiC(S, T)::cyt$
 \end{enumerate}
+}
+
+\noindent Definition of $\Sigma_\mathtt{A}$:
+\begin{enumerate}
+\item $(S, \{ u, p \})$,
+\item $(T, \{ a, i \})$
+\end{enumerate}
+
+\noindent Definition of $\Sigma_\mathtt{T}$:
+\begin{enumerate}
+\item $(KaiC, \{ S, T \})$,
+\item $(KaiB, \emptyset)$
+\end{enumerate}
+
+\noindent We omit $\mathtt{init}$ definition just for simplicity of the example.
 \end{runningExample}
 
 \subsection{Omitting context in partial composition.}
+
+It is possible to omit all partial compositions which contain a unspecified atomic agents. Such agent does not give any additional information and whole partial composition can be reconstructed from signature.
+
+\begin{runningExample}{The example model $\mathtt{M}$}
+\label{run1}
+
+\noindent Definition of rules $\mathtt{R}$:
+{\small
+\begin{enumerate}
+\item $KaiC(S\{u\}).KaiC.KaiC::cyt \Rightarrow KaiC(S\{p\}).KaiC.KaiC::cyt$
+\item $KaiC(S\{u\}).KaiB::cyt \Rightarrow KaiC(S\{p\}).KaiB::cyt$
+\item $KaiC::cyt + KaiC::cyt + KaiC::cyt \Rightarrow KaiC.KaiC.KaiC::cyt$
+\item $KaiC.KaiC.KaiC::cyt \Rightarrow KaiC::cyt + KaiC::cyt + KaiC::cyt$
+\end{enumerate}
+}
+\end{runningExample}
+
+This syntactic extension bring lot of readability to the syntax while preserving all information in context of the model $\mathtt{M}$.
 
 \subsection{Complex signature}
 
 We extend model definition by complex signature $\Sigma_\mathtt{X}$ on syntactic level. In this signature, there are defined aliases for valid complex agent expressions. Then, simple \emph{replace} method is used to substitute original expression by the alias.
 
-\begin{runningExample}\label{run1.1}
+\begin{runningExample}{The example model $\mathtt{M}$}\label{run1.1}
 
 \noindent Definitions of complex signatures:
-\begin{itemize}
+\begin{enumerate}
 \item $KaiC3::cyt = KaiC.KaiC.KaiC::cyt$
 \item $KaiBC::cyt = KaiC.KaiB::cyt$
-\end{itemize}
+\end{enumerate}
+
+\noindent Definition of rules $\mathtt{R}$:
+{\small
+\begin{enumerate}
+\item $KaiC(S\{u\}).KaiC.KaiC::cyt \Rightarrow KaiC(S\{p\}).KaiC.KaiC::cyt$
+\item $KaiC(S\{u\}).KaiB::cyt \Rightarrow KaiC(S\{p\}).KaiB::cyt$
+\item $KaiC::cyt + KaiC::cyt + KaiC::cyt \Rightarrow KaiC3::cyt$
+\item $KaiC3::cyt \Rightarrow KaiC::cyt + KaiC::cyt + KaiC::cyt$
+\end{enumerate}
+}
+
 \end{runningExample}
+
+As can be seen, in this stage the complex signature has it limitations. Once a context is specified, the alias cannot be used anymore. We will resolve this problem in following extensions.
 
 \subsection{Directions}
 
 We allow rules to be bi-directional -- it is just a shortcut for two rules and it can be converted to basic rule form. A rule $\mathtt{R} = \lambda ~\Leftrightarrow~ \rho$ might be written as two rules $\mathtt{R}_1 = \lambda ~\Rightarrow~ \rho$ and $\mathtt{R}_2 = \rho ~\Rightarrow~ \lambda$.
 
-\begin{runningExample}\label{run2}
-$ $
-
-\noindent Definition of rules 3 and 4 from Running example~\ref{run1} using bidirectional rule:
+\begin{runningExample}{The example model $\mathtt{M}$}\label{run2}
+\noindent Definition of rules $\mathtt{R}$:
+{\small
 \begin{enumerate}
-\item $KaiC.KaiC.KaiC::cyt \Leftrightarrow KaiC::cyt + KaiC::cyt + KaiC::cyt$
+\item $KaiC(S\{u\}).KaiC.KaiC::cyt \Rightarrow KaiC(S\{p\}).KaiC.KaiC::cyt$
+\item $KaiC(S\{u\}).KaiB::cyt \Rightarrow KaiC(S\{p\}).KaiB::cyt$
+\item $KaiC::cyt + KaiC::cyt + KaiC::cyt \Leftrightarrow KaiC3::cyt$
 \end{enumerate}
+}
 \end{runningExample}
+
+\noindent Definition of rules 3 and 4 from Running example~\ref{run1.1} was replaced by one bi-directional rule (Running example~\ref{run1.1}, rule 3).
 
 \subsection{Stoichiometry}
 
-For a rule of form $(\mathcal{E}_1, \mathcal{E}_2, \ldots, \mathcal{E}_n) \Rightarrow \mathcal{E}_1.\mathcal{E}_2.~\ldots~.\mathcal{E}_n$, we might reorder both sides such that we get Noncrossing partition $\mathcal{P}([1,\ldots,n])$ from its indices such that $\forall \mathcal{P}_i: \forall x,y \in \mathcal{P}_i: \mathcal{E}_x \equiv \mathcal{E}_y$ and $\forall \mathcal{E}_x \in \mathcal{P}_i \forall \mathcal{E}_y \in \mathcal{P}_j: \mathcal{E}_x \not\equiv \mathcal{E}_y$. Each $\mathcal{P}_i$ forms equivalence groups $\mathcal{G}_\equiv$ of \textit{k} rule agents. Please note some of $\mathcal{E}_i$ might be an complex agent.
+For a rule of form $(\alpha_1, \alpha_2, \ldots, \alpha_n) \Rightarrow \alpha_1.\alpha_2.~\ldots~.\alpha_n$, we might reorder both sides such that we get Noncrossing partition $\mathcal{P}([1,\ldots,n])$ from its indices such that $\forall \mathcal{P}_i: \forall x,y \in \mathcal{P}_i: \alpha_x \equiv \alpha_y$ and $\forall \alpha_x \in \mathcal{P}_i \forall \alpha_y \in \mathcal{P}_j: \alpha_x \not\equiv \alpha_y$. Each $\mathcal{P}_i$ forms equivalence groups $\mathcal{G}_\equiv$ of \textit{k} rule agents.
 
-Such a new rule is equivalent with the original rule since the rules equivalence is defined via rule enumerations (Definition~\ref{enumeration_equiv}).
+Such a new rule is equivalent with the original rule what follows from rules equivalence definitoin (Definition~\ref{rule_equiv}).
 
-For each side $\Gamma = (\mathcal{E}_1, \mathcal{E}_2, \ldots, \mathcal{E}_n)$ of the reordered rule we enrich rule agent $\mathcal{E}$ context to pair $(\mu, \phi)$ where $\mu = 1$ and $\phi$ is the original $\mathcal{E}$. However, some rule agents in $\Gamma$ might be equivalent and then they belong to an equivalence group $\mathcal{G}_\equiv$. Each of these groups $\mathcal{G}_\equiv$ might be written as one pair $(\mu, \mathcal{E}_m)$ where $\mu = |\mathcal{G}_\equiv|$ for some $\mathcal{E}_m \in \mathcal{G}_\equiv$.
+For side $\mathtt{s} = (\alpha_1, \alpha_2, \ldots, \alpha_n)$ of the reordered rule we enrich $\alpha$ context to pair $(\mu, \phi)$ where $\mu = 1$ and $\phi$ is the original $\alpha$. However, some $\alpha${\footnotesize s} in $\mathtt{s}$ might be equivalent and then they belong to an equivalence group $\mathcal{G}_\equiv$. Each of these groups $\mathcal{G}_\equiv$ might be written as one pair $(\mu, \alpha_m)$ where $\mu = |\mathcal{G}_\equiv|$ for some $\alpha_m \in \mathcal{G}_\equiv$.
 
 Note that this process is fully reversible, so agent enumeration in basic form can be easily reconstructed.
 
-\begin{runningExample}\label{run3}
-$ $
-
-\noindent Definition of rule 1 from Running example~\ref{run2} using stoichiometry:
+\begin{runningExample}{The example model $\mathtt{M}$}\label{run3}
+\noindent Definition of rules $\mathtt{R}$:
+{\small
 \begin{enumerate}
-\item $3~KaiC::cyt \Leftrightarrow KaiC.KaiC.KaiC::cyt$
+\item $KaiC(S\{u\}).KaiC.KaiC::cyt \Rightarrow KaiC(S\{p\}).KaiC.KaiC::cyt$
+\item $KaiC(S\{u\}).KaiB::cyt \Rightarrow KaiC(S\{p\}).KaiB::cyt$
+\item $3~KaiC::cyt \Leftrightarrow KaiC3::cyt$
 \end{enumerate}
+}
 \end{runningExample}
+
+\noindent Definition of rule 3 from Running example~\ref{run2} was replaced by using stoichiometry.
 
 \subsection{Locations}
 
-We define neccesary condition, when this notation is allowed.
+Probably most complex syntactic extension is application of locations. The localisation operator is intended for allowing an alternative way of expressing the hierarchically constructed agents. The main idea is to allow zooming into individual parts of a complex or a structure agent.
 
-\begin{definition}{conditions}\label{locations:conditions}
-\emph{Locations conditions.}
+We define neccesary condition which might hold when semantic function $\mathtt{F}$ is applied on individual agents. This notation is allowed only when the conditions hold.
+
+\begin{definition}{Locations conditions.}\label{locations:conditions}
 
 \begin{enumerate}
- \item $\mathtt{A}::\mathtt{T}$ $\Leftrightarrow$ there exists $\mathtt{A}' \in \gamma_p$ of $\mathtt{T}$ such that $\mathtt{A} \lhd \mathtt{A}'$ and $\mathtt{c}(\mathtt{A}) = \mathtt{c}(\mathtt{T})$,
+ \item $\mathtt{A}::\mathtt{T}$ $\Leftrightarrow$ there exists $\mathtt{A}' \in \gamma(\mathtt{T})$ such that $\mathtt{A} \lhd \mathtt{A}'$,
 
-\item $\mathtt{A}::\mathtt{X}$ $\Leftrightarrow$ there exists $\mathtt{A}' \in \gamma_f$ of $\mathtt{X}$ such that $\mathtt{A} \lhd \mathtt{A}'$ and $\mathtt{c}(\mathtt{A}) = \mathtt{c}(\mathtt{X})$,
+\item $\mathtt{A}::\mathtt{X}$ $\Leftrightarrow$ there exists $\mathtt{A}' \in \mu(\mathtt{X})$ such that $\mathtt{A} \lhd \mathtt{A}'$,
 
-\item $\mathtt{T}::\mathtt{X}$ $\Leftrightarrow$ there exists $\mathtt{T}' \in \gamma_f$ of $\mathtt{X}$ such that $\mathtt{T} \lhd \mathtt{T}'$ and $\mathtt{c}(\mathtt{T}) = \mathtt{c}(\mathtt{X})$.
+\item $\mathtt{T}::\mathtt{X}$ $\Leftrightarrow$ there exists $\mathtt{T}' \in \mu(\mathtt{X})$ such that $\mathtt{T} \lhd \mathtt{T}'$.
 \end{enumerate}
 \end{definition}
 
 For each pair of agents $(\alpha, \beta)$ with allowed `::' operator between them $\alpha :: \beta$, we can construct just one agent $\beta'$ without the operator by taking most-left agent $\alpha'$ from full (resp. partial) composition of the agent $\beta$ such that it is \emph{compatible with} the agent $\alpha$ ($\alpha' \lhd \alpha$). Then, agent $\alpha'$ is simply replaced by agent $\alpha$ and agent $\beta'$ is constructed.
 
-By applying previous operation, we can get rid of all locations in rules.
-
-\begin{runningExample}\label{run4}
-$ $
-
-\noindent Definition of rules 1 and 2 from Running example~\ref{run1} using locations (and defined signatures from the same example):
+\begin{runningExample}{The example model $\mathtt{M}$}\label{run4}
+\noindent Definition of rules $\mathtt{R}$:
+{\small
 \begin{enumerate}
 \item $S\{u\}::KaiC::KaiC3::cyt \Rightarrow S\{p\}::KaiC::KaiC3::cyt$
 \item $S\{u\}::KaiC::KaiBC::cyt \Rightarrow S\{p\}::KaiC::KaiBC::cyt$
+\item $3~KaiC::cyt \Leftrightarrow KaiC3::cyt$
 \end{enumerate}
+}
 \end{runningExample}
+
+
+\noindent Definition of rules 1 and 2 from Running example~\ref{run1} was replaced using locations.
+
+You can see localisation operator allowed us to fully use the complex signatures.
 
 \subsection{Variables}
 
-In a rule, one rule agent might be referenced using variable $\upsilon$ as a set of agents it can be replaced with. Such a rule agent is referenced as $?X$. Moreover, in case when a $?X$ is used in a location, it must hold conditions from Definition~\ref{locations:conditions}.
+In the Running example~\ref{run4} there is still space for syntax reduction. Rule 1 and 2 are very similar except context of complex they take place in. Therefore, we will substitute this context with a variable with given domain.
 
-Once again, each rule associated with variable can be easily rewritten as several rules where variable is replaced with agent from set of agents attached to the variable. Please note, according to Definition~\ref{rules:variables}, only one variable can be used per rule.
+In a rule, one rule agent might be referenced using variable $\upsilon$ as a set of rule agents it can be replaced with. Such a rule agent is referenced as $?X$. Moreover, in case when a $?X$ is used in a location, it must hold conditions from Definition~\ref{locations:conditions}.
 
-\begin{runningExample}\label{run5}
-$ $
+Once again, each rule associated with variable can be easily rewritten as several rules where variable is replaced with agent from set of agents attached to the variable. Please note only one variable can be used per rule.
 
-\noindent Definition of rules 1 and 2 from Running example~\ref{run4} as a single rule using a variable:
+\begin{runningExample}{The example model $\mathtt{M}$}\label{run5}
+\noindent Definition of rules $\mathtt{R}$:
+{\small
 \begin{enumerate}
-\item $S\{u\}::KaiC::~?X::cyt \Rightarrow S\{p\}::KaiC::~?X::cyt ~;~ ?X = \{KaiC3, KaiBC\} $
+\item $S\{u\}::KaiC::~?X::cyt \Rightarrow S\{p\}::KaiC::~?X::cyt ~;~ ?X = \{KaiC3, KaiBC\}$
+\item $3~KaiC::cyt \Leftrightarrow KaiC3::cyt$
 \end{enumerate}
+}
 \end{runningExample}
+
+\noindent Definition of rules 1 and 2 from Running example~\ref{run4} was replaced as a single rule using a variable.
+
+This is final syntactic extention. Compared to original model (Running example~\ref{run1}), the resulting model is much more consice and readable. More examples can be seen in chapter (ref case study).
 
 \chapter{Analysis}
 
