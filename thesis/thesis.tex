@@ -716,7 +716,7 @@ Objects are transformed to their ground forms by ground form function $\mathcal{
 
 \begin{center}
 \begin{tabular}{ r c l }
-Object & basic form & ground form \\
+Object & Basic form & Ground form \\
 \hline
  & & \\
 $\mathtt{A}$ & $\mathcal{G}((\mu, \epsilon))$ & $\{~ (\mu, \delta) ~|~ \delta \in \Sigma_A(\mu) ~\}$\\
@@ -745,7 +745,7 @@ where $\bigotimes \mathcal{G}(\mathtt{Indices})^*$ means cartesian product of se
 \noindent Next, we need reassemble produced tuples by concatenation.
 
 \begin{center}
-$\mathtt{reassemble}(\mathcal{G}(\mathtt{R})) = \{~  \tau ~|~ \tau = \Xi_{i=1}^{|\mathcal{G}(\mathtt{R})|} \mathcal{G}(\mathtt{R})_i ~\}$
+$\mathtt{reassemble}(\mathcal{G}(\mathtt{R})) = \{~  \tau ~|~ \mathtt{T} \in \mathcal{G}(\mathtt{R}) \wedge \tau = \Xi_{i=1}^{|\mathtt{T}|} \mathtt{T}_i ~\}$
 \end{center}
 
 \noindent\rule{\textwidth}{2pt}
@@ -753,8 +753,9 @@ $\mathtt{reassemble}(\mathcal{G}(\mathtt{R})) = \{~  \tau ~|~ \tau = \Xi_{i=1}^{
 \section{Generating reactions}
 \label{Generating reactions}
 
-Given a rule $\mathtt{R}$, we can produce appropriate reactions using ground forms and reassembly:
+Given a rule $\mathtt{R}$, we can produce appropriate reactions using ground forms and subsequent application of reassembly.
 
+\begin{definition}{Reactions generating}
 \hspace*{-0.8cm}\begin{tabular}{ r l }
 $\mathtt{Reactions}(\mathtt{R}) =$ & $\{~ \mathtt{r}(\mathtt{seq}, \mathtt{I}) ~|~ T \in \mathtt{reassemble}(\mathcal{G}(\mathtt{R})) ~\}$,\\
 
@@ -768,6 +769,7 @@ where $seq =$ & $ \big(\mathtt{X}(T(0, \ldots, \mathtt{map}(0) - 1), \mathtt{com
 
 and $ \mathtt{I} \in \mathtt{R}$ & and $\chi \in \mathtt{R}$ and $\mathtt{map} \in \mathtt{R}.$\\
 \end{tabular}
+\end{definition}
 
 \noindent\rule{\textwidth}{1pt}
 
@@ -779,18 +781,18 @@ Vectorized model $\mathcal{M}$ is a triple $(\mathcal{R}, \nu, \pi)$ such that $
 \end{definition}
 
 \begin{notation}
-We denote $N(\nu) ~\emph{iff}~ \forall i \in \nu: i \in \mathbb{N}_0$.
+We denote $N(\nu)$ the fact that $\forall i \in \nu: i \in \mathbb{N}_0$.
 \end{notation}
 
 \begin{definition}{Vector reaction application}
 
-Vector reaction application $\rho \subseteq \mathbb{N}_0^n \times \mathbb{Z}^n \times \mathbb{N}_0^n$ such that 
+Vector reaction application $\rho$ is a relation $\rho \subseteq \mathbb{N}_0^n \times \mathbb{Z}^n \times \mathbb{N}_0^n$ such that 
 \begin{center}
 $(\upsilon, \mathtt{r}, \mathtt{u}) \in \rho$ $\Leftrightarrow$ $u = \upsilon + \mathtt{r} \wedge N(u)$.
 \end{center}
 \end{definition}
 
-By iterative application of reaction application we obtain LTS (which can be bounded by a global bound).
+By iterative application of reaction application we obtain (possibly infinite) LTS. This application can be limited by a global bound, which makes sure the produced LTS is finite (ref).
 
 \noindent\rule{\textwidth}{1pt}
 
