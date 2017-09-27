@@ -564,7 +564,11 @@ Reaction $\mathtt{r}$ is a pair $(\mathtt{seq}, \mathtt{I})$ where:
 where $n, m \in \mathbb{N}$.
 \end{definition}
 
-Reaction is similar structure than rule, but much simplier. The reaction is just mediate format for giving semantics to BCSL models and it only holds information about complex contents of the rule. 
+Reaction is similar structure than rule, but much simplier. The reaction is just mediate format for giving semantics to BCSL models and it only holds information about complex contents of the rule.
+
+\begin{notation}
+We denote left-hand-side of the reaction $(\mathtt{seq}_0, \ldots, \mathtt{seq}_{\mathtt{I}-1})$ as $LHS(\mathtt{r})$ and right-hand-side of the reaction$(\mathtt{seq}_\mathtt{I}, \ldots, \mathtt{seq}_n)$ as $RHS(\mathtt{r})$.
+\end{notation}
 
 \noindent\rule{\textwidth}{2pt}
 
@@ -755,7 +759,7 @@ $\mathtt{reassemble}(\mathcal{G}(\mathtt{R})) = \{~  \tau ~|~ \mathtt{T} \in \ma
 
 Given a rule $\mathtt{R}$, we can produce appropriate reactions using ground forms and subsequent application of reassembly.
 
-\begin{definition}{Reactions generating}
+\begin{definition}{Reactions generating}\label{generate_reactions}
 \hspace*{-0.8cm}\begin{tabular}{ r l }
 $\mathtt{Reactions}(\mathtt{R}) =$ & $\{~ \mathtt{r}(\mathtt{seq}, \mathtt{I}) ~|~ T \in \mathtt{reassemble}(\mathcal{G}(\mathtt{R})) ~\}$,\\
 
@@ -777,8 +781,10 @@ and $ \mathtt{I} \in \mathtt{R}$ & and $\chi \in \mathtt{R}$ and $\mathtt{map} \
 
 \begin{definition}{Vectorized model}
 
-Vectorized model $\mathcal{M}$ is a triple $(\mathcal{R}, \nu, \pi)$ such that $\mathcal{R} \subseteq \mathbb{Z}^n$ is set of vector reactions, $\nu \in \mathbb{N}_0^n$ is initial vector state, and $\pi \in \mathcal{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
+Vectorized model $\mathcal{M}$ is a triple $(\mathcal{R}, \nu, \pi)$ such that $\mathcal{R} \subseteq \mathbb{Z}^n$ is set of vector reactions, $\nu \in \mathbb{N}_0^n$ is initial vector state, and $\pi \in \mathcal{X}^n$ is vector of reference complex agents for some $n \in \mathbb{N}$.
 \end{definition}
+
+Vectorized model is a simple model, where reactions and initial state are vectors over integers. Moreover, there is a reference vector of complex agents, which servers for identifying underlaying agents behind the integers (according to particular position in vectors).
 
 \begin{notation}
 We denote $N(\nu)$ the fact that $\forall i \in \nu: i \in \mathbb{N}_0$.
@@ -792,13 +798,17 @@ $(\upsilon, \mathtt{r}, \mathtt{u}) \in \rho$ $\Leftrightarrow$ $u = \upsilon + 
 \end{center}
 \end{definition}
 
+Note some values in reaction vectors might be negative. When applying reaction on state, the resulting state cannot contain any negative values (negative number of entities does not give biological sense). Therefore, application is allowed only if the resulting state contain non-negative values.
+
 By iterative application of reaction application we obtain (possibly infinite) LTS. This application can be limited by a global bound, which makes sure the produced LTS is finite (ref).
 
 \noindent\rule{\textwidth}{1pt}
 
 \section{Production of model}
 
-\begin{definition}{Reference vector}
+In previous sections we defined all what was required to actually create vectorized model (ref) from a BCSL model. This procedure is neccesary in order to allow operational semantics to be applied. 
+
+\begin{definition}{Reference vector}\label{reference_vector}
 
 Reference vector $\pi$ is a tuple of all possible unique complexes constructed from reactions as following:
 
@@ -809,8 +819,7 @@ $\mathcal{U}(\mathtt{Reactions}) = \{~ \mathtt{X} ~|~ \mathtt{X} \in \mathtt{seq
 Then, we just choose a random order of the set.
 \end{definition}
 
-\begin{definition}{State to vector translation}
-
+\begin{definition}{State to vector translation}\label{state_to_vector}
 Translation of state $\mathtt{S}$ to vector is defined as following:
 \begin{center}
 $\lambda(\mathtt{S}, \pi) = (a_1, a_2, \ldots, a_n)$ such that 
@@ -821,16 +830,16 @@ $a_i$ =
 	\end{cases}
 	$
 \end{center}
-\hspace{15pt} where $n = |\pi|$.
+\hspace{15pt} where $n = |\pi|$ and $|\mathtt{S}(\pi_i)|$ is number of occurences of agent $\pi_i$ in state $\mathtt{S}$.
 \end{definition}
 
 Let $\mathtt{M} = (\mathtt{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. In order to construct vectorized model $\mathcal{M} = (\nu, \mathcal{R}, \pi)$, we need to do following steps:
 
 \begin{enumerate}
-\item generate $\mathtt{Reactions}$ as defined in section~\ref{Generating reactions},
-\item construct reference vector $\pi$ from $\mathtt{Reactions}$,
-\item create $\nu$ as $\lambda(\mathtt{S}, \pi)$,
-\item construct set of vector reactions $\mathcal{R}$ from set of $\mathtt{Reactions}$, where individual vector reaction $\vv{r}$ are created from $\mathtt{r}$ as following:
+\item generate $\mathtt{Reactions}(\mathtt{R})$ (Definition~\ref{generate_reactions}),
+\item construct reference vector $\pi$ (Definition~\ref{reference_vector}),
+\item create initial vector state $\nu$ (Definition~\ref{state_to_vector}),
+\item construct set of vector reactions $\mathcal{R}$ from set of $\mathtt{Reactions}(\mathtt{R})$, where individual vector reaction $\vv{r}$ is created from $\mathtt{r}$ as following:
 
 \begin{center}
 $\vv{r} = \lambda(RHS(\mathtt{r}), \pi) - \lambda(LHS(\mathtt{r}), \pi)$
