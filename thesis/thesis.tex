@@ -21,6 +21,7 @@
 \usepackage[usenames, dvipsnames]{color}
 \usepackage{esvect}
 \usepackage{url}
+\usepackage{dsfont}
 
 \newcounter{counter}[section]
 \renewcommand{\thecounter}{\thesection.\arabic{counter}}
@@ -418,7 +419,7 @@ Signatures define for an atomic name allowed set of state names and for a struct
 \noindent\rule{\textwidth}{1pt}
 
 \begin{definition}{Atomic agent}
-Atomic agent $\mathtt{A}$ is a pair $(\eta, \delta)$ where $\eta \in \mathcal{N}_{A}$ is a name and $\delta~\in~\mathcal{N}_{\delta} \cup \{ \varepsilon \}$ is a state.
+Atomic agent $\mathtt{A}$ is a pair $(\eta, \delta)$ where $\eta \in \mathcal{N}_{A}$ is a name and \\ $\delta~\in~\mathcal{N}_{\delta} \cup \{ \varepsilon \}$ is a state.
 \end{definition}
 
 \begin{definition}{Equivalence of atomic agents}
@@ -452,7 +453,7 @@ Structure agent $\mathtt{T}$ is a pair $(\eta, \gamma)$ where $\eta \in \mathcal
 A structure agent represents a biochemical object that is composed from several known atomic agents provided that we know that such a composition is abstract and not necessarily complete. To incorporate such an abstraction of biological structures into our language, a structure agent is defined to be labelled with a unique name and it is constructed only from atomic agents considered in the same physical compartment.
 
 \begin{definition}{Equivalence of structure agents}
-Let $\mathtt{T}, \mathtt{T}'$ be structure agents. $\mathtt{T}$ is \emph{equivalent} with $\mathtt{T}'$, written $\mathtt{T} \equiv \mathtt{T}'$, iff $\eta(\mathtt{T}) \equiv \eta(\mathtt{T}') \wedge \forall \mathtt{A} \in \gamma(\mathtt{T}) \exists \mathtt{A}' \in \gamma(\mathtt{T}') : \mathtt{A} \equiv \mathtt{A}' \wedge \forall \mathtt{A}' \in \gamma(\mathtt{T}') ~\exists \mathtt{A} \in \gamma(\mathtt{T}) : \mathtt{A}' \equiv \mathtt{A}$.
+Let $\mathtt{T}, \mathtt{T}'$ be structure agents. $\mathtt{T}$ is \emph{equivalent} with $\mathtt{T}'$, written $\mathtt{T} \equiv \mathtt{T}'$, iff $\eta(\mathtt{T}) \equiv \eta(\mathtt{T}') \wedge \forall \mathtt{A} \in \gamma(\mathtt{T}) ~\exists \mathtt{A}' \in \gamma(\mathtt{T}') : \mathtt{A} \equiv \mathtt{A}' \wedge \forall \mathtt{A}' \in \gamma(\mathtt{T}') ~\exists \mathtt{A} \in \gamma(\mathtt{T}) : \mathtt{A}' \equiv \mathtt{A}$.
 \end{definition}
 
 The key construct of a structure agent is \emph{partial composition} defined as a list of atomic agents which are considered to be relevant parts of the structure agent. We allow this list to be empty, in that case the meaning is a biological structure for which we do not know its composition.
@@ -473,7 +474,7 @@ A typical example of a structure agent is a protein where the atomic agents are 
 \noindent\rule{\textwidth}{1pt}
 
 \begin{definition}{Complex agent}
-Complex agent $\mathtt{X}$ is a pair $(\mu, \mathtt{com})$ where $\mu \in (\mathcal{A} \cup \mathcal{T})^n$ is a sequence and $\mathtt{com} \in \mathcal{N}_{c}$ is a compartment.
+Complex agent $\mathtt{X}$ is a pair $(\mu, \mathtt{com})$ where $\mu \in (\mathcal{A} \cup \mathcal{T})^n$ is a sequence, $\mathtt{com} \in \mathcal{N}_{c}$ is a compartment, and $n \in \mathbb{N}$.
 \end{definition}
 
 A complex agent represents a non-trivial composite biochemical object that is (inductively) constructed from already known biological objects. In common rule-based languages this is typically defined by introducing some kind of bonds between individual biochemical objects. In BCSL we abstract from detailed specification of bonds and we rather assume a complex as a coexistence of certain objects in a particular group. Moreover, a complex agent resides in a compartment, which gives it a space position. 
@@ -512,13 +513,17 @@ Rule $\mathtt{R}$ is a 5-tuple $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt
 \item $\omega \in (\mathcal{A} \cup \mathcal{T})^m$ is a sequence of atomic and structure agents,
 \item $\mathtt{I} \in \{ 1, \ldots, n \}$ is an index determining start of right-hand-side,
 \item $\mathtt{map} \in \mathbb{N}^m$ is an index map between $\omega$ and $\chi$,
-\item $\mathtt{Indices} \subseteq (\{-\} \cup \mathbb{N})^2$ is an index map between agents from left- and right-hand side
+\item $\mathtt{Indices} \subseteq (\{-\} \cup \mathbb{N})^2$ is an index map between agents from left- and right-hand side (always sorted lexicographically such that $'-' > i$ for every $i \in \mathbb{N}$)
 \end{itemize}
 
 where $n, m \in \mathbb{N}$.
 \end{definition}
 
-As can be seen, rule is quite a complicated structure. The reason is the practical definition of semantics which in following section (ref). Also, it is neccessary to capture relationship between left- and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map between the agents in $\mathtt{Indices}$. Another index map $\mathtt{map}$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, with $\mathtt{I}$ we determining the beggining of right-hand side of the rule.
+As can be seen, rule is quite a complicated structure. The reason is the practical definition of semantics which in following section (ref). Also, it is neccessary to capture relationship between left- and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map between the agents in $\mathtt{Indices}$. Another index map $\mathtt{map}$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, by index $\mathtt{I}$ we determine the end of left-hand side of the rule.
+
+\begin{notation}
+Let $\mathcal{R}$ be universe of all possible rules.
+\end{notation}
 
 \begin{example}{Rule}\label{example:rule}
 
@@ -579,23 +584,23 @@ In this section, we define grammar for the BCSL. As proposed in (ref), the synta
 \begin{definition}{Grammar}
 \begin{center}
 \begin{tabular}{ l l }
-atomic expression & $\mathtt{a} ::= \eta\{s\} ~|~ \eta$\\
+atomic expression & $\alpha ::= \eta\{s\} ~|~ \eta$\\
  & $\eta ::= n \in \mathcal{N}_{A}$ \\
  & $s ::= n \in \mathcal{N}_{\delta}$\\
  & \\
-structure expression & $\mathtt{t} ::= \eta(\gamma) ~|~ \eta$\\
- & $\gamma ::= \mathtt{a}_1, \ldots, \mathtt{a}_k$ \\
+structure expression & $\tau ::= \eta(\gamma) ~|~ \eta$\\
+ & $\gamma ::= \alpha_1, \ldots, \alpha_k$ \\
  & $\eta ::= n \in \mathcal{N}_{T}$\\
  & \\
-complex expression & $\Gamma ::= \alpha_1~.~\ldots~.~\alpha_k :: c$\\
- & $\alpha_i ::= \mathtt{a} ~|~ \mathtt{t}$\\
+complex expression & $\Gamma ::= \beta_1~.~\ldots~.~\beta_k :: c$\\
+ & $\alpha_i ::= \alpha ~|~ \tau$\\
  & $c ::= n \in \mathcal{N}_{c}$\\
  & \\
-rule expression & $\mathtt{R} ::= \Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \ldots + \Gamma_m $
+rule expression & $\rho ::= \Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \ldots + \Gamma_m $
 \end{tabular}
 
 \end{center}
-where $m,n \in \mathbb{N}_0 \wedge m + n \neq 0$ and $k \in \mathbb{N}$.
+where $m,n \in \mathbb{N}_0 \wedge m > n \wedge m + n \neq 0$ and $k \in \mathbb{N}$.
 \end{definition}
 
 \begin{example}{Syntax}\label{example:syntax}
@@ -620,7 +625,7 @@ Examples of agents, complexes and rules given in previous examples:
 \section{BCSL model}
 
 \begin{definition}{BCSL model}
-We define BCSL model $\mathtt{M}$ as 4-tuple $(\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ where $\mathtt{R}$ is set of rule expressions, $\Sigma_\mathtt{A}$ is atomic signature, $\Sigma_\mathtt{T}$ is structure signature, and $\mathtt{init}$ is initial multiset of complex expressions $\Gamma$.
+We define BCSL model $\mathds{M}$ as 4-tuple $(\mathds{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ where $\mathds{R}$ is set of rule expressions, $\Sigma_\mathtt{A}$ is atomic signature, $\Sigma_\mathtt{T}$ is structure signature, and $\mathtt{init}$ is initial multiset of complex expressions $\Gamma$.
 \end{definition}
 
 \noindent\rule{\textwidth}{1pt}
@@ -667,27 +672,27 @@ $\gamma(\mathtt{T}) \ominus \Sigma_T(\mathtt{T}) \Leftrightarrow \{ \mu_\Sigma ~
 
 \section{Semantic function}
 
-In the previous sections, we defined BCSL objects and BCSL model. Now, we need to connect them such that we give semanting meaning to the model $\mathtt{M}$. For this purpose, we define semantic function $\mathtt{F}$. It is defined recursively for a model $\mathtt{M}$ according to expression given as argument:
+In the previous sections, we defined BCSL objects and BCSL model. Now, we need to connect them such that we give semanting meaning to the model $\mathds{M}$. For this purpose, we define semantic function $\mathtt{F}$. It is defined recursively for a model $\mathds{M}$ according to expression given as argument:
 
 \begin{center}
 \begin{tabular}{ r c l}
 $\mathtt{F} \llbracket ~\mu~ \rrbracket$ & = &
     $\begin{cases}
-    \mathtt{A}(\mu, \epsilon) ~\ldots~ \mu \in \Sigma_{A}\\
-    \mathtt{T}(\mu, \emptyset) ~\ldots~ \mu \in \Sigma_{T}\\
+    (\mu, \epsilon) \in \mathcal{A} ~\ldots~ \mu \in \Sigma_{A}\\
+    (\mu, \emptyset) \in \mathcal{A} ~\ldots~ \mu \in \Sigma_{T}\\
     \end{cases}
     $\\
  & & \\
-$\mathtt{F} \llbracket ~\mu\{s\}~ \rrbracket$ & = & $\mathtt{A}(\mu, s)$\\
+$\mathtt{F} \llbracket ~\mu\{s\}~ \rrbracket$ & = & $(\mu, s) \in \mathcal{A}$\\
  & & \\
 $\mathtt{F} \llbracket ~\mu(\mathtt{a}_1, \ldots, \mathtt{a}_n)~ \rrbracket$ & = &
-$\mathtt{T}(\mu, \{~ \mathtt{F} \llbracket \mathtt{a}_1 \rrbracket, \ldots, \mathtt{F} \llbracket \mathtt{a}_n \rrbracket ~\})$\\
+$(\mu, \{~ \mathtt{F} \llbracket \mathtt{a}_1 \rrbracket, \ldots, \mathtt{F} \llbracket \mathtt{a}_n \rrbracket ~\}) \in \mathcal{T}$\\
  & & \\
 $\mathtt{F} \llbracket ~\alpha_1~.~\ldots~.~\alpha_n :: c~ \rrbracket$ & = &
-$\mathtt{X}(~(\mathtt{F} \llbracket ~\alpha_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\alpha_n~ \rrbracket), c~)$\\
+$(~(\mathtt{F} \llbracket ~\alpha_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\alpha_n~ \rrbracket), ~c~) \in \mathcal{X}$\\
  & & \\
 $\mathtt{F} \llbracket ~\Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \ldots + \Gamma_m~ \rrbracket$ & = &
-$\mathtt{R}(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$~ such that:\\
+$(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices}) \in \mathcal{R}$~ such that:\\
 \end{tabular}
 \end{center}
 
@@ -696,15 +701,17 @@ $\mathtt{R}(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$~ such tha
 \item $\chi = (\mathtt{F} \llbracket ~\Gamma_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_n~ \rrbracket, \mathtt{F} \llbracket ~\Gamma_{n+1}~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_m~ \rrbracket)$,
 \item $\omega = \Xi_{i=1}^{|\chi|} \mu(\chi_i)$,
 \item $\mathtt{I} = n$,
-\item $\mathtt{map} = (J_1, \ldots, J_m): J_i = \sum_{y=1}^{i} | \mu(\chi_i) |$,
+\item $\mathtt{map} = (J_1, \ldots, J_m): J_i = \sum_{y=1}^{i} | \mu(\chi_y) |$,
+{\small
 \item \begin{tabular}{l l}
 
 & \hspace*{-0.3cm} $\{~ (i,j) ~|~ i \in [1, \mathtt{map}(\mathtt{I})] \wedge j \in [\mathtt{map}(\mathtt{I}), |\omega|] \wedge |i-j| \equiv \mathtt{map}(\mathtt{I})~\} ~\cup$ \\
 
 \hspace*{-0.3cm}$\mathtt{Indices} =$ & \hspace*{-0.3cm} $\{~ (i, -) ~|~ i \in [k, \mathtt{map}(\mathtt{I})] \wedge k = |~ \{ \mathtt{map}(\mathtt{I}) + 1, \ldots, | \alpha | \} ~| ~\} ~\cup$\\
 
- & \hspace*{-0.3cm} $ \{~ (-, j) ~|~ j \in [k, |\alpha|] \wedge k = 2 * \mathtt{map}(\mathtt{I}) ~\}$ (??? ordered set)
+& \hspace*{-0.3cm} $ \{~ (-, j) ~|~ j \in [k, |\alpha|] \wedge k = 2 * \mathtt{map}(\mathtt{I}) ~\}$
 \end{tabular}
+\\}
 
 \end{itemize}
 \end{center}
@@ -721,26 +728,26 @@ Ground form represents appending context to agents according to signature (we as
 Objects are transformed to their ground forms by ground form function $\mathcal{G}$ defined as following:
 
 \begin{center}
-\begin{tabular}{ r c l }
-Object & Basic form & Ground form \\
+\begin{tabular}{ c c l }
+Object type & Basic form & Ground form \\
 \hline
  & & \\
-$\mathtt{A}$ & $\mathcal{G}((\mu, \epsilon))$ & $\{~ (\mu, \delta) ~|~ \delta \in \Sigma_A(\mu) ~\}$\\
+$\mathcal{A}$ & $\mathcal{G}((\mu, \epsilon))$ & $\{~ (\mu, \delta) ~|~ \delta \in \Sigma_A(\mu) ~\}$\\
  & $\mathcal{G}((\mu, \delta))$ & $\{~(\mu, \delta) ~\}$\\
  & & \\
  \hline
  & & \\
-$\mathtt{T}$ & $\mathcal{G}((\mu, \gamma))$ & $\{~ (\mu, \gamma_\alpha) ~|~ \gamma_\alpha \equiv \gamma \cup \gamma_\Sigma \wedge \gamma_\Sigma = \{~ \mathtt{A}_1, \ldots, \mathtt{A}_n ~\} \wedge$\\
+$\mathcal{T}$ & $\mathcal{G}((\mu, \gamma))$ & $\{~ (\mu, \gamma_\alpha) ~|~ \gamma_\alpha \equiv \gamma \cup \gamma_\Sigma \wedge \gamma_\Sigma = \{~ \mathtt{A}_1, \ldots, \mathtt{A}_n ~\} \wedge$\\
  & & $\wedge~ \mathtt{A}_i \in \mathcal{G}((\mu, \emptyset)) \wedge \mu \in \gamma \ominus \Sigma_T(\mathtt{T}) ~\}$ \\
  & & \\
  \hline
  & & \\
-pair of & $\mathcal{G}((\beta, \beta'))$ & $\{~ (\beta_\alpha, \beta_\alpha') ~|~ \beta_\alpha \in \mathcal{G}(\beta) \wedge \beta'_\alpha \in \mathcal{G}(\beta') \wedge$\\
-agents & & $\wedge~ \gamma(\beta_\alpha) \ominus \gamma(\beta) \equiv \gamma(\beta'_\alpha) \ominus \gamma(\beta') ~\} $ \\
+$(\mathcal{A} \cup \mathcal{T})^2$ & $\mathcal{G}((\beta, \beta'))$ & $\{~ (\beta_\alpha, \beta_\alpha') ~|~ \beta_\alpha \in \mathcal{G}(\beta) \wedge \beta'_\alpha \in \mathcal{G}(\beta') \wedge$\\
+ & & $\wedge~ \gamma(\beta_\alpha) \ominus \gamma(\beta) \equiv \gamma(\beta'_\alpha) \ominus \gamma(\beta') ~\} $ \\
  & & \\
  \hline
  & & \\
-$\mathtt{R}$ & $\mathcal{G}(\mathtt{R})$ & $ \bigotimes \mathcal{G}(\mathtt{Indices})^* $ \\
+$\mathcal{R}$ & $\mathcal{G}(\mathtt{R})$ & $ \bigotimes \mathcal{G}(\mathtt{Indices})^* $ \\
  & $\mathcal{G}(\mathtt{Indices})$ & $(~\mathcal{G}(\omega(i), \omega(j)) ~|~ (i,j) \in \mathtt{Indices})$\\
  
 \end{tabular}
@@ -751,27 +758,27 @@ where $\bigotimes \mathcal{G}(\mathtt{Indices})^*$ is cartesian product of sets 
 \noindent Next, we need reassemble produced tuples by concatenation.
 
 \begin{center}
-$\mathtt{reassemble}(\mathcal{G}(\mathtt{R})) = \{~  \tau ~|~ \mathtt{T} \in \mathcal{G}(\mathtt{R}) \wedge \tau = \Xi_{i=1}^{|\mathtt{T}|} \mathtt{T}_i ~\}$
+$\mathtt{reassemble}(\mathcal{G}(\mathtt{R})) = \{~  y ~|~ x \in \mathcal{G}(\mathtt{R}) \wedge y = \Xi_{i=1}^{|x|} x_i ~\}$
 \end{center}
 
 \noindent\rule{\textwidth}{2pt}
 
-\section{Generating reactions}
+\section{Constructing reactions}
 \label{Generating reactions}
 
 Given a rule $\mathtt{R}$, we can produce appropriate reactions using ground forms and subsequent application of reassembly.
 
-\begin{definition}{Reactions generating}\label{generate_reactions}
+\begin{definition}{Reactions constructing}\label{generate_reactions}
 \hspace*{-0.8cm}\begin{tabular}{ r l }
-$\mathtt{Reactions}(\mathtt{R}) =$ & $\{~ \mathtt{r}(\mathtt{seq}, \mathtt{I}) ~|~ T \in \mathtt{reassemble}(\mathcal{G}(\mathtt{R})) ~\}$,\\
+$\mathtt{Reactions}(\mathtt{R}) =$ & $\{~ \mathtt{r}(\mathtt{seq}, \mathtt{I}) ~|~ y \in \mathtt{reassemble}(\mathcal{G}(\mathtt{R})) ~\}$,\\
 
-where $seq =$ & $ \big(\mathtt{X}(T(0, \ldots, \mathtt{map}(0) - 1), \mathtt{com}(\chi(0))),$ \\
+where $\mathtt{seq} =$ & $ \big(\mathtt{X}(y(0, \ldots, \mathtt{map}(0) - 1), \mathtt{com}(\chi(0))),$ \\
 
-& $\mathtt{X}(T(\mathtt{map}(0), \ldots, \mathtt{map}(1) - 1), \mathtt{com}(\chi(1))), $\\
+& $\mathtt{X}(y(\mathtt{map}(0), \ldots, \mathtt{map}(1) - 1), \mathtt{com}(\chi(1))), $\\
 
 & \ldots,\\
 
-& $\mathtt{X}(T(\mathtt{map}(|\mathtt{map}| - 1]), \ldots, \mathtt{map}(|\mathtt{map}|) - 1, \mathtt{com}(\chi(|\mathtt{map}|)))\big) $\\
+& $\mathtt{X}(y(\mathtt{map}(|\mathtt{map}| - 1]), \ldots, \mathtt{map}(|\mathtt{map}|) - 1, \mathtt{com}(\chi(|\mathtt{map}|)))\big) $\\
 
 and $ \mathtt{I} \in \mathtt{R}$ & and $\chi \in \mathtt{R}$ and $\mathtt{map} \in \mathtt{R}.$\\
 \end{tabular}
@@ -783,7 +790,7 @@ and $ \mathtt{I} \in \mathtt{R}$ & and $\chi \in \mathtt{R}$ and $\mathtt{map} \
 
 \begin{definition}{Vectorized model}
 
-Vectorized model $\mathcal{M}$ is a triple $(\vv{\mathcal{R}}, \vv{\nu}, \pi)$ such that $\vv{\mathcal{R}} \subseteq \mathbb{Z}^n$ is set of vector reactions, $\vv{\nu} \in \mathbb{N}_0^n$ is initial vector state, and $\pi \in \mathcal{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
+Vectorized model $\mathcal{M}$ is a triple $(\vv{\mathds{R}}, \vv{\nu}, \pi)$ such that $\vv{\mathds{R}} \subseteq \mathbb{Z}^n$ is set of vector reactions, $\vv{\nu} \in \mathbb{N}_0^n$ is initial vector state, and $\pi \in \mathcal{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
 \end{definition}
 
 Vectorized model is a simple model, where reactions and initial state are vectors over integers. Moreover, there is a reference vector of complex agents, which servers for identifying underlaying agents behind the integers (according to particular position in vectors).
@@ -812,7 +819,7 @@ In previous sections we defined all what was required to actually create vectori
 
 \begin{definition}{Reference vector}\label{reference_vector}
 
-Reference vector $\pi$ is a tuple of all possible unique complexes constructed from reactions as following:
+Reference vector $\pi$ is a tuple of all possible unique complexes constructed from $\mathtt{Reactions}$ as following:
 
 \begin{center}
 $\mathcal{U}(\mathtt{Reactions}) = \{~ \mathtt{X} ~|~ \mathtt{X} \in \mathtt{seq}(\mathtt{r}) \wedge \mathtt{r} \in \mathtt{Reactions} ~\} $.
@@ -840,8 +847,8 @@ Let $\mathtt{M} = (\mathtt{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{ini
 \begin{enumerate}
 \item generate $\mathtt{Reactions}(\mathtt{R})$ (Definition~\ref{generate_reactions}),
 \item construct reference vector $\pi$ (Definition~\ref{reference_vector}),
-\item create initial vector state $\nu$ (Definition~\ref{state_to_vector}),
-\item construct set of vector reactions $\mathcal{R}$ from set of $\mathtt{Reactions}(\mathtt{R})$, where individual vector reaction $\vv{r}$ is created from $\mathtt{r}$ as following:
+\item create initial vector state $\vv{\nu}$ (Definition~\ref{state_to_vector}),
+\item construct set of vector reactions $\vv{\mathcal{R}}$ from set of $\mathtt{r} \in \mathtt{Reactions}(\mathtt{R})$, where individual vector reaction $\vv{r}$ is created from $\mathtt{r}$ as following:
 
 \begin{center}
 $\vv{r} = \lambda(RHS(\mathtt{r}), \pi) - \lambda(LHS(\mathtt{r}), \pi)$
