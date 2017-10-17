@@ -783,21 +783,13 @@ and $ \mathtt{I} \in \mathtt{R}$ & and $\chi \in \mathtt{R}$ and $\mathtt{map} \
 
 \begin{definition}{Vectorized model}
 
-<<<<<<< HEAD
 Vectorized model $\mathcal{M}$ is a triple $(\vv{\mathcal{R}}, \vv{\nu}, \pi)$ such that $\vv{\mathcal{R}} \subseteq \mathbb{Z}^n$ is set of vector reactions, $\vv{\nu} \in \mathbb{N}_0^n$ is initial vector state, and $\pi \in \mathcal{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
-=======
-Vectorized model $\mathcal{M}$ is a triple $(\mathcal{R}, \nu, \pi)$ such that $\mathcal{R} \subseteq \mathbb{Z}^n$ is set of vector reactions, $\nu \in \mathbb{N}_0^n$ is initial vector state, and $\pi \in \mathcal{X}^n$ is vector of reference complex agents for some $n \in \mathbb{N}$.
->>>>>>> 333f971c0ff4e78906de8ec6a79cc49869cb0b50
 \end{definition}
 
 Vectorized model is a simple model, where reactions and initial state are vectors over integers. Moreover, there is a reference vector of complex agents, which servers for identifying underlaying agents behind the integers (according to particular position in vectors).
 
 \begin{notation}
-<<<<<<< HEAD
 We denote $N(\vv{\nu}) ~\emph{iff}~ \forall i \in \vv{\nu}: i \in \mathbb{N}_0$.
-=======
-We denote $N(\nu)$ the fact that $\forall i \in \nu: i \in \mathbb{N}_0$.
->>>>>>> 333f971c0ff4e78906de8ec6a79cc49869cb0b50
 \end{notation}
 
 \begin{definition}{Vector reaction application}
@@ -846,17 +838,10 @@ $a_i$ =
 Let $\mathtt{M} = (\mathtt{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. In order to construct vectorized model $\mathcal{M} = (\vv{\mathcal{R}}, \vv{\nu}, \pi)$, we need to do following steps:
 
 \begin{enumerate}
-<<<<<<< HEAD
-\item generate $\mathtt{Reactions}$ as defined in section~\ref{Generating reactions},
-\item construct reference vector $\pi$ from $\mathtt{Reactions}$,
-\item create $\vv{\nu}$ as $\lambda(\mathtt{S}, \pi)$,
-\item construct set of vector reactions $\vv{\mathcal{R}}$ from set of $\mathtt{Reactions}$, where individual vector reaction $\vv{r}$ are created from $\mathtt{r}$ as following:
-=======
 \item generate $\mathtt{Reactions}(\mathtt{R})$ (Definition~\ref{generate_reactions}),
 \item construct reference vector $\pi$ (Definition~\ref{reference_vector}),
 \item create initial vector state $\nu$ (Definition~\ref{state_to_vector}),
 \item construct set of vector reactions $\mathcal{R}$ from set of $\mathtt{Reactions}(\mathtt{R})$, where individual vector reaction $\vv{r}$ is created from $\mathtt{r}$ as following:
->>>>>>> 333f971c0ff4e78906de8ec6a79cc49869cb0b50
 
 \begin{center}
 $\vv{r} = \lambda(RHS(\mathtt{r}), \pi) - \lambda(LHS(\mathtt{r}), \pi)$
