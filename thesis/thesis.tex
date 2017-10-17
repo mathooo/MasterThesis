@@ -35,8 +35,8 @@
 \usepackage[
     backend=biber,      % use biber as backend instead of BiBTeX
     style=alphabetic,   % citation style
-	url=true,           % display urls in bibliography
-	hyperref=auto,      % detect hyperref and create links
+  url=true,           % display urls in bibliography
+  hyperref=auto,      % detect hyperref and create links
     firstinits=true,    % abbreviate first names to initials
     maxbibnames=5,      % maxiumim number of authors before making 'et al.'
     alldates=iso8601,   % set date format to ISO 8601
@@ -131,9 +131,9 @@ The reason for this kind of abstraction is the way how we see the biological mod
 
 \begin{figure}
 \begin{center}
-\subfloat[]{\includegraphics[scale=0.23]{solution_first}\label{sol:s1}}
+\subfloat[]{\includegraphics[scale=0.23]{pics/solution_first}\label{sol:s1}}
 \hspace*{1cm}
-\subfloat[]{\includegraphics[scale=0.23]{solution_second}\label{sol:s2}}
+\subfloat[]{\includegraphics[scale=0.23]{pics/solution_second}\label{sol:s2}}
 \caption{\textbf{Examples of solutions}. \textbf{(a)} An example of graphical representation of a solution. \textbf{(b)} Updated solution after rules from Fig.~\ref{rules:fig} were applied. The first rule \textit{(a)} was applied on the yellow $\square$ and green $\bigcirc$ and produced yellow-green complex $\square$--$\bigcirc$. Note there are more options how the rule could be mapped -- each combination of free $\square$ and $\bigcirc$. The second rule \textit{(b)} was applied on red-cyan complex $\square$--$\bigcirc$ where the color of $\square$ was changed from red to green. The third rule \textit{(c)} couldn't be applied because there is no such complex with yellow $\bigcirc$. }
 \label{solutions:fig}
 \end{center}
@@ -146,10 +146,10 @@ The rule can be mapped on a solution. Then, if it is mapped, it can be applied a
 \begin{def}\label{lts}
 \textit{Labelled transition system} (LTS) $\mathcal{L}$ is a tuple $(S, A, \Delta, s_0)$ where:
 \begin{itemize}
-	\item $S$ is a (potentially infinite) set of states (solutions)
-	\item $A$ is a set of labels (reactions)
-	\item $\Delta \subseteq S \times A \times S$ is a transition relation (the map-apply action)
-	\item $s_0 \in S$ is the initial state (initial solution)
+  \item $S$ is a (potentially infinite) set of states (solutions)
+  \item $A$ is a set of labels (reactions)
+  \item $\Delta \subseteq S \times A \times S$ is a transition relation (the map-apply action)
+  \item $s_0 \in S$ is the initial state (initial solution)
 \end{itemize}
 \end{def}
 
@@ -159,21 +159,21 @@ The rule can be mapped on a solution. Then, if it is mapped, it can be applied a
     \textbf{(a)}
   \end{minipage}
   \begin{minipage}[r]{0.6\textwidth}
-    {\hspace*{0.8cm}\includegraphics[scale=0.2]{rule_complex}}
+    {\hspace*{0.8cm}\includegraphics[scale=0.2]{pics/rule_complex}}
 \end{minipage}
 
 \begin{minipage}[l]{0.1\textwidth}
     \textbf{(b)}
   \end{minipage}
   \begin{minipage}[r]{0.6\textwidth}
-    {\hspace*{1.35cm}\includegraphics[scale=0.2]{rule_change}}
+    {\hspace*{1.35cm}\includegraphics[scale=0.2]{pics/rule_change}}
 \end{minipage}
 
 \begin{minipage}[l]{0.1\textwidth}
     \textbf{(c)}
   \end{minipage}
   \begin{minipage}[r]{0.6\textwidth}
-    {\hspace*{1.3cm}\includegraphics[scale=0.2]{rule_diss}}
+    {\hspace*{1.3cm}\includegraphics[scale=0.2]{pics/rule_diss}}
 \end{minipage}
 \caption{\textbf{Examples of rules}. Rule \textbf{(a)}: a $\square$ and a $\bigcirc$ can form a complex $\square$--$\bigcirc$ regardless their colors. Rule \textbf{(b)}: a $\square$ is allowed to change it's color from red to green only if it formed a complex with a $\bigcirc$ regardless it's color. Rule \textbf{(c)}: the rule can disassemble the complex only if the $\bigcirc$ is yellow.}
 \label{rules:fig}
@@ -190,21 +190,21 @@ Moreover, the mapping can be seen as assigning particular objects from the solut
     \textbf{(a)}
   \end{minipage}
   \begin{minipage}[r]{0.6\textwidth}
-    {\hspace*{1.3cm}\includegraphics[scale=0.2]{rule_complex}}
+    {\hspace*{1.3cm}\includegraphics[scale=0.2]{pics/rule_complex}}
 \end{minipage}
 
 \begin{minipage}[l]{0.1\textwidth}
     \textbf{(b)}
   \end{minipage}
   \begin{minipage}[r]{0.6\textwidth}
-    {\hspace*{1.3cm}\includegraphics[scale=0.2]{rule_complex_mapped}}
+    {\hspace*{1.3cm}\includegraphics[scale=0.2]{pics/rule_complex_mapped}}
 \end{minipage}
 
 \begin{minipage}[l]{0.1\textwidth}
     \textbf{(c)}
   \end{minipage}
   \begin{minipage}[r]{0.6\textwidth}
-    {\hspace*{1.3cm}\includegraphics[scale=0.2]{rule_reaction}}
+    {\hspace*{1.3cm}\includegraphics[scale=0.2]{pics/rule_reaction}}
 \end{minipage}
 \caption{\textbf{Example of a map-apply action}. As a solution, we use solution \textit{(a)} from Fig.~\ref{solutions:fig}. \textbf{(a)} Rule can be mapped on a $\square$ and a $\bigcirc$ regardless their colors and form a complex $\square$--$\bigcirc$.  \textbf{(b)} Let's choose yellow $\square$ and green $\bigcirc$ from our solution. The rule was mapped on choosen objects and they were assigned to the left-hand-side of the rule. \textbf{(c)} The rule was applied and new object (yellow-green complex $\square$--$\bigcirc$) was created. We obtained the reaction describing the particular action which has just happened.}
 \label{map-apply:fig}
@@ -221,7 +221,7 @@ From static analysis point of view, using rules directly is not the best choice.
 
 \begin{figure}
 \begin{center}
-\includegraphics[scale=0.5]{reaction_vs_rule}
+\includegraphics[scale=0.5]{pics/reaction_vs_rule}
 \end{center}
 \caption{bla}
 \end{figure}
@@ -260,7 +260,7 @@ BioNetGen Language (BNGL) is very similar to Kappa~\ref{kappa}. There are a few 
 \begin{center}
 \begin{tabular}{c l}
 (a) & A(bsa$\sim$u$\sim$p) \\
-	& B(bsb$\sim$a$\sim$i) \\
+  & B(bsb$\sim$a$\sim$i) \\
 (b) & A(bsa) + B(bsb$\sim$a) $\rightarrow$ A(bsa!1).B(bsb$\sim$a!1) \\
 \end{tabular}
 \end{center}
@@ -591,7 +591,7 @@ complex expression & $\Gamma ::= \alpha_1~.~\ldots~.~\alpha_k :: c$\\
  & $\alpha_i ::= \mathtt{a} ~|~ \mathtt{t}$\\
  & $c ::= n \in \mathcal{N}_{c}$\\
  & \\
-rule & $\mathtt{R} ::= \Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \ldots + \Gamma_m $
+rule expression & $\mathtt{R} ::= \Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \ldots + \Gamma_m $
 \end{tabular}
 
 \end{center}
@@ -612,7 +612,7 @@ Examples of agents, complexes and rules given in previous examples:
 \item rule $\mathtt{R}$ is written as (Example~\ref{example:rule}):
 \end{itemize}
 
-\noindent {\small $K(S\{u\}).B::cyt + C.D\{i\}::cyt + A::cyt \Rightarrow K(S\{p\}.B.C::cyt + D\{a\}.A::cyt + H\{u\}::cyt$}
+\noindent {\small $K(S\{u\}).B::cyt + C.D\{i\}::cyt + A::cyt \Rightarrow K(S\{p\}).B.C::cyt + D\{a\}.A::cyt + H\{u\}::cyt$}
 \end{example}
 
 \noindent\rule{\textwidth}{1pt}
@@ -620,7 +620,7 @@ Examples of agents, complexes and rules given in previous examples:
 \section{BCSL model}
 
 \begin{definition}{BCSL model}
-We define BCSL model $\mathtt{M}$ as 4-tuple $(\mathtt{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ where $\mathtt{R}$ is set of rules (rule expressions?), $\Sigma_\mathtt{A}$ is atomic signature, $\Sigma_\mathtt{T}$ is structure signature, and $\mathtt{init} \subseteq \mathcal{U}$ (expressions?) is a initial state (multiset).
+We define BCSL model $\mathtt{M}$ as 4-tuple $(\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ where $\mathtt{R}$ is set of rule expressions, $\Sigma_\mathtt{A}$ is atomic signature, $\Sigma_\mathtt{T}$ is structure signature, and $\mathtt{init}$ is initial multiset of complex expressions $\Gamma$.
 \end{definition}
 
 \noindent\rule{\textwidth}{1pt}
@@ -667,41 +667,43 @@ $\gamma(\mathtt{T}) \ominus \Sigma_T(\mathtt{T}) \Leftrightarrow \{ \mu_\Sigma ~
 
 \section{Semantic function}
 
-In the previous sections, we defined BCSL objects and the syntax. Now, we need to connect these constructs and give the model $\mathtt{M}$ its semanting meaning. For this purpose, we define semantic function $\mathtt{F}$. It is defined recursively according to expression given as argument:
+In the previous sections, we defined BCSL objects and BCSL model. Now, we need to connect them such that we give semanting meaning to the model $\mathtt{M}$. For this purpose, we define semantic function $\mathtt{F}$. It is defined recursively for a model $\mathtt{M}$ according to expression given as argument:
 
 \begin{center}
 \begin{tabular}{ r c l}
 $\mathtt{F} \llbracket ~\mu~ \rrbracket$ & = &
-		$\begin{cases}
-		\mathtt{A}(\mu, \epsilon) ~\ldots~ \mu \in \Sigma_{A}\\
-		\mathtt{T}(\mu, \emptyset) ~\ldots~ \mu \in \Sigma_{T}\\
-		\end{cases}
-		$\\
+    $\begin{cases}
+    \mathtt{A}(\mu, \epsilon) ~\ldots~ \mu \in \Sigma_{A}\\
+    \mathtt{T}(\mu, \emptyset) ~\ldots~ \mu \in \Sigma_{T}\\
+    \end{cases}
+    $\\
  & & \\
 $\mathtt{F} \llbracket ~\mu\{s\}~ \rrbracket$ & = & $\mathtt{A}(\mu, s)$\\
  & & \\
 $\mathtt{F} \llbracket ~\mu(\mathtt{a}_1, \ldots, \mathtt{a}_n)~ \rrbracket$ & = &
-$\mathtt{T}(\mu, \{ \mathtt{F} \llbracket \mathtt{a}_1 \rrbracket, \ldots, \mathtt{F} \llbracket \mathtt{a}_n \rrbracket \})$\\
+$\mathtt{T}(\mu, \{~ \mathtt{F} \llbracket \mathtt{a}_1 \rrbracket, \ldots, \mathtt{F} \llbracket \mathtt{a}_n \rrbracket ~\})$\\
  & & \\
 $\mathtt{F} \llbracket ~\alpha_1~.~\ldots~.~\alpha_n :: c~ \rrbracket$ & = &
-$\mathtt{X}((\mathtt{F} \llbracket ~\alpha_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\alpha_n~ \rrbracket), c)$\\
+$\mathtt{X}(~(\mathtt{F} \llbracket ~\alpha_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\alpha_n~ \rrbracket), c~)$\\
  & & \\
 $\mathtt{F} \llbracket ~\Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \ldots + \Gamma_m~ \rrbracket$ & = &
-$(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$~ such that:\\
+$\mathtt{R}(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$~ such that:\\
 \end{tabular}
 \end{center}
 
 \begin{center}
 \begin{itemize}
 \item $\chi = (\mathtt{F} \llbracket ~\Gamma_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_n~ \rrbracket, \mathtt{F} \llbracket ~\Gamma_{n+1}~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_m~ \rrbracket)$,
-\item $\omega = \Xi_{i=1}^{|\chi|} \mu(\chi_i)$
-\item $\mathtt{I} = n$
-\item $\mathtt{map} = (J_1, \ldots, J_m): J_i = \sum_{y=1}^{i} | \mu(\chi_i) |$
-\item \begin{tabular}{c l}
+\item $\omega = \Xi_{i=1}^{|\chi|} \mu(\chi_i)$,
+\item $\mathtt{I} = n$,
+\item $\mathtt{map} = (J_1, \ldots, J_m): J_i = \sum_{y=1}^{i} | \mu(\chi_i) |$,
+\item \begin{tabular}{l l}
 
-& $\{~ (i,j) ~|~ i \in [1, \mathtt{map}(\mathtt{I})] \wedge j \in [\mathtt{map}(\mathtt{I}), |\omega|] \wedge |i-j| \equiv \mathtt{map}(\mathtt{I})~\} ~\cup$ \\
-$\mathtt{Indices} =$ & $\{~ (i, -) ~|~ i \in [k, \mathtt{map}(\mathtt{I})] \wedge k = |~ \{ \mathtt{map}(\mathtt{I}) + 1, \ldots, | \alpha | \} ~| ~\} ~\cup$\\
- & $ \{~ (-, j) ~|~ j \in [k, |\alpha|] \wedge k = 2 * \mathtt{map}(\mathtt{I}) ~\}$ (??? ordered set)
+& \hspace*{-0.3cm} $\{~ (i,j) ~|~ i \in [1, \mathtt{map}(\mathtt{I})] \wedge j \in [\mathtt{map}(\mathtt{I}), |\omega|] \wedge |i-j| \equiv \mathtt{map}(\mathtt{I})~\} ~\cup$ \\
+
+\hspace*{-0.3cm}$\mathtt{Indices} =$ & \hspace*{-0.3cm} $\{~ (i, -) ~|~ i \in [k, \mathtt{map}(\mathtt{I})] \wedge k = |~ \{ \mathtt{map}(\mathtt{I}) + 1, \ldots, | \alpha | \} ~| ~\} ~\cup$\\
+
+ & \hspace*{-0.3cm} $ \{~ (-, j) ~|~ j \in [k, |\alpha|] \wedge k = 2 * \mathtt{map}(\mathtt{I}) ~\}$ (??? ordered set)
 \end{tabular}
 
 \end{itemize}
@@ -744,7 +746,7 @@ $\mathtt{R}$ & $\mathcal{G}(\mathtt{R})$ & $ \bigotimes \mathcal{G}(\mathtt{Indi
 \end{tabular}
 \end{center}
 
-where $\bigotimes \mathcal{G}(\mathtt{Indices})^*$ means cartesian product of sets inside of tuple $\mathcal{G}(\mathtt{Indices})$.
+where $\bigotimes \mathcal{G}(\mathtt{Indices})^*$ is cartesian product of sets inside of tuple $\mathcal{G}(\mathtt{Indices})$.
 
 \noindent Next, we need reassemble produced tuples by concatenation.
 
@@ -781,20 +783,28 @@ and $ \mathtt{I} \in \mathtt{R}$ & and $\chi \in \mathtt{R}$ and $\mathtt{map} \
 
 \begin{definition}{Vectorized model}
 
+<<<<<<< HEAD
+Vectorized model $\mathcal{M}$ is a triple $(\vv{\mathcal{R}}, \vv{\nu}, \pi)$ such that $\vv{\mathcal{R}} \subseteq \mathbb{Z}^n$ is set of vector reactions, $\vv{\nu} \in \mathbb{N}_0^n$ is initial vector state, and $\pi \in \mathcal{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
+=======
 Vectorized model $\mathcal{M}$ is a triple $(\mathcal{R}, \nu, \pi)$ such that $\mathcal{R} \subseteq \mathbb{Z}^n$ is set of vector reactions, $\nu \in \mathbb{N}_0^n$ is initial vector state, and $\pi \in \mathcal{X}^n$ is vector of reference complex agents for some $n \in \mathbb{N}$.
+>>>>>>> 333f971c0ff4e78906de8ec6a79cc49869cb0b50
 \end{definition}
 
 Vectorized model is a simple model, where reactions and initial state are vectors over integers. Moreover, there is a reference vector of complex agents, which servers for identifying underlaying agents behind the integers (according to particular position in vectors).
 
 \begin{notation}
+<<<<<<< HEAD
+We denote $N(\vv{\nu}) ~\emph{iff}~ \forall i \in \vv{\nu}: i \in \mathbb{N}_0$.
+=======
 We denote $N(\nu)$ the fact that $\forall i \in \nu: i \in \mathbb{N}_0$.
+>>>>>>> 333f971c0ff4e78906de8ec6a79cc49869cb0b50
 \end{notation}
 
 \begin{definition}{Vector reaction application}
 
 Vector reaction application $\rho$ is a relation $\rho \subseteq \mathbb{N}_0^n \times \mathbb{Z}^n \times \mathbb{N}_0^n$ such that 
 \begin{center}
-$(\upsilon, \mathtt{r}, \mathtt{u}) \in \rho$ $\Leftrightarrow$ $u = \upsilon + \mathtt{r} \wedge N(u)$.
+$(\vv{\upsilon}, \vv{\mathtt{r}}, \vv{\mathtt{u}}) \in \rho$ $\Leftrightarrow$ $\vv{\mathtt{u}} = \vv{\upsilon} + \vv{\mathtt{r}} \wedge N(\vv{\mathtt{u}})$.
 \end{center}
 \end{definition}
 
@@ -824,28 +834,35 @@ Translation of state $\mathtt{S}$ to vector is defined as following:
 \begin{center}
 $\lambda(\mathtt{S}, \pi) = (a_1, a_2, \ldots, a_n)$ such that 
 $a_i$ =
-	$\begin{cases}
-	|\mathtt{S}(\pi_i)| & \ldots~~~~ \pi_i \in \mathtt{S}\\
-	0 & \ldots~~~~ \pi_i \not\in \mathtt{S}\\
-	\end{cases}
-	$
+  $\begin{cases}
+  |\mathtt{S}(\pi_i)| & \ldots~~~~ \pi_i \in \mathtt{S}\\
+  0 & \ldots~~~~ \pi_i \not\in \mathtt{S}\\
+  \end{cases}
+  $
 \end{center}
 \hspace{15pt} where $n = |\pi|$ and $|\mathtt{S}(\pi_i)|$ is number of occurences of agent $\pi_i$ in state $\mathtt{S}$.
 \end{definition}
 
-Let $\mathtt{M} = (\mathtt{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. In order to construct vectorized model $\mathcal{M} = (\nu, \mathcal{R}, \pi)$, we need to do following steps:
+Let $\mathtt{M} = (\mathtt{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. In order to construct vectorized model $\mathcal{M} = (\vv{\mathcal{R}}, \vv{\nu}, \pi)$, we need to do following steps:
 
 \begin{enumerate}
+<<<<<<< HEAD
+\item generate $\mathtt{Reactions}$ as defined in section~\ref{Generating reactions},
+\item construct reference vector $\pi$ from $\mathtt{Reactions}$,
+\item create $\vv{\nu}$ as $\lambda(\mathtt{S}, \pi)$,
+\item construct set of vector reactions $\vv{\mathcal{R}}$ from set of $\mathtt{Reactions}$, where individual vector reaction $\vv{r}$ are created from $\mathtt{r}$ as following:
+=======
 \item generate $\mathtt{Reactions}(\mathtt{R})$ (Definition~\ref{generate_reactions}),
 \item construct reference vector $\pi$ (Definition~\ref{reference_vector}),
 \item create initial vector state $\nu$ (Definition~\ref{state_to_vector}),
 \item construct set of vector reactions $\mathcal{R}$ from set of $\mathtt{Reactions}(\mathtt{R})$, where individual vector reaction $\vv{r}$ is created from $\mathtt{r}$ as following:
+>>>>>>> 333f971c0ff4e78906de8ec6a79cc49869cb0b50
 
 \begin{center}
 $\vv{r} = \lambda(RHS(\mathtt{r}), \pi) - \lambda(LHS(\mathtt{r}), \pi)$
 \end{center}
 
-\item resulting triple $(\nu, \mathcal{R}, \pi)$ is desired model $\mathcal{M}$.
+\item resulting triple $(\vv{\mathcal{R}}, \vv{\nu}, \pi)$ is desired model $\mathcal{M}$.
 \end{enumerate}
 
 \section{Syntactic extensions}
@@ -1161,9 +1178,9 @@ The translation is quite straight-forward:
 \item as described in (section XY), we have finite number of unique agents -- these are all the places \emph{p}
 \item transitions \emph{t} are constructed as follows:
 \begin{itemize}
-	\item for each reaction, create a transition,
-	\item place input edge from each place which has label in left-hand-side of the rule (with appropriate multiplicity),
-	\item do the same for output edges for right-hand-side of the rule,
+  \item for each reaction, create a transition,
+  \item place input edge from each place which has label in left-hand-side of the rule (with appropriate multiplicity),
+  \item do the same for output edges for right-hand-side of the rule,
 \end{itemize}
 \item finally, we create initial marking \emph{m} from given initial state of the model by similar procedure described above.
 \end{enumerate}
@@ -1177,13 +1194,13 @@ The BCSL model definition as given in (ref...) can be reduced by signatures. Not
 \begin{itemize}
 \item for each rule, iterare through all the atomic and structure agent expression 
 \begin{itemize}
-	\item particularly, split the rule expression by rule sides delimiter, rule agent delimiter, and finally compartment and complex delimiters respectivelly
+  \item particularly, split the rule expression by rule sides delimiter, rule agent delimiter, and finally compartment and complex delimiters respectivelly
 \end{itemize}
 \item for each found agent expression
 \begin{itemize}
-	\item if it contains round brackets, go to next step for all its atomic agent expression ans finally extend structure signature by pair name and set of atomic agent names,
-	\item if it contains curly brackets, its an atomic agent and atomic signatures can be extended by the pair name and state,
-	\item in other case, store the name in \emph{uncertain} set of names.
+  \item if it contains round brackets, go to next step for all its atomic agent expression ans finally extend structure signature by pair name and set of atomic agent names,
+  \item if it contains curly brackets, its an atomic agent and atomic signatures can be extended by the pair name and state,
+  \item in other case, store the name in \emph{uncertain} set of names.
 \end{itemize}
 \item finally, place all uncertain names, which are not included in neither of signatures, to structure signature.
 \end{itemize}
@@ -1193,16 +1210,6 @@ The above described procedure will create signatures in assumption all syntactic
 \begin{proof}
 Let $\mathcal{M}$ be a BCSL model and $\Sigma$ its minimal signatures (i.e., all states and partial compositions defined in the signatures are actually used in the rules). Then, signatures $\Sigma'$ obtained by procedure (ref blah) has to be equal to the original signature $\Sigma$. In case its not, it means either there is some extra data in the $\Sigma'$ or some data is missing. Since we create $\Sigma'$ by iterating through all the rules, we construct complete signature with complete states used in the model. Therefore, if some data are missing in $\Sigma'$, then it follows given signature $\Sigma$ is not minimal. On the other hand, if there are some extra data in $\Sigma'$, then given signature $\Sigma$ is incorrect -- its missing some structure details which are being used in the model.
 \end{proof}
-
-\subsection{Detection of dead rules}
-
-A rule is called dead, if there is no trace starting from the initial state in which this rule is applied. The analysis reports the list of the rules it has detected to be dead. 
-
-** define more precisely via markings -- states (lecture3, 36)
-
-\subsection{Detection of dead agents}
-
-An agent is called dead, if there is no trace starting from the initial state with at least one state in which this agent occurs. The analysis reports the list of the agents it has detected to be dead.
 
 \subsection{Optimal bound computations}
 
