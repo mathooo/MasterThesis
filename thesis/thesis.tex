@@ -792,7 +792,7 @@ and $ \mathtt{I} \in \mathtt{R}$ & and $\chi \in \mathtt{R}$ and $\mathtt{map} \
 \section{Chemical Reaction Networks}
 
 \begin{definition}{Chemical Reaction Model (CRN)}
-
+\label{crn}
 Chemical Reaction Model $\mathcal{M}$ is a triple $(\mathfrak{R}, \vv{\nu}, \pi)$ such that $\mathfrak{R} \subseteq \mathbb{Z}^n$ is set of reactions, $\vv{\nu} \in \mathbb{N}_0^n$ is initial vector, and $\pi \in \mathcal{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
 \end{definition}
 
@@ -815,7 +815,7 @@ $(\vv{\upsilon}, \vv{\mathtt{r}}, \vv{\mathtt{u}}) \in \rho$ $\Leftrightarrow$ $
 Note some values in reactions might be negative. When applying reaction on state, the resulting state cannot contain any negative values (negative number of entities does not give biological sense). Therefore, application is allowed only if the resulting vector contains non-negative values.
 
 \begin{definition}{CRN semantics}
-Let $\mathcal{M}$ be a Chemical Reaction Model. By iterative reaction application on initial vector $\vv{\nu}$ and all consequently created state vectors, we obtain an LTS (ref).
+Let $\mathcal{M}$ be a Chemical Reaction Model. The quantitative semantics are given in terms of a discrete-states produced by iterative reaction application on initial vector $\vv{\nu}$ and all consequently created state vectors. This way we obtain an LTS (ref).
 \end{definition}
 
 CRN semantics might lead to possibly infinite LTS. This process can be limited by a global bound, which makes sure the produced LTS is finite (ref).
@@ -824,21 +824,22 @@ CRN semantics might lead to possibly infinite LTS. This process can be limited b
 
 \section{Production of model}
 
-In previous sections we defined all what was required to actually create vectorized model (ref) from a BCSL model. This procedure is neccesary in order to allow operational semantics to be applied. 
+In previous sections we defined all what was required to actually create Chemical Reaction Model (Definition~\ref{crn}) from a BCSL model. This procedure is necessary in order to allow operational semantics to be applied.
 
 \begin{definition}{Reference vector}\label{reference_vector}
 
-Reference vector $\pi$ is a tuple of all possible unique complexes constructed from $\mathtt{Reactions}$ as following:
+Reference vector $\pi$ is a tuple of all possible unique complexes constructed from reactions of model $\mathds{M}$ as following:
 
 \begin{center}
-$\mathcal{U}(\mathtt{Reactions}) = \{~ \mathtt{X} ~|~ \mathtt{X} \in \mathtt{seq}(\mathtt{r}) \wedge \mathtt{r} \in \mathtt{Reactions} ~\} $.
+$$\Pi = \{~ \mathtt{X} ~|~ \mathtt{X} \in \mathtt{seq}(\mathtt{r}) \wedge \mathtt{r} \in \bigcup_{\mathtt{R} \in \mathds{R}} \mathtt{Reactions}(\mathtt{R}) ~\} $$
 \end{center}
 
-Then, we just choose a random order of the set.
+\noindent Then, reference vector $\pi$ is just chosen random order of the set $\Pi$.
+
 \end{definition}
 
-\begin{definition}{State to vector translation}\label{state_to_vector}
-Translation of state $\mathtt{S}$ to vector is defined as following:
+\begin{definition}{Multiset to vector translation}\label{state_to_vector}
+Translation of multiset $\mathtt{S} \subseteq \mathcal{X}$ to vector is defined as following:
 \begin{center}
 $\lambda(\mathtt{S}, \pi) = (a_1, a_2, \ldots, a_n)$ such that 
 $a_i$ =
@@ -848,23 +849,24 @@ $a_i$ =
   \end{cases}
   $
 \end{center}
-\hspace{15pt} where $n = |\pi|$ and $|\mathtt{S}(\pi_i)|$ is number of occurences of agent $\pi_i$ in state $\mathtt{S}$.
+\hspace{15pt} where $n = |\pi|$ and $|\mathtt{S}(\pi_i)|$ is number of occurrences of agent $\pi_i$ in the multiset $\mathtt{S}$.
 \end{definition}
 
-Let $\mathtt{M} = (\mathtt{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. In order to construct vectorized model $\mathcal{M} = (\vv{\mathcal{R}}, \vv{\nu}, \pi)$, we need to do following steps:
+Let $\mathds{M} = (\mathds{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. In order to construct Chemical Reaction Model $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \pi)$, we need to do the following steps:
 
 \begin{enumerate}
-\item generate $\mathtt{Reactions}(\mathtt{R})$ (Definition~\ref{generate_reactions}),
+\item generate reactions for all rules $\mathtt{F}(\mathtt{R}) \in \mathds{R}$ (Definition~\ref{generate_reactions}),
 \item construct reference vector $\pi$ (Definition~\ref{reference_vector}),
-\item create initial vector state $\vv{\nu}$ (Definition~\ref{state_to_vector}),
-\item construct set of vector reactions $\vv{\mathcal{R}}$ from set of $\mathtt{r} \in \mathtt{Reactions}(\mathtt{R})$, where individual vector reaction $\vv{r}$ is created from $\mathtt{r}$ as following:
+\item create initial vector $\vv{\nu}$ from initial multiset $\mathtt{S}$ constructed as $\mathtt{S} = \{ \mathtt{X} ~|~ \mathtt{X} = \mathtt{F}(\Gamma) \wedge \Gamma \in \mathtt{init} \}$ (Definition~\ref{state_to_vector}),
+\item construct set of vector reactions $\mathfrak{R}$ from the set reactions, where individual vector reaction $\vv{r}$ is created from a reaction $\mathtt{r}$ as following:
 
 \begin{center}
 $\vv{r} = \lambda(RHS(\mathtt{r}), \pi) - \lambda(LHS(\mathtt{r}), \pi)$
 \end{center}
 
-\item resulting triple $(\vv{\mathcal{R}}, \vv{\nu}, \pi)$ is desired model $\mathcal{M}$.
 \end{enumerate}
+
+In order to accomplish the process of giving semantics to an BCSL model, it is necessary to note how we revive information which is missing in produced LTS. This procedure is quite straightforward since we still have define reference vector $\pi$. Similarly as we translated multisets of BCSL agents to vectors (Definition~\ref{state_to_vector}), we can apply a reverse procedure, when we build a multiset of agents from a vector according to the reference vector $\pi$. This is how we obtain an LTS as described in (ref).
 
 \section{Syntactic extensions}
 
