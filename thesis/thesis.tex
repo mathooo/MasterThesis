@@ -652,6 +652,15 @@ $\Xi_{i=1}^n T_i = T_1 \mdoubleplus T_2 \mdoubleplus \ldots \mdoubleplus T_n $
 \end{center}
 \end{definition}
 
+\begin{definition}{Reassembly}
+
+Let $Y$ be a set of tuples of particular form, where each $y \in Y$ has form $((a_1, b_1), (a_2, b_2), \ldots, (a_n, b_n))$. Reassembly of set $Y$ is a set of tuples $X$ where each $x \in X$ has form $(a_1, a_2, \ldots, a_n, b_1, b_2, \ldots,  b_n)$. formally
+
+\begin{center}
+$\mathtt{reassembly}(Y) = \{~  x ~|~ y \in Y \wedge x = \Xi_{i=1}^{|y|} y_{i_1} \mdoubleplus \Xi_{i=1}^{|y|} y_{i_2} ~\}$
+\end{center}
+\end{definition}
+
 \begin{definition}{Difference of partial compositions}
 
 Let $\gamma, \gamma'$ be two partial compositions. We define difference of these two sets on names of its atomic agents as following:
@@ -755,22 +764,16 @@ $\mathcal{R}$ & $\mathcal{G}(\mathtt{R})$ & $ \bigotimes \mathcal{G}(\mathtt{Ind
 
 where $\bigotimes \mathcal{G}(\mathtt{Indices})^*$ is cartesian product of sets inside of tuple $\mathcal{G}(\mathtt{Indices})$.
 
-\noindent Next, we need reassemble produced tuples by concatenation.
-
-\begin{center}
-$\mathtt{reassemble}(\mathcal{G}(\mathtt{R})) = \{~  y ~|~ x \in \mathcal{G}(\mathtt{R}) \wedge y = \Xi_{i=1}^{|x|} x_i ~\}$
-\end{center}
-
 \noindent\rule{\textwidth}{2pt}
 
-\section{Constructing reactions}
+\section{Construction of reactions}
 \label{Generating reactions}
 
-Given a rule $\mathtt{R}$, we can produce appropriate reactions using ground forms and subsequent application of reassembly.
+Given a rule $\mathtt{R}$, we can produce appropriate reactions using ground forms and subsequent application of reassembly operation.
 
-\begin{definition}{Reactions constructing}\label{generate_reactions}
+\begin{definition}{Construction of reactions}\label{generate_reactions}
 \hspace*{-0.8cm}\begin{tabular}{ r l }
-$\mathtt{Reactions}(\mathtt{R}) =$ & $\{~ \mathtt{r}(\mathtt{seq}, \mathtt{I}) ~|~ y \in \mathtt{reassemble}(\mathcal{G}(\mathtt{R})) ~\}$,\\
+$\mathtt{Reactions}(\mathtt{R}) =$ & $\{~ \mathtt{r}(\mathtt{seq}, \mathtt{I}) ~|~ y \in \mathtt{reassembly}(\mathcal{G}(\mathtt{R})) ~\}$,\\
 
 where $\mathtt{seq} =$ & $ \big(\mathtt{X}(y(0, \ldots, \mathtt{map}(0) - 1), \mathtt{com}(\chi(0))),$ \\
 
@@ -786,30 +789,36 @@ and $ \mathtt{I} \in \mathtt{R}$ & and $\chi \in \mathtt{R}$ and $\mathtt{map} \
 
 \noindent\rule{\textwidth}{1pt}
 
-\section{Vectorized model}
+\section{Chemical Reaction Networks}
 
-\begin{definition}{Vectorized model}
+\begin{definition}{Chemical Reaction Model (CRN)}
 
-Vectorized model $\mathcal{M}$ is a triple $(\vv{\mathds{R}}, \vv{\nu}, \pi)$ such that $\vv{\mathds{R}} \subseteq \mathbb{Z}^n$ is set of vector reactions, $\vv{\nu} \in \mathbb{N}_0^n$ is initial vector state, and $\pi \in \mathcal{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
+Chemical Reaction Model $\mathcal{M}$ is a triple $(\mathfrak{R}, \vv{\nu}, \pi)$ such that $\mathfrak{R} \subseteq \mathbb{Z}^n$ is set of reactions, $\vv{\nu} \in \mathbb{N}_0^n$ is initial vector, and $\pi \in \mathcal{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
 \end{definition}
 
-Vectorized model is a simple model, where reactions and initial state are vectors over integers. Moreover, there is a reference vector of complex agents, which servers for identifying underlaying agents behind the integers (according to particular position in vectors).
+Chemical Reaction Model is a simple model, where reactions and initial state are vectors over integers. Moreover, there is a reference vector of complex agents, which servers for identifying underlaying agents behind the integers (according to particular position in vectors).
 
-\begin{notation}
+\begin{notation}\label{nonnegative}
 We denote $N(\vv{\nu}) ~\emph{iff}~ \forall i \in \vv{\nu}: i \in \mathbb{N}_0$.
 \end{notation}
 
-\begin{definition}{Vector reaction application}
+By Notation~\ref{nonnegative} we denote the fact that a vector is formed only by non-negative integers.
 
-Vector reaction application $\rho$ is a relation $\rho \subseteq \mathbb{N}_0^n \times \mathbb{Z}^n \times \mathbb{N}_0^n$ such that 
+\begin{definition}{Reaction application}
+
+Reaction application $\rho$ is a relation $\rho \subseteq \mathbb{N}_0^n \times \mathbb{Z}^n \times \mathbb{N}_0^n$ such that 
 \begin{center}
 $(\vv{\upsilon}, \vv{\mathtt{r}}, \vv{\mathtt{u}}) \in \rho$ $\Leftrightarrow$ $\vv{\mathtt{u}} = \vv{\upsilon} + \vv{\mathtt{r}} \wedge N(\vv{\mathtt{u}})$.
 \end{center}
 \end{definition}
 
-Note some values in reaction vectors might be negative. When applying reaction on state, the resulting state cannot contain any negative values (negative number of entities does not give biological sense). Therefore, application is allowed only if the resulting state contain non-negative values.
+Note some values in reactions might be negative. When applying reaction on state, the resulting state cannot contain any negative values (negative number of entities does not give biological sense). Therefore, application is allowed only if the resulting vector contains non-negative values.
 
-By iterative application of reaction application we obtain (possibly infinite) LTS. This application can be limited by a global bound, which makes sure the produced LTS is finite (ref).
+\begin{definition}{CRN semantics}
+Let $\mathcal{M}$ be a Chemical Reaction Model. By iterative reaction application on initial vector $\vv{\nu}$ and all consequently created state vectors, we obtain an LTS (ref).
+\end{definition}
+
+CRN semantics might lead to possibly infinite LTS. This process can be limited by a global bound, which makes sure the produced LTS is finite (ref).
 
 \noindent\rule{\textwidth}{1pt}
 
