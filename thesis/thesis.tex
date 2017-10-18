@@ -140,7 +140,7 @@ The reason for this kind of abstraction is the way how we see the biological mod
 \end{center}
 \end{figure}
 
-On the other hand, the rules are expressions which describe behaviour of groups of objects. A rule has form of a chemical reaction, where substrates and products take place. The difference is that reaction only operates on particular objects. Therefore, a reaction can be seen as a special case of rule (see Fig.~\ref{rules:fig}), where the groups contain exactly one element.
+On the other hand, the rules are expressions which describe behavior of groups of objects. A rule has form of a chemical reaction, where substrates and products take place. The difference is that reaction only operates on particular objects. Therefore, a reaction can be seen as a special case of rule (see Fig.~\ref{rules:fig}), where the groups contain exactly one element.
 
 The rule can be mapped on a solution. Then, if it is mapped, it can be applied and a new solution is produced. The mapping is not always successful (see Fig.~\ref{solutions:fig}, application of rule \textit{c}). By repeating map-apply action, we obtain a \textit{Labelled transition system} $\mathcal{L}$.
 
@@ -207,7 +207,7 @@ Moreover, the mapping can be seen as assigning particular objects from the solut
   \begin{minipage}[r]{0.6\textwidth}
     {\hspace*{1.3cm}\includegraphics[scale=0.2]{pics/rule_reaction}}
 \end{minipage}
-\caption{\textbf{Example of a map-apply action}. As a solution, we use solution \textit{(a)} from Fig.~\ref{solutions:fig}. \textbf{(a)} Rule can be mapped on a $\square$ and a $\bigcirc$ regardless their colors and form a complex $\square$--$\bigcirc$.  \textbf{(b)} Let's choose yellow $\square$ and green $\bigcirc$ from our solution. The rule was mapped on choosen objects and they were assigned to the left-hand-side of the rule. \textbf{(c)} The rule was applied and new object (yellow-green complex $\square$--$\bigcirc$) was created. We obtained the reaction describing the particular action which has just happened.}
+\caption{\textbf{Example of a map-apply action}. As a solution, we use solution \textit{(a)} from Fig.~\ref{solutions:fig}. \textbf{(a)} Rule can be mapped on a $\square$ and a $\bigcirc$ regardless their colors and form a complex $\square$--$\bigcirc$.  \textbf{(b)} Let's choose yellow $\square$ and green $\bigcirc$ from our solution. The rule was mapped on chosen objects and they were assigned to the left-hand-side of the rule. \textbf{(c)} The rule was applied and new object (yellow-green complex $\square$--$\bigcirc$) was created. We obtained the reaction describing the particular action which has just happened.}
 \label{map-apply:fig}
 \end{center}
 \end{figure}
@@ -227,7 +227,7 @@ From static analysis point of view, using rules directly is not the best choice.
 \caption{bla}
 \end{figure}
 
-The rule and reaction differ in level of abstraction. In this context we mean how stringent it is, not what sort of features particular langugage uses. This is universal attribute for all rule-based languages -- the rule is always more abstract than it's instance -- a reaction. Then, analysis of such abstract object statically is a challenge. (cite ?) The reason is that most of the structural information is encoded in rules implicitely. For statis analysis, explicit data are more suitable.
+The rule and reaction differ in level of abstraction. In this context we mean how stringent it is, not what sort of features particular language uses. This is universal attribute for all rule-based languages -- the rule is always more abstract than it's instance -- a reaction. Then, analysis of such abstract object statically is a challenge. (cite ?) The reason is that most of the structural information is encoded in rules implicitly. For static analysis, explicit data are more suitable.
 
 \section{Rule-based languages}
 
@@ -363,7 +363,7 @@ Since platform allows export of models in SBML format, we employed resolvable id
 
 \chapter{Problem formulation}
 
-why we need something new - need of BCS by consotium, later naturally evolved into need of formal definiton
+why we need something new - need of BCS by consortium, later naturally evolved into need of formal definiton
 
 other languages didnt use suitable level of abstraction (explain why)
 
@@ -373,11 +373,11 @@ highlight
 
 motivated by practical needs of ecyano (it means here it should be known from background)
 
-Biochemical Space as described in (ref) is great idea. However, one must cosider the fact that the space might get quite huge. It means keep it consistent in informal form is almost impossible. It is neccesary to be able to detect inconsistency with automatic tools and enable futher analysis of the space. The anotation itself is good, but with enabled formal part with all its advantages is much better. 
+Biochemical Space as described in (ref) is great idea. However, one must consider the fact that the space might get quite huge. It means keep it consistent in informal form is almost impossible. It is necessary to be able to detect inconsistency with automatic tools and enable further analysis of the space. The annotation itself is good, but with enabled formal part with all its advantages is much better. 
 
 For this reasons we decided to improved description part of BCS by defining it formally. Many options how to define the language were available. First of all, we wanted to keep definition space as concise as is possible. Rule-based approach was the best hit, because it is capable to capture required details for biological systems while keeping the description concise. However, there are many rule-based languages and each of them is slightly different in syntactic and semantic level and also on level of abstraction. After deep research (ref prev capt), we have evaluated all existing languages as not suitable. The closest representation to the desired one (ref next section) was Kappa. That is the reason why in first iteration we have chosen translation to Kappa for definition of semantics. However, there were few aspects which were not suitable (ref).
 
-There are several aspects which must be considered when defining new language. From syntactic point of view, we were due to keep the language as simple as possible. It was supposed to be human-readable, which in this context means easy to read, write and maintain by humans even from other disciplines than computer science. From semantic point of view, we needed a straitforward definition which would have practical use in implementation. With experiences from previous iteration, it showed that direct rule-based semantics where quite complicated mechanism of mathcing and replacement is used, is not very effiecient. Therefore we chose indirect definition via reactions -- `practical definition' (ref formal). The level of abstraction point of view is discussed in next section.
+There are several aspects which must be considered when defining new language. From syntactic point of view, we were due to keep the language as simple as possible. It was supposed to be human-readable, which in this context means easy to read, write and maintain by humans even from other disciplines than computer science. From semantic point of view, we needed a straightforward definition which would have practical use in implementation. With experiences from previous iteration, it showed that direct rule-based semantics where quite complicated mechanism of matching and replacement is used, is not very efficient. Therefore we chose indirect definition via reactions -- `practical definition' (ref formal). The level of abstraction point of view is discussed in next section.
 
 \section{Desired abstraction level}
 
@@ -429,10 +429,10 @@ Let $\mathtt{A}, \mathtt{A}'$ be atomic agents. $\mathtt{A}$ is \emph{equivalent
 Note: maybe the definition of equivalence should be done only on names (due tu partial composition in structs).
 
 \begin{notation}
-Let $\mathcal{A}$ be universe of all possible atomic agents.
+Let $\mathds{A}$ be universe of all possible atomic agents.
 \end{notation}
 
-Atomic agents are the simpliest objects used for describing biological entities. An atomic signature with the same name as the atomic agent has defines allowed states for it (with additional $\varepsilon$ state).
+Atomic agents are the simplest objects used for describing biological entities. An atomic signature with the same name as the atomic agent has defines allowed states for it (with additional $\varepsilon$ state).
 
 \begin{example}{Atomic agents}\label{example:atomic}
 
@@ -447,10 +447,10 @@ Please note state $\varepsilon$ does not mean the agent is in \emph{none} state,
 \noindent\rule{\textwidth}{1pt}
 
 \begin{definition}{Structure agent}
-Structure agent $\mathtt{T}$ is a pair $(\eta, \gamma)$ where $\eta \in \mathcal{N}_{T}$ is a name and $\gamma \subseteq \mathcal{A}$ is a set of atomic agents called partial composition.
+Structure agent $\mathtt{T}$ is a pair $(\eta, \gamma)$ where $\eta \in \mathcal{N}_{T}$ is a name and $\gamma \subseteq \mathds{A}$ is a set of atomic agents called partial composition.
 \end{definition}
 
-A structure agent represents a biochemical object that is composed from several known atomic agents provided that we know that such a composition is abstract and not necessarily complete. To incorporate such an abstraction of biological structures into our language, a structure agent is defined to be labelled with a unique name and it is constructed only from atomic agents considered in the same physical compartment.
+A structure agent represents a biochemical object that is composed from several known atomic agents provided that we know that such a composition is abstract and not necessarily complete. To incorporate such an abstraction of biological structures into our language, a structure agent is defined to be labeled with a unique name and it is constructed only from atomic agents considered in the same physical compartment.
 
 \begin{definition}{Equivalence of structure agents}
 Let $\mathtt{T}, \mathtt{T}'$ be structure agents. $\mathtt{T}$ is \emph{equivalent} with $\mathtt{T}'$, written $\mathtt{T} \equiv \mathtt{T}'$, iff $\eta(\mathtt{T}) \equiv \eta(\mathtt{T}') \wedge \forall \mathtt{A} \in \gamma(\mathtt{T}) ~\exists \mathtt{A}' \in \gamma(\mathtt{T}') : \mathtt{A} \equiv \mathtt{A}' \wedge \forall \mathtt{A}' \in \gamma(\mathtt{T}') ~\exists \mathtt{A} \in \gamma(\mathtt{T}) : \mathtt{A}' \equiv \mathtt{A}$.
@@ -459,7 +459,7 @@ Let $\mathtt{T}, \mathtt{T}'$ be structure agents. $\mathtt{T}$ is \emph{equival
 The key construct of a structure agent is \emph{partial composition} defined as a list of atomic agents which are considered to be relevant parts of the structure agent. We allow this list to be empty, in that case the meaning is a biological structure for which we do not know its composition.
 
 \begin{notation}
-Let $\mathcal{T}$ be universe of all possible structure agents.
+Let $\mathds{T}$ be universe of all possible structure agents.
 \end{notation}
 
 A typical example of a structure agent is a protein where the atomic agents are individual amino acids that are of interest in the particular setting.
@@ -474,7 +474,7 @@ A typical example of a structure agent is a protein where the atomic agents are 
 \noindent\rule{\textwidth}{1pt}
 
 \begin{definition}{Complex agent}
-Complex agent $\mathtt{X}$ is a pair $(\mu, \mathtt{com})$ where $\mu \in (\mathcal{A} \cup \mathcal{T})^n$ is a sequence, $\mathtt{com} \in \mathcal{N}_{c}$ is a compartment, and $n \in \mathbb{N}$.
+Complex agent $\mathtt{X}$ is a pair $(\mu, \mathtt{com})$ where $\mu \in (\mathds{A} \cup \mathds{T})^n$ is a sequence, $\mathtt{com} \in \mathcal{N}_{c}$ is a compartment, and $n \in \mathbb{N}$.
 \end{definition}
 
 A complex agent represents a non-trivial composite biochemical object that is (inductively) constructed from already known biological objects. In common rule-based languages this is typically defined by introducing some kind of bonds between individual biochemical objects. In BCSL we abstract from detailed specification of bonds and we rather assume a complex as a coexistence of certain objects in a particular group. Moreover, a complex agent resides in a compartment, which gives it a space position. 
@@ -490,7 +490,7 @@ Let $\mathtt{X}, \mathtt{X}'$ be complexes. $\mathtt{X}$ is \emph{equivalent} wi
 The key element of a complex agent is \emph{sequence} describing inductively constructed coexistence expressions from existing agents. In contrast to partial composition in structure agent, we allow replication at the level of sequence (an agent of a certain name can appear more than once in a sequence).
 
 \begin{notation}
-Let $\mathcal{X}$ be universe of all possible complex agents. Moreover, we denore $\mathcal{U} = \mathcal{A} \cup \mathcal{T} \cup \mathcal{X}$ as universe of all possible agents.
+Let $\mathds{X}$ be universe of all possible complex agents. Moreover, we denote $\mathds{U} = \mathds{A} \cup \mathds{T} \cup \mathds{X}$ as universe of all possible agents.
 \end{notation}
 
 \begin{example}{Complex}\label{example:complex}
@@ -500,7 +500,7 @@ Let $\mathcal{X}$ be universe of all possible complex agents. Moreover, we denor
 \end{itemize}
 \end{example}
 
-The complex agents have very important role in the language. In the rules defined in following, we can always use only complexes. It means, an atomic or structure agent cannot exist on its own, it must be encapsulated in a complex -- it might have only one item in its sequence. Morover, this guarantees each atomic and strucure agent has indirectly given space location -- the compartment.
+The complex agents have very important role in the language. In the rules defined in following, we can always use only complexes. It means, an atomic or structure agent cannot exist on its own, it must be encapsulated in a complex -- it might have only one item in its sequence. Moreover, this guarantees each atomic and structure agent has indirectly given space location -- the compartment.
 
 \noindent\rule{\textwidth}{1pt}
 
@@ -509,8 +509,8 @@ The complex agents have very important role in the language. In the rules define
 Rule $\mathtt{R}$ is a 5-tuple $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$ where:
 
 \begin{itemize}
-\item $\chi \in \mathcal{X}^n$ is a sequence of complexes,
-\item $\omega \in (\mathcal{A} \cup \mathcal{T})^m$ is a sequence of atomic and structure agents,
+\item $\chi \in \mathds{X}^n$ is a sequence of complexes,
+\item $\omega \in (\mathds{A} \cup \mathds{T})^m$ is a sequence of atomic and structure agents,
 \item $\mathtt{I} \in \{ 1, \ldots, n \}$ is an index determining start of right-hand-side,
 \item $\mathtt{map} \in \mathbb{N}^m$ is an index map between $\omega$ and $\chi$,
 \item $\mathtt{Indices} \subseteq (\{-\} \cup \mathbb{N})^2$ is an index map between agents from left- and right-hand side (always sorted lexicographically such that $'-' > i$ for every $i \in \mathbb{N}$)
@@ -519,10 +519,10 @@ Rule $\mathtt{R}$ is a 5-tuple $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt
 where $n, m \in \mathbb{N}$.
 \end{definition}
 
-As can be seen, rule is quite a complicated structure. The reason is the practical definition of semantics which in following section (ref). Also, it is neccessary to capture relationship between left- and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map between the agents in $\mathtt{Indices}$. Another index map $\mathtt{map}$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, by index $\mathtt{I}$ we determine the end of left-hand side of the rule.
+As can be seen, rule is quite a complicated structure. The reason is the practical definition of semantics which in following section (ref). Also, it is necessary to capture relationship between left- and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map between the agents in $\mathtt{Indices}$. Another index map $\mathtt{map}$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, by index $\mathtt{I}$ we determine the end of left-hand side of the rule.
 
 \begin{notation}
-Let $\mathcal{R}$ be universe of all possible rules.
+Let $\mathds{R}$ be universe of all possible rules.
 \end{notation}
 
 \begin{example}{Rule}\label{example:rule}
@@ -562,14 +562,14 @@ $\chi = \begin{bmatrix}
 Reaction $\mathtt{r}$ is a pair $(\mathtt{seq}, \mathtt{I})$ where:
 
 \begin{itemize}
-\item $\mathtt{seq} \in \mathcal{X}^n$ is a sequence of complexes,
+\item $\mathtt{seq} \in \mathds{X}^n$ is a sequence of complexes,
 \item $\mathtt{I} \in \{ 1, \ldots, n \}$ is an index determining start of right-hand-side
 \end{itemize}
 
 where $n, m \in \mathbb{N}$.
 \end{definition}
 
-Reaction is similar structure than rule, but much simplier. The reaction is just mediate format for giving semantics to BCSL models and it only holds information about complex contents of the rule.
+Reaction is similar structure than rule, but much simpler. The reaction is just mediate format for giving semantics to BCSL models and it only holds information about complex contents of the rule.
 
 \begin{notation}
 We denote left-hand-side of the reaction $(\mathtt{seq}_0, \ldots, \mathtt{seq}_{\mathtt{I}-1})$ as $LHS(\mathtt{r})$ and right-hand-side of the reaction$(\mathtt{seq}_\mathtt{I}, \ldots, \mathtt{seq}_n)$ as $RHS(\mathtt{r})$.
@@ -625,14 +625,14 @@ Examples of agents, complexes and rules given in previous examples:
 \section{BCSL model}
 
 \begin{definition}{BCSL model}
-We define BCSL model $\mathds{M}$ as 4-tuple $(\mathds{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ where $\mathds{R}$ is set of rule expressions, $\Sigma_\mathtt{A}$ is atomic signature, $\Sigma_\mathtt{T}$ is structure signature, and $\mathtt{init}$ is initial multiset of complex expressions $\Gamma$.
+We define BCSL model $\mathds{M}$ as 4-tuple $(\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ where $\mathcal{R}$ is set of rule expressions, $\Sigma_\mathtt{A}$ is atomic signature, $\Sigma_\mathtt{T}$ is structure signature, and $\mathtt{init}$ is initial multiset of complex expressions $\Gamma$.
 \end{definition}
 
 \noindent\rule{\textwidth}{1pt}
 
 \section{Additional definitions}
 
-Before we proceed, there are few neccesary definitions.
+Before we proceed, there are few necessary definitions.
 
 \begin{definition}{Tuples concatenation}
 
@@ -681,27 +681,27 @@ $\gamma(\mathtt{T}) \ominus \Sigma_T(\mathtt{T}) \Leftrightarrow \{ \mu_\Sigma ~
 
 \section{Semantic function}
 
-In the previous sections, we defined BCSL objects and BCSL model. Now, we need to connect them such that we give semanting meaning to the model $\mathds{M}$. For this purpose, we define semantic function $\mathtt{F}$. It is defined recursively for a model $\mathds{M}$ according to expression given as argument:
+In the previous sections, we defined BCSL objects and BCSL model. Now, we need to connect them such that we give semantic meaning to the model $\mathds{M}$. For this purpose, we define semantic function $\mathtt{F}$. It is defined recursively for a model $\mathds{M}$ according to expression given as argument:
 
 \begin{center}
 \begin{tabular}{ r c l}
 $\mathtt{F} \llbracket ~\mu~ \rrbracket$ & = &
     $\begin{cases}
-    (\mu, \epsilon) \in \mathcal{A} ~\ldots~ \mu \in \Sigma_{A}\\
-    (\mu, \emptyset) \in \mathcal{A} ~\ldots~ \mu \in \Sigma_{T}\\
+    (\mu, \epsilon) \in \mathds{A} ~\ldots~ \mu \in \Sigma_{A}\\
+    (\mu, \emptyset) \in \mathds{A} ~\ldots~ \mu \in \Sigma_{T}\\
     \end{cases}
     $\\
  & & \\
-$\mathtt{F} \llbracket ~\mu\{s\}~ \rrbracket$ & = & $(\mu, s) \in \mathcal{A}$\\
+$\mathtt{F} \llbracket ~\mu\{s\}~ \rrbracket$ & = & $(\mu, s) \in \mathds{A}$\\
  & & \\
 $\mathtt{F} \llbracket ~\mu(\mathtt{a}_1, \ldots, \mathtt{a}_n)~ \rrbracket$ & = &
-$(\mu, \{~ \mathtt{F} \llbracket \mathtt{a}_1 \rrbracket, \ldots, \mathtt{F} \llbracket \mathtt{a}_n \rrbracket ~\}) \in \mathcal{T}$\\
+$(\mu, \{~ \mathtt{F} \llbracket \mathtt{a}_1 \rrbracket, \ldots, \mathtt{F} \llbracket \mathtt{a}_n \rrbracket ~\}) \in \mathds{T}$\\
  & & \\
 $\mathtt{F} \llbracket ~\alpha_1~.~\ldots~.~\alpha_n :: c~ \rrbracket$ & = &
-$(~(\mathtt{F} \llbracket ~\alpha_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\alpha_n~ \rrbracket), ~c~) \in \mathcal{X}$\\
+$(~(\mathtt{F} \llbracket ~\alpha_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\alpha_n~ \rrbracket), ~c~) \in \mathds{X}$\\
  & & \\
 $\mathtt{F} \llbracket ~\Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \ldots + \Gamma_m~ \rrbracket$ & = &
-$(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices}) \in \mathcal{R}$~ such that:\\
+$(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices}) \in \mathds{R}$~ such that:\\
 \end{tabular}
 \end{center}
 
@@ -725,7 +725,7 @@ $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices}) \in \mathcal{R}$~ su
 \end{itemize}
 \end{center}
 
-Please note by applying semantic function $\mathtt{F}$ on examples from Example~\ref{example:syntax}, we obtain agents (resp. complex or rule) from appropriate referenced examples. Moreover, semantic funtion work \emph{only} on BCSL object and rules well-defined by the given grammar (ref).
+Please note by applying semantic function $\mathtt{F}$ on examples from Example~\ref{example:syntax}, we obtain agents (resp. complex or rule) from appropriate referenced examples. Moreover, semantic function work \emph{only} on BCSL object and rules well-defined by the given grammar (ref).
 
 
 \noindent\rule{\textwidth}{2pt}
@@ -741,28 +741,28 @@ Objects are transformed to their ground forms by ground form function $\mathcal{
 Object type & Basic form & Ground form \\
 \hline
  & & \\
-$\mathcal{A}$ & $\mathcal{G}((\mu, \epsilon))$ & $\{~ (\mu, \delta) ~|~ \delta \in \Sigma_A(\mu) ~\}$\\
+$\mathds{A}$ & $\mathcal{G}((\mu, \epsilon))$ & $\{~ (\mu, \delta) ~|~ \delta \in \Sigma_A(\mu) ~\}$\\
  & $\mathcal{G}((\mu, \delta))$ & $\{~(\mu, \delta) ~\}$\\
  & & \\
  \hline
  & & \\
-$\mathcal{T}$ & $\mathcal{G}((\mu, \gamma))$ & $\{~ (\mu, \gamma_\alpha) ~|~ \gamma_\alpha \equiv \gamma \cup \gamma_\Sigma \wedge \gamma_\Sigma = \{~ \mathtt{A}_1, \ldots, \mathtt{A}_n ~\} \wedge$\\
+$\mathds{T}$ & $\mathcal{G}((\mu, \gamma))$ & $\{~ (\mu, \gamma_\alpha) ~|~ \gamma_\alpha \equiv \gamma \cup \gamma_\Sigma \wedge \gamma_\Sigma = \{~ \mathtt{A}_1, \ldots, \mathtt{A}_n ~\} \wedge$\\
  & & $\wedge~ \mathtt{A}_i \in \mathcal{G}((\mu, \emptyset)) \wedge \mu \in \gamma \ominus \Sigma_T(\mathtt{T}) ~\}$ \\
  & & \\
  \hline
  & & \\
-$(\mathcal{A} \cup \mathcal{T})^2$ & $\mathcal{G}((\beta, \beta'))$ & $\{~ (\beta_\alpha, \beta_\alpha') ~|~ \beta_\alpha \in \mathcal{G}(\beta) \wedge \beta'_\alpha \in \mathcal{G}(\beta') \wedge$\\
+$(\mathds{A} \cup \mathds{T})^2$ & $\mathcal{G}((\beta, \beta'))$ & $\{~ (\beta_\alpha, \beta_\alpha') ~|~ \beta_\alpha \in \mathcal{G}(\beta) \wedge \beta'_\alpha \in \mathcal{G}(\beta') \wedge$\\
  & & $\wedge~ \gamma(\beta_\alpha) \ominus \gamma(\beta) \equiv \gamma(\beta'_\alpha) \ominus \gamma(\beta') ~\} $ \\
  & & \\
  \hline
  & & \\
-$\mathcal{R}$ & $\mathcal{G}(\mathtt{R})$ & $ \bigotimes \mathcal{G}(\mathtt{Indices})^* $ \\
+$\mathds{R}$ & $\mathcal{G}(\mathtt{R})$ & $ \bigotimes \mathcal{G}(\mathtt{Indices})^* $ \\
  & $\mathcal{G}(\mathtt{Indices})$ & $(~\mathcal{G}(\omega(i), \omega(j)) ~|~ (i,j) \in \mathtt{Indices})$\\
  
 \end{tabular}
 \end{center}
 
-where $\bigotimes \mathcal{G}(\mathtt{Indices})^*$ is cartesian product of sets inside of tuple $\mathcal{G}(\mathtt{Indices})$.
+where $\bigotimes \mathcal{G}(\mathtt{Indices})^*$ is Cartesian product of sets inside of tuple $\mathcal{G}(\mathtt{Indices})$.
 
 \noindent\rule{\textwidth}{2pt}
 
@@ -793,7 +793,7 @@ and $ \mathtt{I} \in \mathtt{R}$ & and $\chi \in \mathtt{R}$ and $\mathtt{map} \
 
 \begin{definition}{Chemical Reaction Model (CRN)}
 \label{crn}
-Chemical Reaction Model $\mathcal{M}$ is a triple $(\mathfrak{R}, \vv{\nu}, \pi)$ such that $\mathfrak{R} \subseteq \mathbb{Z}^n$ is set of reactions, $\vv{\nu} \in \mathbb{N}_0^n$ is initial vector, and $\pi \in \mathcal{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
+Chemical Reaction Model $\mathcal{M}$ is a triple $(\mathfrak{R}, \vv{\nu}, \pi)$ such that $\mathfrak{R} \subseteq \mathbb{Z}^n$ is set of reactions, $\vv{\nu} \in \mathbb{N}_0^n$ is initial vector, and $\pi \in \mathds{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
 \end{definition}
 
 Chemical Reaction Model is a simple model, where reactions and initial state are vectors over integers. Moreover, there is a reference vector of complex agents, which servers for identifying underlaying agents behind the integers (according to particular position in vectors).
@@ -831,7 +831,7 @@ In previous sections we defined all what was required to actually create Chemica
 Reference vector $\pi$ is a tuple of all possible unique complexes constructed from reactions of model $\mathds{M}$ as following:
 
 \begin{center}
-$$\Pi = \{~ \mathtt{X} ~|~ \mathtt{X} \in \mathtt{seq}(\mathtt{r}) \wedge \mathtt{r} \in \bigcup_{\mathtt{R} \in \mathds{R}} \mathtt{Reactions}(\mathtt{R}) ~\} $$
+$$\Pi = \{~ \mathtt{X} ~|~ \mathtt{X} \in \mathtt{seq}(\mathtt{r}) \wedge \mathtt{r} \in \bigcup_{\mathtt{R} \in \mathcal{R}} \mathtt{Reactions}(\mathtt{R}) ~\} $$
 \end{center}
 
 \noindent Then, reference vector $\pi$ is just chosen random order of the set $\Pi$.
@@ -839,7 +839,7 @@ $$\Pi = \{~ \mathtt{X} ~|~ \mathtt{X} \in \mathtt{seq}(\mathtt{r}) \wedge \matht
 \end{definition}
 
 \begin{definition}{Multiset to vector translation}\label{state_to_vector}
-Translation of multiset $\mathtt{S} \subseteq \mathcal{X}$ to vector is defined as following:
+Translation of multiset $\mathtt{S} \subseteq \mathds{X}$ to vector is defined as following:
 \begin{center}
 $\lambda(\mathtt{S}, \pi) = (a_1, a_2, \ldots, a_n)$ such that 
 $a_i$ =
@@ -852,10 +852,10 @@ $a_i$ =
 \hspace{15pt} where $n = |\pi|$ and $|\mathtt{S}(\pi_i)|$ is number of occurrences of agent $\pi_i$ in the multiset $\mathtt{S}$.
 \end{definition}
 
-Let $\mathds{M} = (\mathds{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. In order to construct Chemical Reaction Model $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \pi)$, we need to do the following steps:
+Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. In order to construct Chemical Reaction Model $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \pi)$, we need to do the following steps:
 
 \begin{enumerate}
-\item generate reactions for all rules $\mathtt{F}(\mathtt{R}) \in \mathds{R}$ (Definition~\ref{generate_reactions}),
+\item generate reactions for all rules $\mathtt{F}(\mathtt{R}) \in \mathcal{R}$ (Definition~\ref{generate_reactions}),
 \item construct reference vector $\pi$ (Definition~\ref{reference_vector}),
 \item create initial vector $\vv{\nu}$ from initial multiset $\mathtt{S}$ constructed as $\mathtt{S} = \{ \mathtt{X} ~|~ \mathtt{X} = \mathtt{F}(\Gamma) \wedge \Gamma \in \mathtt{init} \}$ (Definition~\ref{state_to_vector}),
 \item construct set of vector reactions $\mathfrak{R}$ from the set reactions, where individual vector reaction $\vv{r}$ is created from a reaction $\mathtt{r}$ as following:
@@ -977,7 +977,7 @@ We allow rules to be bi-directional -- it is just a shortcut for two rules and i
 
 For a rule of form $(\alpha_1, \alpha_2, \ldots, \alpha_n) \Rightarrow \alpha_1.\alpha_2.~\ldots~.\alpha_n$, we might reorder both sides such that we get Noncrossing partition $\mathcal{P}([1,\ldots,n])$ from its indices such that $\forall \mathcal{P}_i: \forall x,y \in \mathcal{P}_i: \alpha_x \equiv \alpha_y$ and $\forall \alpha_x \in \mathcal{P}_i \forall \alpha_y \in \mathcal{P}_j: \alpha_x \not\equiv \alpha_y$. Each $\mathcal{P}_i$ forms equivalence groups $\mathcal{G}_\equiv$ of \textit{k} rule agents.
 
-Such a new rule is equivalent with the original rule what follows from rules equivalence definitoin (Definition~\ref{rule_equiv}).
+Such a new rule is equivalent with the original rule what follows from rules equivalence definition (Definition~\ref{rule_equiv}).
 
 For side $\mathtt{s} = (\alpha_1, \alpha_2, \ldots, \alpha_n)$ of the reordered rule we enrich $\alpha$ context to pair $(\mu, \phi)$ where $\mu = 1$ and $\phi$ is the original $\alpha$. However, some $\alpha${\footnotesize s} in $\mathtt{s}$ might be equivalent and then they belong to an equivalence group $\mathcal{G}_\equiv$. Each of these groups $\mathcal{G}_\equiv$ might be written as one pair $(\mu, \alpha_m)$ where $\mu = |\mathcal{G}_\equiv|$ for some $\alpha_m \in \mathcal{G}_\equiv$.
 
@@ -1000,7 +1000,7 @@ Note that this process is fully reversible, so agent enumeration in basic form c
 
 Probably most complex syntactic extension is application of locations. The localisation operator is intended for allowing an alternative way of expressing the hierarchically constructed agents. The main idea is to allow zooming into individual parts of a complex or a structure agent.
 
-We define neccesary condition which might hold when semantic function $\mathtt{F}$ is applied on individual agents. This notation is allowed only when the conditions hold.
+We define necessary condition which might hold when semantic function $\mathtt{F}$ is applied on individual agents. This notation is allowed only when the conditions hold.
 
 \begin{definition}{Locations conditions.}\label{locations:conditions}
 
@@ -1051,7 +1051,7 @@ Once again, each rule associated with variable can be easily rewritten as severa
 
 \noindent Definition of rules 1 and 2 from Running example~\ref{run4} was replaced as a single rule using a variable.
 
-This is final syntactic extention. Compared to original model (Running example~\ref{run1}), the resulting model is much more consice and readable. More examples can be seen in chapter (ref case study).
+This is final syntactic extension. Compared to original model (Running example~\ref{run1}), the resulting model is much more concise and readable. More examples can be seen in chapter (ref case study).
 
 \chapter{Analysis}
 
@@ -1076,7 +1076,7 @@ explain that state space might be unbounded, disscuss what does it mean, use def
 
  - ref to static analysis for obtaining optimal upper bound for agents
 
-\subsection{Disscussion about rates and how they could be solved}
+\subsection{Discussion about rates and how they could be solved}
 
 In order to provide numerical simulation (cite), we need to assign a reaction rate to each rule. However, this is quite a challenging task and we will briefly explain why.
 
@@ -1088,32 +1088,32 @@ Example goes here...
 
 There are several solutions of this problem. However, none of them is an optimal one and therefore this remains an open problem. In other languages... they solved it as... finish this...
 
-Another general problem which causes issues is stoichiometry. The problem is if we refference an agent which has multiple enumeratives in the rule, it is not clear which one should be used as reference in kinetics. Therefore we distinguise two types of solutions:
+Another general problem which causes issues is stoichiometry. The problem is if we reference an agent which has multiple enumeratives in the rule, it is not clear which one should be used as reference in kinetics. Therefore we distinguish two types of solutions:
 
 \textbf{Solutions with forbidden stoichiometry}:
 
 \begin{enumerate}
 \item unique agents
 
-In this case, we allow arbitrary kinetics, but with a restriction. It is not allowed to use two identical agents in the same rule (including both sides of the rule). Moreover, in kinetics it is allowed to use only agents which are already used in the rule (in the very same form). This restriction decreases the expressivity of the rules -- for example, it is not possible to define agents which are required but not consumed in the rule. However, mapping between agents in rule and kinetics are clear.
+In this case, we allow arbitrary kinetics, but with a restriction. It is not allowed to use two identical agents in the same rule (including both sides of the rule). Moreover, in kinetics it is allowed to use only agents which are already used in the rule (in the very same form). This restriction decreases the expressiveness of the rules -- for example, it is not possible to define agents which are required but not consumed in the rule. However, mapping between agents in rule and kinetics are clear.
 
 \item almost optimal solution
 
-In order to make sure the agent from kinetics and rule are connected properly, we would have to extend the syntax of the language itself. For example, and agent might be enriched by `$\sim\mathbb{N}$' in both places. Then, the mapping would be unambiguous. However, such s syntax extension leads to decreases readablity of the language, which definitely not desired solution. Optionally, the numbering of agents might be implicit, what does not change syntax of the language, but makes it harder to write w.r.t. language simplicity.
+In order to make sure the agent from kinetics and rule are connected properly, we would have to extend the syntax of the language itself. For example, and agent might be enriched by `$\sim\mathbb{N}$' in both places. Then, the mapping would be unambiguous. However, such s syntax extension leads to decreases readability of the language, which definitely not desired solution. Optionally, the numbering of agents might be implicit, what does not change syntax of the language, but makes it harder to write w.r.t. language simplicity.
 
 \end{enumerate}
 
 
-\textbf{Solutions with allowed stioichiometry}:
+\textbf{Solutions with allowed stoichiometry}:
 
 \begin{enumerate}
 \item we allow only \emph{mass action} kinetics
 
-The possitive thing about this kinetics is that all it needs is a given paramter. The rate is computed as multiple of the parameter with all agents on the left-hand-side of the rule. Since the stoichiometry is allowed in this case, the mapping is not always clear. For this reason we multiply all possible mappings together, which gives appropriate results.
+The positive thing about this kinetics is that all it needs is a given parameter. The rate is computed as multiple of the parameter with all agents on the left-hand-side of the rule. Since the stoichiometry is allowed in this case, the mapping is not always clear. For this reason we multiply all possible mappings together, which gives appropriate results.
 
 \item the first left agent
 
-Arbitrary kinetics might be used, but both rule and kinetics must be defined very carefully. The method for mapping rate agent to rule agent is very simple -- whenever an agent is referenced in kinetics, first suitable rule-agent from the left is choosen. This solution is very simple to use, but rules are not that easy to write.
+Arbitrary kinetics might be used, but both rule and kinetics must be defined very carefully. The method for mapping rate agent to rule agent is very simple -- whenever an agent is referenced in kinetics, first suitable rule-agent from the left is chosen. This solution is very simple to use, but rules are not that easy to write.
 
 \end{enumerate}
 
@@ -1121,20 +1121,20 @@ Arbitrary kinetics might be used, but both rule and kinetics must be defined ver
 
 The language itself offers interesting capabilities in order to provide static analysis of given models. In order to provide such properties we define \emph{compatibility} operator $\lhd$ for each type of agents and complexes.
 
-\begin{definition}{Compatiblity of atomic agents}
+\begin{definition}{Compatibility of atomic agents}
 Let $\mathtt{A}_1$, $\mathtt{A}_2$ be atomic agents. Then, we say $\mathtt{A}_1$ is \emph{compatible with} $\mathtt{A}_2$, written $\mathtt{A}_1 \lhd \mathtt{A}_2$, if either $\mathtt{A}_1 \equiv \mathtt{A}_2$ or $\eta(\mathtt{A}_1) \equiv \eta(\mathtt{A}_2) \wedge \delta(\mathtt{A}_1) \equiv \varepsilon $.
 \end{definition}
 
-Note that compatibility of two atomic agents is very close to their equivalance, but the left-hand-side agent is allowed to have its state undefined. 
+Note that compatibility of two atomic agents is very close to their equivalence, but the left-hand-side agent is allowed to have its state undefined. 
 
-\begin{definition}{Compatiblity of structure agents}
+\begin{definition}{Compatibility of structure agents}
 Let $\mathtt{T}_1$, $\mathtt{T}_2$ be structure agents. We say $\mathtt{T}_1$ is \emph{compatible with} $\mathtt{T}_2$, written $\mathtt{T}_1 \lhd \mathtt{T}_2$, iff either $\mathtt{T}_1 \equiv \mathtt{T}_2$ or $\eta(\mathtt{T}_1) \equiv \eta(\mathtt{T}_2) \wedge \forall \mathtt{A}_1$ : $\mathtt{A}_1 \in \gamma(\mathtt{T}_1) ~\exists \mathtt{A}_2 : \mathtt{A}_2 \in \gamma(\mathtt{T}_2)$ : $\mathtt{A}_1 \lhd \mathtt{A}_2$.
 \end{definition}
 
 In other words, structure agents are compatible, if we can create pairs from atomic agents of left-hand-side agent's composition with the right-hand-ones such that these atomic agents are all unique. For such pairs, the agents in each pair must be compatible.
 
-\begin{definition}{Compatiblity of complex agents}
-Let $\mathtt{X}_1$, $\mathtt{X}_2$ be complex agents. We say $\mathtt{X}_1$ is \emph{compatible with} $\mathtt{X}_2$, written $\mathtt{X}_1 \lhd \mathtt{X}_2$, iff either $\mathtt{X}_1 \equiv \mathtt{X}_2$ or $\exists$ permutation $ \mu(\mathtt{X}'_2)$ of $\mu(\mathtt{X}_2)$ such that $ \forall i \in [1, n] : \mu(\mathtt{X}_1)_i \lhd \mu(\mathtt{X}'_2)_i $, where $n$ is length of sequence which is same for both sequencies.
+\begin{definition}{Compatibility of complex agents}
+Let $\mathtt{X}_1$, $\mathtt{X}_2$ be complex agents. We say $\mathtt{X}_1$ is \emph{compatible with} $\mathtt{X}_2$, written $\mathtt{X}_1 \lhd \mathtt{X}_2$, iff either $\mathtt{X}_1 \equiv \mathtt{X}_2$ or $\exists$ permutation $ \mu(\mathtt{X}'_2)$ of $\mu(\mathtt{X}_2)$ such that $ \forall i \in [1, n] : \mu(\mathtt{X}_1)_i \lhd \mu(\mathtt{X}'_2)_i $, where $n$ is length of sequence which is same for both sequences.
 \end{definition}
 
 Compatibility for complexes means that every pair of agents through the sequences of complexes must be compatible.
@@ -1147,13 +1147,13 @@ Moreover, it is always possible to derive the most upper (supremum) ancestor by 
 
 \subsection{Context-based reduction}
 
-Context reduced network (CRN) is created form given BCSL model by reducing context of all rules to maximum level (Proof XY). This procedure might produce rules with no action -- such rules might be omitted. Then, only rules creating/destroying agents and complex formation/dissotiation should remain, providing reduced network. Since we are reducing context, the resulting can be equal or smaller then the original model. Therefore, it is suitable for reachability checking. 
+Context reduced network (CRN) is created form given BCSL model by reducing context of all rules to maximum level (Proof XY). This procedure might produce rules with no action -- such rules might be omitted. Then, only rules creating/destroying agents and complex formation/dissociation should remain, providing reduced network. Since we are reducing context, the resulting can be equal or smaller then the original model. Therefore, it is suitable for reachability checking. 
 
 If we are checking whether an agent is reachable for given model, we might first check whether it's super-ancestor is reachable in created CRN. If so, then we are still not certain about reachability of agent itself and it has to be checked in the original model. However, when it comes to non-reachability, agent which is non-reachable in CRN is not reachable in the original model too (proof ?).
 
 \subsection{Static reachability analysis}
 
-In case we have defined reachability operator for agents, we can apply static reachability analysis before enumerating whole state space of the model. When checking reachablity of an agent $\mathtt{A}$, we can check whether it is non-reachable (similarly as in the previous section) by the following procedure:
+In case we have defined reachability operator for agents, we can apply static reachability analysis before enumerating whole state space of the model. When checking reachability of an agent $\mathtt{A}$, we can check whether it is non-reachable (similarly as in the previous section) by the following procedure:
 
 \begin{itemize}
 \item go through all agents on the right-hand-side of all rules,
@@ -1171,7 +1171,7 @@ This procedure can be extended for checking reachability of multiple agents, how
 
 \subsection{Translation to Petri Net}
 
-Moreover, by generating reaction-based model from rule-based, which is always possible (ref a section), we can futhermore translate such model to Petri Net (cite).
+Moreover, by generating reaction-based model from rule-based, which is always possible (ref a section), we can furthermore translate such model to Petri Net (cite).
 
 definition of petri net goes here
 
@@ -1188,16 +1188,16 @@ The translation is quite straight-forward:
 \item finally, we create initial marking \emph{m} from given initial state of the model by similar procedure described above.
 \end{enumerate}
 
-Once the model is traslated, we are allowed apply all available analysis which are provides by PNs. For example, P and T invariants, deadlock detection, coverability etc. (cite material z Petri nets predmetu)
+Once the model is translated, we are allowed apply all available analysis which are provides by PNs. For example, P and T invariants, deadlock detection, coverability etc. (cite material z Petri nets predmetu)
 
 \subsection{Getting signatures from the model}
 
-The BCSL model definition as given in (ref...) can be reduced by signatures. Note we do not mean extended signatures by complex names -- just the basic signatures for atomic and structure agents. These can be obatained statically from the rules (and the initial state) just in one run. The process comprises these steps:
+The BCSL model definition as given in (ref...) can be reduced by signatures. Note we do not mean extended signatures by complex names -- just the basic signatures for atomic and structure agents. These can be obtained statically from the rules (and the initial state) just in one run. The process comprises these steps:
 
 \begin{itemize}
-\item for each rule, iterare through all the atomic and structure agent expression 
+\item for each rule, iterate through all the atomic and structure agent expression 
 \begin{itemize}
-  \item particularly, split the rule expression by rule sides delimiter, rule agent delimiter, and finally compartment and complex delimiters respectivelly
+  \item particularly, split the rule expression by rule sides delimiter, rule agent delimiter, and finally compartment and complex delimiters respectively
 \end{itemize}
 \item for each found agent expression
 \begin{itemize}
@@ -1208,7 +1208,7 @@ The BCSL model definition as given in (ref...) can be reduced by signatures. Not
 \item finally, place all uncertain names, which are not included in neither of signatures, to structure signature.
 \end{itemize}
 
-The above described procedure will create signatures in assumption all syntactic extensions (including complex signature) are removed before. We could discuss fact that desired signature might be in some manner \emph{bigger} than the collected ones. However, if for example we want to have more states defined for an atomic agent, they should be definitelly used somewhere in the model. In other case, it does not play any role in the model behaviour and therefore its definition is useless. 
+The above described procedure will create signatures in assumption all syntactic extensions (including complex signature) are removed before. We could discuss fact that desired signature might be in some manner \emph{bigger} than the collected ones. However, if for example we want to have more states defined for an atomic agent, they should be definitely used somewhere in the model. In other case, it does not play any role in the model behavior and therefore its definition is useless. 
 
 \begin{proof}
 Let $\mathcal{M}$ be a BCSL model and $\Sigma$ its minimal signatures (i.e., all states and partial compositions defined in the signatures are actually used in the rules). Then, signatures $\Sigma'$ obtained by procedure (ref blah) has to be equal to the original signature $\Sigma$. In case its not, it means either there is some extra data in the $\Sigma'$ or some data is missing. Since we create $\Sigma'$ by iterating through all the rules, we construct complete signature with complete states used in the model. Therefore, if some data are missing in $\Sigma'$, then it follows given signature $\Sigma$ is not minimal. On the other hand, if there are some extra data in $\Sigma'$, then given signature $\Sigma$ is incorrect -- its missing some structure details which are being used in the model.
@@ -1222,7 +1222,7 @@ define
 
 \chapter{Implementation}
 
-In order to support usability of the BCSL language, we developed software tool BCSgen. The general goal of the tool is to provide environment suitable for editing and maintanace of the BCSL models and provide functionality to analyse the models. The software was developed in several iterations. First as independent project MUNI33/092015 in \emph{Dean's Program of the Faculty of Informatics MU for support of student research and development projects}, later as part of the project MUNI33/062017 in the same program. Finally, it was finalized to current stage in this thesis.
+In order to support usability of the BCSL language, we developed software tool BCSgen. The general goal of the tool is to provide environment suitable for editing and maintenance of the BCSL models and provide functionality to analyse the models. The software was developed in several iterations. First as independent project MUNI33/092015 in \emph{Dean's Program of the Faculty of Informatics MU for support of student research and development projects}, later as part of the project MUNI33/062017 in the same program. Finally, it was finalized to current stage in this thesis.
 
 The tool is developed in Python (cite) as open-source desktop software build under GPL-3.0 license. The source codes, short tutorial for usage and installation, and current stable version as binary files are available on GitHub\footnotemark[1]\footnotetext[1]{\url{https://github.com/sybila/BCSgen}}.
 
@@ -1230,19 +1230,19 @@ In the first iteration, there was no support for models editing. The only functi
 
 In the second iteration, we focused on speed improvement and development user-friendly GUI. For the speed improvement, we implemented semantics as defined in this thesis (ref). Compared to previous iteration, now there was no exactly rule-based execution of the rule -- rules we rather translated to reactions and subsequently encoded as vector operations over natural numbers. Therefore, one transaction was just addition of one vector (left-hadn side) and subtraction of another one (right-hand side). The GUI was reimplemented in PyQt (cite), which naturally works with multithreading. In this area, it was huge step forward. Moreover, we improved input/output formats. For input, we defined BCSL model format, which serves for import. As output format we have chosen JSON, which is very suitable for its simplicity and support by many external tools.
 
-In the last iteration, which is part of this thesis, we focused on improvement of models maintenance, additional analysis services, and visualisation. We have intergrated editor which is able to highlight syntax errors while building the model. To achieve this, we needed an efficient rule-parser which would be able to parse the rules very fast. The parser is able to parse even syntactic enxtensions mentioned in (ref). The rules engine then translates the rule to ground form and creates reactions (in case there are no errors in the model). Since this engine runs in the background (in another thread) user does not notice any increased performance. Once reactions are computed, this is indicated by possibility to export them and generate state space of the model.
+In the last iteration, which is part of this thesis, we focused on improvement of models maintenance, additional analysis services, and visualisation. We have integrated editor which is able to highlight syntax errors while building the model. To achieve this, we needed an efficient rule-parser which would be able to parse the rules very fast. The parser is able to parse even syntactic extensions mentioned in (ref). The rules engine then translates the rule to ground form and creates reactions (in case there are no errors in the model). Since this engine runs in the background (in another thread) user does not notice any increased performance. Once reactions are computed, this is indicated by possibility to export them and generate state space of the model.
 
-Next, we implemented additional analysis. Namely, model simulation and reachability analysis. For the simulation, we allow stochastic or deterministic form. In the first one, random rules are fired according to Poisson distribution while in latter average trace is computed by solving ODEs build from the reactions. For stochastic case, there are options to choose number of runs and apply interpolation on resulting time series chart in order to achive smoother results. It important to note that only models with defined rates can be simulated. For simplicity, approach (ref) was chosen from the disscused ones.
+Next, we implemented additional analysis. Namely, model simulation and reachability analysis. For the simulation, we allow stochastic or deterministic form. In the first one, random rules are fired according to Poisson distribution while in latter average trace is computed by solving ODEs build from the reactions. For stochastic case, there are options to choose number of runs and apply interpolation on resulting time series chart in order to achieve smoother results. It important to note that only models with defined rates can be simulated. For simplicity, approach (ref) was chosen from the discussed ones.
 
  -- more info about static analysis goes here
 
-Since there are some graphs and charts generated in BCSgen, we decided to intergrate visualisation tools into it. For this, we used two libraries -- vis.js (cite) for interactive networks visualisation and MatPlotLib (cite), a Python library suitable for visualisation of time series. Vis.js is used for exploration of state space with highlighting choosen node and announcing content of the node. Moreover, its possible to display paths from initial state to states, which satisfy reachability condition given in reachability analysis part. This is very demonstrative and very suitable for education purposes. However, such visualisation has its limitations, for huge graphs its very difficult to display the graph -- on the other hand, from such number of nodes it is not even usefull. The MatPlotLib provides visualisation of simulation results. It possible to zoom the chart, hide/show individual curves, and export the current view as a picture.
+Since there are some graphs and charts generated in BCSgen, we decided to integrate visualisation tools into it. For this, we used two libraries -- vis.js (cite) for interactive networks visualisation and MatPlotLib (cite), a Python library suitable for visualisation of time series. Vis.js is used for exploration of state space with highlighting chosen node and announcing content of the node. Moreover, its possible to display paths from initial state to states, which satisfy reachability condition given in reachability analysis part. This is very demonstrative and very suitable for education purposes. However, such visualisation has its limitations, for huge graphs its very difficult to display the graph -- on the other hand, from such number of nodes it is not even useful. The MatPlotLib provides visualisation of simulation results. It possible to zoom the chart, hide/show individual curves, and export the current view as a picture.
 
 As a future work for the tool we are planning to reimplement it to web-based version. In ideal case, it should be integrated to CMP (cite or ref) to allow direct analysis of the models and appropriate Biochemical Space.  
 
 \chapter{Case study}
 
-To demonstrate Biochemical Space has practical use, we introduce an instance of CMP, where BCS is used in practise. E-cyanobacterium.org is an online platform providing tools for public sharing, annotation, analysis, and visualization of dynamical models and wet-lab experiments related to cyanobacteria. The general aim is to stimulate collaboration between experimental and computational systems biologists to achieve better understanding of cyanobacteria. As an instance of CMP, it covers all the features described in (ref, cite?).
+To demonstrate Biochemical Space has practical use, we introduce an instance of CMP, where BCS is used in practice. E-cyanobacterium.org is an online platform providing tools for public sharing, annotation, analysis, and visualization of dynamical models and wet-lab experiments related to cyanobacteria. The general aim is to stimulate collaboration between experimental and computational systems biologists to achieve better understanding of cyanobacteria. As an instance of CMP, it covers all the features described in (ref, cite?).
 
 The following processes of cyanobacteria are covered in BCS: environmental processes, respiration and photosynthesis, carbon concentrating mechanism, circadian clock, and metabolism. Currently, the repository of models contains two models describing circadian clock (Miyoshi et al. 2007 (cite), Hertel et al. 2013 (cite) and a kinetic model of metabolism (Jablonsky et al. 2014 cite). Two other models present unpublished results -- dynamics of carbon fluxes (M\"{u}ller et al.) and photosynthesis (Plyusnina et al.). Each of them was properly mapped on the BCS and helped to form suitable space covering all mentioned processes.
 
