@@ -852,7 +852,7 @@ $a_i$ =
 \hspace{15pt} where $n = |\pi|$ and $|\mathtt{S}(\pi_i)|$ is number of occurrences of agent $\pi_i$ in the multiset $\mathtt{S}$.
 \end{definition}
 
-Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. In order to construct Chemical Reaction Model $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \pi)$, we need to do the following steps:
+Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. In order to construct Chemical Reaction Model $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \pi)$ from the model $\mathds{M}$, we need to apply the following steps:
 
 \begin{enumerate}
 \item generate reactions for all rules $\mathtt{F}(\mathtt{R}) \in \mathcal{R}$ (Definition~\ref{generate_reactions}),
@@ -866,15 +866,15 @@ $\vv{r} = \lambda(RHS(\mathtt{r}), \pi) - \lambda(LHS(\mathtt{r}), \pi)$
 
 \end{enumerate}
 
-In order to accomplish the process of giving semantics to an BCSL model, it is necessary to note how we revive information which is missing in produced LTS. This procedure is quite straightforward since we still have define reference vector $\pi$. Similarly as we translated multisets of BCSL agents to vectors (Definition~\ref{state_to_vector}), we can apply a reverse procedure, when we build a multiset of agents from a vector according to the reference vector $\pi$. This is how we obtain an LTS as described in (ref).
+In order to accomplish the process of giving semantics to an BCSL model, it is necessary to note how we revive information which is missing in produced LTS. This procedure is quite straightforward since we still have define reference vector $\pi$. Similarly as we translated multisets of BCSL agents to vectors (Definition~\ref{state_to_vector}), we can apply a reverse procedure, when we build a multiset of agents from a vector according to the reference vector $\pi$. This is how we obtain an LTS as described in (ref).  
 
 \section{Syntactic extensions}
 
 We define several syntactic extensions for better readability of the rules. Note that each rule in a extended form can be always translated to basic form defined above. All rules containing the following extensions must be converted to basic form before semantics can be applied.
 
-For better demonstration, we give running example, which will go through all syntactic extensions. Please, do not find any sense of the model, it has really only demonstrative purpose.
+For better demonstration, we give running example, which will go through all syntactic extensions. Please note there is no biological sense of the model, it has only demonstrative purpose.
 
-\begin{runningExample}{The example model $\mathtt{M}$}
+\begin{runningExample}{The example model $\mathds{M}$}
 \label{run1}
 
 \noindent Definition of rules $\mathtt{R}$:
@@ -914,7 +914,7 @@ $\Rightarrow KaiC(S, T)::cyt + KaiC(S, T)::cyt + KaiC(S, T)::cyt$
 
 It is possible to omit all partial compositions which contain a unspecified atomic agents. Such agent does not give any additional information and whole partial composition can be reconstructed from signature.
 
-\begin{runningExample}{The example model $\mathtt{M}$}
+\begin{runningExample}{The example model $\mathds{M}$}
 \label{run1}
 
 \noindent Definition of rules $\mathtt{R}$:
@@ -928,13 +928,13 @@ It is possible to omit all partial compositions which contain a unspecified atom
 }
 \end{runningExample}
 
-This syntactic extension bring lot of readability to the syntax while preserving all information in context of the model $\mathtt{M}$.
+This syntactic extension bring lot of readability to the syntax while preserving all information in context of the model $\mathds{M}$.
 
 \subsection{Complex signature}
 
 We extend model definition by complex signature $\Sigma_\mathtt{X}$ on syntactic level. In this signature, there are defined aliases for valid complex agent expressions. Then, simple \emph{replace} method is used to substitute original expression by the alias.
 
-\begin{runningExample}{The example model $\mathtt{M}$}\label{run1.1}
+\begin{runningExample}{The example model $\mathds{M}$}\label{run1.1}
 
 \noindent Definitions of complex signatures:
 \begin{enumerate}
@@ -960,7 +960,7 @@ As can be seen, in this stage the complex signature has it limitations. Once a c
 
 We allow rules to be bi-directional -- it is just a shortcut for two rules and it can be converted to basic rule form. A rule $\mathtt{R} = \lambda ~\Leftrightarrow~ \rho$ might be written as two rules $\mathtt{R}_1 = \lambda ~\Rightarrow~ \rho$ and $\mathtt{R}_2 = \rho ~\Rightarrow~ \lambda$.
 
-\begin{runningExample}{The example model $\mathtt{M}$}\label{run2}
+\begin{runningExample}{The example model $\mathds{M}$}\label{run2}
 \noindent Definition of rules $\mathtt{R}$:
 {\small
 \begin{enumerate}
@@ -975,15 +975,15 @@ We allow rules to be bi-directional -- it is just a shortcut for two rules and i
 
 \subsection{Stoichiometry}
 
-For a rule of form $(\alpha_1, \alpha_2, \ldots, \alpha_n) \Rightarrow \alpha_1.\alpha_2.~\ldots~.\alpha_n$, we might reorder both sides such that we get Noncrossing partition $\mathcal{P}([1,\ldots,n])$ from its indices such that $\forall \mathcal{P}_i: \forall x,y \in \mathcal{P}_i: \alpha_x \equiv \alpha_y$ and $\forall \alpha_x \in \mathcal{P}_i \forall \alpha_y \in \mathcal{P}_j: \alpha_x \not\equiv \alpha_y$. Each $\mathcal{P}_i$ forms equivalence groups $\mathcal{G}_\equiv$ of \textit{k} rule agents.
+For a rule of form $(\alpha_1, \alpha_2, \ldots, \alpha_n) \Rightarrow \alpha_1.\alpha_2.~\ldots~.\alpha_n$, we might reorder both sides such that we get noncrossing partition $\mathcal{P}([1,\ldots,n])$ from its indices such that $\forall \mathcal{P}_i: \forall x,y \in \mathcal{P}_i: \alpha_x \equiv \alpha_y$ and $\forall \alpha_x \in \mathcal{P}_i \forall \alpha_y \in \mathcal{P}_j: \alpha_x \not\equiv \alpha_y$. Each $\mathcal{P}_i$ forms equivalence groups $\mathcal{G}_\equiv$ of \textit{k} rule agents.
 
 Such a new rule is equivalent with the original rule what follows from rules equivalence definition (Definition~\ref{rule_equiv}).
 
-For side $\mathtt{s} = (\alpha_1, \alpha_2, \ldots, \alpha_n)$ of the reordered rule we enrich $\alpha$ context to pair $(\mu, \phi)$ where $\mu = 1$ and $\phi$ is the original $\alpha$. However, some $\alpha${\footnotesize s} in $\mathtt{s}$ might be equivalent and then they belong to an equivalence group $\mathcal{G}_\equiv$. Each of these groups $\mathcal{G}_\equiv$ might be written as one pair $(\mu, \alpha_m)$ where $\mu = |\mathcal{G}_\equiv|$ for some $\alpha_m \in \mathcal{G}_\equiv$.
+For side $\mathtt{s} = (\alpha_1, \alpha_2, \ldots, \alpha_n)$ of the reordered rule we enrich $\alpha$ context to pair $(\iota, \alpha)$ with $\iota = 1$. However, some $\alpha${\footnotesize s} in $\mathtt{s}$ might be equivalent and then they belong to an equivalence group $\mathcal{G}_\equiv$. Each of these groups $\mathcal{G}_\equiv$ might be written as one pair $(\iota, \alpha_m)$ where $\iota = |\mathcal{G}_\equiv|$ for some $\alpha_m \in \mathcal{G}_\equiv$.
 
 Note that this process is fully reversible, so agent enumeration in basic form can be easily reconstructed.
 
-\begin{runningExample}{The example model $\mathtt{M}$}\label{run3}
+\begin{runningExample}{The example model $\mathds{M}$}\label{run3}
 \noindent Definition of rules $\mathtt{R}$:
 {\small
 \begin{enumerate}
@@ -998,9 +998,9 @@ Note that this process is fully reversible, so agent enumeration in basic form c
 
 \subsection{Locations}
 
-Probably most complex syntactic extension is application of locations. The localisation operator is intended for allowing an alternative way of expressing the hierarchically constructed agents. The main idea is to allow zooming into individual parts of a complex or a structure agent.
+Probably most complex syntactic extension is application of locations. The localisation operator is intended for allowing an alternative way of expressing the hierarchically constructed agents. The main idea is to allow zooming into individual parts of complex and structure agents.
 
-We define necessary condition which might hold when semantic function $\mathtt{F}$ is applied on individual agents. This notation is allowed only when the conditions hold.
+We define necessary condition which must hold when semantic function $\mathtt{F}$ is applied on individual agents. This notation is allowed only when the conditions hold.
 
 \begin{definition}{Locations conditions.}\label{locations:conditions}
 
@@ -1015,7 +1015,7 @@ We define necessary condition which might hold when semantic function $\mathtt{F
 
 For each pair of agents $(\alpha, \beta)$ with allowed `::' operator between them $\alpha :: \beta$, we can construct just one agent $\beta'$ without the operator by taking most-left agent $\alpha'$ from full (resp. partial) composition of the agent $\beta$ such that it is \emph{compatible with} the agent $\alpha$ ($\alpha' \lhd \alpha$). Then, agent $\alpha'$ is simply replaced by agent $\alpha$ and agent $\beta'$ is constructed.
 
-\begin{runningExample}{The example model $\mathtt{M}$}\label{run4}
+\begin{runningExample}{The example model $\mathds{M}$}\label{run4}
 \noindent Definition of rules $\mathtt{R}$:
 {\small
 \begin{enumerate}
@@ -1039,7 +1039,7 @@ In a rule, one rule agent might be referenced using variable $\upsilon$ as a set
 
 Once again, each rule associated with variable can be easily rewritten as several rules where variable is replaced with agent from set of agents attached to the variable. Please note only one variable can be used per rule.
 
-\begin{runningExample}{The example model $\mathtt{M}$}\label{run5}
+\begin{runningExample}{The example model $\mathds{M}$}\label{run5}
 \noindent Definition of rules $\mathtt{R}$:
 {\small
 \begin{enumerate}
