@@ -1214,11 +1214,27 @@ The above described procedure will create signatures in assumption all syntactic
 Let $\mathcal{M}$ be a BCSL model and $\Sigma$ its minimal signatures (i.e., all states and partial compositions defined in the signatures are actually used in the rules). Then, signatures $\Sigma'$ obtained by procedure (ref blah) has to be equal to the original signature $\Sigma$. In case its not, it means either there is some extra data in the $\Sigma'$ or some data is missing. Since we create $\Sigma'$ by iterating through all the rules, we construct complete signature with complete states used in the model. Therefore, if some data are missing in $\Sigma'$, then it follows given signature $\Sigma$ is not minimal. On the other hand, if there are some extra data in $\Sigma'$, then given signature $\Sigma$ is incorrect -- its missing some structure details which are being used in the model.
 \end{proof}
 
-\subsection{Optimal bound computations}
+\subsection{Minimal optimal bound of the system}
 
-explain how and why we do it
+Transition systems produced by semantics of BCSL models are infinite in general. Despite the fact the underlaying reaction networks are always finite (ref), there are types of reactions which can increase number of occurrences in a state with no limitations. Typically, such reactions form interface between the modelled system and the environment.
 
-define
+However, the process of applying vector reactions on states can be extended by a control system. This system does not allow to grow individual values inside the state vector above given bound. Simply, if produced vector should obtain an integer higher than the bound, the action is not taken. This procedure is very similar to checking whether all values in the vector are positive.
+
+The only remaining issue is what is an optimal value for the bound. The universal solution is to let the modeller decide. It follows extension of model definition by the bound. However, this process requires the user to know additional information about the model and additional effort. It does not fit to purposes of the language.
+
+Therefore we decided to apply a static analysis on the model. We will not provide a formal definition of this analysis, rather give intuition and reason about this particular solution.
+
+We decided to find a minimal bound, which is in this context optimal for generating all required objects. It means that all the complexes which are potentially encoded in rules (reactions) will be produced, but only in one repetition. In other words, with this bound a minimal network should be created. In such network, every agent reachable in boundless network is reachable also in minimal network.
+
+To actually calculate the minimal bound, we take maximum value from the following measurements:
+
+\begin{itemize}
+  \item count the highest number of occurrences from all agents in initial state,
+  \item count the highest number of unique agents in all complexes of all rules,
+  \item count the highest stoichiometry in all left- and hand-sides of the rules.
+\end{itemize}
+
+This should guarantee that it is possible to achieve high enough number of occurrence to produce any complex or combination of complexes.
 
 \chapter{Implementation}
 
