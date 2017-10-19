@@ -1119,7 +1119,7 @@ Arbitrary kinetics might be used, but both rule and kinetics must be defined ver
 
 \section{Static analysis}
 
-The language itself offers interesting capabilities in order to provide static analysis of given models. In order to provide such properties we define \emph{compatibility} operator $\lhd$ for each type of agents and complexes.
+The language itself offers interesting capabilities in order to provide static analysis of given models. In order to provide such properties we define \emph{compatibility} operator $\lhd$ for each type of agents.
 
 \begin{definition}{Compatibility of atomic agents}
 Let $\mathtt{A}_1$, $\mathtt{A}_2$ be atomic agents. Then, we say $\mathtt{A}_1$ is \emph{compatible with} $\mathtt{A}_2$, written $\mathtt{A}_1 \lhd \mathtt{A}_2$, if either $\mathtt{A}_1 \equiv \mathtt{A}_2$ or $\eta(\mathtt{A}_1) \equiv \eta(\mathtt{A}_2) \wedge \delta(\mathtt{A}_1) \equiv \varepsilon $.
@@ -1139,15 +1139,17 @@ Let $\mathtt{X}_1$, $\mathtt{X}_2$ be complex agents. We say $\mathtt{X}_1$ is \
 
 Compatibility for complexes means that every pair of agents through the sequences of complexes must be compatible.
 
-From first chapters it should be clear, that an agent (or a complex) might have its ancestors and successors. The compatibility operator formulates this relationship formally. It important to note that each successor is compatible with its ancestor, but the reverse relation does not hold. 
+From first chapters it should be clear, that an agent (or a complex) might have its ancestors and successors. The compatibility operator formulates this relationship formally. Each successor is compatible with its ancestor, but the reverse relation does not hold. 
 
-describe this formally ? lattice (svaz) - upper
+The compatibility operator generates partial order for particular subsets in $\mathds{A}, \mathds{T}$, and $\mathds{X}$. Such subsets are formed by agents of the same type, which hold the compatibility conditions. Moreover, there exist maximal subsets which contain all agents related by the compatibility operator. In such sets, there always exists a supremum, what is an ancestor of all the remaining agents in the set. Each agents belongs to exactly one maximal set.
 
-Moreover, it is always possible to derive the most upper (supremum) ancestor by reducing the context of agent. (proof this) - thanks to this proof, we can create network defined next:
+example of lattice
+
+These sets form a tree (lattice), where the lower the node is, more context details it has. This fact follows from the definition of compatibility operator.
 
 \subsection{Context-based reduction}
 
-Context reduced network (CRN) is created form given BCSL model by reducing context of all rules to maximum level (Proof XY). This procedure might produce rules with no action -- such rules might be omitted. Then, only rules creating/destroying agents and complex formation/dissociation should remain, providing reduced network. Since we are reducing context, the resulting can be equal or smaller then the original model. Therefore, it is suitable for reachability checking. 
+Context reduced network (CRN) is created form given BCSL model by reducing context of agents in rules to maximum level. This is achieved by taking supremum from maximal set formed by compatibility operator. This procedure might produce rules with no action -- such rules might be omitted. Then, only rules creating/destroying agents and complex formation/dissociation should remain, providing reduced network. Since we are reducing context, the resulting network can be equal or smaller than the original one.
 
 If we are checking whether an agent is reachable for given model, we might first check whether it's super-ancestor is reachable in created CRN. If so, then we are still not certain about reachability of agent itself and it has to be checked in the original model. However, when it comes to non-reachability, agent which is non-reachable in CRN is not reachable in the original model too (proof ?).
 
