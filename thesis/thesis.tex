@@ -1059,7 +1059,13 @@ This is final syntactic extension. Compared to original model (Running example~\
 
 multisets compared to graphs (isomorphisms) - other languages
 
-\section{Dynamic analysis}
+In the previous chapters, we defined BCS language itself. From the provided examples and case study (ref) it should be clear that it provides concise and readable notation when it comes to describing biological systems. Moreover, accompanied with relevant annotation information, it is suitable for building huge models.
+
+However, descriptive properties are not enough for using computational methods in order to analyse particular processes. In this chapter we describe basic approaches we employ for our language and propose several methods which could be potentially used in context of static analysis.
+
+We distinguish two general approached in model analysis -- dynamic and static. Dynamic analyses are enabled by some form of executing the model. It requires either enumerating all possible scenarios of model's behavior (so called state space) or applying assumptions in order to calculate average behavior (simulation). On the other hand, static analyses provide information without execution of the model, just by investigating it's structure. Both approaches require to build particular mechanisms which enable application of the analyses.
+
+\section{Dynamic analyses}
 
 briefly explain how (non)deterministic simulations work, give citations
 
@@ -1075,6 +1081,18 @@ such as simulation, model checking (reachability)
 explain that state space might be unbounded, disscuss what does it mean, use definition from petri net
 
  - ref to static analysis for obtaining optimal upper bound for agents
+
+Dynamic analyses are very common ways how to analyse models written in formal representations. These analyses are usually trying to predict behavior of the modelled system using formal description of the system -- the model. In this case, we have a BCSL model $\mathds{M}$. 
+
+\subsection{Model checking}
+
+Model checking is an approach of checking whether given model meets a given specification (cite). Typically this is done by specifying given requirements in a temporal logic and then its check whether a given structure satisfies a given logical formula. There are two version of model checking -- explicit-state (cite) and symbolic (cite). We will focus on the first one because it is quite strait-forward, and we let the second approach as a future work. 
+
+In case of explicit-state model checking, we need to enumerate entire state space and then check given specification on it. We will not discuss this approach anymore since we have given the BCSL models semantics (ref) which are able to generate LTSs. These structures are suitable for model checking analysis and can be applied in external tools including temporal properties specification.
+
+\subsection{Simulation}
+
+TBA
 
 \subsection{Discussion about rates and how they could be solved}
 
@@ -1117,9 +1135,9 @@ Arbitrary kinetics might be used, but both rule and kinetics must be defined ver
 
 \end{enumerate}
 
-\section{Static analysis}
+\section{Static analyses}
 
-The language itself offers interesting capabilities in order to provide static analysis of given models. In order to provide such properties we define \emph{compatibility} operator $\lhd$ for each type of agents.
+The language itself offers interesting capabilities in order to provide static analyses of given models. In order to provide such properties we define \emph{compatibility} operator $\lhd$ for each type of agents.
 
 \begin{definition}{Compatibility of atomic agents}
 Let $\mathtt{A}_1$, $\mathtt{A}_2$ be atomic agents. Then, we say $\mathtt{A}_1$ is \emph{compatible with} $\mathtt{A}_2$, written $\mathtt{A}_1 \lhd \mathtt{A}_2$, if either $\mathtt{A}_1 \equiv \mathtt{A}_2$ or $\eta(\mathtt{A}_1) \equiv \eta(\mathtt{A}_2) \wedge \delta(\mathtt{A}_1) \equiv \varepsilon $.
