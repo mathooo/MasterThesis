@@ -43,7 +43,7 @@
     alldates=iso8601,   % set date format to ISO 8601
 ]{biblatex}
 \addbibresource{thesis.bib}
-% setting custom colors for l
+
 
 % FI THESIS settings
 \thesistitle{Formal biochemical space for specification and analysis of biochemical processes}
@@ -68,50 +68,14 @@
 
 \begin{ThesisThanks}
 Many thanks to you all.
-
-\vspace{1em}
-\noindent
-There would be much less
-algebra,        % advancements, art, adrenaline, archery, astrophotography, algebra
-board gaming,   % beauty, baking, beer, board gaming
-curiosity,      % courage, contemplation, cooking, cakes, curiosity
-drama,          % discipline, devotion, drama
-experience,     % empathy, experience
-functional programmig,  % fun, friendliness, faith, functional programmig
-geekiness,      % GEB, good books, geekiness
-honesty,        % humour, honesty
-inspiration,    % improvements, ideas, idealisms, inspiration
-joy,            % jokes, joy
-knowledge,      % knowledge
-learning,       % learning, love
-magic,          % meaning, magic, miracles, meta, moose
-nighttime walks,    % nighttime walks, Norway
-OpenLabs,       % organization, openness, optimism, OpenLabs
-puzzle hunts,   % peace, patience, procrastination, puzzle hunts
-quiet,          % quiet
-respect,        % research, respect
-surprises,      % spontaneity, silence, security, stories, star gazing, surprises
-trust,          % typographic correctness, tolerance, trust
-unpredictability,   % understanding, unity, unpredictability
-vigilance,      % vigilance
-Wachumba,       % wisdom, Wachumba
-xylophone,      % xylophone
-yummies         % yellow, you, yummies
-and
-zeal            % Zendo, Zen, zeal
-in the world for me without you.
-
-\vspace{0.65\textheight}
-\noindent
-Access to computing and storage facilities owned by parties and projects contributing to the National Grid Infrastructure MetaCentrum, provided under the programme Projects of Large Infrastructure for Research, Development, and Innovations(LM2010005), is greatly appreciated.
 \end{ThesisThanks}
 
 \begin{ThesisAbstract}
-This thesis explores the randomness of outputs created by authenticated encryption schemes submitted to the  competition. Tested scenarios included three different modes of public message numbers. For the assessment, four different software tools were used: three common statistical batteries and a novel genetically inspired framework. The obtained results are interpreted in two ways: Firstly, to gain insights into the quality of the proposed  candidates. Secondly, to compare and contrast the used randomness testing tools. Directions for future research are proposed based on the obtained conclusions.
+Abstract
 \end{ThesisAbstract}
 
 \begin{ThesisKeyWords}
-statistical randomness, authenticated encryption, CAESAR, evolutionary algorithms, genetic programming
+key words
 \end{ThesisKeyWords}
 
 \MainMatter
@@ -1298,18 +1262,16 @@ It is important to note the KaiA and KaiB kinases only \emph{enhance} the phosph
 
 Another interesting aspect of the circadian clock is formation of KaiC hexamers. The condition that a KaiC protein can be (de)phosphorylated \emph{only} inside a hexamer leads to one important fact -- it does not mean the hexamer must be assembled from/dissociated to unphosphorylated KaiC proteins. The hexamer can be dissociated at any point in time, for example when three KaiCs are phosphorylated on the serine residue, other two are phosphorylated on both residues, and the last one is not phosphorylated. It is quite obvious the number of possible combinations is quite huge. But still we need to describe this fact in the system we are modelling.
 
-Fortunately, rule-based languages including BCSL are very suitable for such cases. What we actually need to express is situation, when you form the complex (or dissolve) regardless the context (states) of the interacting entities (six KaiC proteins).
+Fortunately, rule-based languages including BCSL are very suitable for such cases. What we actually need to express is situation, when a complex needs to be formed (or dissolveed) regardless the context (states) of the interacting entities (six KaiC proteins).
 
 -- kaic formation rule goes here
 
-mention clock model - few rules, a lot of reactions, almost endless state space - impossible to analyse
+Another interesting process inside cyanobacteria is photosynthesis. It is performed on internal membranes called thylakoids. In general, photosynthesis in cyanobacteria uses water as an electron donor and produces oxygen as a product. Electron transport is performed though multiple protein complexes, which together form the thylakoid membrane itself. Such complexes are for example photosystem I. and II. However, model the complexes directly is not very efficient. The typical rules in photosynthesis are just electron transfers between the complexes or reduction/oxidation of individual parts. Therefore, such action usually happen regardless the context of the rest of the complexes in a photosystem. The best approach with respect to BCSL language is to usage structure agent for defining the protein complexes and its individual parts model as partial composition.
+
+-- example rule ID 4 and 33 
 
 it would be great to somehow demonstrate defined statical analysis here
 
-BCS used on ecyano
-
-key features
- 
 practical examples of defined objects
 
 \chapter{Conclusions}
