@@ -352,6 +352,7 @@ Best way how to present process hierarchy of BCS is via visualisation. We have e
 
 
 \subsection{The level of abstraction}
+\label{level_of_abstraction}
 
 When describing particular process or object, we can go almost infinitely deeper into details. Even if the depth is not infinite, it deep enough to lead into state when the description larger than object itself. Imagine that you want to describe a molecule as position of each atom. You definitely need more space to store such information than the molecule itself occupies.
 
@@ -380,6 +381,8 @@ For this reasons we decided to improved description part of BCS by defining it f
 There are several aspects which must be considered when defining new language. From syntactic point of view, we were due to keep the language as simple as possible. It was supposed to be human-readable, which in this context means easy to read, write and maintain by humans even from other disciplines than computer science. From semantic point of view, we needed a straightforward definition which would have practical use in implementation. With experiences from previous iteration, it showed that direct rule-based semantics where quite complicated mechanism of matching and replacement is used, is not very efficient. Therefore we chose indirect definition via reactions -- `practical definition' (ref formal). The level of abstraction point of view is discussed in next section.
 
 \section{Desired abstraction level}
+
+In section~\ref{level_of_abstraction}, we have motivated the level of abstraction we need to use in BCS. 
 
 explain what kind of systems we need to describe
 
@@ -1092,9 +1095,12 @@ In case of explicit-state model checking, we need to enumerate entire state spac
 
 \subsection{Simulation}
 
-TBA
+Once we want to simulate BCSL model, regardless the approach we choose it is necessary to enrich the rule by kinetic rates. These rates basically mean how quickly or slowly a rule takes place. However, assigning a rate to the rule is not as simple as it might seem. This is discussed in Section~\ref{rates_discussion}.
+
+Lets assume we have an optimal solution for assigning rates to the rules. Then we are able to provide deterministic simulation (cite) by translating rules to reactions and consequently construct Ordinary Differential Equations (ODEs) from them. It is possible to enable also stochastic simulation, either by network-free simulators such as NFsim (cite) or using indirect approach on generated reactions (e.g. Gillespie algorithm).
 
 \subsection{Discussion about rates and how they could be solved}
+\label{rates_discussion}
 
 In order to provide numerical simulation (cite), we need to assign a reaction rate to each rule. However, this is quite a challenging task and we will briefly explain why.
 
@@ -1189,27 +1195,6 @@ It does not matter how many rules we have to apply in order to create desired ag
 
 This procedure can be extended for checking reachability of multiple agents, however, it does not consider stoichiometry.
 
-\subsection{Translation to Petri Net}
-
-Moreover, by generating reaction-based model from rule-based, which is always possible (ref a section), we can furthermore translate such model to Petri Net (cite).
-
-definition of petri net goes here
-
-The translation is quite straight-forward: 
-
-\begin{enumerate}
-\item as described in (section XY), we have finite number of unique agents -- these are all the places \emph{p}
-\item transitions \emph{t} are constructed as follows:
-\begin{itemize}
-  \item for each reaction, create a transition,
-  \item place input edge from each place which has label in left-hand-side of the rule (with appropriate multiplicity),
-  \item do the same for output edges for right-hand-side of the rule,
-\end{itemize}
-\item finally, we create initial marking \emph{m} from given initial state of the model by similar procedure described above.
-\end{enumerate}
-
-Once the model is translated, we are allowed apply all available analysis which are provides by PNs. For example, P and T invariants, deadlock detection, coverability etc. (cite material z Petri nets predmetu)
-
 \subsection{Getting signatures from the model}
 
 The BCSL model definition as given in (ref...) can be reduced by signatures. Note we do not mean extended signatures by complex names -- just the basic signatures for atomic and structure agents. These can be obtained statically from the rules (and the initial state) just in one run. The process comprises these steps:
@@ -1255,6 +1240,27 @@ To actually calculate the minimal bound, we take maximum value from the followin
 \end{itemize}
 
 This should guarantee that it is possible to achieve high enough number of occurrence to produce any complex or combination of complexes.
+
+\subsection{Translation to Petri Net}
+
+Moreover, by generating reaction-based model from rule-based, which is always possible (ref a section), we can furthermore translate such model to Petri Net (cite).
+
+definition of petri net goes here
+
+The translation is quite straight-forward: 
+
+\begin{enumerate}
+\item as described in (section XY), we have finite number of unique agents -- these are all the places \emph{p}
+\item transitions \emph{t} are constructed as follows:
+\begin{itemize}
+  \item for each reaction, create a transition,
+  \item place input edge from each place which has label in left-hand-side of the rule (with appropriate multiplicity),
+  \item do the same for output edges for right-hand-side of the rule,
+\end{itemize}
+\item finally, we create initial marking \emph{m} from given initial state of the model by similar procedure described above.
+\end{enumerate}
+
+Once the model is translated, we are allowed apply all available analysis which are provides by PNs. For example, P and T invariants, deadlock detection, coverability etc. (cite material z Petri nets predmetu)
 
 \chapter{Implementation}
 
