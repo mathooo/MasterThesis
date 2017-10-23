@@ -356,9 +356,13 @@ and which we need
 
 \section{What was wrong with translation to Kappa}
 
-abstraction which were not suitable
+In the previous version of language development, both definition and implementation were made via translation to Kappa. It means there was defined a translation function, which was able to convert BCSL expressions to Kappa expressions. The huge advantage was that the conversion was quite easy-to-do and this way our language inherited all features Kappa had.
 
-slow implementation (cross ref)
+However, this indirect approach had several disadvantages. First of all, Kappa has only one type of agent (no hierarchy). It follows all additional information encoded in different agent types are lost during conversion. This particularly means atomic agents had to be considered as binding sites and structure agents as Kappa agents. But it was not always suitable, especially when atomic agents had independent role in a rule. Moreover, complex treatment in Kappa requires explicit bonds between individual agents. Therefore, when translating our multiset-like complex agent to Kappa complex, one needs to choose one of many possible isomorphisms. Multiple default options are available, such as circular layout, linear layout etc. But it was not possible to express fact that order does not matter (which is done in BCSL thought equivalence definition).
+
+-- picture of examples, different approach to complexes
+
+From the implementation point of view, executing models was delayed by conversion to Kappa and then calling Kappa core to apply it's semantics. Moreover, Kappa uses network-free simulator, which is very efficient the models, because the rules are executed directly. Each rule is being matched on current state and then matched objects are replaced according the rule. The problem is when model is more complex. The number of rules does not cause significant change, however number of different interacting agents does. Once there are many agents, the time of one match \& replace step rises dramatically. Compared to indirect methods when first reaction network is enumerated, the initial step takes some time, but then rule application itself is fast regardless number of agents. 
 
 \chapter{Formal definition}
 
