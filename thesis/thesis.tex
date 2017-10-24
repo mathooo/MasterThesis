@@ -1116,22 +1116,26 @@ Let $\mathtt{T}_1$, $\mathtt{T}_2$ be structure agents. We say $\mathtt{T}_1$ is
 In other words, structure agents are compatible, if we can create pairs from atomic agents of left-hand-side agent's composition with the right-hand-ones such that these atomic agents are all unique. For such pairs, the agents in each pair must be compatible.
 
 \begin{definition}{Compatibility of complex agents}
-Let $\mathtt{X}_1$, $\mathtt{X}_2$ be complex agents. We say $\mathtt{X}_1$ is \emph{compatible with} $\mathtt{X}_2$, written $\mathtt{X}_1 \lhd \mathtt{X}_2$, iff either $\mathtt{X}_1 \equiv \mathtt{X}_2$ or $\exists$ permutation $ \mu(\mathtt{X}'_2)$ of $\mu(\mathtt{X}_2)$ such that $ \forall i \in [1, n] : \mu(\mathtt{X}_1)_i \lhd \mu(\mathtt{X}'_2)_i $, where $n$ is length of sequence which is same for both sequences.
+Let $\mathtt{X}_1$, $\mathtt{X}_2$ be complex agents. We say $\mathtt{X}_1$ is \emph{compatible with} $\mathtt{X}_2$, written $\mathtt{X}_1 \lhd \mathtt{X}_2$, iff either $\mathtt{X}_1 \equiv \mathtt{X}_2$ or $\mathtt{com}(\mathtt{X}_1) \equiv \mathtt{com}(\mathtt{X}_2) \wedge \exists$ permutation $ \mu(\mathtt{X}'_2)$ of $\mu(\mathtt{X}_2)$ such that $ \forall i \in [1, n] : \mu(\mathtt{X}_1)_i \lhd \mu(\mathtt{X}'_2)_i $, where $n$ is length of sequence which is same for both sequences.
 \end{definition}
 
 Compatibility for complexes means that every pair of agents through the sequences of complexes must be compatible.
 
-From first chapters it should be clear, that an agent (or a complex) might have its ancestors and successors. The compatibility operator formulates this relationship formally. Each successor is compatible with its ancestor, but the reverse relation does not hold. 
+From first chapters it should be clear that an agent might have its ancestors and successors. The compatibility operator formulates this relationship formally. Each successor is compatible with its ancestor, but the reverse relation does not hold. The successor had always more details specified.
 
-The compatibility operator generates partial order for particular subsets in $\mathds{A}, \mathds{T}$, and $\mathds{X}$. Such subsets are formed by agents of the same type, which hold the compatibility conditions. Moreover, there exist maximal subsets which contain all agents related by the compatibility operator. In such sets, there always exists a supremum, what is an ancestor of all the remaining agents in the set. Each agents belongs to exactly one maximal set.
+The compatibility operator generates partial order of $\mathds{A}, \mathds{T}$, and $\mathds{X}$ sets. For our purposes, partial order of $\mathds{X}$ is interesting:
 
-example of lattice
+$$ \mathtt{X}_1 \sqsubseteq \mathtt{X}_2 \sqsubseteq \ldots \sqsubseteq \mathtt{X}_n $$
 
-These sets form a tree (lattice), where the lower the node is, more context details it has. This fact follows from the definition of compatibility operator.
+The reason is that complex agents actually encapsulate all other agent types including compartments. However, partial order of entire universe of complex agents is not very useful, since most of agents cannot be compared. We are interested in particular subsets $\mathds{X}_\sqsubseteq$ which are formed from complexes of the same type, i.e. those sets where each pair of complexes holds the compatibility conditions (in one direction):
+
+$$ \mathds{X}_\sqsubseteq \subseteq \mathds{X} : \forall \mathtt{X}, \mathtt{X}' \in \mathds{X}_\sqsubseteq : \mathtt{X} \lhd \mathtt{X}' \vee \mathtt{X}' \lhd \mathtt{X}$$
+
+In these sets, there always exists a supremum, what is an ancestor of all the remaining agents in the set. Each agent $\mathtt{X}$ belongs to exactly one set $\mathds{X}_\sqsubseteq$.
 
 \subsection{Context-based reduction}
 
-Context reduced network (CRN) is created form given BCSL model by reducing context of agents in rules to maximum level. This is achieved by taking supremum from maximal set formed by compatibility operator. This procedure might produce rules with no action -- such rules might be omitted. Then, only rules creating/destroying agents and complex formation/dissociation should remain, providing reduced network. Since we are reducing context, the resulting network can be equal or smaller than the original one.
+Context reduced network (CRN) is created form given BCSL model by reducing context of complexes in rules to maximum level. This is achieved by taking supremum from set $\mathds{X}_\sqsubseteq$ formed by compatibility operator. This procedure might produce rules with no action -- such rules might be omitted. Then, only rules creating/destroying agents and complex formation/dissociation should remain, providing reduced network. Since we are reducing context, the resulting network can be equal or smaller than the original one.
 
 If we are checking whether an agent is reachable for given model, we might first check whether it's super-ancestor is reachable in created CRN. If so, then we are still not certain about reachability of agent itself and it has to be checked in the original model. However, when it comes to non-reachability, agent which is non-reachable in CRN is not reachable in the original model too (proof ?).
 
