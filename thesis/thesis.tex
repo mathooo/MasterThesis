@@ -1133,7 +1133,31 @@ $$ \mathds{X}_\sqsubseteq \subseteq \mathds{X} : \forall \mathtt{X}, \mathtt{X}'
 
 In these sets, there always exists a supremum, what is an ancestor of all the remaining agents in the set. Each agent $\mathtt{X}$ belongs to exactly one set $\mathds{X}_\sqsubseteq$.
 
+Practically, relation following from compatibility operator can be used in several ways. It is suitable for deeper static analysis on level of complexes~\ref{context_reduction} and for finding nontrivial relationships between the rules~\ref{rule_redundancy}.
+
+\subsection{Rule redundancy reduction}
+\label{rule_redundancy}
+
+There might be cases when there are redundant rules defined in a model. This might be done for example by inattention of modeller in combination with high level of abstraction language uses. These rules do not cause any semantical difference, but might slow down dynamic and/or static analysis, eventually affect the results of analysis.
+
+Before we can eliminate such rules, we have to detect them. For this purpose, compatibility operator and resulting ordered sets $\mathds{X}_\sqsubseteq$ can be used.
+
+Lets have two rules $\mathtt{R}, \mathtt{R}'$ of form:
+
+$$ \mathtt{R}: \mathtt{X}_1 + \ldots + \mathtt{X}_n \Rightarrow \mathtt{X}_{n+1} + \ldots + \mathtt{X}_{m} $$
+
+for some $m,n \in \mathbb{N}$ such that both $\mathtt{R}, \mathtt{R}'$ are well-formed rules.
+
+If following condition holds:
+
+$$ \forall i \in [ 1, m ]: \mathtt{X} \lhd \mathtt{X}' $$
+
+we declare the rule $\mathtt{R}$ as a redundant rule. In other words, the rule does not add any semantic details or the rule itself has no effect.
+
+-- add an example
+
 \subsection{Context-based reduction}
+\label{context_reduction}
 
 Context reduced network (CRN) is created form given BCSL model by reducing context of complexes in rules to maximum level. This is achieved by taking supremum from set $\mathds{X}_\sqsubseteq$ formed by compatibility operator. This procedure might produce rules with no action -- such rules might be omitted. Then, only rules creating/destroying agents and complex formation/dissociation should remain, providing reduced network. Since we are reducing context, the resulting network can be equal or smaller than the original one.
 
