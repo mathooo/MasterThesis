@@ -15,7 +15,7 @@
 \usepackage{subfig}
 \usepackage{graphicx}
 \usepackage{kpfonts}
-\usepackage[labelfont=bf]{caption}
+\usepackage[labelfont=bf, margin=0.5cm, font=small, skip=1pt]{caption}
 \usepackage{stmaryrd}
 \usepackage{mathtools}
 \usepackage[usenames, dvipsnames]{color}
@@ -36,6 +36,7 @@
 \newenvironment{runningExample}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Running example \thecounter} \textit{#1} \par\nopagebreak}{\bigskip}
 
 \newcommand\mdoubleplus{\mathbin{+\mkern-7mu+}}
+\newcommand*\arc{{\fontfamily{pbk}\fontseries{db}\selectfont+}}
 
 \usetikzlibrary{fit, hobby}
 \usetikzlibrary{chains}
@@ -53,6 +54,14 @@
 }
 
 \definecolor{mydarkgreen}{RGB}{48, 129, 7}
+
+\usepackage{titlesec}
+
+\titleformat{\subsubsection}
+  {\bfseries}
+  {\thesubsection}
+  {1em}
+  {}
 
 % FI THESIS settings
 \thesistitle{Formal biochemical space for specification and analysis of biochemical processes}
@@ -94,16 +103,18 @@ key words
 
 \chapter{Background}
 
-bla
+In this chapter, we introduce all relevant terms which will be used in the thesis. Namely, we give an introduction to rule-based modelling and compare it to usual reaction-based approach. Then we describe typical representatives of the rule-based languages and highlight their key features. We also introduce Comprehensive Modeling Platform with it core parts and provide motivation behind Biochemical Space, as a key feature of the platform.
 
-\section{Rule-based basics}
+\section{Rule-based modelling}
 \label{Rule-based basics}
 
-bla bla some intro
+Modelling complex systems in biology is necessary with respect to its complexity and size. The more complex the system is, the harder it is to describe it formally. The typical approach in modelling is using chemical reactions or ordinary differential equations. The general problem with these approached is that number of interacting objects and interactions themselves are often too high to be effectively enumerated. Rule-based modelling offers a solution for this problem. It is a natural extension of reaction-based approach, when instead of operating with object, we operate with \emph{types} of objects. The semantics of the model are defined via \emph{rules} on the given types. Typically, rule-based models are more concise.
 
-The reason for this kind of abstraction is the way how we see the biological models. We represent model $\mathcal{M}$ as set of rules and an initial solution of interacting entities. We understand solution as a mixture of individual objects which are randomly distributed (see Fig.~\ref{solutions:fig}a). Therefore, we cannot assign them any order and we do not see them as expressions but rather as multisets. For us, this representation of solution is the closest to the reality.
+There are multiple approaches to rule-based modelling, but all of them match in principle described above. 
 
-\begin{figure}
+We represent model $\mathds{M}$ as set of rules and an initial solution of interacting entities. We understand solution as a mixture of individual objects which are randomly distributed (Fig.~\ref{solutions:fig}a). Therefore, we cannot assign them any order and we do not see them as expressions but rather as multisets. For us, this representation of solution is the closest to the reality.
+
+\begin{figure}[!h]
 \begin{center}
 \subfloat[]{\includegraphics[scale=0.23]{pics/solution_first}\label{sol:s1}}
 \hspace*{1cm}
@@ -113,19 +124,20 @@ The reason for this kind of abstraction is the way how we see the biological mod
 \end{center}
 \end{figure}
 
-On the other hand, the rules are expressions which describe behavior of groups of objects. A rule has form of a chemical reaction, where substrates and products take place. The difference is that reaction only operates on particular objects. Therefore, a reaction can be seen as a special case of rule (see Fig.~\ref{rules:fig}), where the groups contain exactly one element.
+On the other hand, the rules are expressions which describe behavior of groups of objects. A rule has form of a chemical reaction, where substrates and products take place. The difference is that reaction only operates on particular objects. Therefore, a reaction can be seen as a special case of rule (Fig.~\ref{rules:fig}), where the types match exactly one element.
 
-The rule can be mapped on a solution. Then, if it is mapped, it can be applied and a new solution is produced. The mapping is not always successful (see Fig.~\ref{solutions:fig}, application of rule \textit{c}). By repeating map-apply action, we obtain a \textit{Labelled transition system} $\mathcal{L}$.
+The rule can be mapped on a solution. Then, if it is mapped, it can be applied and a new solution is produced. The mapping is not always successful (Fig.~\ref{solutions:fig}, application of rule \textit{c}). By repeating map-apply action, we obtain a \textit{Labelled transition system} $\mathcal{L}$ (Definition~\ref{lts}).
 
-\begin{def}\label{lts}
+\begin{definition}{Labelled transition system}\label{lts}
 \textit{Labelled transition system} (LTS) $\mathcal{L}$ is a tuple $(S, A, \Delta, s_0)$ where:
+
 \begin{itemize}
-  \item $S$ is a (potentially infinite) set of states (solutions)
-  \item $A$ is a set of labels (reactions)
-  \item $\Delta \subseteq S \times A \times S$ is a transition relation (the map-apply action)
-  \item $s_0 \in S$ is the initial state (initial solution)
+  \item $S$ is a (potentially infinite) set of states (solutions),
+  \item $A$ is a set of labels (reactions),
+  \item $\Delta \subseteq S \times A \times S$ is a transition relation (the map-apply action),
+  \item $s_0 \in S$ is the initial state (initial solution).
 \end{itemize}
-\end{def}
+\end{definition}
 
 \begin{figure}[!h]
 \begin{center}
@@ -156,9 +168,7 @@ The rule can be mapped on a solution. Then, if it is mapped, it can be applied a
 
 The mapping of a rule on a solution can be seen as a particular moment, when the objects in the solution have just the conformation suitable for the rule and therefore the rule can be applied. However, since the distribution of objects is random, we can assume a sequence of objects needed for rule (if there are such objects) is always available.
 
-Moreover, the mapping can be seen as assigning particular objects from the solution to objects on the left-hand-side of the rule. The rule application can be seen as changing the mapped objects to new objects according to the right-hand-side of the rule (i.e., particular objects are assigned to the right-hand-side). As a by-product, we obtain an instance of the rule -- a reaction (see Fig.~\ref{map-apply:fig}). This is how we construct the set of reactions $A$ in the LTS $\mathcal{L}$.
-
-\begin{figure}
+\begin{figure}[!h]
 \begin{center}
 \begin{minipage}[l]{0.1\textwidth}
     \textbf{(a)}
@@ -185,20 +195,22 @@ Moreover, the mapping can be seen as assigning particular objects from the solut
 \end{center}
 \end{figure}
 
-Since this kind of graphical representation is not very suitable for describing the processes and for transferring them.. ???, in next chapter(s) we define a formal language which is built on principles described in this chapter.
+Moreover, the mapping can be seen as assigning particular objects from the solution to objects on the left-hand-side of the rule. The rule application can be then seen as changing the mapped objects to new objects according to the right-hand-side of the rule (i.e., particular objects are assigned to the right-hand-side). As a by-product, we obtain an instance of the rule -- a reaction (Fig.~\ref{map-apply:fig}). This is how we construct the set of labels (reactions) $A$ in the LTS $\mathcal{L}$.
+
+Since this kind of graphical representation is not very suitable for describing the processes and for machine processing, we define a formal language which is built on principles described in this chapter.
 
 \section{Rule-based vs. reaction-based}
 
 A rule is a generalized reaction. This is how the difference can be characterized. From the application point of view (ref), reaction can be applied on a solution only in a particular way whilst rule can be applied in multiple ways (see ref mapping picture). It allows to write models, where many similar processes might occur via rules, by defining a pattern (or context) in which the action can happen. Since there might be many features we need to express, there are several languages focusing on different form of details.  
 
-From static analysis point of view, using rules directly is not the best choice. The main reason is so-called side effects, which might happen during rule application. These side-effect differ from language to language, and it is a feature we tried to avoid in BCS as much as is possible. There is no such thing for reaction, because all the context is enumerated explicitly. Therefore, we cannot statically say how exactly will be the rule used.
-
-\begin{figure}
+\begin{figure}[!h]
 \begin{center}
 \includegraphics[scale=0.5]{pics/reaction_vs_rule}
 \end{center}
-\caption{bla}
+\caption{Graphical comparison of rule-based and reaction-based approaches. There can be seen combinatorial explosion in number of possible particular interactions (reactions), which can be depicted in a few simple rules.}
 \end{figure}
+
+From static analysis point of view, using rules directly is not the best choice. The main reason is so-called side effects, which might happen during rule application. These side-effect differ from language to language, and it is a feature we tried to avoid in BCS as much as is possible. There is no such thing for reaction, because all the context is enumerated explicitly. Therefore, we cannot statically say how exactly will be the rule used.
 
 The rule and reaction differ in level of abstraction. In this context we mean how stringent it is, not what sort of features particular language uses. This is universal attribute for all rule-based languages -- the rule is always more abstract than it's instance -- a reaction. Then, analysis of such abstract object statically is a challenge. (cite ?) The reason is that most of the structural information is encoded in rules implicitly. For static analysis, explicit data are more suitable.
 
@@ -384,7 +396,42 @@ BCS provides well described biological background for mathematical models of pro
 
 When building the BCS, emphasis is put on well-defined and complete annotations. Therefore, links to relevant ontologies must be specified for each entity and rule. Unique IDs provided by ontologies can help to automatically detect duplicities. IDs are also used to create hypertext links to related ontologies on the web, thus providing a one part of the already mentioned connection between ontologies and models. At this moment, links to KEGG~\cite{Kanehisa04012016}, ChEBI~\cite{ChEBI}, CyanoBase~\cite{CyanoBase} and other databases are supported. A single entity or a rule can have multiple links to several external databases. An example is presence of a particular entity in ChEBI as well as in KEGG. In the case of annotating enzymatic rules, an EC number (here acting as a descriptor of the rule mechanism behind the catalytic reaction) is associated to the enzyme via a respective KEGG ID.
 
+\begin{figure}[!h]
+\begin{center}
+\framebox{
+{\footnotesize
+\begin{tabular}{ l | l }
+ DESCRIPTION: & Protein involved in hydrolysis of N-acetylated amino acids\\
+ LINKS: & KEGG::ec3.5.1.14, CBS::slr1653, CBS::sll0100\\
+ NOTES: & ChEBI link is missing
+\end{tabular}}
+}
+\end{center}
+\caption{Description, links, and notes information for an entity.}
+\end{figure}
+
 The fact that most attributes in entity and rule definitions are tightly coupled with information from linked ontologies is the reason why we have started with describing annotation attributes. In the first place, one of these attributes is \emph{name}, which is taken from ontologies or follows the standard naming conventions. \emph{ID} of every entity is fixed by the consortium. KEGG ID, ChEBI ID or internal ID is used if no reasonable \emph{ID} is available. \emph{ID}s of rules are internal and assigned automatically.
+
+\begin{figure}[!h]
+\begin{center}
+\framebox{
+{\footnotesize
+\begin{tabular}{ l | l }
+ ENTITY ID: & HCO3\\
+ STATES: & \{-, +\}\\
+ LOCATIONS: & cyt, liq\\
+ COMPOSITION:\\
+ ENTITY NAME: & hydrogencarbonate\\
+ CLASSIFICATION: & small molecule\\
+ DESCRIPTION: & Plays major role in carbon concentrating\\
+ & mechanism (CCM).\\
+ LINKS: & CHEBI::17544\\
+ ORGANISM: & Synechococcus elongatus PCC 7942\\
+\end{tabular}}
+}
+\end{center}
+\caption{Complete information given for an atomic entity.}
+\end{figure}
 
 An entity in our interpretation is a bounded space (a so-called \emph{compartment}) or a structural part of a specific organism. BCS covers a hierarchy of entities ranging from small molecules (\emph{atomic entities (agents)}) through composite structures (\emph{structure entities (agents)}) to large complex molecules (\emph{complex entities (agents)}). Our goal is to make BCS as simple as possible. In existing ontologies, entities residing in several different states (oxidised, reduced, etc.) are usually treated as separate entities, thus causing the total number of entities to be enormous. To reduce this complexity, the concept of \emph{states} is defined in BCS. They allow to define allowed set of states, in which an atomic agent might occur.
 
@@ -392,9 +439,68 @@ BCS extends the traditional concept of compartmentalisation with a hierarchy at 
 
 An entity can be a part of a structurally more complex entity. We consider two kinds of composite entities: structure and complex entities. Structure entity represents partially specified composite species, e.g. a photosystem complex partially specified with prosthetic groups of interest. Complex entity represents fully specified composite species, e.g., a homodimer of KaiC protein.
 
-Rules are specified by rule equations enriched with additional annotation information. When defining a rule equation, identifiers of substrates and products are used to make the notation of rules compact. Every entity appearing in a \emph{rule equation} has to be followed by the localisation operator associating it with a particular compartment. This is important especially for rules that act on both sides of a membrane. That way, a rule is always precisely localised in/inbetween compartments. A natural stoichiometric coefficient can be placed before any entity in a rule equation. Irreversible and reversible rules are distinguished by the operators `$\Rightarrow$', `$\Leftrightarrow$'. The `$+$' symbol is used as a separator between individual substrates and individual products. A rule can also have an assigned classification. Rule classification assigns a list of higher level biophysical processes in which the rule is involved. 
+\begin{figure}[!h]
+\begin{center}
+\framebox{
+{\footnotesize
+\begin{tabular}{ l | l }
+ ENTITY ID: & KaiC\\
+ STATES:\\
+ LOCATIONS: & cyt\\
+ COMPOSITION: & S $|$ T\\
+ ENTITY NAME: & circadian clock protein kinase KaiC\\
+ CLASSIFICATION: & enzyme\\
+ DESCRIPTION: & Monomer component representing a core component\\
+ & of the circadian clock system.\\
+ LINKS: & uniprot::Q79PF4, cyanobase::Synpcc7942\_1216\\
+ ORGANISM: & Synechococcus elongatus PCC 7942
+\end{tabular}}
+}
+\end{center}
+\caption{Complete information given for a structure entity.}
+\end{figure}
+
+Rules are specified by rule equations enriched with additional annotation information. When defining a rule equation, identifiers of substrates and products are used to make the notation of rules compact. Every entity appearing in a \emph{rule equation} has to be followed by the localisation operator associating it with a particular compartment. This is important especially for rules that act on both sides of a membrane. That way, a rule is always precisely localised in/inbetween compartments. A natural stoichiometric coefficient can be placed before any entity in a rule equation. Irreversible and reversible rules are distinguished by the operators `$\Rightarrow$', `$\Leftrightarrow$'. The `$+$' symbol is used as a separator between individual substrates and individual products. A rule can also have an assigned classification. Rule classification assigns a list of higher level biophysical processes in which the rule is involved.
+
+\begin{figure}[!h]
+\begin{center}
+\framebox{
+{\footnotesize
+\begin{tabular}{ l | l }
+ RULE ID: & NADPH oxid.\\
+ RULE EQUATION: & $NADPH :: cyt + 5 h\{$\arc$\} :: cyt + pq :: cym \Rightarrow$\\
+ & $\Rightarrow NADP\{$\arc$\} :: cyt + 4 h\{$\arc$\} :: pps + pqh2 :: cym$\\
+ MODIFIER: & NDH1\\
+ RULE NAME: & plastoquinone reduction in the cytoplasmic membrane\\
+ CLASSIFICATION: & reduction, oxidation\\
+ DESCRIPTION: & Oxidation of NADPH and reduction of plastoquinone\\
+ & in the cytoplasmic membrane.\\
+\end{tabular}}
+}
+\end{center}
+\caption{Complete information for a rule.}
+\end{figure}
 
 In some cases, emphasis on a detailed description leads to very complex BCS models. Abstraction of some processes is therefore needed to keep BCS models as simple as possible. To this end, rules expressing enzymatic reactions are considered in a simplified form. In fact, there should be at least two different rules describing an enzymatic reaction (one for a substrate binding and another for a catalytic step). Instead, since an enzyme is not affected during the reaction, it is affiliated to the rule as a \emph{modifier}. However, it is difficult to define precise meaning of a modifier in this case. We rather treat the modifier attribute informally as an entity \textit{which has to be present} for the rule to be enabled. The exact reaction mechanism of an enzyme is not always clear and therefore it is abstracted out.
+
+\begin{figure}[!h]
+\begin{center}
+\framebox{
+{\footnotesize
+\begin{tabular}{ l | l }
+ RULE ID: & FGFR2 phosph.\\
+ RULE EQUATION: & $Thr\{u\}::FGF::FGFR2::cyt \Leftrightarrow $\\
+ & $\Leftrightarrow Thr\{p\}::FGF::FGFR2::cyt$\\
+ MODIFIER: & NDH1\\
+ RULE NAME: & FGFR2 threonine residue (de)phosphorylation\\
+ CLASSIFICATION: & phosphorylation, dephosphorylation\\
+ DESCRIPTION: & FGF enzyme is phosphorylated on threonine residue\\
+ & in FGFR2 complex.\\
+\end{tabular}}
+}
+\end{center}
+\caption{A rule employing structure entity state change.}
+\end{figure}
 
 Higher abstraction comes into account when several electrons play `musical chairs' inside protein complexes. The issue is that parts of processing protein complex can have different unstable states during a short period of time. When one tries to define all rules among these proteins, combinatorial explosion of the number of states of the complex arises. Not all of these combinations are biologically correct. Even when excluding biologically inadmissible cases, the number of states is still enormous. For the purpose of BCS, we introduce a solution inspired by the enzymatic rule mentioned above. We treat a protein complex as a structure entity on which structurally simpler entities change its state (not necessarily proteins) and we abstract from background processes. We can see a particular rule as a change of a state of a structure entity.
 
@@ -407,6 +513,8 @@ The general goal of BCS is to provide knowledge base for mathematical models. In
 To improve usability and verifiability of the BCS, we defined Biochemical Space Language. The language is formally defined and serves for describing the entities and the rules. It has rule-based semantics, what allows compact description of the objects. Moreover, the syntax was designed in order to be very concise and human-readable. Hence it is very suitable for our needs.
 
 The whole BCS is defined in BCSL. This fact makes sure the entities and the rules are defined with all appropriate properties. Moreover, it helps us to relate objects from the models to BCS objects. Note that due to rule-based nature of the BCSL, in BCS there are defined only abstract objects representing types. Therefore, when relating for example an model variable to BCS entity, we might need to specify it's properties. 
+
+-- picture DB BCS and from it BCSL uses some data (something similar as at SASB 2017)
 
 Once BCS is build, we can use it to reference the models. It means to relate all the variables and reactions of the model and to entities and rules of BCS. In particular, each variable should have assigned an entity for BCS. It increases information value of the variable (due to annotation of BCS entity). Since reactions of the model are composed from its variables, this way we also rewrite general reactions to reactions written in BCSL. The result of relating all the entities is model written in BCSL. 
 
@@ -896,7 +1004,7 @@ $(\vv{\upsilon}, \vv{\mathtt{r}}, \vv{\mathtt{u}}) \in \rho$ $\Leftrightarrow$ $
 Note some values in reactions might be negative. When applying reaction on state, the resulting state cannot contain any negative values (negative number of entities does not give biological sense). Therefore, application is allowed only if the resulting vector contains non-negative values.
 
 \begin{definition}{CRN semantics}
-Let $\mathcal{M}$ be a Chemical Reaction Model. The quantitative semantics are given in terms of a discrete-states produced by iterative reaction application on initial vector $\vv{\nu}$ and all consequently created state vectors. This way we obtain an LTS.
+Let $\mathcal{M}$ be a Chemical Reaction Model. The quantitative semantics are given in terms of a discrete-states produced by iterative reaction application on initial vector $\vv{\nu}$ and all consequently created state vectors. This way we obtain an LTS (Definition~\ref{lts}).
 \end{definition}
 
 CRN semantics might lead to possibly infinite LTS. This process can be limited by a global bound, which makes sure the produced LTS is finite (Section~\ref{optimal_bound}).
@@ -947,7 +1055,7 @@ $\vv{r} = \lambda(RHS(\mathtt{r}), \pi) - \lambda(LHS(\mathtt{r}), \pi)$
 
 \end{enumerate}
 
-In order to accomplish the process of giving semantics to an BCSL model, it is necessary to note how we revive information which is missing in produced LTS. This procedure is quite straightforward since we still have define reference vector $\pi$. Similarly as we translated multisets of BCSL agents to vectors (Definition~\ref{state_to_vector}), we can apply a reverse procedure, when we build a multiset of agents from a vector according to the reference vector $\pi$. This is how we obtain an LTS.  
+In order to accomplish the process of giving semantics to an BCSL model, it is necessary to note how we revive information which is missing in produced LTS (Definition~\ref{lts}). This procedure is quite straightforward since we still have define reference vector $\pi$. Similarly as we translated multisets of BCSL agents to vectors (Definition~\ref{state_to_vector}), we can apply a reverse procedure, when we build a multiset of agents from a vector according to the reference vector $\pi$. This is how we obtain an LTS.  
 
 \section{Syntactic extensions}
 \label{syntactic_extensions}
