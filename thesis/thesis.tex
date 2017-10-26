@@ -22,6 +22,9 @@
 \usepackage{esvect}
 \usepackage{url}
 \usepackage{dsfont}
+\usepackage{color}
+\usepackage{tikz}
+\usepackage{pythonhighlight}
 
 \newcounter{counter}[section]
 \renewcommand{\thecounter}{\thesection.\arabic{counter}}
@@ -32,6 +35,23 @@
 \newenvironment{runningExample}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Running example \thecounter} \textit{#1} \par\nopagebreak}{\bigskip}
 
 \newcommand\mdoubleplus{\mathbin{+\mkern-7mu+}}
+
+\usetikzlibrary{fit, hobby}
+\usetikzlibrary{chains}
+\usetikzlibrary{arrows,positioning,decorations.markings} 
+\usetikzlibrary{decorations.pathmorphing}
+\tikzset{snake it/.style={decorate, decoration=snake}}
+
+
+\tikzset{
+    myarrow/.style={
+        decoration={markings,mark=at position 1 with {\arrow[scale=1]{>}}},
+        postaction={decorate},
+        >=stealth
+    }
+}
+
+\definecolor{mydarkgreen}{RGB}{48, 129, 7}
 
 % FI THESIS settings
 \thesistitle{Formal biochemical space for specification and analysis of biochemical processes}
@@ -192,7 +212,7 @@ This language was developed for modeling of protein-protein interactions. Theref
 
 The \textit{Kappa rules} are changing properties of the agents. Particularly, it might add/delete/change a bond or a state of one or multiple agents at once. Such as all the other rule-based languages, when we do not care about some context, we simply omit it. Example of a rule is in Figure~\ref{kappa-rule}.
 
-\begin{figure}
+\begin{figure}[!h]
 \begin{center}
 \begin{tabular}{c l}
 (a) & A(bsa$\sim$\{ u, p \}) ; B(bsb$\sim$\{ a, i \}) \\
@@ -209,7 +229,7 @@ The general problem we have to face with in Kappa is too detailed description. F
 
 BioNetGen Language (BNGL,~\cite{BNGL}) is very similar to Kappa (Section~\ref{kappa}). There are a few general differences: (1) it is allowed to define multiple binding sites with same name for an agent; (2) one binding site is allowed to have multiple bonds; (3) in the rules BNGL uses `+' and `.' for expressing reaction complex and complex of agents respectively. Example of a rule is in Figure~\ref{bngl-rule}.
 
-\begin{figure}
+\begin{figure}[!h]
 \begin{center}
 \begin{tabular}{c l}
 (a) & A(bsa$\sim$u$\sim$p) \\
@@ -220,48 +240,141 @@ BioNetGen Language (BNGL,~\cite{BNGL}) is very similar to Kappa (Section~\ref{ka
 \caption{Example of a BGNL rule. (a) Definition of associated agents. (b) The rule itself. Note the A and B agents must first create \emph{reaction complex} denoted with `+' (i.e., they must be close to each other) and then they create \emph{complex of agents} denoted as `.' (i.e., they are physically connected).}\label{bngl-rule}
 \end{figure}
 
-\subsection{PySB}
-
-This language works as a package to Python language. The definition of models directly in the code allows to use the full syntax of Python, what dramatically increases expression power of PySB. On the other hand, it might be hard to follow abstraction which are this way possible and models themselves are hard to analyze. Moreover, the core of the language is made by translating to BGNL~\ref{bngl}.
-
 \subsection{Chromar}
 
 The language allows to define attributes for agents and range them over pre-defined domains. The qualitative semantics are given by rule match on multisets composed from these agents producing reaction. It is followed by standard application of the reaction (in manner of multiset operations). The language is very useful when creating a model where we need to create new distinct objects and control population of these objects.
 
 Embedding this language to functional programming language Haskell increases its expressive power while making the ability of some analysis more expensive. Moreover, one needs to learn Haskell (at least it's basics) in order to use Chromar.
 
-\begin{figure}
+\begin{figure}[!h]
 \begin{center}
 A(a = x), A(a = y) $\xrightarrow[]{\text{f(x,y)}}$ A(a = x + y), A(a = y - 1) [g(x, y)]
 \end{center}
 \caption{Example of a Chromar rule.}\label{chromar-rule}
 \end{figure}
 
-I would like to highlight an important feature of stochastic semantics which this language offers. Compared to other rule-based languages, it is capable of specifying rates for individual reactions inherited from the rule. This is allowed by variable value bindings and type-determination between left- and right-hand-side of the rule.
+It want to highlight an important feature of stochastic semantics which this language offers. Compared to other rule-based languages, it is capable of specifying rates for individual reactions inherited from the rule. This is allowed by variable value bindings and type-determination between left- and right-hand-side of the rule.
 
 However, when it comes to readability and presentation to the user, the language is not a best-fit. All the biologically relevant terms such as states must be encoded to natural numbers.
 
+\subsection{PySB}
+
+This language works as a package to Python language. The definition of models directly in the code allows to use the full syntax of Python, what dramatically increases expression power of PySB. On the other hand, it might be hard to follow abstraction which are this way possible and models themselves are hard to analyze. Moreover, the core of the language is made by translating to BGNL~\ref{bngl}.
+
+\begin{figure}[!h]
+\begin{center}
+\begin{python}
+# Declare the monomers
+Monomer('L', ['s'])
+Monomer('R', ['s'])
+
+# Declare the binding rule
+Rule(L(s=None) + R(s=None) <> L(s=1) % R(s=1), kf, kr)
+\end{python}
+\end{center}
+\caption{Example of a PySB rule.}\label{PySB-rule}
+\end{figure}
+
 \subsection{SBML-multi package}
 
-Systems biology Markup Language (SBML) is a standard established for systems biology. It is able to describe all necessary rule-based features and therefore it is possible to export each such language in this format. It is the most suitable format for exchange and storage of the models, but less for analysis and direct representation to the users (it is and XML format). It serves as intermediate language. 
+Systems Biology Markup Language (SBML) is a standard established for systems biology. It is able to describe all necessary rule-based features and therefore it is possible to export each such language in this format. It is the most suitable format for exchange and storage of the models, but less for analysis and direct representation to the users (it is an XML format). It serves as intermediate language.
 
-\section{Biochemical Space}
+\begin{figure}[!h]
+\lstset{language=XML}
+\begin{lstlisting}[basicstyle=\scriptsize, frame=single]
+  <?xml version="1.0" encoding="UTF-8"?>
+  <sbml xmlns="http://www.sbml.org/sbml/level2" level="2" version="1">
+    <model>
+      <listOfCompartments>
+        <compartment id="uVol" size="1"/>
+      </listOfCompartments>
+      <listOfSpecies>
+        <species id="input" compartment="uVol" initialConcentration="16"
+                 boundaryCondition="true"/>
+        <species id="output" compartment="uVol" initialConcentration="0"/>
+        <species id="X4" compartment="uVol" initialConcentration="14"/>
+      </listOfSpecies>
+      <listOfReactions>
+         .. .
+        <reaction id="R1" reversible="false">
+          <listOfReactants>
+            <speciesReference species="input"/>
+          </listOfReactants>
+          <listOfProducts>
+            <speciesReference species="output"/>
+          </listOfProducts>
+          <kineticLaw>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <apply>
+                <times/>
+                <ci> k </ci>
+                <ci> input </ci>
+              </apply>
+            </math>
+            <listOfParameters>
+              <parameter id="k" name="0_100000000_" value="7.0370457"/>
+            </listOfParameters>
+          </kineticLaw>
+        </reaction>
+         . ..
+        </reaction>
+      </listOfReactions>
+    </model>
+  </sbml>
+\end{lstlisting}
+\caption{Example of a simple SBML model.}\label{SBML_example}
+\end{figure}
 
-definition of BCS, what is it good for
+\section{Comprehensive Modeling Platform}
 
-explanation of the format, importance of annotation
+Comprehensive Modeling Platform~\cite{cs2bio2013} is an online platform providing tools for public sharing, annotation, analysis, and visualization of dynamical models and wet-lab experiments related to domain-specific systems. The platform is unique in integrating abstract mathematical models with a precise consortium-agreed biochemical description provided in a rule-based formalism. The general aim is to stimulate collaboration between experimental and computational systems biologists to achieve better understanding of the domain-specific system.
 
-from informal BCS through definition by embedding to Kappa
+\begin{figure}[!h]
+\begin{center}
+\begin{tikzpicture}[scale=1, transform shape, boxed/.style={rectangle, draw, line width=1pt, inner sep=5pt, rounded corners=5pt}]
 
-why not good enough (informal)
+% nodes ------------------------------------------------------------------------
+\node [draw=mydarkgreen, boxed] (numbers) at (-2, 28) {\begin{tabular}{c}
+                              \textbf{Relevant} \\
+                              \textbf{numbers}
+                          \end{tabular}};
+\node [draw=mydarkgreen, boxed] (exper) at (2, 28) {\begin{tabular}{c}
+                              \textbf{Experiments} \\
+                              \textbf{repository}
+                          \end{tabular}};
+\node [draw=mydarkgreen, boxed] (models) at (6, 28) {\begin{tabular}{c}
+                              \textbf{Models} \\
+                              \textbf{repository}
+                          \end{tabular}};
 
-how it was evolving
+\node [draw=mydarkgreen, boxed] (bcs) at (2,26) {\textbf{Biochemical Space}};
 
-what it has common with rule-based languages, how it all started
+\node [draw=mydarkgreen, boxed] (visual) at (2,24) {\textbf{Visualisation}};
+\node [draw=mydarkgreen, boxed] (sbml) at (6,24) {\textbf{SBML export}};
+\node [draw=mydarkgreen, boxed] (analysis) at (-2, 24) {\textbf{Analysis}};
 
-Biochemical Space (BCS,~\cite{BCS}) is ...
+% arrows ------------------------------------------------------------------------
+\draw[myarrow, draw=mydarkgreen, fill=mydarkgreen, shorten <=-3pt, shorten >=1pt, line width=1pt] (numbers.south east) to (bcs.north west);
+\draw[myarrow, draw=mydarkgreen, fill=mydarkgreen, shorten >=1pt, line width=1pt] (exper) to (bcs);
+\draw[myarrow, draw=mydarkgreen, fill=mydarkgreen, shorten <=-3pt, shorten >=1pt, line width=1pt] (models.south west) to (bcs.north east);
 
-** short intro, mention it is part of CMP~\cite{cs2bio2013} !!!
+\draw[myarrow, draw=mydarkgreen, fill=mydarkgreen, shorten >=1pt, line width=1pt] (models) to (exper);
+\draw[myarrow, draw=mydarkgreen, fill=mydarkgreen, shorten >=1pt, line width=1pt] (exper) to (models);
+\draw[myarrow, draw=mydarkgreen, fill=mydarkgreen, shorten >=1pt, line width=1pt] (exper) to (numbers);
+
+\draw[myarrow, draw=mydarkgreen, fill=mydarkgreen, shorten >=1pt, line width=1pt] (bcs) to (visual);
+\draw[myarrow, draw=mydarkgreen, fill=mydarkgreen, shorten >=1pt, line width=1pt] (bcs) to (analysis.north east);
+\draw[myarrow, draw=mydarkgreen, fill=mydarkgreen, shorten >=1pt, line width=1pt] (bcs) to (sbml.north west);
+
+\draw[myarrow, draw=mydarkgreen, fill=mydarkgreen, shorten >=1pt, line width=1pt] (models) to (sbml);
+\end{tikzpicture}
+\end{center}
+\caption{text goes here}\label{cmp_overview}
+\end{figure}
+
+\subsection{Biochemical Space}
+
+The platform consists of several dedicated modules (Fig.~\ref{cmp_overview}), all connected to a central module -- \emph{Biochemical Space} (BCS)~\cite{BCS} -- that is the backbone of the platform. BCS provides formal description of the biological problem and it is based on the hierarchy of selected biological processes. It is accompanied with schemas representing relevant biological processes in the context of modelled system. For each process, there are presented relevant models, chemical entities, and rules. Presentation of every process includes detailed information and links to relevant internal and external sources.
 
 BCS provides well described biological background for mathematical models of processes taking place in specific organism. Complete BCS provides a connection between existing ontologies and partial mathematical models. BCS offers a human readable format which can be easily edited in a dedicated editor and visualised on the website. First part of a BCS is represented by a set of \emph{entities} (to be compliant with process-algebraic frameworks we call entities \emph{agents}), while the second part contains \emph{rules} (abstractly represented chemical reactions defined over the set of entities). In our case study, a consortium of scientists is involved in modelling several cyanobacterial processes and in establishing of the respective BCS.
 
@@ -281,7 +394,7 @@ In some cases, emphasis on a detailed description leads to very complex BCS mode
 
 Higher abstraction comes into account when several electrons play `musical chairs' inside protein complexes. The issue is that parts of processing protein complex can have different unstable states during a short period of time. When one tries to define all rules among these proteins, combinatorial explosion of the number of states of the complex arises. Not all of these combinations are biologically correct. Even when excluding biologically inadmissible cases, the number of states is still enormous. For the purpose of BCS, we introduce a solution inspired by the enzymatic rule mentioned above. We treat a protein complex as a structure entity on which structurally simpler entities change its state (not necessarily proteins) and we abstract from background processes. We can see a particular rule as a change of a state of a structure entity.
 
-\subsection{The difference between BCS and BCSL}
+\subsubsection{The difference between BCS and BCSL}
 
 It is important to realise the difference between Biochemical Space Language and Biochemical Space. 
 
@@ -297,22 +410,27 @@ Model defined in BCSL has two main advantages -- formal analysis can be applied 
 
 To sum it up, BCS serves as definition domain for models written in BCSL (so called signature). It defines what can and what cannot be written in models and also increases rule compactness due to syntactic extensions. For example, some context might be omitted from the rule because it can be reconstructed from the signature.
 
-
-\subsection{How is BCS accompanied with visualisation}
-
-Best way how to present process hierarchy of BCS is via visualisation. We have employed several interactive schemes representing chosen important processes. These schemes go through abstract "higher" process to particular rules. In a scheme, a "lower" process, rule or an entity might be showed. However, the schemes might get quite complex. For this reason, a table of complete list of entities and rules is assigned to the scheme while skipping less important ones from the visualisation.
-
-
-\subsection{The level of abstraction}
+\subsubsection{The level of abstraction}
 \label{level_of_abstraction}
 
 When describing particular process or object, we can go almost infinitely deeper into details. Even if the depth is not infinite, it deep enough to lead into state when the description larger than object itself. Imagine that you want to describe a molecule as position of each atom. You definitely need more space to store such information than the molecule itself occupies.
 
 Therefore, when creating BCS, we choose a level of details which we do not exceed. This ensures the size of BCS will not exponentially increase with additional details. The problem might occur when we try to map a model which uses more detailed description of the system than BCS does. However, we simply allow relating multiple model objects to BCS objects and vice versa. For example, multiple model reaction might be mapped on one BCS rule denoting the fact the process represented by the rule can be described in more details by the reactions. On the other hand, model might neglect some details. Then for example, a reaction can be mapped on multiple rules with similar meaning than in previous example.
 
-\subsection{Inclusion of BCS in SBML export (annotation)}
+\subsubsection{Inclusion of BCS in SBML export (annotation)}
 
 Since platform allows export of models in SBML format, we employed resolvable identifier links. These links are included in generated SBML file and point to appropriate rules/entities in BCS. 
+
+\subsection{Model Repository}
+\label{model}
+
+\emph{Model repository} is a collection of implemented mathematical models describing particular parts of biological processes. Every model is represented as a set of ordinary differential equations generated from the model reaction network. Models are integrated within BCS. In particular, each model component should be related to some BCS entity and each model reaction should be related to some BCS rule. Moreover, a model is associated with some parameter value sets (data sets) that enable simulation in a particular biologically-relevant scenarios. Additionally, several basic non-parameter-specific static analysis techniques based on model stoichiometry are also provided.
+
+An implemented model then includes complete biological annotation of all components and reactions that is provided by mapping to BCS. This might help to find connections and overlaps among models. Further, implemented model can be exported to SBML.
+
+\subsection{Experiments Repository}
+
+\emph{Experiments repository} is a module for storage and presentation of time-series data from wet-lab experiments. Every experiment is well-grounded by precise description (device, medium, organism, etc.) and appropriate annotations. Experiments are structured -- several time series data can be attached to a single experiment. Every time series targets a specific list of measured substances together with time stamps of the individual measurements. Data can be imported and exported in simple text formats. Time series are visualised in a chart.
 
 \chapter{Problem formulation}
 
@@ -1052,6 +1170,7 @@ Model checking is an approach of checking whether given model meets a given spec
 In case of explicit-state model checking, we need to enumerate entire state space and then check given specification on it. We will not discuss this approach anymore since we have given the BCSL models semantics (ref) which are able to generate LTSs. These structures are suitable for model checking analysis and can be applied in external tools including temporal properties specification.
 
 \subsection{Simulation}
+\label{simulation}
 
 Once we want to simulate BCSL model, regardless the approach we choose it is necessary to enrich the rule by kinetic rates. These rates basically mean how quickly or slowly a rule takes place. However, assigning a rate to the rule is not as simple as it might seem. This is discussed in Section~\ref{rates_discussion}.
 
