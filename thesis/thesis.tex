@@ -202,6 +202,7 @@ From static analysis point of view, using rules directly is not the best choice.
 The rule and reaction differ in level of abstraction. In this context we mean how stringent it is, not what sort of features particular language uses. This is universal attribute for all rule-based languages -- the rule is always more abstract than it's instance -- a reaction. Then, analysis of such abstract object statically is a challenge. (cite ?) The reason is that most of the structural information is encoded in rules implicitly. For static analysis, explicit data are more suitable.
 
 \section{Rule-based languages}
+\label{rule_based_languages}
 
 There are several rule-based languages dedicated for modeling of biological systems. Each of them uses different features and abstractions. In this chapter, we will try to highlight the key features for some representatives of them.
 
@@ -373,6 +374,7 @@ Comprehensive Modeling Platform~\cite{cs2bio2013} is an online platform providin
 \end{figure}
 
 \subsection{Biochemical Space}
+\label{bcs_general}
 
 The platform consists of several dedicated modules (Fig.~\ref{cmp_overview}), all connected to a central module -- \emph{Biochemical Space} (BCS)~\cite{BCS} -- that is the backbone of the platform. BCS provides formal description of the biological problem and it is based on the hierarchy of selected biological processes. It is accompanied with schemas representing relevant biological processes in the context of modelled system. For each process, there are presented relevant models, chemical entities, and rules. Presentation of every process includes detailed information and links to relevant internal and external sources.
 
@@ -433,34 +435,29 @@ An implemented model then includes complete biological annotation of all compone
 \emph{Experiments repository} is a module for storage and presentation of time-series data from wet-lab experiments. Every experiment is well-grounded by precise description (device, medium, organism, etc.) and appropriate annotations. Experiments are structured -- several time series data can be attached to a single experiment. Every time series targets a specific list of measured substances together with time stamps of the individual measurements. Data can be imported and exported in simple text formats. Time series are visualised in a chart.
 
 \chapter{Problem formulation}
+\label{problem_formulation}
 
-why we need something new - need of BCS by consortium, later naturally evolved into need of formal definiton
+Biochemical Space as described in Section~\ref{bcs_general} is great idea. However, one must consider the fact that the space might get quite huge. It means keep it consistent in informal form is almost impossible. It is necessary to be able to detect inconsistency with automatic tools and enable further analysis of the space. The annotation itself is good, but with enabled formal part with all its advantages is much better. 
 
-other languages didnt use suitable level of abstraction (explain why)
+For this reasons we decided to improved description part of BCS by defining it formally. Many options how to define the language were available. First of all, we wanted to keep definition space as concise as is possible. Rule-based approach was the best hit, because it is capable to capture required details for biological systems while keeping the description concise. However, there are many rule-based languages and each of them is slightly different in syntactic and semantic level and also on level of abstraction. After a deep research (Section~\ref{rule_based_languages}), we have evaluated all existing languages as not suitable. The closest representation to the desired one was Kappa language(Section~\ref{kappa}). That is the reason why in first iteration we have chosen translation to Kappa for definition of semantics. However, there were few aspects which were not suitable (Section~\ref{why_not_kappa}).
 
-what was wrong before
-
-highlight 
-
-motivated by practical needs of ecyano (it means here it should be known from background)
-
-Biochemical Space as described in (ref) is great idea. However, one must consider the fact that the space might get quite huge. It means keep it consistent in informal form is almost impossible. It is necessary to be able to detect inconsistency with automatic tools and enable further analysis of the space. The annotation itself is good, but with enabled formal part with all its advantages is much better. 
-
-For this reasons we decided to improved description part of BCS by defining it formally. Many options how to define the language were available. First of all, we wanted to keep definition space as concise as is possible. Rule-based approach was the best hit, because it is capable to capture required details for biological systems while keeping the description concise. However, there are many rule-based languages and each of them is slightly different in syntactic and semantic level and also on level of abstraction. After deep research (ref prev capt), we have evaluated all existing languages as not suitable. The closest representation to the desired one (ref next section) was Kappa. That is the reason why in first iteration we have chosen translation to Kappa for definition of semantics. However, there were few aspects which were not suitable (ref).
-
-There are several aspects which must be considered when defining new language. From syntactic point of view, we were due to keep the language as simple as possible. It was supposed to be human-readable, which in this context means easy to read, write and maintain by humans even from other disciplines than computer science. From semantic point of view, we needed a straightforward definition which would have practical use in implementation. With experiences from previous iteration, it showed that direct rule-based semantics where quite complicated mechanism of matching and replacement is used, is not very efficient. Therefore we chose indirect definition via reactions -- `practical definition' (ref formal). The level of abstraction point of view is discussed in next section.
+There are several aspects which must be considered when defining new language. From syntactic point of view, we were due to keep the language as simple as possible. It was supposed to be human-readable, which in this context means easy to read, write and maintain by humans even from other disciplines than computer science. From semantic point of view, we needed a straightforward definition which would have practical use in implementation. With experiences from previous iteration, it showed that direct rule-based semantics where quite complicated mechanism of matching and replacement is used, is not very efficient. Therefore we chose indirect definition via reactions -- `practical definition' (Section~\ref{formal_definition}). The level of abstraction point of view is discussed in next section.
 
 \section{Desired abstraction level}
 
-In section~\ref{level_of_abstraction}, we have motivated the level of abstraction we need to use in BCS. 
+In section~\ref{level_of_abstraction}, we have motivated the level of abstraction we need to use in BCS. To achieve that, we decided to neglect structural details, i.e. we do not employ binding approach. We consider binding as too low level of details. Instead, we improve definition of interacting agents to higher level, when it agent itself might express some kind of structural description. This way, we avoid complicated creation of complexes and reduce complicated syntax.
 
-explain what kind of systems we need to describe
+\begin{figure}[!h]
+\begin{center}
+  \includegraphics[scale=0.35]{pics/abstraction}
+\end{center}
+\caption{Comparison of a complex in biology (on the left) to abstraction used in BCS (on the right).}\label{abstraction_comparision}
+\end{figure}
 
-which details we dont need
-
-and which we need
+Also, we determine two types of complexes. Actually, none of them is literally a complex, we rather see it as a coexistence. It allows us to express even other types of interaction. We also determine whether the expresses complex is complete, i.e. the enumerated subparts are all which actually form the complex. The other type of complex expresses the fact that subparts play an important role in the complex, but there are more parts which we do not model, but this fact is somehow important for semantics of the model.
 
 \section{What was wrong with translation to Kappa}
+\label{why_not_kappa}
 
 In our last paper~\cite{Ded201627}, we defined semantics of Biochemical Space Language (BCSL) via translating to a similar language called Kappa~\cite{kappa_formal}. However, we realised this approach is not very beneficial since we are not fully using the expressive power of our language this way. The thing is Kappa operates purely on expressions. We want to promote our language to a higher level when it operates on objects in multisets. By translating to Kappa we loose such abstraction. 
 
@@ -473,6 +470,7 @@ However, this indirect approach had several disadvantages. First of all, Kappa h
 From the implementation point of view, executing models was delayed by conversion to Kappa and then calling Kappa core to apply it's semantics. Moreover, Kappa uses network-free simulator, which is very efficient the models, because the rules are executed directly. Each rule is being matched on current state and then matched objects are replaced according the rule. The problem is when model is more complex. The number of rules does not cause significant change, however number of different interacting agents does. Once there are many agents, the time of one match \& replace step rises dramatically. Compared to indirect methods when first reaction network is enumerated, the initial step takes some time, but then rule application itself is fast regardless number of agents. 
 
 \chapter{Formal definition}
+\label{formal_definition}
 
 In this chapter, we define Biochemical Space Language formally. First, we define all the required objects, then we define syntax of the language and finally give semantics to the BCSL models.
 
@@ -598,7 +596,7 @@ Rule $\mathtt{R}$ is a 5-tuple $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt
 where $n, m \in \mathbb{N}$.
 \end{definition}
 
-As can be seen, rule is quite a complicated structure. The reason is the practical definition of semantics which in following section (ref). Also, it is necessary to capture relationship between left- and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map between the agents in $\mathtt{Indices}$. Another index map $\mathtt{map}$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, by index $\mathtt{I}$ we determine the end of left-hand side of the rule.
+As can be seen, rule is quite a complicated structure. The reason is the practical definition of semantics which can bes seen in following sections. Also, it is necessary to capture relationship between left- and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map between the agents in $\mathtt{Indices}$. Another index map $\mathtt{map}$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, by index $\mathtt{I}$ we determine the end of left-hand side of the rule.
 
 \begin{notation}
 Let $\mathds{R}$ be universe of all possible rules.
@@ -657,8 +655,9 @@ We denote left-hand-side of the reaction $(\mathtt{seq}_0, \ldots, \mathtt{seq}_
 \noindent\rule{\textwidth}{2pt}
 
 \section{Syntax}
+\label{syntax}
 
-In this section, we define grammar for the BCSL. As proposed in (ref), the syntax must be simple and readable. It was already defined in~\cite{Ded201627}, here we give just simplified version of the definition.
+In this section, we define grammar for the BCSL. As proposed in Section~\ref{problem_formulation}, the syntax must be simple and readable. It was already defined in~\cite{Ded201627}, here we give just simplified version of the definition.
 
 \begin{definition}{Grammar}
 \begin{center}
@@ -804,8 +803,7 @@ $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices}) \in \mathds{R}$~ suc
 \end{itemize}
 \end{center}
 
-Please note by applying semantic function $\mathtt{F}$ on examples from Example~\ref{example:syntax}, we obtain agents (resp. complex or rule) from appropriate referenced examples. Moreover, semantic function work \emph{only} on BCSL object and rules well-defined by the given grammar (ref).
-
+Please note by applying semantic function $\mathtt{F}$ on examples from Example~\ref{example:syntax}, we obtain agents (resp. complex or rule) from appropriate referenced examples. Moreover, semantic function works \emph{only} on BCSL object and rules well-defined by the given grammar (Section~\ref{syntax}).
 
 \noindent\rule{\textwidth}{2pt}
 
@@ -894,10 +892,10 @@ $(\vv{\upsilon}, \vv{\mathtt{r}}, \vv{\mathtt{u}}) \in \rho$ $\Leftrightarrow$ $
 Note some values in reactions might be negative. When applying reaction on state, the resulting state cannot contain any negative values (negative number of entities does not give biological sense). Therefore, application is allowed only if the resulting vector contains non-negative values.
 
 \begin{definition}{CRN semantics}
-Let $\mathcal{M}$ be a Chemical Reaction Model. The quantitative semantics are given in terms of a discrete-states produced by iterative reaction application on initial vector $\vv{\nu}$ and all consequently created state vectors. This way we obtain an LTS (ref).
+Let $\mathcal{M}$ be a Chemical Reaction Model. The quantitative semantics are given in terms of a discrete-states produced by iterative reaction application on initial vector $\vv{\nu}$ and all consequently created state vectors. This way we obtain an LTS.
 \end{definition}
 
-CRN semantics might lead to possibly infinite LTS. This process can be limited by a global bound, which makes sure the produced LTS is finite (ref).
+CRN semantics might lead to possibly infinite LTS. This process can be limited by a global bound, which makes sure the produced LTS is finite (Section~\ref{optimal_bound}).
 
 \noindent\rule{\textwidth}{1pt}
 
@@ -1325,6 +1323,7 @@ Let $\mathcal{M}$ be a BCSL model and $\Sigma$ its minimal signatures (i.e., all
 \end{proof}
 
 \subsection{Minimal optimal bound of the system}
+\label{optimal_bound}
 
 Transition systems produced by semantics of BCSL models are infinite in general. Despite the fact the underlaying reaction networks are always finite (ref), there are types of reactions which can increase number of occurrences in a state with no limitations. Typically, such reactions form interface between the modelled system and the environment.
 
