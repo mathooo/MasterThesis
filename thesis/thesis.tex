@@ -591,7 +591,7 @@ In this chapter, we define Biochemical Space Language formally. First, we define
 
 \section{Objects definition}
 
-Let $\mathcal{N}_{A},~\mathcal{N}_{T},~\mathcal{N}_{\delta},~\mathcal{N}_{c}$ be mutually exclusive finite sets of atomic, structure, state names, and compartments, respectively.
+Let $\mathcal{N}_{A},~\mathcal{N}_{T},~\mathcal{N}_{\delta},~\mathcal{N}_{c}$ be mutually exclusive finite sets of atomic, structure, states, and compartments, respectively. Moreover, $\varepsilon$ is reserver character and does not belong to any of these sets.
 
 \begin{definition}{Signature}
 Atomic signature $\Sigma_{\mathtt{A}} \subseteq \mathcal{N}_{A} \times 2^{\mathcal{N}_{\delta}}$ associates atomic names with set of state names. 
@@ -614,8 +614,12 @@ Signatures define for an atomic name allowed set of state names and for a struct
 Atomic agent $\mathtt{A}$ is a pair $(\eta, \delta)$ where $\eta \in \mathcal{N}_{A}$ is a name and \\ $\delta~\in~\mathcal{N}_{\delta} \cup \{ \varepsilon \}$ is a state.
 \end{definition}
 
+\begin{notation}
+Let $\mathtt{A}$ be an atomic agent. We denote by $\eta(\mathtt{A})$ its name and by $\delta(\mathtt{A})$ its state.
+\end{notation}
+
 \begin{definition}{Equivalence of atomic agents}
-Let $\mathtt{A}, \mathtt{A}'$ be atomic agents. $\mathtt{A}$ is \emph{equivalent} with $\mathtt{A}'$, written $\mathtt{A} \equiv \mathtt{A}'$, iff $\eta(\mathtt{A}) \equiv \eta(\mathtt{A}') \wedge \delta(\mathtt{A}) \equiv \delta(\mathtt{A}')$.
+Let $\mathtt{A}, \mathtt{A}'$ be atomic agents. $\mathtt{A}$ is \emph{equivalent} to $\mathtt{A}'$, written $\mathtt{A} \equiv \mathtt{A}'$, iff $\eta(\mathtt{A}) \equiv \eta(\mathtt{A}') \wedge \delta(\mathtt{A}) \equiv \delta(\mathtt{A}')$.
 \end{definition}
 
 Note: maybe the definition of equivalence should be done only on names (due tu partial composition in structs).
@@ -624,7 +628,7 @@ Note: maybe the definition of equivalence should be done only on names (due tu p
 Let $\mathds{A}$ be universe of all possible atomic agents.
 \end{notation}
 
-Atomic agents are the simplest objects used for describing biological entities. An atomic signature with the same name as the atomic agent has defines allowed states for it (with additional $\varepsilon$ state).
+Atomic agents are the simplest objects used for describing biological entities. An atomic signature with the same name as the atomic agent defines all allowed states for it (with additional $\varepsilon$ state).
 
 \begin{example}{Atomic agents}\label{example:atomic}
 
@@ -644,8 +648,14 @@ Structure agent $\mathtt{T}$ is a pair $(\eta, \gamma)$ where $\eta \in \mathcal
 
 A structure agent represents a biochemical object that is composed from several known atomic agents provided that we know that such a composition is abstract and not necessarily complete. To incorporate such an abstraction of biological structures into our language, a structure agent is defined to be labeled with a unique name and it is constructed only from atomic agents considered in the same physical compartment.
 
+\begin{notation}
+Let $\mathtt{T}$ be a structure agent. We denote by $\eta(\mathtt{T})$ its name and by $\gamma(\mathtt{A})$ its partial composition.
+\end{notation}
+
 \begin{definition}{Equivalence of structure agents}
-Let $\mathtt{T}, \mathtt{T}'$ be structure agents. $\mathtt{T}$ is \emph{equivalent} with $\mathtt{T}'$, written $\mathtt{T} \equiv \mathtt{T}'$, iff $\eta(\mathtt{T}) \equiv \eta(\mathtt{T}') \wedge \forall \mathtt{A} \in \gamma(\mathtt{T}) ~\exists \mathtt{A}' \in \gamma(\mathtt{T}') : \mathtt{A} \equiv \mathtt{A}' \wedge \forall \mathtt{A}' \in \gamma(\mathtt{T}') ~\exists \mathtt{A} \in \gamma(\mathtt{T}) : \mathtt{A}' \equiv \mathtt{A}$.
+Let $\mathtt{T}, \mathtt{T}'$ be structure agents. $\mathtt{T}$ is \emph{equivalent} with $\mathtt{T}'$, written $\mathtt{T} \equiv \mathtt{T}'$, iff $\eta(\mathtt{T}) \equiv \eta(\mathtt{T}') \wedge \gamma(\mathtt{T}) \equiv \gamma(\mathtt{T'})$.
+
+%\forall \mathtt{A} \in \gamma(\mathtt{T}) ~\exists \mathtt{A}' \in \gamma(\mathtt{T}') : \mathtt{A} \equiv \mathtt{A}' \wedge \forall \mathtt{A}' \in \gamma(\mathtt{T}') ~\exists \mathtt{A} \in \gamma(\mathtt{T}) : \mathtt{A}' \equiv \mathtt{A}$.
 \end{definition}
 
 The key construct of a structure agent is \emph{partial composition} defined as a list of atomic agents which are considered to be relevant parts of the structure agent. We allow this list to be empty, in that case the meaning is a biological structure for which we do not know its composition.
@@ -666,7 +676,7 @@ A typical example of a structure agent is a protein where the atomic agents are 
 \noindent\rule{\textwidth}{1pt}
 
 \begin{definition}{Complex agent}
-Complex agent $\mathtt{X}$ is a pair $(\mu, \mathtt{com})$ where $\mu \in (\mathds{A} \cup \mathds{T})^n$ is a sequence, $\mathtt{com} \in \mathcal{N}_{c}$ is a compartment, and $n \in \mathbb{N}$.
+Complex agent $\mathtt{X}$ is a pair $(\mu, \mathtt{com})$ where $\mu \in (\mathds{A} \cup \mathds{T})^n$ is a sequence of agents, $\mathtt{com} \in \mathcal{N}_{c}$ is a compartment, and $n \in \mathbb{N}$.
 \end{definition}
 
 A complex agent represents a non-trivial composite biochemical object that is (inductively) constructed from already known biological objects. In common rule-based languages this is typically defined by introducing some kind of bonds between individual biochemical objects. In BCSL we abstract from detailed specification of bonds and we rather assume a complex as a coexistence of certain objects in a particular group. Moreover, a complex agent resides in a compartment, which gives it a space position. 
@@ -786,7 +796,7 @@ structure expression & $\tau ::= \eta(\gamma) ~|~ \eta$\\
  & $\eta ::= n \in \mathcal{N}_{T}$\\
  & \\
 complex expression & $\Gamma ::= \beta_1~.~\ldots~.~\beta_k :: c$\\
- & $\alpha_i ::= \alpha ~|~ \tau$\\
+ & $\beta_i ::= \alpha ~|~ \tau$\\
  & $c ::= n \in \mathcal{N}_{c}$\\
  & \\
 rule expression & $\rho ::= \Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \ldots + \Gamma_m $
@@ -839,7 +849,7 @@ $X \mdoubleplus Y = (x_1, \ldots, x_n, y_1, \ldots, y_m)$.
 
 \begin{definition}{Sum of concatenations}
 
-Let $T = (T_1, T_2, \ldots, T_n)$ be sequence of tuples where $\tau_i = (x_{i_1}, \ldots, x_{i_m})$. Concatenation of sequence of tuples $\Xi_{i=1}^n T_i$ is defined as:
+Let $T = (T_1, T_2, \ldots, T_n)$ be sequence of tuples. Concatenation of sequence of tuples $\Xi_{i=1}^n T_i$ is defined as:
 
 \begin{center}
 $\Xi_{i=1}^n T_i = T_1 \mdoubleplus T_2 \mdoubleplus \ldots \mdoubleplus T_n $
@@ -905,7 +915,7 @@ $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices}) \in \mathds{R}$~ suc
 \item $\chi = (\mathtt{F} \llbracket ~\Gamma_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_n~ \rrbracket, \mathtt{F} \llbracket ~\Gamma_{n+1}~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_m~ \rrbracket)$,
 \item $\omega = \Xi_{i=1}^{|\chi|} \mu(\chi_i)$,
 \item $\mathtt{I} = n$,
-\item $\mathtt{map} = (J_1, \ldots, J_m): J_i = \sum_{y=1}^{i} | \mu(\chi_y) |$,
+\item $\mathtt{map} = (J_1, \ldots, J_m): J_i = \sum\limits_{y=1}^{i} | \mu(\chi_y) |$,
 {\small
 \item \begin{tabular}{l l}
 
