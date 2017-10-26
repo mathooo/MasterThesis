@@ -514,7 +514,12 @@ To improve usability and verifiability of the BCS, we defined Biochemical Space 
 
 The whole BCS is defined in BCSL. This fact makes sure the entities and the rules are defined with all appropriate properties. Moreover, it helps us to relate objects from the models to BCS objects. Note that due to rule-based nature of the BCSL, in BCS there are defined only abstract objects representing types. Therefore, when relating for example an model variable to BCS entity, we might need to specify it's properties. 
 
--- picture DB BCS and from it BCSL uses some data (something similar as at SASB 2017)
+\begin{figure}[!h]
+\begin{center}
+  \includegraphics[scale=0.13]{pics/bcsl_vs_bcs.pdf}
+\end{center}
+\caption{BCS domain serves for improved BCSL models definition, which leads to better model readability and results.}
+\end{figure}
 
 Once BCS is build, we can use it to reference the models. It means to relate all the variables and reactions of the model and to entities and rules of BCS. In particular, each variable should have assigned an entity for BCS. It increases information value of the variable (due to annotation of BCS entity). Since reactions of the model are composed from its variables, this way we also rewrite general reactions to reactions written in BCSL. The result of relating all the entities is model written in BCSL. 
 
@@ -529,25 +534,25 @@ When describing particular process or object, we can go almost infinitely deeper
 
 Therefore, when creating BCS, we choose a level of details which we do not exceed. This ensures the size of BCS will not exponentially increase with additional details. The problem might occur when we try to map a model which uses more detailed description of the system than BCS does. However, we simply allow relating multiple model objects to BCS objects and vice versa. For example, multiple model reaction might be mapped on one BCS rule denoting the fact the process represented by the rule can be described in more details by the reactions. On the other hand, model might neglect some details. Then for example, a reaction can be mapped on multiple rules with similar meaning than in previous example.
 
-\subsubsection{Inclusion of BCS in SBML export (annotation)}
+\subsubsection{BCSL as annotation in SBML export}
 
-Since platform allows export of models in SBML format, we employed resolvable identifier links. These links are included in generated SBML file and point to appropriate rules/entities in BCS. 
+Since platform allows export of models in SBML format, we employ resolvable identifier links~\cite{juty2011identifiers}. These links are included in generated SBML file and point to appropriate rules and entities in BCS. 
 
 \subsection{Model Repository}
 \label{model}
 
-\emph{Model repository} is a collection of implemented mathematical models describing particular parts of biological processes. Every model is represented as a set of ordinary differential equations generated from the model reaction network. Models are integrated within BCS. In particular, each model component should be related to some BCS entity and each model reaction should be related to some BCS rule. Moreover, a model is associated with some parameter value sets (data sets) that enable simulation in a particular biologically-relevant scenarios. Additionally, several basic non-parameter-specific static analysis techniques based on model stoichiometry are also provided.
+Model repository is a collection of implemented mathematical models describing particular parts of biological processes. Every model is represented as a set of ordinary differential equations generated from the model reaction network. Models are integrated within BCS. In particular, each model component should be related to some BCS entity and each model reaction should be related to some BCS rule. Moreover, a model is associated with some parameter value sets (data sets) that enable simulation in a particular biologically-relevant scenarios. Additionally, several basic non-parameter-specific static analysis techniques based on model stoichiometry are also provided.
 
 An implemented model then includes complete biological annotation of all components and reactions that is provided by mapping to BCS. This might help to find connections and overlaps among models. Further, implemented model can be exported to SBML.
 
 \subsection{Experiments Repository}
 
-\emph{Experiments repository} is a module for storage and presentation of time-series data from wet-lab experiments. Every experiment is well-grounded by precise description (device, medium, organism, etc.) and appropriate annotations. Experiments are structured -- several time series data can be attached to a single experiment. Every time series targets a specific list of measured substances together with time stamps of the individual measurements. Data can be imported and exported in simple text formats. Time series are visualised in a chart.
+Experiments repository is a module for storage and presentation of time-series data from wet-lab experiments. Every experiment is well-grounded by precise description (device, medium, organism, etc.) and appropriate annotations. Experiments are structured -- several time series data can be attached to a single experiment. Every time series targets a specific list of measured substances together with time stamps of the individual measurements. Data can be imported and exported in simple text formats. Time series are visualised in a chart.
 
 \chapter{Problem formulation}
 \label{problem_formulation}
 
-Biochemical Space as described in Section~\ref{bcs_general} is great idea. However, one must consider the fact that the space might get quite huge. It means keep it consistent in informal form is almost impossible. It is necessary to be able to detect inconsistency with automatic tools and enable further analysis of the space. The annotation itself is good, but with enabled formal part with all its advantages is much better. 
+Biochemical Space as described in Section~\ref{bcs_general} is definitely a good idea. However, one must consider the fact that the space might get quite huge. It means keep it consistent in an informal form is almost impossible. It is necessary to be able to detect inconsistency with automatic tools and enable further analysis of the space. The annotation itself is good, but with enabled formal part with all its advantages is much better. 
 
 For this reasons we decided to improved description part of BCS by defining it formally. Many options how to define the language were available. First of all, we wanted to keep definition space as concise as is possible. Rule-based approach was the best hit, because it is capable to capture required details for biological systems while keeping the description concise. However, there are many rule-based languages and each of them is slightly different in syntactic and semantic level and also on level of abstraction. After a deep research (Section~\ref{rule_based_languages}), we have evaluated all existing languages as not suitable. The closest representation to the desired one was Kappa language(Section~\ref{kappa}). That is the reason why in first iteration we have chosen translation to Kappa for definition of semantics. However, there were few aspects which were not suitable (Section~\ref{why_not_kappa}).
 
@@ -561,7 +566,7 @@ In section~\ref{level_of_abstraction}, we have motivated the level of abstractio
 \begin{center}
   \includegraphics[scale=0.35]{pics/abstraction}
 \end{center}
-\caption{Comparison of a complex in biology (on the left) to abstraction used in BCS (on the right).}\label{abstraction_comparision}
+\caption{Comparison of a complex in biology (on the left) to abstraction used in BCS (on the right). In biology, one must consider all possible graph isomorphisms which result from combinatorial options how edges can be placed to create a connected graph~\cite{Chartrand1985}. In BCS we neglect such details and see created structure only in sense of coexistence (a multiset), which significantly reduces number of possible deviations.}\label{abstraction_comparision}
 \end{figure}
 
 Also, we determine two types of complexes. Actually, none of them is literally a complex, we rather see it as a coexistence. It allows us to express even other types of interaction. We also determine whether the expresses complex is complete, i.e. the enumerated subparts are all which actually form the complex. The other type of complex expresses the fact that subparts play an important role in the complex, but there are more parts which we do not model, but this fact is somehow important for semantics of the model.
