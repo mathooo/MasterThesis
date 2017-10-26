@@ -25,6 +25,7 @@
 \usepackage{color}
 \usepackage{tikz}
 \usepackage{pythonhighlight}
+\usepackage[hidelinks]{hyperref}
 
 \newcounter{counter}[section]
 \renewcommand{\thecounter}{\thesection.\arabic{counter}}
@@ -327,6 +328,7 @@ Systems Biology Markup Language (SBML) is a standard established for systems bio
 \end{figure}
 
 \section{Comprehensive Modeling Platform}
+\label{cmp}
 
 Comprehensive Modeling Platform~\cite{cs2bio2013} is an online platform providing tools for public sharing, annotation, analysis, and visualization of dynamical models and wet-lab experiments related to domain-specific systems. The platform is unique in integrating abstract mathematical models with a precise consortium-agreed biochemical description provided in a rule-based formalism. The general aim is to stimulate collaboration between experimental and computational systems biologists to achieve better understanding of the domain-specific system.
 
@@ -701,6 +703,7 @@ Examples of agents, complexes and rules given in previous examples:
 \noindent\rule{\textwidth}{1pt}
 
 \section{BCSL model}
+\label{BCSl_model}
 
 \begin{definition}{BCSL model}
 We define BCSL model $\mathds{M}$ as 4-tuple $(\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ where $\mathcal{R}$ is set of rule expressions, $\Sigma_\mathtt{A}$ is atomic signature, $\Sigma_\mathtt{T}$ is structure signature, and $\mathtt{init}$ is initial multiset of complex expressions $\Gamma$.
@@ -758,6 +761,7 @@ $\gamma(\mathtt{T}) \ominus \Sigma_T(\mathtt{T}) \Leftrightarrow \{ \mu_\Sigma ~
 \end{definition}
 
 \section{Semantic function}
+\label{semantic_function}
 
 In the previous sections, we defined BCSL objects and BCSL model. Now, we need to connect them such that we give semantic meaning to the model $\mathds{M}$. For this purpose, we define semantic function $\mathtt{F}$. It is defined recursively for a model $\mathds{M}$ according to expression given as argument:
 
@@ -943,9 +947,10 @@ $\vv{r} = \lambda(RHS(\mathtt{r}), \pi) - \lambda(LHS(\mathtt{r}), \pi)$
 
 \end{enumerate}
 
-In order to accomplish the process of giving semantics to an BCSL model, it is necessary to note how we revive information which is missing in produced LTS. This procedure is quite straightforward since we still have define reference vector $\pi$. Similarly as we translated multisets of BCSL agents to vectors (Definition~\ref{state_to_vector}), we can apply a reverse procedure, when we build a multiset of agents from a vector according to the reference vector $\pi$. This is how we obtain an LTS as described in (ref).  
+In order to accomplish the process of giving semantics to an BCSL model, it is necessary to note how we revive information which is missing in produced LTS. This procedure is quite straightforward since we still have define reference vector $\pi$. Similarly as we translated multisets of BCSL agents to vectors (Definition~\ref{state_to_vector}), we can apply a reverse procedure, when we build a multiset of agents from a vector according to the reference vector $\pi$. This is how we obtain an LTS.  
 
 \section{Syntactic extensions}
+\label{syntactic_extensions}
 
 We define several syntactic extensions for better readability of the rules. Note that each rule in a extended form can be always translated to basic form defined above. All rules containing the following extensions must be converted to basic form before semantics can be applied.
 
@@ -1128,7 +1133,7 @@ Once again, each rule associated with variable can be easily rewritten as severa
 
 \noindent Definition of rules 1 and 2 from Running example~\ref{run4} was replaced as a single rule using a variable.
 
-This is final syntactic extension. Compared to original model (Running example~\ref{run1}), the resulting model is much more concise and readable. More examples can be seen in chapter (ref case study).
+This is final syntactic extension. Compared to original model (Running example~\ref{run1}), the resulting model is much more concise and readable. More examples can be seen in Section~\ref{case_study}.
 
 \chapter{Analysis}
 
@@ -1136,7 +1141,7 @@ This is final syntactic extension. Compared to original model (Running example~\
 
 multisets compared to graphs (isomorphisms) - other languages
 
-In the previous chapters, we defined BCS language itself. From the provided examples and case study (ref) it should be clear that it provides concise and readable notation when it comes to describing biological systems. Moreover, accompanied with relevant annotation information, it is suitable for building huge models.
+In the previous chapters, we defined BCS language itself. From the provided examples and case study (Section~\ref{case_study}) it should be clear that it provides concise and readable notation when it comes to describing biological systems. Moreover, accompanied with relevant annotation information, it is suitable for building huge models.
 
 However, descriptive properties are not enough for using computational methods in order to analyse particular processes. In this chapter we describe basic approaches we employ for our language and propose several methods which could be potentially used in context of static analysis.
 
@@ -1165,7 +1170,7 @@ Dynamic analyses are very common ways how to analyse models written in formal re
 
 Model checking is an approach of checking whether given model meets a given specification~\cite{clarke1999model}. Typically this is done by specifying given requirements in a temporal logic and then its check whether a given structure satisfies a given logical formula. There are two version of model checking -- explicit-state and symbolic. We will focus on the first one because it is quite strait-forward, and we let the second approach as a future work.
 
-In case of explicit-state model checking, we need to enumerate entire state space and then check given specification on it. We will not discuss this approach anymore since we have given the BCSL models semantics (ref) which are able to generate LTSs. These structures are suitable for model checking analysis and can be applied in external tools including temporal properties specification.
+In case of explicit-state model checking, we need to enumerate entire state space and then check given specification on it. We will not discuss this approach anymore since we have given the BCSL models semantics, which are able to generate LTSs. These structures are suitable for model checking analysis and can be applied in external tools including temporal properties specification.
 
 \subsection{Simulation}
 \label{simulation}
@@ -1187,7 +1192,7 @@ Example goes here...
 
 There are several solutions of this problem. However, none of them is an optimal one and therefore this remains an open problem. In other languages... they solved it as... finish this...
 
-Another general problem which causes issues is stoichiometry. The problem is if we reference an agent which has multiple enumeratives in the rule, it is not clear which one should be used as reference in kinetics. Therefore we distinguish two types of solutions:
+Another general problem which causes issues is stoichiometry. The problem is if we reference an agent which has multiple enumerations in the rule, it is not clear which one should be used as reference in kinetics. Therefore we distinguish two types of solutions:
 
 \textbf{Solutions with forbidden stoichiometry}:
 
@@ -1300,7 +1305,7 @@ This procedure can be extended for checking reachability of multiple agents, how
 
 \subsection{Getting signatures from the model}
 
-The BCSL model definition as given in (ref...) can be reduced by signatures. Note we do not mean extended signatures by complex names -- just the basic signatures for atomic and structure agents. These can be obtained statically from the rules (and the initial state) just in one run. The process comprises these steps:
+The BCSL model definition as given in Section~\ref{BCSl_model} can be reduced by signatures. Note we do not mean extended signatures by complex names -- just the basic signatures for atomic and structure agents. These can be obtained statically from the rules (and the initial state) just in one run. The process comprises these steps:
 
 \begin{itemize}
 \item for each rule, iterate through all the atomic and structure agent expression 
@@ -1325,7 +1330,7 @@ Let $\mathcal{M}$ be a BCSL model and $\Sigma$ its minimal signatures (i.e., all
 \subsection{Minimal optimal bound of the system}
 \label{optimal_bound}
 
-Transition systems produced by semantics of BCSL models are infinite in general. Despite the fact the underlaying reaction networks are always finite (ref), there are types of reactions which can increase number of occurrences in a state with no limitations. Typically, such reactions form interface between the modelled system and the environment.
+Transition systems produced by semantics of BCSL models are infinite in general. Despite the fact the underlaying reaction networks are always finite (Section~\ref{optimal_bound}), there are types of reactions which can increase number of occurrences in a state with no limitations. Typically, such reactions form interface between the modelled system and the environment.
 
 However, the process of applying vector reactions on states can be extended by a control system. This system does not allow to grow individual values inside the state vector above given bound. Simply, if produced vector should obtain an integer higher than the bound, the action is not taken. This procedure is very similar to checking whether all values in the vector are positive.
 
@@ -1347,7 +1352,7 @@ This should guarantee that it is possible to achieve high enough number of occur
 
 \subsection{Translation to Petri Net}
 
-Moreover, by generating reaction-based model from rule-based, which is always possible (ref a section), we can furthermore translate such model to Petri Net~\cite{petri}.
+By generating reaction-based model from rule-based, which is always possible (Section~\ref{Generating reactions}), we can furthermore translate such model to Petri Net~\cite{petri}.
 
 definition of petri net goes here
 
@@ -1372,21 +1377,22 @@ In order to support usability of the BCSL language, we developed software tool B
 
 The tool is developed in Python language (version 2.7) as open-source desktop software build under GPL-3.0 license. The source codes, short tutorial for usage and installation, and current stable version as binary files are available on GitHub\footnotemark[1]\footnotetext[1]{\url{https://github.com/sybila/BCSgen}}.
 
-In the first iteration, there was no support for models editing. The only functionality provided by the tool was import of the model from a text file (in particular format) and enumerating whole state space of the model. Moreover, the implementation was done by translating to Kappa (ref chapter) and it was rather slow and non-efficient. The single transaction (application of one rule) was delayed by translation to Kappa and then by exact matching and replacement, which might get quite complicated (ref). However, it was a good start for the language and it was possible to analyse exported networks in external tools. There was simple GUI made in Tkinter~\cite{Tkinter}, which had several issues. The most important one was the fact that Tkinter was not designed for multithreading programming. Therefore, for example, while computing a state space for the model, the whole GUI was not responsible.
+In the first iteration, there was no support for models editing. The only functionality provided by the tool was import of the model from a text file (in particular format) and enumerating whole state space of the model. Moreover, the implementation was done by translating to Kappa and it was rather slow and non-efficient. The single transaction (application of one rule) was delayed by translation to Kappa and then by exact matching and replacement, which might get quite complicated. However, it was a good start for the language and it was possible to analyse exported networks in external tools. There was simple GUI made in Tkinter~\cite{Tkinter}, which had several issues. The most important one was the fact that Tkinter was not designed for multithreading programming. Therefore, for example, while computing a state space for the model, the whole GUI was not responsible.
 
-In the second iteration, we focused on speed improvement and development user-friendly GUI. For the speed improvement, we implemented semantics as defined in this thesis (ref). Compared to previous iteration, now there was no exactly rule-based execution of the rule -- rules we rather translated to reactions and subsequently encoded as vector operations over integers. Therefore, one transaction was just addition of one vector (left-hand-side) and subtraction of another one (right-hand-side). The GUI was reimplemented in PyQt~\cite{summerfield2007rapid}, which naturally works with multithreading. In this area, it was huge step forward. Moreover, we improved input/output formats. For input, we defined BCSL model format, which serves for import. As output format we have chosen JSON, which is very suitable for its simplicity and support by many external tools.
+In the second iteration, we focused on speed improvement and development user-friendly GUI. For the speed improvement, we implemented semantics as defined in this thesis (Section~\ref{semantic_function}). Compared to previous iteration, now there was no exactly rule-based execution of the rule -- rules we rather translated to reactions and subsequently encoded as vector operations over integers. Therefore, one transaction was just addition of one vector (left-hand-side) and subtraction of another one (right-hand-side). The GUI was reimplemented in PyQt~\cite{summerfield2007rapid}, which naturally works with multithreading. In this area, it was huge step forward. Moreover, we improved input/output formats. For input, we defined BCSL model format, which serves for import. As output format we have chosen JSON, which is very suitable for its simplicity and support by many external tools.
 
-In the last iteration, which is part of this thesis, we focused on improvement of models maintenance, additional analysis services, and visualisation. We have integrated editor which is able to highlight syntax errors while building the model. To achieve this, we needed an efficient rule-parser which would be able to parse the rules very fast. The parser is able to parse even syntactic extensions mentioned in (ref). The rules engine then translates the rule to ground form and creates reactions (in case there are no errors in the model). Since this engine runs in the background (in another thread) user does not notice any increased performance. Once reactions are computed, this is indicated by possibility to export them and generate state space of the model.
+In the last iteration, which is part of this thesis, we focused on improvement of models maintenance, additional analysis services, and visualisation. We have integrated editor which is able to highlight syntax errors while building the model. To achieve this, we needed an efficient rule-parser which would be able to parse the rules very fast. The parser is able to parse even syntactic extensions defined in Section~\ref{syntactic_extensions}. The rules engine then translates the rule to ground form and creates reactions (in case there are no errors in the model). Since this engine runs in the background (in another thread) user does not notice any increased performance. Once reactions are computed, this is indicated by possibility to export them and generate state space of the model.
 
-Next, we implemented additional analysis. Namely, model simulation and reachability analysis. For the simulation, we allow stochastic or deterministic form. In the first one, random rules are fired according to Poisson distribution while in latter average trace is computed by solving ODEs build from the reactions. For the stochastic case, there are options to choose number of runs and apply interpolation on resulting time series chart in order to achieve smoother results. It is important to note that only models with defined rates can be simulated. For simplicity, approach (ref) was chosen from the discussed ones.
+Next, we implemented additional analysis. Namely, model simulation and reachability analysis. For the simulation, we allow stochastic or deterministic form. In the first one, random rules are fired according to Poisson distribution while in latter average trace is computed by solving ODEs build from the reactions. For the stochastic case, there are options to choose number of runs and apply interpolation on resulting time series chart in order to achieve smoother results. It is important to note that only models with defined rates can be simulated. For simplicity, approach where only fully specified agents are used (Section~\ref{rates_discussion}) was chosen from the discussed ones.
 
  -- more info about static analysis goes here
 
 Since there are some graphs and charts generated in BCSgen, we decided to integrate visualisation tools into it. For this, we used two libraries -- vis.js~\cite{almende2016vis} for interactive networks visualisation and MatPlotLib~\cite{hunter2007matplotlib}, a Python library suitable for visualisation of time series. Vis.js is used for exploration of state space with highlighting chosen node and announcing content of the node. Moreover, it is possible to display paths from initial state to other states, which satisfy reachability condition given in reachability analysis part. This is very demonstrative and suitable for education purposes. However, such visualisation has its limitations, for huge graphs its very difficult to display the graph -- on the other hand, from such number of nodes it is not even useful. The MatPlotLib provides visualisation of simulation results. It possible to zoom the chart, hide/show individual curves, and export the current view as a picture.
 
-As a future work for the tool we are planning to reimplement it to a web-based version. In ideal case, it should be integrated to CMP (ref) to allow direct analysis of the models and appropriate parts of Biochemical Space.  
+As a future work for the tool we are planning to reimplement it to a web-based version. In ideal case, it should be integrated to CMP (Section~\ref{cmp}) to allow direct analysis of the models and appropriate parts of Biochemical Space.  
 
 \chapter{Case study}
+\label{case_study}
 
 To demonstrate Biochemical Space has practical use, we introduce an instance of CMP, where BCS is used in practice. E-cyanobacterium.org~\cite{Trojak2016} is an online platform providing tools for public sharing, annotation, analysis, and visualization of dynamical models and wet-lab experiments related to cyanobacteria. The general aim is to stimulate collaboration between experimental and computational systems biologists to achieve better understanding of cyanobacteria. As an instance of CMP, it covers all the features of the platform.
 
