@@ -295,48 +295,54 @@ Systems Biology Markup Language (SBML) is a standard established for systems bio
 
 \begin{figure}[!h]
 \lstset{language=XML}
-\begin{lstlisting}[basicstyle=\scriptsize, frame=single]
-  <?xml version="1.0" encoding="UTF-8"?>
-  <sbml xmlns="http://www.sbml.org/sbml/level2" level="2" version="1">
-    <model>
-      <listOfCompartments>
-        <compartment id="uVol" size="1"/>
-      </listOfCompartments>
-      <listOfSpecies>
-        <species id="input" compartment="uVol" initialConcentration="16"
-                 boundaryCondition="true"/>
-        <species id="output" compartment="uVol" initialConcentration="0"/>
-        <species id="X4" compartment="uVol" initialConcentration="14"/>
-      </listOfSpecies>
-      <listOfReactions>
-         .. .
-        <reaction id="R1" reversible="false">
-          <listOfReactants>
-            <speciesReference species="input"/>
-          </listOfReactants>
-          <listOfProducts>
-            <speciesReference species="output"/>
-          </listOfProducts>
-          <kineticLaw>
-            <math xmlns="http://www.w3.org/1998/Math/MathML">
-              <apply>
-                <times/>
-                <ci> k </ci>
-                <ci> input </ci>
-              </apply>
-            </math>
-            <listOfParameters>
-              <parameter id="k" name="0_100000000_" value="7.0370457"/>
-            </listOfParameters>
-          </kineticLaw>
-        </reaction>
-         . ..
-        </reaction>
-      </listOfReactions>
-    </model>
-  </sbml>
+\begin{lstlisting}[basicstyle=\tiny, frame=single]
+<?xml version="1.0" encoding="UTF-8"?>
+<sbml xmlns="http://www.sbml.org/sbml/level2" level="2" version="1">
+  <model>
+    <listOfCompartments>
+      <compartment id="c" constant="true" multi:isType="true" />
+      <compartment id="cc" constant="true" multi:isType="true">
+        <multi:listOfCompartmentReferences>
+          <multi:compartmentReference multi:id="cr1" multi:compartment="c" />
+          <multi:compartmentReference multi:id="cr2" multi:compartment="c" />
+        </multi:listOfCompartmentReferences>
+      </compartment>
+    </listOfCompartments>
+    <multi:listOfSpeciesTypes>
+      <multi:bindingSiteSpeciesType multi:id="stA" multi:compartment="c" />
+      <multi:speciesType multi:id="stAA" multi:compartment="cc">
+        <multi:listOfSpeciesTypeInstances>
+          <multi:speciesTypeInstance multi:id="stiA1" multi:speciesType="stA"
+            multi:compartmentReference="cr1" />
+          <multi:speciesTypeInstance multi:id="stiA2" multi:speciesType="stA"
+            multi:compartmentReference="cr2" />
+        </multi:listOfSpeciesTypeInstances>
+        <multi:listOfInSpeciesTypeBonds>
+          <multi:inSpeciesTypeBond multi:bindingSite1="stiA1" multi:bindingSite2="stiA2" />
+        </multi:listOfInSpeciesTypeBonds>
+      </multi:speciesType>
+    </multi:listOfSpeciesTypes>
+    <listOfSpecies>
+      <species id="spA" multi:speciesType="stA" compartment="c" ... />
+      <species id="spAA" multi:speciesType="stAA" compartment="cc" ... />
+    </listOfSpecies>
+    <listOfReactions>
+      <reaction id="reaction" ...>
+        <listOfReactants>
+          <speciesReference id="r1" species="spA" multi:compartmentReference="cr1" ... />
+          <speciesReference id="r2" species="spA" multi:compartmentReference="cr2" ... />
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="spAA" ... />
+        </listOfProducts>
+        ...
+      </reaction>
+      ...
+    </listOfReactions>
+  </model>
+</sbml>
 \end{lstlisting}
-\caption{Example of a simple SBML model.}\label{SBML_example}
+\caption{Example of a simple SBML-multi model. There are included SpeciesTypes, Species which belong to these types, and Reactions where those species are interacting.}\label{SBML_example}
 \end{figure}
 
 \section{Comprehensive Modeling Platform}
@@ -653,7 +659,7 @@ Let $\mathtt{T}$ be a structure agent. We denote by $\eta(\mathtt{T})$ its name 
 \end{notation}
 
 \begin{definition}{Equivalence of structure agents}
-Let $\mathtt{T}, \mathtt{T}'$ be structure agents. $\mathtt{T}$ is \emph{equivalent} with $\mathtt{T}'$, written $\mathtt{T} \equiv \mathtt{T}'$, iff $\eta(\mathtt{T}) \equiv \eta(\mathtt{T}') \wedge \gamma(\mathtt{T}) \equiv \gamma(\mathtt{T'})$.
+Let $\mathtt{T}, \mathtt{T}'$ be structure agents. $\mathtt{T}$ is \emph{equivalent} to $\mathtt{T}'$, written $\mathtt{T} \equiv \mathtt{T}'$, iff $\eta(\mathtt{T}) \equiv \eta(\mathtt{T}') \wedge \gamma(\mathtt{T}) \equiv \gamma(\mathtt{T'})$.
 
 %\forall \mathtt{A} \in \gamma(\mathtt{T}) ~\exists \mathtt{A}' \in \gamma(\mathtt{T}') : \mathtt{A} \equiv \mathtt{A}' \wedge \forall \mathtt{A}' \in \gamma(\mathtt{T}') ~\exists \mathtt{A} \in \gamma(\mathtt{T}) : \mathtt{A}' \equiv \mathtt{A}$.
 \end{definition}
@@ -686,7 +692,7 @@ Let $\mathtt{X}$ be a complex agent. We denote length of sequence $\mu$ as $\mat
 \end{notation}
 
 \begin{definition}{Equivalence of complex agents}\label{rule_equiv}
-Let $\mathtt{X}, \mathtt{X}'$ be complexes. $\mathtt{X}$ is \emph{equivalent} with $\mathtt{X}'$, written $\mathtt{X} \equiv \mathtt{X}'$, iff $\mathtt{len}(\mathtt{X}) \equiv \mathtt{len}(\mathtt{X'}) \wedge \exists $ permutation $ \mu'(\mathtt{X}')$ of $\mu(\mathtt{X}')$ such that $\forall i~\in~[1,~n]: \mu(\mathtt{X})_i \equiv \mu'(\mathtt{X}')_i$.
+Let $\mathtt{X}, \mathtt{X}'$ be complexes. $\mathtt{X}$ is \emph{equivalent} to $\mathtt{X}'$, written $\mathtt{X} \equiv \mathtt{X}'$, iff $\mathtt{len}(\mathtt{X}) \equiv \mathtt{len}(\mathtt{X'}) \wedge \exists $ permutation $ \mu'(\mathtt{X}')$ of $\mu(\mathtt{X}')$ such that $\forall i~\in~[1,~n]: \mu(\mathtt{X})_i \equiv \mu'(\mathtt{X}')_i$.
 \end{definition}
 
 The key element of a complex agent is \emph{sequence} describing inductively constructed coexistence expressions from existing agents. In contrast to partial composition in structure agent, we allow replication at the level of sequence (an agent of a certain name can appear more than once in a sequence).
