@@ -37,6 +37,7 @@
 
 \newcommand\mdoubleplus{\mathbin{+\mkern-7mu+}}
 \newcommand*\arc{{\fontfamily{pbk}\fontseries{db}\selectfont+}}
+\newcommand\myeq{\stackrel{\mathclap{\scriptsize\mbox{def}}}{=}}
 
 \usetikzlibrary{fit, hobby}
 \usetikzlibrary{chains}
@@ -595,9 +596,11 @@ From the implementation point of view, executing models was delayed by conversio
 
 In this chapter, we define Biochemical Space Language formally. First, we define all the required objects, then we define syntax of the language and finally give semantics to the BCSL models.
 
+The semantics we give is indirect, i.e. we don't give semantic sense to rules themselves, rather provide a procedure how to generate reactions from the rules and give semantics to them. 
+
 \section{Objects definition}
 
-Let $\mathcal{N}_{A},~\mathcal{N}_{T},~\mathcal{N}_{\delta},~\mathcal{N}_{c}$ be mutually exclusive finite sets of atomic, structure, states, and compartments, respectively. Moreover, $\varepsilon$ is reserver character and does not belong to any of these sets.
+Let $\mathcal{N}_{A},~\mathcal{N}_{T},~\mathcal{N}_{\delta},~\mathcal{N}_{c}$ be mutually exclusive finite sets of atomic, structure, states, and compartments, respectively. Moreover, $\varepsilon$ is reserver symbol and does not belong to any of these sets.
 
 \begin{definition}{Signature}
 Atomic signature $\Sigma_{\mathtt{A}} \subseteq \mathcal{N}_{A} \times 2^{\mathcal{N}_{\delta}}$ associates atomic names with set of state names. 
@@ -780,7 +783,7 @@ where $n, m \in \mathbb{N}$.
 Reaction is similar structure than rule, but much simpler. The reaction is just mediate format for giving semantics to BCSL models and it only holds information about complex contents of the rule.
 
 \begin{notation}
-We denote left-hand-side of the reaction $(\mathtt{seq}_0, \ldots, \mathtt{seq}_{\mathtt{I}-1})$ as $LHS(\mathtt{r})$ and right-hand-side of the reaction$(\mathtt{seq}_\mathtt{I}, \ldots, \mathtt{seq}_n)$ as $RHS(\mathtt{r})$.
+We denote left-hand-side of the reaction $(\pi_0(\mathtt{seq}), \ldots, \pi_{\mathtt{I}-1}(\mathtt{seq}))$ as $LHS(\mathtt{r})$ and right-hand-side of the reaction $(\pi_\mathtt{I}(\mathtt{seq}), \ldots, \pi_n(\mathtt{seq}))$ as $RHS(\mathtt{r})$.
 \end{notation}
 
 \noindent\rule{\textwidth}{2pt}
@@ -793,11 +796,11 @@ In this section, we define grammar for the BCSL. As proposed in Section~\ref{pro
 \begin{definition}{Grammar}
 \begin{center}
 \begin{tabular}{ l l }
-atomic expression & $\alpha ::= \eta\{s\} ~|~ \eta$\\
+atomic expression & $\alpha ::= \eta\{s\} ~|~ \eta\{\varepsilon\}$\\
  & $\eta ::= n \in \mathcal{N}_{A}$ \\
  & $s ::= n \in \mathcal{N}_{\delta}$\\
  & \\
-structure expression & $\tau ::= \eta(\gamma) ~|~ \eta$\\
+structure expression & $\tau ::= \eta(\gamma) ~|~ \eta(\varnothing)$\\
  & $\gamma ::= \alpha_1, \ldots, \alpha_k$ \\
  & $\eta ::= n \in \mathcal{N}_{T}$\\
  & \\
@@ -817,7 +820,7 @@ where $m,n \in \mathbb{N}_0 \wedge m > n \wedge m + n \neq 0$ and $k \in \mathbb
 Examples of agents, complexes and rules given in previous examples:
 
 \begin{itemize}
-\item $\mathtt{A}_1$ is written as $S\{u\}$, $\mathtt{A}_2$ is written as $Q$ (Example~\ref{example:atomic}),
+\item $\mathtt{A}_1$ is written as $S\{u\}$, $\mathtt{A}_2$ is written as $Q\{\varepsilon\}$ (Example~\ref{example:atomic}),
 
 \item $\mathtt{T}_1$ is written as $K(S\{p\}, Q\{i\})$, $\mathtt{T}_2$ is written as $K(Q\{A\})$ (Example~\ref{example:structure}),
 
@@ -826,7 +829,7 @@ Examples of agents, complexes and rules given in previous examples:
 \item rule $\mathtt{R}$ is written as (Example~\ref{example:rule}):
 \end{itemize}
 
-\noindent {\small $K(S\{u\}).B::cyt + C.D\{i\}::cyt + A::cyt \Rightarrow K(S\{p\}).B.C::cyt + D\{a\}.A::cyt + H\{u\}::cyt$}
+\noindent {\small $K(S\{u\}).B(\varnothing)::cyt + C(\varnothing).D\{i\}::cyt + A\{\varepsilon\}::cyt \Rightarrow K(S\{p\}).B(\varnothing).C(\varnothing)::cyt + D\{a\}.A\{\varepsilon\}::cyt + H\{u\}::cyt$}
 \end{example}
 
 \noindent\rule{\textwidth}{1pt}
@@ -834,15 +837,19 @@ Examples of agents, complexes and rules given in previous examples:
 \section{BCSL model}
 \label{BCSl_model}
 
+Once we have defined syntax of BCSL, we can proceed to BCSL model. We always consider initialised model, which means the definition contains an initial state of the system. The definition also contains rule expressions and signatures. 
+
 \begin{definition}{BCSL model}
-We define BCSL model $\mathds{M}$ as 4-tuple $(\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ where $\mathcal{R}$ is set of rule expressions, $\Sigma_\mathtt{A}$ is atomic signature, $\Sigma_\mathtt{T}$ is structure signature, and $\mathtt{init}$ is initial multiset of complex expressions $\Gamma$.
+BCSL model $\mathds{M}$ is a 4-tuple $(\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ where $\mathcal{R}$ is set of rule expressions, $\Sigma_\mathtt{A}$ is atomic signature, $\Sigma_\mathtt{T}$ is structure signature, and $\mathtt{init}$ is initial multiset of complex expressions $\Gamma$.
 \end{definition}
 
 \noindent\rule{\textwidth}{1pt}
 
 \section{Additional definitions}
 
-Before we proceed, there are few necessary definitions.
+Before we proceed, there are few necessary definitions. These definitions are required in next section in order to generate reactions from rules.
+
+First of all, we need to define tuples concatenation, since we work with them quite often want to make sure this operation is clear.
 
 \begin{definition}{Tuples concatenation}
 
@@ -853,6 +860,8 @@ $X \mdoubleplus Y = (x_1, \ldots, x_n, y_1, \ldots, y_m)$.
 \end{center}
 \end{definition}
 
+Then, we can generalise concatenation operation to multiple tuples.
+
 \begin{definition}{Sum of concatenations}
 
 Let $T = (T_1, T_2, \ldots, T_n)$ be sequence of tuples. Concatenation of sequence of tuples $\Xi_{i=1}^n T_i$ is defined as:
@@ -862,30 +871,44 @@ $\Xi_{i=1}^n T_i = T_1 \mdoubleplus T_2 \mdoubleplus \ldots \mdoubleplus T_n $
 \end{center}
 \end{definition}
 
-\begin{definition}{Reassembly}
+Next, we need to define projection $\pi$ to enable iterating through multidimensional structures.
 
-Let $Y$ be a set of tuples of particular form, where each $y \in Y$ has form $((a_1, b_1), (a_2, b_2), \ldots, (a_n, b_n))$. Reassembly of set $Y$ is a set of tuples $X$ where each $x \in X$ has form $(a_1, a_2, \ldots, a_n, b_1, b_2, \ldots,  b_n)$. formally
-
+\begin{definition}{Projection}
 \begin{center}
-$\mathtt{reassembly}(Y) = \{~  x ~|~ y \in Y \wedge x = \Xi_{i=1}^{|y|} y_{i_1} \mdoubleplus \Xi_{i=1}^{|y|} y_{i_2} ~\}$
+$ \pi_i = ((x_1, \ldots, x_n) \mapsto x_i) : X^n \rightarrow X $
 \end{center}
 \end{definition}
+
+Reassembly operation is again quite simple action on tuples. Intuitively, we need to reorganise tuple which has form $((a_1, b_1), (a_2, b_2),\\ \ldots, (a_n, b_n))$ to a tuple of form $(a_1, a_2, \ldots, a_n, b_1, b_2, \ldots,  b_n)$. We define reassembly generally on a set of tuples. 
+
+\begin{definition}{Reassembly}
+
+Let $Y$ be a set of tuples of particular form, where each $y \in Y$ has particular form $((a_1, b_1), (a_2, b_2), \ldots, (a_n, b_n))$. Then:
+
+\begin{center}
+$\mathtt{reassembly}(Y) = \{~  x ~|~ y \in Y \wedge x = \Xi_{i=1}^{|y|} \pi_1(y_i) \mdoubleplus \Xi_{i=1}^{|y|} \pi_2(y_i) ~\}$
+\end{center}
+\end{definition}
+
+We need to define difference of partial compositions of structure agents $\gamma \ominus \gamma'$. This difference is not just set difference, because we are not comparing atomic agents by overall equality, only equality on agent names. This operation is necessary in process of generating reactions from rules, which basically means adding details to partial compositions according to defined signatures.
 
 \begin{definition}{Difference of partial compositions}
 
-Let $\gamma, \gamma'$ be two partial compositions. We define difference of these two sets on names of its atomic agents as following:
+Let $\gamma, \gamma'$ be two partial compositions. We define difference of these two sets on names of its atomic agents as follows:
 
 \begin{center}
-$\gamma \ominus \gamma' \Leftrightarrow \{ \mu_\alpha ~|~ \exists \mathtt{A}: (\mathtt{A} \in \gamma \wedge \mu(\mathtt{A}) \equiv \mu_\alpha ) \wedge \not\exists \mathtt{A}': (\mathtt{A}' \in \gamma' \wedge \mu(\mathtt{A}') \equiv \mu_\alpha)\}$
+$\gamma \ominus \gamma' \myeq \{ \eta_\alpha ~|~ \exists \mathtt{A}: (\mathtt{A} \in \gamma \wedge \eta(\mathtt{A}) \equiv \eta_\alpha ) \wedge \not\exists \mathtt{A}': (\mathtt{A}' \in \gamma' \wedge \eta(\mathtt{A}') \equiv \eta_\alpha)\}$
 \end{center}
 \end{definition}
 
+Similarly as in previous definition, we need to be able to find difference in context of atomic agent names between partial composition and structure signature.
+
 \begin{definition}{Difference of partial composition and structure signature}
 
-Let $\mathtt{T}$ be a structure agent. Next, let $\gamma(\mathtt{T})$ be its partial composition and $\Sigma_T(\mathtt{T})$ appropriate signature. We define difference of these two sets on names of atomic agents as following:
+Let $\mathtt{T}$ be a structure agent and $\Sigma_T(\mathtt{T})$ appropriate signature. We define difference of partial composition $\gamma(\mathtt{T})$ and structure signature $\Sigma_T(\mathtt{T})$ as follows:
 
 \begin{center}
-$\gamma(\mathtt{T}) \ominus \Sigma_T(\mathtt{T}) \Leftrightarrow \{ \mu_\Sigma ~|~ \mu_\Sigma \in \Sigma_T(\mathtt{T}) \wedge \not\exists \mathtt{A}: (\mathtt{A} \in \gamma(\mathtt{T}) \wedge \mu(\mathtt{A}) \equiv \mu_\Sigma)\}$
+$\gamma(\mathtt{T}) \ominus \Sigma_T(\mathtt{T}) \myeq \{ \eta_\Sigma ~|~ \eta_\Sigma \in \Sigma_T(\mathtt{T}) \wedge \not\exists \mathtt{A}: (\mathtt{A} \in \gamma(\mathtt{T}) \wedge \eta(\mathtt{A}) \equiv \eta_\Sigma)\}$
 \end{center}
 \end{definition}
 
@@ -896,17 +919,14 @@ In the previous sections, we defined BCSL objects and BCSL model. Now, we need t
 
 \begin{center}
 \begin{tabular}{ r c l}
-$\mathtt{F} \llbracket ~\mu~ \rrbracket$ & = &
-    $\begin{cases}
-    (\mu, \epsilon) \in \mathds{A} ~\ldots~ \mu \in \Sigma_{A}\\
-    (\mu, \emptyset) \in \mathds{A} ~\ldots~ \mu \in \Sigma_{T}\\
-    \end{cases}
-    $\\
+$\mathtt{F} \llbracket ~\eta\{\varepsilon\}~ \rrbracket$ & = & $(\eta, \varepsilon) \in \mathds{A}$\\
  & & \\
-$\mathtt{F} \llbracket ~\mu\{s\}~ \rrbracket$ & = & $(\mu, s) \in \mathds{A}$\\
+$\mathtt{F} \llbracket ~\eta\{s\}~ \rrbracket$ & = & $(\eta, s) \in \mathds{A}$\\
  & & \\
-$\mathtt{F} \llbracket ~\mu(\mathtt{a}_1, \ldots, \mathtt{a}_n)~ \rrbracket$ & = &
-$(\mu, \{~ \mathtt{F} \llbracket \mathtt{a}_1 \rrbracket, \ldots, \mathtt{F} \llbracket \mathtt{a}_n \rrbracket ~\}) \in \mathds{T}$\\
+$\mathtt{F} \llbracket ~\eta(\varnothing)~ \rrbracket$ & = & $(\eta, \emptyset) \in \mathds{T}$\\
+ & & \\
+$\mathtt{F} \llbracket ~\eta(\mathtt{a}_1, \ldots, \mathtt{a}_n)~ \rrbracket$ & = &
+$(\eta, \{~ \mathtt{F} \llbracket \mathtt{a}_1 \rrbracket, \ldots, \mathtt{F} \llbracket \mathtt{a}_n \rrbracket ~\}) \in \mathds{T}$\\
  & & \\
 $\mathtt{F} \llbracket ~\alpha_1~.~\ldots~.~\alpha_n :: c~ \rrbracket$ & = &
 $(~(\mathtt{F} \llbracket ~\alpha_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\alpha_n~ \rrbracket), ~c~) \in \mathds{X}$\\
@@ -919,17 +939,17 @@ $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices}) \in \mathds{R}$~ suc
 \begin{center}
 \begin{itemize}
 \item $\chi = (\mathtt{F} \llbracket ~\Gamma_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_n~ \rrbracket, \mathtt{F} \llbracket ~\Gamma_{n+1}~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_m~ \rrbracket)$,
-\item $\omega = \Xi_{i=1}^{|\chi|} \mu(\chi_i)$,
+\item $\omega = \Xi_{i=1}^{|\chi|} \mu(\pi_i(\chi))$,
 \item $\mathtt{I} = n$,
-\item $\mathtt{map} = (J_1, \ldots, J_m): J_i = \sum\limits_{y=1}^{i} | \mu(\chi_y) |$,
+\item $\mathtt{map} = (J_1, \ldots, J_m): J_k = \sum\limits_{i=1}^{k} | \mu(\pi_i(\chi)) |$,
 {\small
 \item \begin{tabular}{l l}
 
-& \hspace*{-0.3cm} $\{~ (i,j) ~|~ i \in [1, \mathtt{map}(\mathtt{I})] \wedge j \in [\mathtt{map}(\mathtt{I}), |\omega|] \wedge |i-j| \equiv \mathtt{map}(\mathtt{I})~\} ~\cup$ \\
+& \hspace*{-0.3cm} $\{~ (i,j) ~|~ i \in [1, \pi_\mathtt{I}(\mathtt{map})] \wedge j \in [\pi_\mathtt{I}(\mathtt{map}), |\omega|] \wedge |i-j| \equiv \pi_\mathtt{I}(\mathtt{map})~\} ~\cup$ \\
 
-\hspace*{-0.3cm}$\mathtt{Indices} =$ & \hspace*{-0.3cm} $\{~ (i, -) ~|~ i \in [k, \mathtt{map}(\mathtt{I})] \wedge k = |~ \{ \mathtt{map}(\mathtt{I}) + 1, \ldots, | \alpha | \} ~| ~\} ~\cup$\\
+\hspace*{-0.3cm}$\mathtt{Indices} =$ & \hspace*{-0.3cm} $\{~ (i, -) ~|~ i \in [k, \pi_\mathtt{I}(\mathtt{map})] \wedge k = |~ \{ \pi_\mathtt{I}(\mathtt{map}) + 1, \ldots, | \alpha | \} ~| ~\} ~\cup$\\
 
-& \hspace*{-0.3cm} $ \{~ (-, j) ~|~ j \in [k, |\alpha|] \wedge k = 2 * \mathtt{map}(\mathtt{I}) ~\}$
+& \hspace*{-0.3cm} $ \{~ (-, j) ~|~ j \in [k, |\alpha|] \wedge k = 2 * \pi_\mathtt{I}(\mathtt{map}) ~\}$
 \end{tabular}
 \\}
 
@@ -942,7 +962,7 @@ Please note by applying semantic function $\mathtt{F}$ on examples from Example~
 
 \section{Ground forms}
 
-Ground form represents appending context to agents according to signature (we assume signature is always available and therefore we omit it in ground from function arguments).
+Ground form represents appending context to agents according to signature (we assume signature is always available and therefore we omit it in ground from function arguments). Particularly, this process means adding details to partial compositions and adding states of atomic agents according to defined signatures. Since there are typically multiple allowed states for an atomic agent, this processes leads to multiple options how to add a context. This is natural consequence of fact that a is an abstract representation of multiple reactions. 
 
 Objects are transformed to their ground forms by ground form function $\mathcal{G}$ defined as following:
 
@@ -951,28 +971,33 @@ Objects are transformed to their ground forms by ground form function $\mathcal{
 Object type & Basic form & Ground form \\
 \hline
  & & \\
-$\mathds{A}$ & $\mathcal{G}((\mu, \epsilon))$ & $\{~ (\mu, \delta) ~|~ \delta \in \Sigma_A(\mu) ~\}$\\
- & $\mathcal{G}((\mu, \delta))$ & $\{~(\mu, \delta) ~\}$\\
+$\mathds{A}$ & $\mathcal{G}(\eta, \epsilon)$ & $\{~ (\eta, \delta) ~|~ \delta \in \Sigma_A(\eta) ~\}$\\
+ & $\mathcal{G}(\eta, \delta)$ & $\{~(\eta, \delta) ~\}$\\
+ & & \\
+  \hline
+ & & \\
+ $\mathds{A}^2$ & $\mathcal{G}(\mathtt{A}, \mathtt{A}')$ & $\{~ (a, a') ~|~ a \in \mathcal{G}(\mathtt{A}) \wedge a' \in \mathcal{G}(\mathtt{A}') \wedge \delta(a) \equiv \delta(a') ~\}$\\
  & & \\
  \hline
  & & \\
-$\mathds{T}$ & $\mathcal{G}((\mu, \gamma))$ & $\{~ (\mu, \gamma_\alpha) ~|~ \gamma_\alpha \equiv \gamma \cup \gamma_\Sigma \wedge \gamma_\Sigma = \{~ \mathtt{A}_1, \ldots, \mathtt{A}_n ~\} \wedge$\\
- & & $\wedge~ \mathtt{A}_i \in \mathcal{G}((\mu, \emptyset)) \wedge \mu \in \gamma \ominus \Sigma_T(\mathtt{T}) ~\}$ \\
+$\mathds{T}$ & $\mathcal{G}(\eta, \gamma)$ & $\{~ (\eta, \gamma_\alpha) ~|~ \gamma_\alpha \equiv \gamma \cup \gamma_\Sigma \wedge \gamma_\Sigma = \{~ \mathtt{A}_1, \ldots, \mathtt{A}_n ~\} \wedge$\\
+ & & $\wedge~ \mathtt{A}_i \in \mathcal{G}((\eta, \emptyset)) \wedge \eta \in \gamma \ominus \Sigma_T(\mathtt{T}) ~\}$ \\
  & & \\
  \hline
  & & \\
-$(\mathds{A} \cup \mathds{T})^2$ & $\mathcal{G}((\beta, \beta'))$ & $\{~ (\beta_\alpha, \beta_\alpha') ~|~ \beta_\alpha \in \mathcal{G}(\beta) \wedge \beta'_\alpha \in \mathcal{G}(\beta') \wedge$\\
- & & $\wedge~ \gamma(\beta_\alpha) \ominus \gamma(\beta) \equiv \gamma(\beta'_\alpha) \ominus \gamma(\beta') ~\} $ \\
- & & \\
+$\mathds{T}^2$ & $\mathcal{G}(\mathtt{T}, \mathtt{T}')$ & $\{~ (t, t') ~|~ t \in \mathcal{G}(\mathtt{T}) \wedge t' \in \mathcal{G}(\mathtt{T}') \wedge$\\
+ & & $\wedge~ \gamma(t) \ominus \gamma(\mathtt{T}) \equiv \gamma(t') \ominus \gamma(\mathtt{T}') ~\} $ \\
+  & & \\
  \hline
  & & \\
-$\mathds{R}$ & $\mathcal{G}(\mathtt{R})$ & $ \bigotimes \mathcal{G}(\mathtt{Indices})^* $ \\
- & $\mathcal{G}(\mathtt{Indices})$ & $(~\mathcal{G}(\omega(i), \omega(j)) ~|~ (i,j) \in \mathtt{Indices})$\\
+$\mathds{R}$ & $\mathcal{G}(\mathtt{R})$ & $ \displaystyle \prod_{i = 1}^{|\mathcal{G}(\mathtt{Indices})|} \mathcal{G}(\mathtt{Indices})_i $ \\
+
+ & $\mathcal{G}(\mathtt{Indices})$ & $\{~\mathcal{G}(\pi_i(\omega), \pi_j(\omega)) ~|~ (i,j) \in \mathtt{Indices}\}$\\
  
 \end{tabular}
 \end{center}
 
-where $\bigotimes \mathcal{G}(\mathtt{Indices})^*$ is Cartesian product of sets inside of tuple $\mathcal{G}(\mathtt{Indices})$.
+where $\mathcal{G}(\mathtt{Indices})$ is an ordered set according to order function $f: \mathtt{Indices} \rightarrow \mathbb{N}$. This function assigns to each item $(i,j) \in \mathtt{Indices}$ a unique position $f(i,j) = k$. An item $\mathcal{G}(\pi_i(\omega), \pi_j(\omega)) \in \mathcal{G}(\mathtt{Indices})$ preserves this position $k$.
 
 \noindent\rule{\textwidth}{2pt}
 
@@ -985,13 +1010,13 @@ Given a rule $\mathtt{R}$, we can produce appropriate reactions using ground for
 \hspace*{-0.8cm}\begin{tabular}{ r l }
 $\mathtt{Reactions}(\mathtt{R}) =$ & $\{~ \mathtt{r}(\mathtt{seq}, \mathtt{I}) ~|~ y \in \mathtt{reassembly}(\mathcal{G}(\mathtt{R})) ~\}$,\\
 
-where $\mathtt{seq} =$ & $ \big(\mathtt{X}(y(0, \ldots, \mathtt{map}(0) - 1), \mathtt{com}(\chi(0))),$ \\
+where $\mathtt{seq} =$ & $ \big(\mathtt{X}(y(0, \ldots, \pi_0(\mathtt{map}) - 1), \mathtt{com}(\pi_0(\chi))),$ \\
 
-& $\mathtt{X}(y(\mathtt{map}(0), \ldots, \mathtt{map}(1) - 1), \mathtt{com}(\chi(1))), $\\
+& ~~$\mathtt{X}(y(\pi_0(\mathtt{map}), \ldots, \pi_1(\mathtt{map}) - 1), \mathtt{com}(\pi_1(\chi))), $\\
 
-& \ldots,\\
+& ~~\ldots,\\
 
-& $\mathtt{X}(y(\mathtt{map}(|\mathtt{map}| - 1]), \ldots, \mathtt{map}(|\mathtt{map}|) - 1, \mathtt{com}(\chi(|\mathtt{map}|)))\big) $\\
+& ~~$\mathtt{X}(y(\pi_{|\mathtt{map}| - 1}(\mathtt{map}), \ldots, \pi_{|\mathtt{map}|}(\mathtt{map}) - 1), \mathtt{com}(\pi_{|\mathtt{map}|}(\chi)))\big) $\\
 
 and $ \mathtt{I} \in \mathtt{R}$ & and $\chi \in \mathtt{R}$ and $\mathtt{map} \in \mathtt{R}.$\\
 \end{tabular}
@@ -1003,16 +1028,16 @@ and $ \mathtt{I} \in \mathtt{R}$ & and $\chi \in \mathtt{R}$ and $\mathtt{map} \
 
 \begin{definition}{Chemical Reaction Model (CRN)}
 \label{crn}
-Chemical Reaction Model $\mathcal{M}$ is a triple $(\mathfrak{R}, \vv{\nu}, \pi)$ such that $\mathfrak{R} \subseteq \mathbb{Z}^n$ is set of reactions, $\vv{\nu} \in \mathbb{N}_0^n$ is initial vector, and $\pi \in \mathds{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
+Chemical Reaction Model $\mathcal{M}$ is a triple $(\mathfrak{R}, \vv{\nu}, \theta)$ such that $\mathfrak{R} \subseteq \mathbb{Z}^n$ is set of reactions, $\vv{\nu} \in \mathbb{N}_0^n$ is initial vector, and $\theta \in \mathds{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
 \end{definition}
 
 Chemical Reaction Model is a simple model, where reactions and initial state are vectors over integers. Moreover, there is a reference vector of complex agents, which servers for identifying underlaying agents behind the integers (according to particular position in vectors).
 
 \begin{notation}\label{nonnegative}
-We denote $N(\vv{\nu}) ~\emph{iff}~ \forall i \in \vv{\nu}: i \in \mathbb{N}_0$.
+We denote $N(\vv{\nu})$ condition $\forall i \in \vv{\nu}: i \in \mathbb{N}_0$.
 \end{notation}
 
-By Notation~\ref{nonnegative} we denote the fact that a vector is formed only by non-negative integers.
+By Notation~\ref{nonnegative} we denote the condition that a vector is formed only by non-negative integers.
 
 \begin{definition}{Reaction application}
 
@@ -1038,45 +1063,43 @@ In previous sections we defined all what was required to actually create Chemica
 
 \begin{definition}{Reference vector}\label{reference_vector}
 
-Reference vector $\pi$ is a tuple of all possible unique complexes constructed from reactions of model $\mathds{M}$ as following:
+Let $\Theta$ be a set of all possible unique complexes constructed from reactions of model $\mathds{M}$ defined as follows:
 
-\begin{center}
-$$\Pi = \{~ \mathtt{X} ~|~ \mathtt{X} \in \mathtt{seq}(\mathtt{r}) \wedge \mathtt{r} \in \bigcup_{\mathtt{R} \in \mathcal{R}} \mathtt{Reactions}(\mathtt{R}) ~\} $$
-\end{center}
+$$\Theta = \{~ \mathtt{X} ~|~ \mathtt{X} \in \mathtt{seq}(\mathtt{r}) \wedge \mathtt{r} \in \bigcup_{\mathtt{R} \in \mathcal{R}} \mathtt{Reactions}(\mathtt{R}) ~\} $$
 
-\noindent Then, reference vector $\pi$ is just chosen random order of the set $\Pi$.
+\noindent Then, reference vector $\theta \in \Theta^n$ such that $\forall i,j \leq n : \Theta_i \not\equiv \Theta_j$ and $n~=~|\Theta|$. Note there are $n!$ possibilities how to choose $\theta$, arbitrary can be chosen.
 
 \end{definition}
 
 \begin{definition}{Multiset to vector translation}\label{state_to_vector}
 Translation of multiset $\mathtt{S} \subseteq \mathds{X}$ to vector is defined as following:
 \begin{center}
-$\lambda(\mathtt{S}, \pi) = (a_1, a_2, \ldots, a_n)$ such that 
+$\lambda(\mathtt{S}, \theta) = (a_1, a_2, \ldots, a_n)$ such that 
 $a_i$ =
   $\begin{cases}
-  |\mathtt{S}(\pi_i)| & \ldots~~~~ \pi_i \in \mathtt{S}\\
-  0 & \ldots~~~~ \pi_i \not\in \mathtt{S}\\
+  |\mathtt{S}(\theta_i)| & \ldots~~~~ \theta_i \in \mathtt{S}\\
+  0 & \ldots~~~~ \theta_i \not\in \mathtt{S}\\
   \end{cases}
   $
 \end{center}
-\hspace{15pt} where $n = |\pi|$ and $|\mathtt{S}(\pi_i)|$ is number of occurrences of agent $\pi_i$ in the multiset $\mathtt{S}$.
+\hspace{15pt} where $n = |\theta|$ and $|\mathtt{S}(\pi_i)|$ is number of occurrences of agent $\pi_i$ in the multiset $\mathtt{S}$.
 \end{definition}
 
-Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. In order to construct Chemical Reaction Model $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \pi)$ from the model $\mathds{M}$, we need to apply the following steps:
+Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. In order to construct Chemical Reaction Model $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \theta)$ from the model $\mathds{M}$, we need to apply the following steps:
 
 \begin{enumerate}
 \item generate reactions for all rules $\mathtt{F}(\mathtt{R}) \in \mathcal{R}$ (Definition~\ref{generate_reactions}),
-\item construct reference vector $\pi$ (Definition~\ref{reference_vector}),
-\item create initial vector $\vv{\nu}$ from initial multiset $\mathtt{S}$ constructed as $\mathtt{S} = \{ \mathtt{X} ~|~ \mathtt{X} = \mathtt{F}(\Gamma) \wedge \Gamma \in \mathtt{init} \}$ (Definition~\ref{state_to_vector}),
+\item construct reference vector $\theta$ (Definition~\ref{reference_vector}),
+\item create initial vector $\vv{\nu} = \lambda(\mathtt{S}, \theta)$ from initial multiset $\mathtt{S}$ where $\mathtt{S} = \{ \mathtt{X} ~|~ \mathtt{X} = \mathtt{F}(\Gamma) \wedge \Gamma \in \mathtt{init} \}$ (Definition~\ref{state_to_vector}),
 \item construct set of vector reactions $\mathfrak{R}$ from the set reactions, where individual vector reaction $\vv{r}$ is created from a reaction $\mathtt{r}$ as following:
 
 \begin{center}
-$\vv{r} = \lambda(RHS(\mathtt{r}), \pi) - \lambda(LHS(\mathtt{r}), \pi)$
+$\vv{r} = \lambda(RHS(\mathtt{r}), \theta) - \lambda(LHS(\mathtt{r}), \theta)$
 \end{center}
 
 \end{enumerate}
 
-In order to accomplish the process of giving semantics to an BCSL model, it is necessary to note how we revive information which is missing in produced LTS (Definition~\ref{lts}). This procedure is quite straightforward since we still have define reference vector $\pi$. Similarly as we translated multisets of BCSL agents to vectors (Definition~\ref{state_to_vector}), we can apply a reverse procedure, when we build a multiset of agents from a vector according to the reference vector $\pi$. This is how we obtain an LTS.  
+In order to accomplish the process of giving semantics to an BCSL model, it is necessary to note how we revive information which is missing in produced LTS (Definition~\ref{lts}). This procedure is quite straightforward since we still have define reference vector $\theta$. Similarly as we translated multisets of BCSL agents to vectors (Definition~\ref{state_to_vector}), we can apply a reverse procedure, when we build a multiset of agents from a vector according to the reference vector $\theta$. This is how we obtain an LTS.  
 
 \section{Syntactic extensions}
 \label{syntactic_extensions}
