@@ -596,7 +596,9 @@ From the implementation point of view, executing models was delayed by conversio
 
 In this chapter, we define Biochemical Space Language formally. First, we define all the required objects, then we define syntax of the language and finally give semantics to the BCSL models.
 
-The semantics we give is indirect, i.e. we don't give semantic sense to rules themselves, rather provide a procedure how to generate reactions from the rules and give semantics to them. 
+The semantics we give is indirect, i.e. we don't give semantic sense to rules themselves, rather provide a procedure how to generate reactions from the rules and give semantics to them.
+
+For better readability, we provide examples of syntax for most important object during their definition. However, the formal definition of syntax itself and the relation to the objects will be given later. 
 
 \section{Objects definition}
 
@@ -643,7 +645,13 @@ Atomic agents are the simplest objects used for describing biological entities. 
 
 \begin{itemize}
 \item An atomic agent $\mathtt{A}_1 = (S, u)$
+\begin{itemize}
+	\item written as $S\{u\}$.
+\end{itemize}
 \item An atomic agent $\mathtt{A}_2 = (Q, \varepsilon)$
+\begin{itemize}
+	\item written as $Q\{\varepsilon\}$.
+\end{itemize}
 \end{itemize}
 \end{example}
 
@@ -678,7 +686,13 @@ A typical example of a structure agent is a protein where the atomic agents are 
 \begin{example}{Structure agent}\label{example:structure}
 \begin{itemize}
 \item A structure agent $\mathtt{T}_1 = (K, \textcolor{red}{\{}(S, p), (Q, i)\textcolor{red}{\}})$
+\begin{itemize}
+	\item written as $K(S\{p\}, Q\{i\})$.
+\end{itemize}
 \item A structure agent $\mathtt{T}_2 = (K, \textcolor{red}{\{}(Q, a)\textcolor{red}{\}})$
+\begin{itemize}
+	\item written as $K(Q\{A\})$.
+\end{itemize}
 \end{itemize}
 \end{example}
 
@@ -708,6 +722,9 @@ Let $\mathds{X}$ be universe of all possible complex agents. Moreover, we denote
 
 \begin{itemize}
 \item A complex $\mathtt{X} = (\textcolor{green}{(}(K, \textcolor{red}{\{}(S, p), (Q, i)\textcolor{red}{\}}), (S, p)\textcolor{green}{)}, cytosol)$
+\begin{itemize}
+	\item written as $K(S\{p\}, Q\{i\}).S\{p\}::cytosol$
+\end{itemize}
 \end{itemize}
 \end{example}
 
@@ -764,6 +781,13 @@ $\chi = \begin{bmatrix}
 \item $\mathtt{map} = (2,4,5,8,10,11)$
 \item $\mathtt{Indices} = [ (1,6) ; (2,7) ; (3,8) ; (4,9) ; (5,10) ; (-,11) ] $
 \end{itemize}
+ written as:
+
+\begin{center}
+\hspace*{-2cm}{\small $K(S\{u\}).B(\varnothing)::cyt + C(\varnothing).D\{i\}::cyt + A\{\varepsilon\}::cyt \Rightarrow$ 
+
+$\Rightarrow K(S\{p\}).B(\varnothing).C(\varnothing)::cyt + D\{a\}.A\{\varepsilon\}::cyt + H\{u\}::cyt$}
+\end{center}
 \end{example}
 
 \noindent\rule{\textwidth}{1pt}
@@ -815,22 +839,7 @@ rule expression & $\rho ::= \Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1
 where $m,n \in \mathbb{N}_0 \wedge m > n \wedge m + n \neq 0$ and $k \in \mathbb{N}$.
 \end{definition}
 
-\begin{example}{Syntax}\label{example:syntax}
-
-Examples of agents, complexes and rules given in previous examples:
-
-\begin{itemize}
-\item $\mathtt{A}_1$ is written as $S\{u\}$, $\mathtt{A}_2$ is written as $Q\{\varepsilon\}$ (Example~\ref{example:atomic}),
-
-\item $\mathtt{T}_1$ is written as $K(S\{p\}, Q\{i\})$, $\mathtt{T}_2$ is written as $K(Q\{A\})$ (Example~\ref{example:structure}),
-
-\item $\mathtt{X}$ is written as $K(S\{p\}, Q\{i\}).S\{p\}::cytosol$ (Example~\ref{example:complex}),
-
-\item rule $\mathtt{R}$ is written as (Example~\ref{example:rule}):
-\end{itemize}
-
-\noindent {\small $K(S\{u\}).B(\varnothing)::cyt + C(\varnothing).D\{i\}::cyt + A\{\varepsilon\}::cyt \Rightarrow K(S\{p\}).B(\varnothing).C(\varnothing)::cyt + D\{a\}.A\{\varepsilon\}::cyt + H\{u\}::cyt$}
-\end{example}
+Examples of syntax can be seen in the previous examples (Example~\ref{example:atomic} to \ref{example:rule}).
 
 \noindent\rule{\textwidth}{1pt}
 
@@ -956,7 +965,7 @@ $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices}) \in \mathds{R}$~ suc
 \end{itemize}
 \end{center}
 
-Please note by applying semantic function $\mathtt{F}$ on examples from Example~\ref{example:syntax}, we obtain agents (resp. complex or rule) from appropriate referenced examples. Moreover, semantic function works \emph{only} on BCSL object and rules well-defined by the given grammar (Section~\ref{syntax}).
+Please note by applying semantic function $\mathtt{F}$ on expressions from Examples~\ref{example:atomic} to \ref{example:rule}, we obtain agents (resp. complex or rule) from appropriate examples. Moreover, semantic function works \emph{only} on BCSL object and rules well-defined by the given grammar (Section~\ref{syntax}).
 
 \noindent\rule{\textwidth}{2pt}
 
