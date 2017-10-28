@@ -1112,20 +1112,20 @@ For better demonstration, we give running example, which will go through all syn
 \label{run1}
 
 \noindent Definition of rules $\mathtt{R}$:
-{\small
+{\footnotesize
 \begin{enumerate}
-\item $KaiC(S\{u\}, T).KaiC(S, T).KaiC(S, T)::cyt \Rightarrow $
+\item $KaiC(S\{u\}, T\{\varepsilon\}).KaiC(S\{\varepsilon\}, T\{\varepsilon\}).KaiC(S\{\varepsilon\}, T\{\varepsilon\})::cyt \Rightarrow $
 
-$\Rightarrow KaiC(S\{p\}, T).KaiC(S, T).KaiC(S, T)::cyt$
+$\Rightarrow KaiC(S\{p\}, T\{\varepsilon\}).KaiC(S\{\varepsilon\}, T\{\varepsilon\}).KaiC(S\{\varepsilon\}, T\{\varepsilon\})::cyt$
 
-\item $KaiC(S\{u\}, T).KaiB::cyt \Rightarrow KaiC(S\{p\}, T).KaiB::cyt$
-\item $KaiC(S, T)::cyt + KaiC(S, T)::cyt + KaiC(S, T)::cyt \Rightarrow$ 
+\item $KaiC(S\{u\}, T\{\varepsilon\}).KaiB::cyt \Rightarrow KaiC(S\{p\}, T\{\varepsilon\}).KaiB::cyt$
+\item $KaiC(S\{\varepsilon\}, T\{\varepsilon\})::cyt + KaiC(S\{\varepsilon\}, T\{\varepsilon\})::cyt + KaiC(S\{\varepsilon\}, T\{\varepsilon\})::cyt \Rightarrow$ 
 
-$ \Rightarrow KaiC(S, T).KaiC(S, T).KaiC(S, T)::cyt$
+$ \Rightarrow KaiC(S\{\varepsilon\}, T\{\varepsilon\}).KaiC(S\{\varepsilon\}, T\{\varepsilon\}).KaiC(S\{\varepsilon\}, T\{\varepsilon\})::cyt$
 
-\item $KaiC(S, T).KaiC(S, T).KaiC(S, T)::cyt \Rightarrow $
+\item $KaiC(S\{\varepsilon\}, T\{\varepsilon\}).KaiC(S\{\varepsilon\}, T\{\varepsilon\}).KaiC(S\{\varepsilon\}, T\{\varepsilon\})::cyt \Rightarrow $
 
-$\Rightarrow KaiC(S, T)::cyt + KaiC(S, T)::cyt + KaiC(S, T)::cyt$
+$\Rightarrow KaiC(S\{\varepsilon\}, T\{\varepsilon\})::cyt + KaiC(S\{\varepsilon\}, T\{\varepsilon\})::cyt + KaiC(S\{\varepsilon\}, T\{\varepsilon\})::cyt$
 \end{enumerate}
 }
 
@@ -1146,10 +1146,30 @@ $\Rightarrow KaiC(S, T)::cyt + KaiC(S, T)::cyt + KaiC(S, T)::cyt$
 
 \subsection{Omitting context in partial composition.}
 
-It is possible to omit all partial compositions which contain a unspecified atomic agents. Such agent does not give any additional information and whole partial composition can be reconstructed from signature.
+It is possible to omit all atomic agents with unspecified state $\varepsilon$ from partial compositions of structure agents. Such agents do not give any additional information and whole partial composition can be reconstructed from the given signature.
 
 \begin{runningExample}{The example model $\mathds{M}$}
-\label{run1}
+\label{run2}
+
+\noindent Definition of rules $\mathtt{R}$:
+{\footnotesize
+\begin{enumerate}
+\item $KaiC(S\{u\}).KaiC(\varnothing).KaiC(\varnothing)::cyt \Rightarrow KaiC(S\{p\}).KaiC(\varnothing).KaiC(\varnothing)::cyt$
+\item $KaiC(S\{u\}).KaiB::cyt \Rightarrow KaiC(S\{p\}).KaiB::cyt$
+\item $KaiC(\varnothing)::cyt + KaiC(\varnothing)::cyt + KaiC(\varnothing)::cyt \Rightarrow$
+
+$ \Rightarrow KaiC(\varnothing).KaiC(\varnothing).KaiC(\varnothing)::cyt$
+\item $KaiC(\varnothing).KaiC(\varnothing).KaiC(\varnothing)::cyt \Rightarrow$ 
+
+$ \Rightarrow KaiC(\varnothing)::cyt + KaiC(\varnothing)::cyt + KaiC(\varnothing)::cyt$
+\end{enumerate}
+}
+\end{runningExample}
+
+Additionally, this extension can be done more precisely by omitting $(\varnothing)$ part completely. Since we have structure signature defined, we can unambiguously determine which names belong to structure agents and this syntactic part can be easily reconstructed.
+
+\begin{runningExample}{The example model $\mathds{M}$}
+\label{run3}
 
 \noindent Definition of rules $\mathtt{R}$:
 {\small
@@ -1168,7 +1188,8 @@ This syntactic extension bring lot of readability to the syntax while preserving
 
 We extend model definition by complex signature $\Sigma_\mathtt{X}$ on syntactic level. In this signature, there are defined aliases for valid complex agent expressions. Then, simple \emph{replace} method is used to substitute original expression by the alias.
 
-\begin{runningExample}{The example model $\mathds{M}$}\label{run1.1}
+\begin{runningExample}{The example model $\mathds{M}$}
+\label{run4}
 
 \noindent Definitions of complex signatures:
 \begin{enumerate}
@@ -1194,7 +1215,8 @@ As can be seen, in this stage the complex signature has it limitations. Once a c
 
 We allow rules to be bi-directional -- it is just a shortcut for two rules and it can be converted to basic rule form. A rule $\mathtt{R} = \lambda ~\Leftrightarrow~ \rho$ might be written as two rules $\mathtt{R}_1 = \lambda ~\Rightarrow~ \rho$ and $\mathtt{R}_2 = \rho ~\Rightarrow~ \lambda$.
 
-\begin{runningExample}{The example model $\mathds{M}$}\label{run2}
+\begin{runningExample}{The example model $\mathds{M}$}
+\label{run5}
 \noindent Definition of rules $\mathtt{R}$:
 {\small
 \begin{enumerate}
@@ -1205,7 +1227,7 @@ We allow rules to be bi-directional -- it is just a shortcut for two rules and i
 }
 \end{runningExample}
 
-\noindent Definition of rules 3 and 4 from Running example~\ref{run1.1} was replaced by one bi-directional rule (Running example~\ref{run1.1}, rule 3).
+\noindent Definition of rules 3 and 4 from Running example~\ref{run4} was replaced by one bi-directional rule (Running example~\ref{run5}, rule 3).
 
 \subsection{Stoichiometry}
 
@@ -1217,7 +1239,8 @@ For side $\mathtt{s} = (\alpha_1, \alpha_2, \ldots, \alpha_n)$ of the reordered 
 
 Note that this process is fully reversible, so agent enumeration in basic form can be easily reconstructed.
 
-\begin{runningExample}{The example model $\mathds{M}$}\label{run3}
+\begin{runningExample}{The example model $\mathds{M}$}
+\label{run6}
 \noindent Definition of rules $\mathtt{R}$:
 {\small
 \begin{enumerate}
@@ -1228,7 +1251,7 @@ Note that this process is fully reversible, so agent enumeration in basic form c
 }
 \end{runningExample}
 
-\noindent Definition of rule 3 from Running example~\ref{run2} was replaced by using stoichiometry.
+\noindent Definition of rule 3 from Running example~\ref{run5} was replaced by using stoichiometry.
 
 \subsection{Locations}
 
@@ -1249,7 +1272,8 @@ We define necessary condition which must hold when semantic function $\mathtt{F}
 
 For each pair of agents $(\alpha, \beta)$ with allowed `::' operator between them $\alpha :: \beta$, we can construct just one agent $\beta'$ without the operator by taking most-left agent $\alpha'$ from full (resp. partial) composition of the agent $\beta$ such that it is \emph{compatible with} the agent $\alpha$ ($\alpha' \lhd \alpha$). Then, agent $\alpha'$ is simply replaced by agent $\alpha$ and agent $\beta'$ is constructed.
 
-\begin{runningExample}{The example model $\mathds{M}$}\label{run4}
+\begin{runningExample}{The example model $\mathds{M}$}
+\label{run7}
 \noindent Definition of rules $\mathtt{R}$:
 {\small
 \begin{enumerate}
@@ -1260,20 +1284,20 @@ For each pair of agents $(\alpha, \beta)$ with allowed `::' operator between the
 }
 \end{runningExample}
 
-
-\noindent Definition of rules 1 and 2 from Running example~\ref{run1} was replaced using locations.
+\noindent Definition of rules 1 and 2 from Running example~\ref{run6} was replaced using locations.
 
 You can see localisation operator allowed us to fully use the complex signatures.
 
 \subsection{Variables}
 
-In the Running example~\ref{run4} there is still space for syntax reduction. Rule 1 and 2 are very similar except context of complex they take place in. Therefore, we will substitute this context with a variable with given domain.
+In the Running example~\ref{run7} there is still space for syntax reduction. Rule 1 and 2 are very similar except context of complex they take place in. Therefore, we will substitute this context with a variable with given domain.
 
 In a rule, one rule agent might be referenced using variable $\upsilon$ as a set of rule agents it can be replaced with. Such a rule agent is referenced as $?X$. Moreover, in case when a $?X$ is used in a location, it must hold conditions from Definition~\ref{locations:conditions}.
 
 Once again, each rule associated with variable can be easily rewritten as several rules where variable is replaced with agent from set of agents attached to the variable. Please note only one variable can be used per rule.
 
-\begin{runningExample}{The example model $\mathds{M}$}\label{run5}
+\begin{runningExample}{The example model $\mathds{M}$}
+\label{run8}
 \noindent Definition of rules $\mathtt{R}$:
 {\small
 \begin{enumerate}
@@ -1283,7 +1307,7 @@ Once again, each rule associated with variable can be easily rewritten as severa
 }
 \end{runningExample}
 
-\noindent Definition of rules 1 and 2 from Running example~\ref{run4} was replaced as a single rule using a variable.
+\noindent Definition of rules 1 and 2 from Running example~\ref{run7} was replaced as a single rule using a variable.
 
 This is final syntactic extension. Compared to original model (Running example~\ref{run1}), the resulting model is much more concise and readable. More examples can be seen in Section~\ref{case_study}.
 
