@@ -1037,10 +1037,10 @@ and $ \mathtt{I} \in \mathtt{R}$ & and $\chi \in \mathtt{R}$ and $\mathtt{map} \
 
 \begin{definition}{Chemical Reaction Model (CRN)}
 \label{crn}
-Chemical Reaction Model $\mathcal{M}$ is a triple $(\mathfrak{R}, \vv{\nu}, \theta)$ such that $\mathfrak{R} \subseteq \mathbb{Z}^n$ is set of reactions, $\vv{\nu} \in \mathbb{N}_0^n$ is initial vector, and $\theta \in \mathds{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
+Chemical Reaction Model $\mathcal{M}$ is a triple $(\mathfrak{R}, \vv{\nu}, \theta)$ such that $\mathfrak{R} \subseteq \mathbb{Z}^n$ is set of chemical reactions, $\vv{\nu} \in \mathbb{N}_0^n$ is initial vector, and $\theta \in \mathds{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
 \end{definition}
 
-Chemical Reaction Model is a simple model, where reactions and initial state are vectors over integers. Moreover, there is a reference vector of complex agents, which servers for identifying underlaying agents behind the integers (according to particular position in vectors).
+Chemical Reaction Model is a simple model, where chemical reactions and initial state are vectors over integers. Moreover, there is a reference vector of complex agents, which servers for identifying underlaying agents behind the integers (according to particular position in vectors).
 
 \begin{notation}\label{nonnegative}
 We denote $N(\vv{\nu})$ condition $\forall i \in \vv{\nu}: i \in \mathbb{N}_0$.
@@ -1048,15 +1048,15 @@ We denote $N(\vv{\nu})$ condition $\forall i \in \vv{\nu}: i \in \mathbb{N}_0$.
 
 By Notation~\ref{nonnegative} we denote the condition that a vector is formed only by non-negative integers.
 
-\begin{definition}{Reaction application}
+\begin{definition}{Chemical reaction application}
 
-Reaction application $\rho$ is a relation $\rho \subseteq \mathbb{N}_0^n \times \mathbb{Z}^n \times \mathbb{N}_0^n$ such that 
+Chemical reaction application $\varrho$ is a relation $\varrho \subseteq \mathbb{N}_0^n \times \mathbb{Z}^n \times \mathbb{N}_0^n$ such that 
 \begin{center}
-$(\vv{\upsilon}, \vv{\mathtt{r}}, \vv{\mathtt{u}}) \in \rho$ $\Leftrightarrow$ $\vv{\mathtt{u}} = \vv{\upsilon} + \vv{\mathtt{r}} \wedge N(\vv{\mathtt{u}})$.
+$(\vv{\upsilon}, \vv{\mathtt{r}}, \vv{\mathtt{u}}) \in \varrho$ $\Leftrightarrow$ $\vv{\mathtt{u}} = \vv{\upsilon} + \vv{\mathtt{r}} \wedge N(\vv{\mathtt{u}})$.
 \end{center}
 \end{definition}
 
-Note some values in reactions might be negative. When applying reaction on state, the resulting state cannot contain any negative values (negative number of entities does not give biological sense). Therefore, application is allowed only if the resulting vector contains non-negative values.
+Note some values in chemical reactions might be negative. When applying reaction on state, the resulting state cannot contain any negative values (negative number of entities does not give biological sense). Therefore, application is allowed only if the resulting vector contains non-negative values.
 
 \begin{definition}{CRN semantics}
 Let $\mathcal{M}$ be a Chemical Reaction Model. The quantitative semantics are given in terms of a discrete-states produced by iterative reaction application on initial vector $\vv{\nu}$ and all consequently created state vectors. This way we obtain an LTS (Definition~\ref{lts}).
@@ -1100,7 +1100,7 @@ Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{in
 \item generate reactions for all rules $\mathtt{F}(\mathtt{R}) \in \mathcal{R}$ (Definition~\ref{generate_reactions}),
 \item construct reference vector $\theta$ (Definition~\ref{reference_vector}),
 \item create initial vector $\vv{\nu} = \lambda(\mathtt{S}, \theta)$ from initial multiset $\mathtt{S}$ where $\mathtt{S} = \{ \mathtt{X} ~|~ \mathtt{X} = \mathtt{F}(\Gamma) \wedge \Gamma \in \mathtt{init} \}$ (Definition~\ref{state_to_vector}),
-\item construct set of vector reactions $\mathfrak{R}$ from the set reactions, where individual vector reaction $\vv{r}$ is created from a reaction $\mathtt{r}$ as following:
+\item construct set of chemical reactions $\mathfrak{R}$ from the set reactions, where individual vector reaction $\vv{r}$ is created from a reaction $\mathtt{r}$ as following:
 
 \begin{center}
 $\vv{r} = \lambda(RHS(\mathtt{r}), \theta) - \lambda(LHS(\mathtt{r}), \theta)$
@@ -1222,7 +1222,7 @@ As can be seen, in this stage the complex signature has it limitations. Once a c
 
 \subsection{Directions}
 
-We allow rules to be bi-directional -- it is just a shortcut for two rules and it can be converted to basic rule form. A rule $\mathtt{R} = \lambda ~\Leftrightarrow~ \rho$ might be written as two rules $\mathtt{R}_1 = \lambda ~\Rightarrow~ \rho$ and $\mathtt{R}_2 = \rho ~\Rightarrow~ \lambda$.
+We allow rules to be bi-directional -- it is just a shortcut for two rules and it can be converted to basic rule form. A rule $\mathtt{R} = l ~\Leftrightarrow~ r$ might be written as two rules $\mathtt{R}_1 = l ~\Rightarrow~ r$ and $\mathtt{R}_2 = r ~\Rightarrow~ l$.
 
 \begin{runningExample}{The example model $\mathds{M}$}
 \label{run5}
@@ -1612,10 +1612,63 @@ practical examples of defined objects
 
 \appendix
 
-\chapter{cheat-sheet}
+\chapter{Cheat sheet}
 
-\begin{tabular}{l | l}
-$\sigma(X)$ & set of permutations of set (or tuple) $X$ of length $|X|$
+\begin{tabular}{c c | l}
+$\sigma(X)$ & & set of permutations of set (or tuple) $X$ of length $|X|$\\
+$\Sigma_{\mathtt{A}}$ & & atomic signature \\
+$\Sigma_{\mathtt{T}}$ & & structure signature \\
+$\mathtt{A}$ & & atomic agent \\
+ & $\eta$ & name \\
+ & $\delta$ & state \\
+ & $\varepsilon$ & empty state (not specified)\\
+$\mathds{A}$ & & universe of all possible atomic agents \\
+$\mathtt{T}$ & & structure agent \\
+ & $\eta$ & name \\
+ & $\gamma$ & partial composition\\
+$\mathds{T}$ & & universe of all possible structure agents\\
+$\mathtt{X}$ & & complex agent\\
+ & $\mu$ & sequence of agents\\
+ & $\mathtt{com}$ & compartment\\
+$\mathds{X}$ & & universe of all possible complex agents\\
+$\mathds{U}$ & & universe of all possible agents\\
+$\mathtt{R}$ & & rule\\
+ & $\chi$ & sequence of complexes\\
+ & $\omega$ & sequence of atomic and structure agents\\
+ & $\mathtt{I}$ & index determining start of right-hand-side\\
+ & $\mathtt{map}$ & index map between $\omega$ and $\chi$\\
+ & $\mathtt{Indices}$ & is an index map between agents from left-\\
+ & & and right-hand side\\
+$\mathds{R}$ & & universe of all possible rules\\
+$\mathtt{r}$ & & reaction\\
+ & $LHS(\mathtt{r})$ & left-hand-side of the reaction\\
+ & $RHS(\mathtt{r})$ & right-hand-side of the reaction\\
+$\alpha$ & & atomic expression\\
+$\tau$ & & structure expression\\
+$\Gamma$ & & complex expression\\
+$\rho$ & & rule expression\\
+$\mathds{M}$ & & BCSL model\\
+ & $\mathcal{R}$ & set of rule expressions\\
+ & $\mathtt{init}$ & initial multiset of complex expressions\\
+\end{tabular}
+
+\begin{tabular}{c c | l}
+$X \mdoubleplus Y$ & & tuples concatenation\\
+$\Xi_{i=1}^n T_i$ & & generalised concatenation\\
+$\pi_i$ & & projection on dimension i\\
+$\mathtt{reassembly}(Y)$ & & reassembly of tuples\\
+$\gamma \ominus \gamma'$ & & difference of partial compositions\\
+$\gamma(\mathtt{T}) \ominus \Sigma_T(\mathtt{T})$ & & difference of partial composition and\\
+ & & structure signature\\
+$\mathtt{F}$ & & semantic function\\
+$\mathcal{G}$ & & ground form function\\
+$\mathcal{M}$ & & Chemical Reaction Model\\
+ & $\mathfrak{R}$ & set of chemical reactions\\
+ & $\vv{\nu}$ & initial vector\\
+ & $\theta$ & vector of reference complexes\\
+$\varrho$ & & chemical reaction application\\
+$\mathtt{S}$ & & a multiset of agents\\
+$\lambda(\mathtt{S}, \theta)$ & & multiset to vector translation\\
 \end{tabular}
 
 \end{document}
