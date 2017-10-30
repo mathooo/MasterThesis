@@ -26,6 +26,7 @@
 \usepackage{tikz}
 \usepackage{pythonhighlight}
 \usepackage[hidelinks]{hyperref}
+\usepackage{bbm}
 
 \newcounter{counter}[section]
 \renewcommand{\thecounter}{\thesection.\arabic{counter}}
@@ -34,6 +35,7 @@
 \newenvironment{notation}{\bigskip\refstepcounter{counter}\noindent\textbf{Notation \thecounter}\par\nopagebreak}{\bigskip}
 \newenvironment{proof}{\bigskip\refstepcounter{counter}\noindent\textbf{Proof \thecounter}\par\nopagebreak}{\bigskip}
 \newenvironment{runningExample}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Running example \thecounter} \textit{#1} \par\nopagebreak}{\bigskip}
+\newenvironment{theorem}{\bigskip\refstepcounter{counter}\noindent\textbf{Theorem \thecounter }\par\nopagebreak}{\bigskip}
 
 \newcommand\mdoubleplus{\mathbin{+\mkern-7mu+}}
 \newcommand*\arc{{\fontfamily{pbk}\fontseries{db}\selectfont+}}
@@ -1449,15 +1451,41 @@ From first chapters it should be clear that an agent might have its ancestors an
 
 The compatibility operator generates partial order of $\mathds{A}, \mathds{T}$, and $\mathds{X}$ sets. For our purposes, partial order of $\mathds{X}$ is interesting:
 
-$$ \mathtt{X}_1 \sqsubseteq \mathtt{X}_2 \sqsubseteq \ldots \sqsubseteq \mathtt{X}_n $$
+$$ \mathds{X}_\sqsubseteq = \mathtt{X}_1 \sqsubseteq \mathtt{X}_2 \sqsubseteq \ldots \sqsubseteq \mathtt{X}_n $$
 
-The reason is that complex agents actually encapsulate all other agent types including compartments. However, partial order of entire universe of complex agents is not very useful, since most of agents cannot be compared. We are interested in particular subsets $\mathds{X}_\sqsubseteq$ which are formed from all complexes of the same type, i.e. those sets where each pair of complexes holds the compatibility conditions (in one direction):
+The reason is that complex agents actually encapsulate all other agent types including compartments. However, partial order of entire universe of complex agents is not very useful, since most of agents cannot be compared. We are interested in particular subsets $\mathbbmss{X}$ which are formed from all complexes of the same type, i.e. those sets where each pair of complexes holds the compatibility conditions (in arbitrary some direction).
 
-$$ \mathds{X}_\sqsubseteq \subseteq \mathds{X} : \forall \mathtt{X}, \mathtt{X}' \in \mathds{X}_\sqsubseteq : \mathtt{X} \lhd \mathtt{X}' \vee \mathtt{X}' \lhd \mathtt{X} $$ $$and$$ $$ \forall \mathtt{X} \in \mathds{X}_\sqsubseteq \forall \mathtt{X}' \not\in \mathds{X}_\sqsubseteq : \neg (\mathtt{X} \lhd \mathtt{X}') \wedge \neg (\mathtt{X}' \lhd \mathtt{X}) $$
+\begin{definition}{Compatible set}
+\label{compatible_set}
+Sets $\mathbbmss{X}_1, \ldots, \mathbbmss{X}_n \subseteq \mathds{X}$ are \emph{compatible sets} if for each compatible set $\mathbbmss{X}_i$ and $\mathbbmss{X}_j$ hold the following conditions:
+\begin{enumerate}
+	\item \label{compatible_cond} $ \forall \mathtt{X}, \mathtt{X}' \in \mathbbmss{X}_i: \mathtt{X} \lhd \mathtt{X}' \vee \mathtt{X}' \lhd \mathtt{X} $,
+	\item \label{non_compatible_cond} $\forall \mathtt{X} \in \mathbbmss{X}_i \forall \mathtt{X}' \in \mathbbmss{X}_j: \neg (\mathtt{X} \lhd \mathtt{X}') \wedge \neg (\mathtt{X}' \lhd \mathtt{X})$.
+\end{enumerate}
+\end{definition}
 
-In these sets, there always exists a supremum, what is an ancestor of all the remaining agents in the set. Each agent $\mathtt{X}$ belongs to exactly one set $\mathds{X}_\sqsubseteq$.
+\begin{theorem}
+In these sets, there always exists a supremum, what is an ancestor of all the remaining agents in the set. 
+\end{theorem}
 
--- two proofs?
+\begin{proof}
+Proof goes here...
+\end{proof}
+
+\begin{theorem}
+Each agent $\mathtt{X}$ belongs to exactly one set $\mathbbmss{X}$.
+\end{theorem}
+
+\begin{proof}
+
+[Proof by contradiction.]
+
+Lets assume a complex agent $\mathtt{X}$ belongs to two compatible sets, namely $\mathtt{X} \in \mathbbmss{X}_1, \mathbbmss{X}_2$. From the Definition~\ref{compatible_set} condition~(\ref{compatible_cond}) follows that there exists a $\mathtt{X}_1 \in \mathbbmss{X}_1$ such that either $\mathtt{X} \lhd \mathtt{X}_1$ or $\mathtt{X}_1 \lhd \mathtt{X}$ holds. 
+
+Then, the condition~(\ref{non_compatible_cond}) claims that none of complex agents from $\mathbbmss{X}_2$ can be compatible with (in either direction) a complex agent from $\mathbbmss{X}_1$. Namely $\mathtt{X} \in \mathbbmss{X}_2$ cannot be compatible with $\mathtt{X}_1 \in \mathbbmss{X}_1$. It follows $\mathtt{X} \not\in \mathbbmss{X}_2$, what is a contradiction.
+
+% via identity?
+\end{proof}
 
 -- a picture goes here
 
@@ -1468,7 +1496,7 @@ Practically, relation following from compatibility operator can be used in sever
 
 There might be cases when there are redundant rules defined in a model. This might be done for example by inattention of modeller in combination with high level of abstraction language uses. These rules do not cause any semantical difference, but might slow down dynamic and/or static analysis, eventually affect the results of analysis.
 
-Before we can eliminate such rules, we have to detect them. For this purpose, compatibility operator and resulting ordered sets $\mathds{X}_\sqsubseteq$ can be used.
+Before we can eliminate such rules, we have to detect them. For this purpose, compatibility operator and resulting ordered sets $\mathbbmss{X}$ can be used.
 
 Lets have two rules $\mathtt{R}, \mathtt{R}'$ of form:
 
@@ -1491,7 +1519,7 @@ we declare the rule $\mathtt{R}$ as a redundant rule. In other words, the rule d
 \subsection{Context-based reduction}
 \label{context_reduction}
 
-Context reduced network (CRN) is created form given BCSL model by reducing context of complexes in rules to maximum level. This is achieved by taking supremum from set $\mathds{X}_\sqsubseteq$ formed by compatibility operator. This procedure might produce rules with no action -- such rules might be omitted. Then, only rules creating/destroying agents and complex formation/dissociation should remain, providing reduced network. Since we are reducing context, the resulting network can be equal or smaller than the original one.
+Context reduced network (CRN) is created form given BCSL model by reducing context of complexes in rules to maximum level. This is achieved by taking supremum from set $\mathbbmss{X}$ formed by compatibility operator. This procedure might produce rules with no action -- such rules might be omitted. Then, only rules creating/destroying agents and complex formation/dissociation should remain, providing reduced network. Since we are reducing context, the resulting network can be equal or smaller than the original one.
 
 Moreover, the resulting network looses its rule-based properties and becomes flat structure -- a reaction-based network.
 
