@@ -1455,7 +1455,7 @@ $$ \mathds{X}_\sqsubseteq = \mathtt{X}_1 \sqsubseteq \mathtt{X}_2 \sqsubseteq \l
 
 The reason is that complex agents actually encapsulate all other agent types including compartments. However, partial order of entire universe of complex agents is not very useful, since most of agents cannot be compared. We are interested in particular subsets $\mathbbmss{X}$ which are formed from all complexes of the same type, i.e. those sets where each pair of complexes holds the compatibility conditions (in arbitrary some direction).
 
-\begin{definition}{Compatible set}
+\begin{definition}{Compatible sets}
 \label{compatible_set}
 Sets $\mathbbmss{X}_1, \ldots, \mathbbmss{X}_n \subseteq \mathds{X}$ are \emph{compatible sets} if for each compatible set $\mathbbmss{X}_i$ and $\mathbbmss{X}_j$ hold the following conditions:
 \begin{enumerate}
@@ -1470,6 +1470,8 @@ In these sets, there always exists a supremum, what is an ancestor of all the re
 
 \begin{proof}
 Proof goes here...
+
+% via fact that we can always remove some context from complex agent, if not it is the supremum
 \end{proof}
 
 \begin{theorem}
@@ -1496,7 +1498,7 @@ Practically, relation following from compatibility operator can be used in sever
 
 There might be cases when there are redundant rules defined in a model. This might be done for example by inattention of modeller in combination with high level of abstraction language uses. These rules do not cause any semantical difference, but might slow down dynamic and/or static analysis, eventually affect the results of analysis.
 
-Before we can eliminate such rules, we have to detect them. For this purpose, compatibility operator and resulting ordered sets $\mathbbmss{X}$ can be used.
+Before we can eliminate such rules, we have to detect them. For this purpose, compatibility operator and resulting compatible sets $\mathbbmss{X}$ can be used.
 
 Lets have two rules $\mathtt{R}, \mathtt{R}'$ of form:
 
@@ -1513,13 +1515,15 @@ we declare the rule $\mathtt{R}$ as a redundant rule. In other words, the rule d
 -- add an example
 
 \begin{proof}
-{by controversy: show two rules which hold mentioned condition. generate reactions from them and show, that one set is subset of the other one}
+{by controversy: show two rules which hold mentioned condition. generate reactions from them and show, that one set is subset of the other one
+
+by "induction": show for one complex that you generate subset of complexes from "smaller" agent in compatible relation. Then, generalise it for entire rule}
 \end{proof}
 
 \subsection{Context-based reduction}
 \label{context_reduction}
 
-Context reduced network (CRN) is created form given BCSL model by reducing context of complexes in rules to maximum level. This is achieved by taking supremum from set $\mathbbmss{X}$ formed by compatibility operator. This procedure might produce rules with no action -- such rules might be omitted. Then, only rules creating/destroying agents and complex formation/dissociation should remain, providing reduced network. Since we are reducing context, the resulting network can be equal or smaller than the original one.
+Context reduced network (CRN) is created form given BCSL model by reducing context of complexes in rules to maximum level. This is achieved by taking supremum from compatible set $\mathbbmss{X}$. This procedure might produce rules with no action -- such rules might be omitted. Then, only rules creating/destroying agents and complex formation/dissociation should remain, providing reduced network. Since we are reducing context, the resulting network can be equal or smaller than the original one.
 
 Moreover, the resulting network looses its rule-based properties and becomes flat structure -- a reaction-based network.
 
