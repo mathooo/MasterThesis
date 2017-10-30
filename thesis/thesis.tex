@@ -790,6 +790,18 @@ $\Rightarrow K(S\{p\}).B(\varnothing).C(\varnothing)::cyt + D\{a\}.A\{\varepsilo
 \end{center}
 \end{example}
 
+We need to specify, when a rule is well-formed. For now on, we assume all used rules are well-defined. 
+
+\begin{definition}{Well-formed rule}
+Let $\mathtt{R}$ be a rule and $i,j \in \mathbb{N}$ natural numbers. We say the rule $\mathtt{R}$ is \emph{well-formed} if the following conditions hold:
+
+\begin{enumerate}
+	\item $\forall (i,j) \in \mathtt{Indices}: \pi_i(\omega) \not\equiv \pi_j(\omega) \Rightarrow \eta(\pi_i(\omega)) \equiv \eta(\pi_j(\omega))$,
+	\item $\exists (i,j) \in \mathtt{Indices}: \pi_i(\chi) \not\equiv \pi_j(\chi) $
+\end{enumerate}
+
+\end{definition}
+
 \noindent\rule{\textwidth}{1pt}
 
 \begin{definition}{Reaction}
@@ -1624,7 +1636,7 @@ practical examples of defined objects
 \chapter{Conclusions}
 
 \bibliographystyle{citeStyle}
-\bibliography{papers.bib}
+\bibliography{papers}
 
 \appendix
 
