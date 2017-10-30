@@ -1434,11 +1434,13 @@ The compatibility operator generates partial order of $\mathds{A}, \mathds{T}$, 
 
 $$ \mathtt{X}_1 \sqsubseteq \mathtt{X}_2 \sqsubseteq \ldots \sqsubseteq \mathtt{X}_n $$
 
-The reason is that complex agents actually encapsulate all other agent types including compartments. However, partial order of entire universe of complex agents is not very useful, since most of agents cannot be compared. We are interested in particular subsets $\mathds{X}_\sqsubseteq$ which are formed from complexes of the same type, i.e. those sets where each pair of complexes holds the compatibility conditions (in one direction):
+The reason is that complex agents actually encapsulate all other agent types including compartments. However, partial order of entire universe of complex agents is not very useful, since most of agents cannot be compared. We are interested in particular subsets $\mathds{X}_\sqsubseteq$ which are formed from all complexes of the same type, i.e. those sets where each pair of complexes holds the compatibility conditions (in one direction):
 
-$$ \mathds{X}_\sqsubseteq \subseteq \mathds{X} : \forall \mathtt{X}, \mathtt{X}' \in \mathds{X}_\sqsubseteq : \mathtt{X} \lhd \mathtt{X}' \vee \mathtt{X}' \lhd \mathtt{X}$$
+$$ \mathds{X}_\sqsubseteq \subseteq \mathds{X} : \forall \mathtt{X}, \mathtt{X}' \in \mathds{X}_\sqsubseteq : \mathtt{X} \lhd \mathtt{X}' \vee \mathtt{X}' \lhd \mathtt{X} $$ $$and$$ $$ \forall \mathtt{X} \in \mathds{X}_\sqsubseteq \forall \mathtt{X}' \not\in \mathds{X}_\sqsubseteq : \neg (\mathtt{X} \lhd \mathtt{X}') \wedge \neg (\mathtt{X}' \lhd \mathtt{X}) $$
 
 In these sets, there always exists a supremum, what is an ancestor of all the remaining agents in the set. Each agent $\mathtt{X}$ belongs to exactly one set $\mathds{X}_\sqsubseteq$.
+
+-- a picture goes here
 
 Practically, relation following from compatibility operator can be used in several ways. It is suitable for deeper static analysis on level of complexes~\ref{context_reduction} and for finding nontrivial relationships between the rules~\ref{rule_redundancy}.
 
@@ -1463,16 +1465,26 @@ we declare the rule $\mathtt{R}$ as a redundant rule. In other words, the rule d
 
 -- add an example
 
+\begin{proof}
+{by controversy: show two rules which hold mentioned condition. generate reactions from them and show, that one set is subset of the other one}
+\end{proof}
+
 \subsection{Context-based reduction}
 \label{context_reduction}
 
 Context reduced network (CRN) is created form given BCSL model by reducing context of complexes in rules to maximum level. This is achieved by taking supremum from set $\mathds{X}_\sqsubseteq$ formed by compatibility operator. This procedure might produce rules with no action -- such rules might be omitted. Then, only rules creating/destroying agents and complex formation/dissociation should remain, providing reduced network. Since we are reducing context, the resulting network can be equal or smaller than the original one.
 
+Moreover, the resulting network looses its rule-based properties and becomes flat structure -- a reaction-based network.
+
 If we are checking whether an agent is reachable for given model, we might first check whether it's super-ancestor is reachable in created CRN. If so, then we are still not certain about reachability of agent itself and it has to be checked in the original model. However, when it comes to non-reachability, agent which is non-reachable in CRN is not reachable in the original model too (proof ?).
+
+\begin{proof}
+{since we have done a over-approximation of the original model, ... by controversy ?}
+\end{proof}
 
 \subsection{Static reachability analysis}
 
-In case we have defined reachability operator for agents, we can apply static reachability analysis before enumerating whole state space of the model. When checking reachability of an agent $\mathtt{A}$, we can check whether it is non-reachable (similarly as in the previous section) by the following procedure:
+Since we have defined compatibility operator for agents, we can apply static reachability analysis before enumerating whole state space of the model. When checking reachability of an agent $\mathtt{A}$, we can check whether it is non-reachable (similarly as in the previous section) by the following procedure:
 
 \begin{itemize}
 \item go through all agents on the right-hand-side of all rules,
@@ -1602,6 +1614,10 @@ Another interesting process inside cyanobacteria is photosynthesis. It is perfor
 -- example rule ID 4 and 33 
 
 it would be great to somehow demonstrate defined statical analysis here
+
+-- could be defined a small model with question of reachability of some agent, which can be answered directly without enumerating state space
+
+-- also the context reduced network -- a more complicated model which is small after reduction, show that something is not reachable
 
 practical examples of defined objects
 
