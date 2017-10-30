@@ -796,11 +796,15 @@ We need to specify, when a rule is well-formed. For now on, we assume all used r
 Let $\mathtt{R}$ be a rule and $i,j \in \mathbb{N}$ natural numbers. We say the rule $\mathtt{R}$ is \emph{well-formed} if the following conditions hold:
 
 \begin{enumerate}
-	\item $\forall (i,j) \in \mathtt{Indices}: \pi_i(\omega) \not\equiv \pi_j(\omega) \Rightarrow \eta(\pi_i(\omega)) \equiv \eta(\pi_j(\omega))$,
-	\item $\exists (i,j) \in \mathtt{Indices}: \pi_i(\chi) \not\equiv \pi_j(\chi) $
+	\item \label{cond1} $\exists (i,j) \in \mathtt{Indices}: \pi_i(\chi) \not\equiv \pi_j(\chi) $,
+	\item \label{cond2} $\forall (i,j) \in \mathtt{Indices}: \eta(\pi_i(\omega)) \equiv \eta(\pi_j(\omega))$.
 \end{enumerate}
 
 \end{definition}
+
+A rule is well-formed if it does any action. It means, some change has to occur during rule application. This is ensured by condition~(\ref{cond1}), which requires at least one pair of complexes from left- and right-hand side of the rule to be different. The other condition ~(\ref{cond2}) has to hold on order to guarantee pairs of structure and atomic agents in $\omega$ of the rule have the same name. This condition is crutial for ground form function $\mathcal{G}$~(Section~\ref{ground_forms}), where adding context to different agents do not give a sense. 
+
+Please note the conditions for well-formed rules do not apply on those agents, which do not have a pair on the other side of the rule.
 
 \noindent\rule{\textwidth}{1pt}
 
@@ -982,6 +986,7 @@ Please note by applying semantic function $\mathtt{F}$ on expressions from Examp
 \noindent\rule{\textwidth}{2pt}
 
 \section{Ground forms}
+\label{ground_forms}
 
 Ground form represents appending context to agents according to signature (we assume signature is always available and therefore we omit it in ground from function arguments). Particularly, this process means adding details to partial compositions and adding states of atomic agents according to defined signatures. Since there are typically multiple allowed states for an atomic agent, this processes leads to multiple options how to add a context. This is natural consequence of fact that a is an abstract representation of multiple reactions. 
 
@@ -1452,6 +1457,8 @@ $$ \mathds{X}_\sqsubseteq \subseteq \mathds{X} : \forall \mathtt{X}, \mathtt{X}'
 
 In these sets, there always exists a supremum, what is an ancestor of all the remaining agents in the set. Each agent $\mathtt{X}$ belongs to exactly one set $\mathds{X}_\sqsubseteq$.
 
+-- two proofs?
+
 -- a picture goes here
 
 Practically, relation following from compatibility operator can be used in several ways. It is suitable for deeper static analysis on level of complexes~\ref{context_reduction} and for finding nontrivial relationships between the rules~\ref{rule_redundancy}.
@@ -1578,7 +1585,7 @@ The translation is quite straight-forward:
 \item finally, we create initial marking \emph{m} from given initial state of the model by similar procedure described above.
 \end{enumerate}
 
-Once the model is translated, we are allowed apply all available analysis which are provides by PNs. For example, P and T invariants, deadlock detection, coverability etc. (see~\cite{petri}).
+Once the model is translated, we are allowed apply all available analysis which are provided by PNs. For example, P and T invariants, deadlock detection, coverability etc. (see~\cite{petri}).
 
 \chapter{Implementation}
 
