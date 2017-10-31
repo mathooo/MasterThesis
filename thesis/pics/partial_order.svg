@@ -14,8 +14,8 @@
    viewBox="0 0 1052.3622 744.09448"
    id="svg2"
    version="1.1"
-   inkscape:version="0.91 r13725"
-   sodipodi:docname="drawing.svg">
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="partial_order.svg">
   <defs
      id="defs4">
     <marker
@@ -219,14 +219,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="580.42366"
-     inkscape:cy="386.91007"
+     inkscape:zoom="1.4"
+     inkscape:cx="516.27878"
+     inkscape:cy="463.86967"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1053"
+     inkscape:window-height="1148"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1" />
@@ -238,7 +238,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -281,44 +281,44 @@
          sodipodi:role="line"
          id="tspan4146"
          x="419.21332"
-         y="521.02197"></tspan></text>
+         y="521.02197" /></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:35px;line-height:125%;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="551.54327"
-       y="511.93063"
+       style="font-size:35px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu, Normal'"
+       x="772.97186"
+       y="514.78778"
        id="text4156"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4158"
-         x="551.54327"
-         y="511.93063">K(S{<tspan
+         x="772.97186"
+         y="514.78778">K(S{<tspan
    style="font-size:35px;fill:#c80000;fill-opacity:1"
    id="tspan8637">p</tspan>})::cyt</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:35px;line-height:125%;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="314.15744"
+       style="font-size:35px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu, Normal'"
+       x="309.87173"
        y="511.93063"
        id="text4160"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4162"
-         x="314.15744"
+         x="309.87173"
          y="511.93063">K(T{<tspan
    style="font-size:35px;fill:#00c800;fill-opacity:1"
    id="tspan8627">u</tspan>})::cyt</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:35px;line-height:125%;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="796.00024"
-       y="513.95087"
+       style="font-size:35px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu, Normal'"
+       x="532.42883"
+       y="511.80798"
        id="text4164"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4166"
-         x="796.00024"
-         y="513.95087">K(T{<tspan
+         x="532.42883"
+         y="511.80798">K(T{<tspan
    style="font-size:35px;fill:#c80000;fill-opacity:1"
    id="tspan8639">p</tspan>})::cyt</tspan></text>
     <text
@@ -388,8 +388,8 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-3)"
-       d="m 386.15429,522.60991 1.01014,144.45181"
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Mend-3)"
+       d="m 386.15429,522.60991 1.72443,145.88038"
        id="path4184-3"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
@@ -400,20 +400,20 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-7)"
-       d="M 621.54014,525.62004 397.28627,666.03126"
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Mend-7)"
+       d="m 621.54014,525.62004 1.46042,146.1255"
        id="path4184-8"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-9)"
-       d="M 884.17979,527.64036 631.64165,671.08202"
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Mend-9)"
+       d="M 884.17979,527.64036 400.21307,666.79631"
        id="path4184-87"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-90)"
-       d="m 884.15949,528.63021 2.02031,143.44166"
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Mend-90)"
+       d="m 884.15949,528.63021 -1.55112,142.72737"
        id="path4184-37"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
