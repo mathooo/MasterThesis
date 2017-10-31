@@ -36,6 +36,7 @@
 \newenvironment{proof}{\bigskip\refstepcounter{counter}\noindent\textbf{Proof \thecounter}\par\nopagebreak}{\bigskip}
 \newenvironment{runningExample}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Running example \thecounter} \textit{#1} \par\nopagebreak}{\bigskip}
 \newenvironment{theorem}{\bigskip\refstepcounter{counter}\noindent\textbf{Theorem \thecounter }\par\nopagebreak}{\bigskip}
+\newenvironment{remark}{\bigskip\refstepcounter{counter}\noindent\textbf{Remark \thecounter }\par\nopagebreak}{\bigskip}
 
 \newcommand\mdoubleplus{\mathbin{+\mkern-7mu+}}
 \newcommand*\arc{{\fontfamily{pbk}\fontseries{db}\selectfont+}}
@@ -1507,31 +1508,52 @@ Then, the condition~(\ref{non_compatible_cond}) claims that no complex agent fro
 
 Practically, relation following from compatibility operator can be used in several ways. It is suitable for deeper static analysis on level of complexes~\ref{context_reduction} and for finding nontrivial relationships between the rules~\ref{rule_redundancy}.
 
-\subsection{Rule redundancy reduction}
+\begin{remark}
+\label{generating_vs_compatibility}
+Note that in the process generating reactions from the rules (Section~\ref{Generating reactions}), we are using ground form function (Section~\ref{ground_forms}). What the function basically does is it adds context to individual complex agents (and its substructures). In the definition of the function we provided exact procedure how to generate such agents.
+
+However, when we look at the process more theoretically, a set of appropriate complex agents is generated for every complex agent $\mathtt{X}$ in the rule $\mathtt{R}$ and then they are connected to multiple unique reaction. These sets are actually subsets $\mathbbmss{X}_\subseteq$ of compatible sets $\mathbbmss{X}$ such that 
+
+$$ \mathbbmss{X}_\subseteq \subseteq \mathbbmss{X}: \forall \mathtt{X}' \in \mathbbmss{X}_\subseteq: \mathtt{X}' \lhd \mathtt{X}$$
+
+where $\mathtt{X} \in \mathbbmss{X}$.
+
+\end{remark}
+
+\subsection{Rule redundancy elimination}
 \label{rule_redundancy}
 
 There might be cases when there are redundant rules defined in a model. This might be done for example by inattention of modeller in combination with high level of abstraction language uses. These rules do not cause any semantical difference, but might slow down dynamic and/or static analysis, eventually affect the results of analysis.
 
-Before we can eliminate such rules, we have to detect them. For this purpose, compatibility operator and resulting compatible sets $\mathbbmss{X}$ can be used.
+\begin{theorem}
 
 Lets have two rules $\mathtt{R}, \mathtt{R}'$ of form:
 
-$$ \mathtt{R}: \mathtt{X}_1 + \ldots + \mathtt{X}_n \Rightarrow \mathtt{X}_{n+1} + \ldots + \mathtt{X}_{m} $$
+$$ \mathtt{X}_1 + \ldots + \mathtt{X}_n \Rightarrow \mathtt{X}_{n+1} + \ldots + \mathtt{X}_{m} $$
 
 for some $m,n \in \mathbb{N}$ such that both $\mathtt{R}, \mathtt{R}'$ are well-formed rules.
 
-If following condition holds:
+We declare rule $\mathtt{R}$ as a \emph{redundant} rule iff
 
-$$ \forall i \in [ 1, m ]: \mathtt{X} \lhd \mathtt{X}' $$
+$$ \forall i \in [ 1, m ]: \mathtt{X}_i \lhd \mathtt{X}'_i. $$
+\end{theorem}
 
-we declare the rule $\mathtt{R}$ as a redundant rule. In other words, the rule does not add any semantic details or the rule itself has no effect.
+In other words, the rule $\mathtt{R}$ does not add any semantic details or the rule itself has no effect.
 
 -- add an example
 
-\begin{proof}
-{by controversy: show two rules which hold mentioned condition. generate reactions from them and show, that one set is subset of the other one
+For the proof we can use compatible sets $\mathbbmss{X}$ and the fact that when we are generating reactions from rules, we are actually enumerating all agents from the set $\mathbbmss{X}$ which are \emph{compatible with} original agent in the rule (Remark~\ref{generating_vs_compatibility}).
 
-by "induction": show for one complex that you generate subset of complexes from "smaller" agent in compatible relation. Then, generalise it for entire rule}
+\begin{proof}
+The problem whether the elimination of redundant rules preserves semantics can be reduced to a simple question -- if it holds for single pair of complex agents for a position $k$ in the rules, then it generally holds for entire rule.
+
+The complex agents $\mathtt{X}_k, \mathtt{X}'_k$ both belong to the same compatible set $\mathbbmss{X}$ since $\mathtt{X}_k \lhd \mathtt{X}'_k$, which follows from the condition of the theorem. 
+
+Then, we can create subsets $\mathbbmss{X}_\subseteq, \mathbbmss{X}'_\subseteq \subseteq \mathbbmss{X}$ for both complex agents respectively (Remark~\ref{generating_vs_compatibility}). Because the agents are compatible ($\mathtt{X}_k \lhd \mathtt{X}'_k$ ), the compatible subset $\mathbbmss{X}_\subseteq$ of agent $\mathtt{X}_k$ is either subset or equal to set $\mathbbmss{X}'_\subseteq$ of agent $\mathtt{X}'_k$:
+
+$$\mathbbmss{X}_\subseteq \subseteq \mathbbmss{X}'_\subseteq.$$
+
+Therefore, the produced set of reactions from the redundant rule is actually a subset of reactions produced from the non-redundant rule. The redundant rule does not bring any semantical acquisition.
 \end{proof}
 
 \subsection{Context-based reduction}
@@ -1544,7 +1566,7 @@ Moreover, the resulting network looses its rule-based properties and becomes fla
 If we are checking whether an agent is reachable for given model, we might first check whether it's super-ancestor is reachable in created CRN. If so, then we are still not certain about reachability of agent itself and it has to be checked in the original model. However, when it comes to non-reachability, agent which is non-reachable in CRN is not reachable in the original model too (proof ?).
 
 \begin{proof}
-{since we have done a over-approximation of the original model, ... by controversy ?}
+since we have done a over-approximation of the original model, ... by controversy ?
 \end{proof}
 
 \subsection{Static reachability analysis}
@@ -1558,9 +1580,9 @@ Since we have defined compatibility operator for agents, we can apply static rea
 \end{itemize}
 
 \begin{proof}
-{paint picture where we start in init, go through random path and then we apply rule r which created the agent we want (from state $x_1$ to state $x_2$)
+paint picture where we start in init, go through random path and then we apply rule r which created the agent we want (from state $x_1$ to state $x_2$)
 
-It does not matter how many rules we have to apply in order to create desired agent from the initial state. Important is that somewhere on path we have to create the very same complex (if it is a complex) and we have to change all state properties to required form. Since the language is rule-based, the change might be context-free, i.e. some context might be missing. For such situation, there was \emph{compatibility} operator defined. Therefore, there has to be at least one rule which has on its right-hand-side an agent compatible with the given agent.}
+It does not matter how many rules we have to apply in order to create desired agent from the initial state. Important is that somewhere on path we have to create the very same complex (if it is a complex) and we have to change all state properties to required form. Since the language is rule-based, the change might be context-free, i.e. some context might be missing. For such situation, there was \emph{compatibility} operator defined. Therefore, there has to be at least one rule which has on its right-hand-side an agent compatible with the given agent.
 \end{proof}
 
 This procedure can be extended for checking reachability of multiple agents, however, it does not consider stoichiometry.
