@@ -1559,14 +1559,24 @@ Therefore, the produced set of reactions from the redundant rule is actually a s
 \subsection{Context-based reduction}
 \label{context_reduction}
 
-Context reduced network (CRN) is created form given BCSL model by reducing context of complexes in rules to maximum level. This is achieved by taking supremum from compatible set $\mathbbmss{X}$. This procedure might produce rules with no action -- such rules might be omitted. Then, only rules creating/destroying agents and complex formation/dissociation should remain, providing reduced network. Since we are reducing context, the resulting network can be equal or smaller than the original one.
+Context reduced model (CRM) is created form given BCSL model by reducing context of complexes in rules to maximum level. This is achieved by taking supremum from compatible set $\mathbbmss{X}$. This procedure might produce rules with no action, i.e. not well-formed rules -- such rules might be omitted. Then, only rules creating/destroying agents and complex formation/dissociation should remain, providing reduced network. Since we are reducing context, the resulting network can be equal or smaller than the original one.
 
-Moreover, the resulting network looses its rule-based properties and becomes flat structure -- a reaction-based network.
+\begin{definition}{Context reduced model}
+formally define + define formally how the model is constructed from the original model!
+\end{definition}
 
-If we are checking whether an agent is reachable for given model, we might first check whether it's super-ancestor is reachable in created CRN. If so, then we are still not certain about reachability of agent itself and it has to be checked in the original model. However, when it comes to non-reachability, agent which is non-reachable in CRN is not reachable in the original model too (proof ?).
+Moreover, the resulting network looses its rule-based properties and becomes a flat structure -- a reaction-based network.
+
+If we are checking whether an agent is reachable for given model, we might first check whether it's super-ancestor is reachable in created CRN. If so, then we are still not certain about reachability of agent itself and it has to be checked in the original model. However, when it comes to non-reachability, agent which is non-reachable in CRN is not reachable in the original model too.
+
+\begin{theorem}
+We want to check whether an complex agent $\mathtt{X}$ is reachable in the LTS of a given BCSL model $\mathds{M}$. Let $\mathbbmss{X}$ be a compatible set for $\mathtt{X}$.
+
+If supremum $\mathtt{sup}(\mathbbmss{X})$ is non-reachable in context reduced model CRM of given model $\mathds{M}$, then agent $\mathtt{X}$ is also non-reachable in the LTS of the original model $\mathds{M}$.
+\end{theorem}
 
 \begin{proof}
-since we have done a over-approximation of the original model, ... by controversy ?
+by controversy ? we will assume an agent is non reach in CRM but reach in $\mathds{M}$
 \end{proof}
 
 \subsection{Static reachability analysis}
