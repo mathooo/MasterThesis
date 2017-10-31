@@ -1449,6 +1449,10 @@ Compatibility for complexes means that every pair of agents through the sequence
 
 From first chapters it should be clear that an agent might have its ancestors and successors. The compatibility operator formulates this relationship formally. Each successor is compatible with its ancestor, but the reverse relation does not hold. The successor had always more details specified.
 
+\begin{notation}
+Let $\beta_1, \beta_2$ be two agents. We denote $\beta_1 \Delta \beta_2$ the fact the agents are compatible iff either $\beta_1 \lhd \beta_2$ or $\beta_2 \lhd \beta_1$ holds.
+\end{notation}
+
 The compatibility operator generates partial order of $\mathds{A}, \mathds{T}$, and $\mathds{X}$ sets. For our purposes, partial order of $\mathds{X}$ is interesting:
 
 $$ \mathds{X}_\sqsubseteq = \mathtt{X}_1 \sqsubseteq \mathtt{X}_2 \sqsubseteq \ldots \sqsubseteq \mathtt{X}_n $$
@@ -1457,22 +1461,34 @@ The reason is that complex agents actually encapsulate all other agent types inc
 
 \begin{definition}{Compatible sets}
 \label{compatible_set}
-Sets $\mathbbmss{X}_1, \ldots, \mathbbmss{X}_n \subseteq \mathds{X}$ are \emph{compatible sets} if for each compatible set $\mathbbmss{X}_i$ and $\mathbbmss{X}_j$ hold the following conditions:
+Sets $\mathbbmss{X}_1, \ldots, \mathbbmss{X}_n \subseteq \mathds{X}$ are \emph{compatible sets} if for each compatible set $\mathbbmss{X}$ hold the following conditions:
+\begin{center}
 \begin{enumerate}
-	\item \label{compatible_cond} $ \forall \mathtt{X}, \mathtt{X}' \in \mathbbmss{X}_i: \mathtt{X} \lhd \mathtt{X}' \vee \mathtt{X}' \lhd \mathtt{X} $,
-	\item \label{non_compatible_cond} $\forall \mathtt{X} \in \mathbbmss{X}_i \forall \mathtt{X}' \in \mathbbmss{X}_j: \neg (\mathtt{X} \lhd \mathtt{X}') \wedge \neg (\mathtt{X}' \lhd \mathtt{X})$.
+	\item \label{compatible_cond} $ \forall \mathtt{X}_1, \mathtt{X}_2 \in \mathbbmss{X} ~\exists~ \mathtt{X}' \in \mathbbmss{X}: \mathtt{X}_1 \lhd \mathtt{X}' \wedge \mathtt{X}_2 \lhd \mathtt{X}'$ such that $\mathtt{X}_1 \neq \mathtt{X}_2$,
+	\item \label{finite_cond} the set $\mathbbmss{X}$ is finite,
+
+\hspace*{-1cm} and for each pair of compatible sets $\mathbbmss{X}_i, \mathbbmss{X}_j$ holds:
+
+	\item \label{non_compatible_cond} $\forall \mathtt{X} \in \mathbbmss{X}_i \forall \mathtt{X}' \in \mathbbmss{X}_j: \neg (\mathtt{X} ~\Delta~ \mathtt{X}') $.
 \end{enumerate}
+\end{center}
+
 \end{definition}
 
 \begin{theorem}
-In these sets, there always exists a supremum, what is an ancestor of all the remaining agents in the set. 
+In every compatible set $\mathbbmss{X}$, there always exists a supremum, what is an ancestor of all the remaining agents in the set.
 \end{theorem}
 
 \begin{proof}
-Proof goes here...
-
-% via fact that we can always remove some context from complex agent, if not it is the supremum
+The theorem follows from Definition~\ref{compatible_set} condition~(\ref{compatible_cond}) which basically claims that there is a supremum (in manner of compatibility) for each two complex agents in the compatible set $\mathbbmss{X}$. Since there exists a supremum for every two items of the set and the set $\mathbbmss{X}$ is finite (condition~\ref{finite_cond}), there must exists a global supremum for the entire set.
 \end{proof}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[scale=0.13]{pics/partial_order}
+\end{center}
+\caption{An example of compatible set $\mathbbmss{X}$. The partial order is depicted by a tree. For better readability, the agents are written in BCSL syntax. In this case, it is formed by a complex in $cyt$ compartment, which has only one structure agent $K$ in its sequence. The structure agent $K$ has allowed atomic agents $T$ and $S$ in its partial composition. These two atomic agents might occur in two states -- $u$ and $p$. The set is complete -- there are all relevant agents bounded by compatibility operator.}
+\end{figure}
 
 \begin{theorem}
 Each agent $\mathtt{X}$ belongs to exactly one set $\mathbbmss{X}$.
@@ -1482,14 +1498,12 @@ Each agent $\mathtt{X}$ belongs to exactly one set $\mathbbmss{X}$.
 
 [Proof by contradiction.]
 
-Lets assume a complex agent $\mathtt{X}$ belongs to two compatible sets, namely $\mathtt{X} \in \mathbbmss{X}_1, \mathbbmss{X}_2$. From the Definition~\ref{compatible_set} condition~(\ref{compatible_cond}) follows that there exists a $\mathtt{X}_1 \in \mathbbmss{X}_1$ such that either $\mathtt{X} \lhd \mathtt{X}_1$ or $\mathtt{X}_1 \lhd \mathtt{X}$ holds. 
+Lets assume a complex agent $\mathtt{X}$ belongs to two compatible sets, namely $\mathtt{X} \in \mathbbmss{X}_1, \mathbbmss{X}_2$. From the Definition~\ref{compatible_set} condition~(\ref{compatible_cond}) follows that there exists a $\mathtt{X}_1 \in \mathbbmss{X}_1$ such that $\mathtt{X} \lhd \mathtt{X}_1$. 
 
-Then, the condition~(\ref{non_compatible_cond}) claims that none of complex agents from $\mathbbmss{X}_2$ can be compatible with (in either direction) a complex agent from $\mathbbmss{X}_1$. Namely $\mathtt{X} \in \mathbbmss{X}_2$ cannot be compatible with $\mathtt{X}_1 \in \mathbbmss{X}_1$. It follows $\mathtt{X} \not\in \mathbbmss{X}_2$, what is a contradiction.
+Then, the condition~(\ref{non_compatible_cond}) claims that no complex agent from $\mathbbmss{X}_1$ and no complex agent from $\mathbbmss{X}_2$ can be compatible. Namely, $\mathtt{X}_1 \in \mathbbmss{X}_1$ cannot be compatible with $\mathtt{X} \in \mathbbmss{X}_2$. However, $\mathtt{X}$ and $\mathtt{X}_1$ are compatible ($\mathtt{X} \lhd \mathtt{X}_1$). It follows $\mathtt{X} \not\in \mathbbmss{X}_2$, what is a contradiction.
 
 % via identity?
 \end{proof}
-
--- a picture goes here
 
 Practically, relation following from compatibility operator can be used in several ways. It is suitable for deeper static analysis on level of complexes~\ref{context_reduction} and for finding nontrivial relationships between the rules~\ref{rule_redundancy}.
 
