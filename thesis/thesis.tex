@@ -610,8 +610,10 @@ Before we proceed, we need to define projection $\pi_i$ to enable iterating thro
 Projection $\pi_i : X^n \rightarrow X $ is defined as follows:
 
 \begin{center}
-$ \pi_i = ((x_1, \ldots, x_n) \mapsto x_i) $
+$ \pi_i(x_1, \ldots, x_n) = x_i $
 \end{center}
+
+for some $i, n \in \mathbb{N}$ and $i \leq n$.
 \end{definition}
 
 We also need to define permutations...
@@ -835,7 +837,7 @@ where $n, m \in \mathbb{N}$.
 Reaction is similar structure than rule, but much simpler. The reaction is just mediate format for giving semantics to BCSL models and it only holds information about complex contents of the rule.
 
 \begin{notation}
-We denote left-hand-side of the reaction $(\pi_0(\mathtt{seq}), \ldots, \pi_{\mathtt{I}-1}(\mathtt{seq}))$ as $LHS(\mathtt{r})$ and right-hand-side of the reaction $(\pi_\mathtt{I}(\mathtt{seq}), \ldots, \pi_n(\mathtt{seq}))$ as $RHS(\mathtt{r})$.
+We denote left-hand-side of the reaction $(\pi_1(\mathtt{seq}), \ldots, \pi_{\mathtt{I}-1}(\mathtt{seq}))$ as $LHS(\mathtt{r})$ and right-hand-side of the reaction $(\pi_\mathtt{I}(\mathtt{seq}), \ldots, \pi_n(\mathtt{seq}))$ as $RHS(\mathtt{r})$.
 \end{notation}
 
 \noindent\rule{\textwidth}{2pt}
@@ -1002,7 +1004,7 @@ Objects are transformed to their ground forms by ground form function $\mathcal{
 
 \begin{center}
 \begin{tabular}{ c c l }
-Object type & Arguments & Ground form \\
+Object type & Notation & Ground form \\
 \hline
  & & \\
 $\mathds{A}$ & $\mathcal{G}(\eta, \epsilon)$ & $\{~ (\eta, \delta) ~|~ \delta \in \Sigma_A(\eta) ~\}$\\
@@ -1101,7 +1103,7 @@ Let $\Theta$ be a set of all possible unique complexes constructed from reaction
 
 $$\Theta = \{~ \mathtt{X} ~|~ \mathtt{X} \in \mathtt{seq}(\mathtt{r}) \wedge \mathtt{r} \in \bigcup_{\mathtt{R} \in \mathcal{R}} \mathtt{Reactions}(\mathtt{R}) ~\} $$
 
-\noindent Then, the reference vector $\theta$ is a tuple $X \in \Theta^n$ such that $\forall i,j \leq n : \Theta_i \not\equiv \Theta_j$ and $n~=~|\Theta|$. Note there are $n!$ possibilities how to choose $\theta$, an arbitrary one can be chosen.
+\noindent Then, the \emph{reference vector} $\theta$ is a tuple $X \in \Theta^n$ such that $\forall i,j \leq n : \Theta_i \not\equiv \Theta_j$ and $n~=~|\Theta|$. Note there are $n!$ possibilities how to choose $\theta$, an arbitrary one can be chosen.
 
 \end{definition}
 
