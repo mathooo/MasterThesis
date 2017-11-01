@@ -1624,21 +1624,26 @@ This approach can be generalised for non-reachability of a (multi)set of complex
 
 \subsection{Static reachability analysis}
 
-Since we have defined compatibility operator for agents, we can apply static reachability analysis before enumerating whole state space of the model. When checking reachability of an agent $\mathtt{A}$, we can check whether it is non-reachable (similarly as in the previous section) by the following procedure:
+Since we have defined compatibility operator for agents, we can apply static reachability analysis before enumerating whole state space of the model $\mathds{M}$. This analysis has its limitations, but can serve for checking whether a complex agent $\mathtt{X}$ is non-reachable (similarly as in the previous section). For that, all we need is set of rules $\mathcal{R}_f$ created from set of rule expressions $\mathcal{R}$ of model $\mathds{M}$ with semantic function $\mathtt{F}$.
 
-\begin{itemize}
-\item go through all agents on the right-hand-side of all rules,
-\item check whether there exists an agent such that it is compatible with desired agent $\mathtt{A}$,
-\item if there is no such agent, agent $\mathtt{A}$ cannot be reachable.
-\end{itemize}
+\begin{theorem}
+\label{static_reach}
+We can declare a complex agent $\mathtt{X}$ as non-reachable for a set of rules $\mathcal{R}_f$ iff there does not exist a rule $\mathtt{R} = (\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices}) \in \mathcal{R}_f$ such that $\exists \mathtt{X}' \in \chi: \mathtt{X}' \lhd \mathtt{X}$.
+\end{theorem}
+
+The Theorem~\ref{static_reach} states a very powerful fact in context of non-reachability analyses. Compared to dynamic non-reachability analyses, it completely avoids any combinatorial explosion and gives answer only by linear testing of structural properties of rules.
 
 \begin{proof}
-paint picture where we start in init, go through random path and then we apply rule r which created the agent we want (from state $x_1$ to state $x_2$)
+It does not matter how many rules we have to apply in order to create desired agent from the initial state. Important is that at some point on the path we have to create a complex agent $\mathtt{X}_2 \lhd \mathtt{X}$ from a complex agent $\mathtt{X}_1$ applying a rule $\mathtt{R}$. 
 
-It does not matter how many rules we have to apply in order to create desired agent from the initial state. Important is that somewhere on path we have to create the very same complex (if it is a complex) and we have to change all state properties to required form. Since the language is rule-based, the change might be context-free, i.e. some context might be missing. For such situation, there was \emph{compatibility} operator defined. Therefore, there has to be at least one rule which has on its right-hand-side an agent compatible with the given agent. $\QEDA$
+\begin{center}
+\includegraphics[scale=0.15]{pics/static_reach}
+\end{center}
+
+In order to happen such action, there has to be at least one rule which has on its right-hand-side a complex agent compatible with the given complex agent. $\QEDA$
 \end{proof}
 
-This procedure can be extended for checking reachability of multiple agents, however, it does not consider stoichiometry.
+This procedure can be extended for checking reachability of multiple complex agents, however, it does not consider stoichiometry.
 
 \subsection{Getting signatures from the model}
 
