@@ -40,7 +40,7 @@
 
 \newcommand\mdoubleplus{\mathbin{+\mkern-7mu+}}
 \newcommand*\arc{{\fontfamily{pbk}\fontseries{db}\selectfont+}}
-\newcommand\myeq{\stackrel{\mathclap{\scriptsize\mbox{def}}}{=}}
+\newcommand\myeq{\stackrel{\mathclap{\scriptsize\mbox{def}}}{\Leftrightarrow}}
 
 \usetikzlibrary{fit, hobby}
 \usetikzlibrary{chains}
@@ -601,7 +601,19 @@ In this chapter, we define Biochemical Space Language formally. First, we define
 
 The semantics we give is indirect, i.e. we don't give semantic sense to rules themselves, rather provide a procedure how to generate reactions from the rules and give semantics to them.
 
-For better readability, we provide examples of syntax for most important object during their definition. However, the formal definition of syntax itself and the relation to the objects will be given later. 
+For better readability, we provide examples of syntax for most important object during their definition. However, the formal definition of syntax itself and the relation to the objects will be given later.
+
+Before we proceed, we need to define projection $\pi_i$ to enable iterating through multidimensional structures.
+
+\begin{definition}{Projection}
+Projection $\pi_i : X^n \rightarrow X $ is defined as follows:
+
+\begin{center}
+$ \pi_i = ((x_1, \ldots, x_n) \mapsto x_i) $
+\end{center}
+\end{definition}
+
+We also need to define permutations...
 
 \section{Objects definition}
 
@@ -707,12 +719,8 @@ Complex agent $\mathtt{X}$ is a pair $(\mu, \mathtt{com})$ where $\mu \in (\math
 
 A complex agent represents a non-trivial composite biochemical object that is (inductively) constructed from already known biological objects. In common rule-based languages this is typically defined by introducing some kind of bonds between individual biochemical objects. In BCSL we abstract from detailed specification of bonds and we rather assume a complex as a coexistence of certain objects in a particular group. Moreover, a complex agent resides in a compartment, which gives it a space position. 
 
-\begin{notation}
-Let $\mathtt{X}$ be a complex agent. We denote length of sequence $\mu$ as $\mathtt{len}(\mathtt{X})$. 
-\end{notation}
-
 \begin{definition}{Equivalence of complex agents}\label{rule_equiv}
-Let $\mathtt{X}, \mathtt{X}'$ be complexes. $\mathtt{X}$ is \emph{equivalent} to $\mathtt{X}'$, written $\mathtt{X} \equiv \mathtt{X}'$, iff $\mathtt{len}(\mathtt{X}) \equiv \mathtt{len}(\mathtt{X'}) \wedge \exists \mu' \in \sigma(\mu(\mathtt{X}'))$ such that $\forall i~\in~[1,~n]: \pi_i(\mu(\mathtt{X})) \equiv \pi_i(\mu')$.
+Let $\mathtt{X}, \mathtt{X}'$ be complexes. $\mathtt{X}$ is \emph{equivalent} to $\mathtt{X}'$, written $\mathtt{X} \equiv \mathtt{X}'$, iff $|\mu(\mathtt{X})| \equiv |\mu(\mathtt{X'})| \wedge \exists \mu' \in \sigma(\mu(\mathtt{X}'))$ such that $\forall i~\in~[1,~n]: \pi_i(\mu(\mathtt{X})) \equiv \pi_i(\mu')$.
 \end{definition}
 
 The key element of a complex agent is \emph{sequence} describing inductively constructed coexistence expressions from existing agents. In contrast to partial composition in structure agent, we allow replication at the level of sequence (an agent of a certain name can appear more than once in a sequence).
@@ -796,7 +804,7 @@ $\Rightarrow K(S\{p\}).B(\varnothing).C(\varnothing)::cyt + D\{a\}.A\{\varepsilo
 We need to specify, when a rule is well-formed. For now on, we assume all used rules are well-defined. 
 
 \begin{definition}{Well-formed rule}
-Let $\mathtt{R}$ be a rule and $i,j \in \mathbb{N}$ natural numbers. We say the rule $\mathtt{R}$ is \emph{well-formed} if the following conditions hold:
+Let $\mathtt{R}$ be a rule and $i,j \in \mathbb{N}$ natural numbers. We say the rule $\mathtt{R} = (\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$ is \emph{well-formed} if the following conditions hold:
 
 \begin{enumerate}
 	\item \label{cond1} $\exists (i,j) \in \mathtt{Indices}: \pi_i(\chi) \not\equiv \pi_j(\chi) $,
@@ -899,14 +907,6 @@ $\Xi_{i=1}^n T_i = T_1 \mdoubleplus T_2 \mdoubleplus \ldots \mdoubleplus T_n $
 \end{center}
 \end{definition}
 
-Next, we need to define projection $\pi$ to enable iterating through multidimensional structures.
-
-\begin{definition}{Projection}
-\begin{center}
-$ \pi_i = ((x_1, \ldots, x_n) \mapsto x_i) : X^n \rightarrow X $
-\end{center}
-\end{definition}
-
 Reassembly operation is again quite simple action on tuples. Intuitively, we need to reorganise tuple which has form $((a_1, b_1), (a_2, b_2),\\ \ldots, (a_n, b_n))$ to a tuple of form $(a_1, a_2, \ldots, a_n, b_1, b_2, \ldots,  b_n)$. We define reassembly generally on a set of tuples. 
 
 \begin{definition}{Reassembly}
@@ -938,6 +938,10 @@ Let $\mathtt{T}$ be a structure agent and $\Sigma_T(\mathtt{T})$ appropriate sig
 \begin{center}
 $\gamma(\mathtt{T}) \ominus \Sigma_T(\mathtt{T}) \myeq \{ \eta_\Sigma ~|~ \eta_\Sigma \in \Sigma_T(\mathtt{T}) \wedge \not\exists \mathtt{A}: (\mathtt{A} \in \gamma(\mathtt{T}) \wedge \eta(\mathtt{A}) \equiv \eta_\Sigma)\}$
 \end{center}
+\end{definition}
+
+\begin{definition}{Non-crossing partition}
+A partition $\mathcal{P} = B_1/B_2/\ldots/B_k$ of $[1,\ldots,n]$ is non-crossing if  whenever a quadruple of elements $1 \leq a < b < c < d \leq n$ satisfies $a, c \in B_i$ and $b, d \in B_j$ for some $1 \leq i, j \leq k$, then in fact $i = j$; thus, the blocks do not cross.
 \end{definition}
 
 \section{Semantic function}
@@ -997,7 +1001,7 @@ Objects are transformed to their ground forms by ground form function $\mathcal{
 
 \begin{center}
 \begin{tabular}{ c c l }
-Object type & Basic form & Ground form \\
+Object type & Arguments & Ground form \\
 \hline
  & & \\
 $\mathds{A}$ & $\mathcal{G}(\eta, \epsilon)$ & $\{~ (\eta, \delta) ~|~ \delta \in \Sigma_A(\eta) ~\}$\\
@@ -1072,7 +1076,7 @@ By Notation~\ref{nonnegative} we denote the condition that a vector is formed on
 
 Chemical reaction application $\varrho$ is a relation $\varrho \subseteq \mathbb{N}_0^n \times \mathbb{Z}^n \times \mathbb{N}_0^n$ such that 
 \begin{center}
-$(\vv{\upsilon}, \vv{\mathtt{r}}, \vv{\mathtt{u}}) \in \varrho$ $\Leftrightarrow$ $\vv{\mathtt{u}} = \vv{\upsilon} + \vv{\mathtt{r}} \wedge N(\vv{\mathtt{u}})$.
+$(\vv{\upsilon}, \vv{\mathtt{r}}, \vv{\mathtt{u}}) \in \varrho \myeq \vv{\mathtt{u}} = \vv{\upsilon} + \vv{\mathtt{r}} \wedge N(\vv{\mathtt{u}})$.
 \end{center}
 \end{definition}
 
@@ -1096,7 +1100,7 @@ Let $\Theta$ be a set of all possible unique complexes constructed from reaction
 
 $$\Theta = \{~ \mathtt{X} ~|~ \mathtt{X} \in \mathtt{seq}(\mathtt{r}) \wedge \mathtt{r} \in \bigcup_{\mathtt{R} \in \mathcal{R}} \mathtt{Reactions}(\mathtt{R}) ~\} $$
 
-\noindent Then, reference vector $\theta \in \Theta^n$ such that $\forall i,j \leq n : \Theta_i \not\equiv \Theta_j$ and $n~=~|\Theta|$. Note there are $n!$ possibilities how to choose $\theta$, arbitrary can be chosen.
+\noindent Then, the reference vector $\theta$ is a tuple $X \in \Theta^n$ such that $\forall i,j \leq n : \Theta_i \not\equiv \Theta_j$ and $n~=~|\Theta|$. Note there are $n!$ possibilities how to choose $\theta$, an arbitrary one can be chosen.
 
 \end{definition}
 
@@ -1238,7 +1242,7 @@ We extend model definition by complex signature $\Sigma_\mathtt{X}$ on syntactic
 
 \end{runningExample}
 
-As can be seen, in this stage the complex signature has it limitations. Once a context is specified, the alias cannot be used anymore. We will resolve this problem in following extensions.
+The usage of the complex signature has its limitations. Once a context is specified, the alias cannot be used anymore. We will resolve this problem in following extensions.
 
 \subsection{Directions}
 
@@ -1260,11 +1264,23 @@ We allow rules to be bi-directional -- it is just a shortcut for two rules and i
 
 \subsection{Stoichiometry}
 
-For a rule of form $(\alpha_1, \alpha_2, \ldots, \alpha_n) \Rightarrow \alpha_1.\alpha_2.~\ldots~.\alpha_n$, we might reorder both sides such that we get noncrossing partition $\mathcal{P}([1,\ldots,n])$ from its indices such that $\forall \mathcal{P}_i: \forall x,y \in \mathcal{P}_i: \alpha_x \equiv \alpha_y$ and $\forall \alpha_x \in \mathcal{P}_i \forall \alpha_y \in \mathcal{P}_j: \alpha_x \not\equiv \alpha_y$. Each $\mathcal{P}_i$ forms equivalence groups $\mathcal{G}_\equiv$ of \textit{k} rule agents.
+For a rule of form 
+
+$$\beta_1::\mathtt{c} + \beta_2::\mathtt{c} + \ldots + \beta_n::\mathtt{c} \Rightarrow \beta_1.\beta_2.~\ldots~.\beta_n::\mathtt{c}$$
+
+we might reorder both sides such that we get non-crossing partition $\mathcal{P} = B_1/B_2/\ldots/B_k$ from its indices $[1,\ldots,n]$ such that:
+
+\begin{center}
+$\forall B \in \mathcal{P}: \forall i,j \in B: \beta_i \equiv \beta_j$ 
+
+and
+
+$\forall B, B' \in \mathcal{P}: \forall \beta \in B ~\forall \beta' \in B': \beta \not\equiv \beta'$.
+\end{center}
+
+For the left-hand side $\beta_1::\mathtt{c} + \beta_2::\mathtt{c} + \ldots + \beta_n::\mathtt{c}$ of the reordered rule we can replace all rule agents $[\beta_i, \ldots, \beta_j]$ which belong to the same non-crossing partition $B$ by notation $`k~\beta'$, where $\beta$ is a representative from $\beta_i, \ldots, \beta_j$ (they are all equivalent) and $k$ is number of the agents.
 
 Such a new rule is equivalent with the original rule what follows from rules equivalence definition (Definition~\ref{rule_equiv}).
-
-For side $\mathtt{s} = (\alpha_1, \alpha_2, \ldots, \alpha_n)$ of the reordered rule we enrich $\alpha$ context to pair $(\iota, \alpha)$ with $\iota = 1$. However, some $\alpha${\footnotesize s} in $\mathtt{s}$ might be equivalent and then they belong to an equivalence group $\mathcal{G}_\equiv$. Each of these groups $\mathcal{G}_\equiv$ might be written as one pair $(\iota, \alpha_m)$ where $\iota = |\mathcal{G}_\equiv|$ for some $\alpha_m \in \mathcal{G}_\equiv$.
 
 Note that this process is fully reversible, so agent enumeration in basic form can be easily reconstructed.
 
