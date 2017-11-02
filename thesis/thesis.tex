@@ -60,13 +60,9 @@
 
 \definecolor{mydarkgreen}{RGB}{48, 129, 7}
 
-% \usepackage{titlesec}
-
-% \titleformat{\subsubsection}
-%   {\bfseries}
-%   {\thesubsubsection}
-%   {10em}
-%   {}
+% uncomment in case of \subsubsection usage
+%\usepackage{titlesec}
+%\titleformat{\subsubsection}{}{\thesubsubsection}{1em}{\bfseries}
 
 % FI THESIS settings
 \thesistitle{Formal biochemical space for specification and analysis of biochemical processes}
@@ -384,17 +380,17 @@ Comprehensive Modeling Platform~\cite{cs2bio2013} is an online platform providin
 \draw[myarrow, draw=mydarkgreen, fill=mydarkgreen, shorten >=1pt, line width=1pt] (models) to (sbml);
 \end{tikzpicture}
 \end{center}
-\caption{text goes here}\label{cmp_overview}
+\caption{An overview of Comprehensive Modeling Platform. It is composed by three layers: (1) input to the platform, all the relevant data; (2) Biochemical Space as a intermediate format for the data; (3) output of the platform, results of analyses and visualisations.}\label{cmp_overview}
 \end{figure}
 
 \subsection{Biochemical Space}
 \label{bcs_general}
 
-The platform consists of several dedicated modules (Fig.~\ref{cmp_overview}), all connected to a central module -- \emph{Biochemical Space} (BCS)~\cite{BCS} -- that is the backbone of the platform. BCS provides formal description of the biological problem and it is based on the hierarchy of selected biological processes. It is accompanied with schemas representing relevant biological processes in the context of modelled system. For each process, there are presented relevant models, chemical entities, and rules. Presentation of every process includes detailed information and links to relevant internal and external sources.
+The platform consists of several dedicated modules (Fig.~\ref{cmp_overview}), all connected to a central module -- \emph{Biochemical Space} (BCS)~\cite{BCS} -- what is the backbone of the platform. BCS provides formal description and annotation of the biological system and it is based on the hierarchy of selected biological processes. It is accompanied with schemas representing relevant biological processes in the context of the modelled system. For each process, there are presented relevant models, chemical entities, and rules. Presentation of every process includes detailed information and links to relevant internal and external sources.
 
-BCS provides well described biological background for mathematical models of processes taking place in specific organism. Complete BCS provides a connection between existing ontologies and partial mathematical models. BCS offers a human readable format which can be easily edited in a dedicated editor and visualised on the website. First part of a BCS is represented by a set of \emph{entities} (to be compliant with process-algebraic frameworks we call entities \emph{agents}), while the second part contains \emph{rules} (abstractly represented chemical reactions defined over the set of entities). In our case study, a consortium of scientists is involved in modelling several cyanobacterial processes and in establishing of the respective BCS.
+BCS provides a well-described biological background for mathematical models of processes taking place in specific organism. Complete BCS provides a connection between existing ontologies and partial mathematical models. BCS offers a human readable format which can be easily edited in a dedicated editor and visualised within the platform. First part of a BCS is represented by a set of \emph{entities}, while the second part contains \emph{rules}.
 
-When building the BCS, emphasis is put on well-defined and complete annotations. Therefore, links to relevant ontologies must be specified for each entity and rule. Unique IDs provided by ontologies can help to automatically detect duplicities. IDs are also used to create hypertext links to related ontologies on the web, thus providing a one part of the already mentioned connection between ontologies and models. At this moment, links to KEGG~\cite{Kanehisa04012016}, ChEBI~\cite{ChEBI}, CyanoBase~\cite{CyanoBase} and other databases are supported. A single entity or a rule can have multiple links to several external databases. An example is presence of a particular entity in ChEBI as well as in KEGG. In the case of annotating enzymatic rules, an EC number (here acting as a descriptor of the rule mechanism behind the catalytic reaction) is associated to the enzyme via a respective KEGG ID.
+When building the BCS, emphasis is put on well-defined and complete annotations. Therefore, links to relevant ontologies must be specified for each entity and rule. Unique IDs provided by ontologies can help to automatically detect duplicities. IDs are also used to create hypertext links to related ontologies on the web, thus providing a one part of the already mentioned connection between ontologies and models. At this moment, links to KEGG~\cite{Kanehisa04012016}, ChEBI~\cite{ChEBI}, CyanoBase~\cite{CyanoBase}, and other databases are supported (example of usage is in Figure~\ref{database_links}). A single entity or a rule can have multiple links to several external databases. An example is presence of a particular entity in ChEBI as well as in KEGG.
 
 \begin{figure}[!h]
 \begin{center}
@@ -407,7 +403,7 @@ When building the BCS, emphasis is put on well-defined and complete annotations.
 \end{tabular}}
 }
 \end{center}
-\caption{Description, links, and notes information for an entity.}
+\caption{Description, links, and notes information for an entity.}\label{database_links}
 \end{figure}
 
 The fact that most attributes in entity and rule definitions are tightly coupled with information from linked ontologies is the reason why we have started with describing annotation attributes. In the first place, one of these attributes is \emph{name}, which is taken from ontologies or follows the standard naming conventions. \emph{ID} of every entity is fixed by the consortium. KEGG ID, ChEBI ID or internal ID is used if no reasonable \emph{ID} is available. \emph{ID}s of rules are internal and assigned automatically.
@@ -430,14 +426,14 @@ The fact that most attributes in entity and rule definitions are tightly coupled
 \end{tabular}}
 }
 \end{center}
-\caption{Complete information given for an atomic entity.}
+\caption{Complete information given for an atomic entity.}\label{entity_example}
 \end{figure}
 
-An entity in our interpretation is a bounded space (a so-called \emph{compartment}) or a structural part of a specific organism. BCS covers a hierarchy of entities ranging from small molecules (\emph{atomic entities (agents)}) through composite structures (\emph{structure entities (agents)}) to large complex molecules (\emph{complex entities (agents)}). Our goal is to make BCS as simple as possible. In existing ontologies, entities residing in several different states (oxidised, reduced, etc.) are usually treated as separate entities, thus causing the total number of entities to be enormous. To reduce this complexity, the concept of \emph{states} is defined in BCS. They allow to define allowed set of states, in which an atomic agent might occur.
+An entity in our interpretation is a bounded space (a so-called \emph{compartment}) or a structural part of a specific organism (for an example, see Figure~\ref{entity_example}). BCS covers a hierarchy of \emph{entities} (or \emph{agents}) ranging from small molecules (\emph{atomic entity}) through composite structures (\emph{structure entity}) to large complex molecules (\emph{complex entity}). Our goal is to make BCS as simple as possible. In existing ontologies, entities residing in several different states (oxidised, reduced, etc.) are usually treated as separate entities, thus causing the total number of entities to be enormous. To reduce this complexity, the concept of \emph{states} is defined in BCS. They allow to define allowed set of states, in which an atomic entity might occur.
 
 BCS extends the traditional concept of compartmentalisation with a hierarchy at the level of entities. A particular entity can reside in several different compartments. Additionally, \emph{classification} specifies the type of an entity in a sense of functional or structural characterisation.
 
-An entity can be a part of a structurally more complex entity. We consider two kinds of composite entities: structure and complex entities. Structure entity represents partially specified composite species, e.g. a photosystem complex partially specified with prosthetic groups of interest. Complex entity represents fully specified composite species, e.g., a homodimer of KaiC protein.
+An atomic entity can be a part of a structurally more complex entity. We consider two kinds of composite entities: structure (Figure~\ref{structure_example}) and complex entities. Structure entity represents partially specified composite species, e.g. a photosystem complex partially specified with prosthetic groups of interest. Complex entity represents fully specified composite species, e.g., a homodimer of KaiC protein.
 
 \begin{figure}[!h]
 \begin{center}
@@ -457,10 +453,10 @@ An entity can be a part of a structurally more complex entity. We consider two k
 \end{tabular}}
 }
 \end{center}
-\caption{Complete information given for a structure entity.}
+\caption{Complete information given for a structure entity.}\label{structure_example}
 \end{figure}
 
-Rules are specified by rule equations enriched with additional annotation information. When defining a rule equation, identifiers of substrates and products are used to make the notation of rules compact. Every entity appearing in a \emph{rule equation} has to be followed by the localisation operator associating it with a particular compartment. This is important especially for rules that act on both sides of a membrane. That way, a rule is always precisely localised in/inbetween compartments. A natural stoichiometric coefficient can be placed before any entity in a rule equation. Irreversible and reversible rules are distinguished by the operators `$\Rightarrow$', `$\Leftrightarrow$'. The `$+$' symbol is used as a separator between individual substrates and individual products. A rule can also have an assigned classification. Rule classification assigns a list of higher level biophysical processes in which the rule is involved.
+Rules are specified by \emph{rule equations} enriched with additional annotation information. When defining a rule equation, identifiers of substrates and products are used to make the notation of rules compact. Every entity appearing in a \emph{rule equation} has to be followed by the localisation operator associating it with a particular compartment. This is important especially for rules that act on both sides of a membrane. That way, a rule is always precisely localised in/inbetween compartments. A natural stoichiometric coefficient can be placed before any entity in a rule equation. Irreversible and reversible rules are distinguished by the operators `$\Rightarrow$', `$\Leftrightarrow$'. The `$+$' symbol is used as a separator between individual substrates and individual products. A rule can also have an assigned classification. Rule classification assigns a list of higher level biophysical processes in which the rule is involved. For an example, see Figure~\ref{rule_example}.
 
 \begin{figure}[!h]
 \begin{center}
@@ -478,7 +474,7 @@ Rules are specified by rule equations enriched with additional annotation inform
 \end{tabular}}
 }
 \end{center}
-\caption{Complete information for a rule.}
+\caption{Complete information for a rule.}\label{rule_example}
 \end{figure}
 
 In some cases, emphasis on a detailed description leads to very complex BCS models. Abstraction of some processes is therefore needed to keep BCS models as simple as possible. To this end, rules expressing enzymatic reactions are considered in a simplified form. In fact, there should be at least two different rules describing an enzymatic reaction (one for a substrate binding and another for a catalytic step). Instead, since an enzyme is not affected during the reaction, it is affiliated to the rule as a \emph{modifier}. However, it is difficult to define precise meaning of a modifier in this case. We rather treat the modifier attribute informally as an entity \textit{which has to be present} for the rule to be enabled. The exact reaction mechanism of an enzyme is not always clear and therefore it is abstracted out.
@@ -499,44 +495,16 @@ In some cases, emphasis on a detailed description leads to very complex BCS mode
 \end{tabular}}
 }
 \end{center}
-\caption{A rule employing structure entity state change.}
+\caption{A rule employing structure entity state change. A Threonine ($Thr$) amino acid residue of a $FGF$ protein inside a $FGFR2$ complex can change it's state from unphosphorylated ($u$) to phosphorylated ($p$).}
 \end{figure}
 
-Higher abstraction comes into account when several electrons play `musical chairs' inside protein complexes. The issue is that parts of processing protein complex can have different unstable states during a short period of time. When one tries to define all rules among these proteins, combinatorial explosion of the number of states of the complex arises. Not all of these combinations are biologically correct. Even when excluding biologically inadmissible cases, the number of states is still enormous. For the purpose of BCS, we introduce a solution inspired by the enzymatic rule mentioned above. We treat a protein complex as a structure entity on which structurally simpler entities change its state (not necessarily proteins) and we abstract from background processes. We can see a particular rule as a change of a state of a structure entity.
+Higher abstraction comes into account when several electrons play `musical chairs' inside protein complexes. The issue is that parts of processing protein complex can have different unstable states during a short period of time. When one tries to define all rules among these proteins, combinatorial explosion of the number of states of the complex arises. Not all of these combinations are biologically correct. Even when excluding biologically inadmissible cases, the number of states is still enormous. For the purpose of BCS, we introduce a solution -- we treat a protein complex as a structure entity on which structurally simpler atomic entities change their states (not necessarily proteins) and we abstract from background processes.
 
-\subsubsection{The difference between BCS and BCSL}
+When describing particular process or object, we can go almost infinitely deeper into details. Even if the depth is not infinite, it is deep enough to lead into state when the description larger than object itself. Imagine that you want to describe a molecule as position of each atom. You definitely need more space to store such information than the molecule itself occupies.
 
-It is important to realise the difference between Biochemical Space Language and Biochemical Space. 
+Therefore, when creating a BCS, we choose a level of details which we do not exceed. This ensures the size of BCS will not exponentially increase with additional details. The problem might occur when we try to map a model which uses more detailed description of the system than BCS does. However, we simply allow relating multiple model objects to BCS objects and \emph{vice versa}. For example, multiple model reactions might be mapped on one BCS rule denoting the fact the process represented by the rule can be described in more details by the reactions. On the other hand, model might neglect some details. Then for example, a reaction can be mapped on multiple rules with similar meaning than in previous case.
 
-The general goal of BCS is to provide knowledge base for mathematical models. In order to achieve that, Biochemical Space is formed by a database of biochemical entities. This allows us to describe particular objects with their attributes and properties and form space hierarchy. Each entity should be properly annotated by description and links to suitable external databases. However, entities are not enough for describing models since it requires also process hierarchy. Therefore, alongside with space hierarchy of entities, process hierarchy is build via interactive schemes. The hierarchy allows us to zoom on individual rules which present atomic operations happening on the entities.
-
-To improve usability and verifiability of the BCS, we defined Biochemical Space Language. The language is formally defined and serves for describing the entities and the rules. It has rule-based semantics, what allows compact description of the objects. Moreover, the syntax was designed in order to be very concise and human-readable. Hence it is very suitable for our needs.
-
-The whole BCS is defined in BCSL. This fact makes sure the entities and the rules are defined with all appropriate properties. Moreover, it helps us to relate objects from the models to BCS objects. Note that due to rule-based nature of the BCSL, in BCS there are defined only abstract objects representing types. Therefore, when relating for example an model variable to BCS entity, we might need to specify it's properties. 
-
-\begin{figure}[!h]
-\begin{center}
-  \includegraphics[scale=0.13]{pics/bcsl_vs_bcs.pdf}
-\end{center}
-\caption{BCS domain serves for improved BCSL models definition, which leads to better model readability and results.}
-\end{figure}
-
-Once BCS is build, we can use it to reference the models. It means to relate all the variables and reactions of the model and to entities and rules of BCS. In particular, each variable should have assigned an entity for BCS. It increases information value of the variable (due to annotation of BCS entity). Since reactions of the model are composed from its variables, this way we also rewrite general reactions to reactions written in BCSL. The result of relating all the entities is model written in BCSL. 
-
-Model defined in BCSL has two main advantages -- formal analysis can be applied on the model and the biological meaning of the whole model is fully reconstructed.
-
-To sum it up, BCS serves as definition domain for models written in BCSL (so called signature). It defines what can and what cannot be written in models and also increases rule compactness due to syntactic extensions. For example, some context might be omitted from the rule because it can be reconstructed from the signature.
-
-\subsubsection{The level of abstraction}
-\label{level_of_abstraction}
-
-When describing particular process or object, we can go almost infinitely deeper into details. Even if the depth is not infinite, it deep enough to lead into state when the description larger than object itself. Imagine that you want to describe a molecule as position of each atom. You definitely need more space to store such information than the molecule itself occupies.
-
-Therefore, when creating BCS, we choose a level of details which we do not exceed. This ensures the size of BCS will not exponentially increase with additional details. The problem might occur when we try to map a model which uses more detailed description of the system than BCS does. However, we simply allow relating multiple model objects to BCS objects and vice versa. For example, multiple model reaction might be mapped on one BCS rule denoting the fact the process represented by the rule can be described in more details by the reactions. On the other hand, model might neglect some details. Then for example, a reaction can be mapped on multiple rules with similar meaning than in previous example.
-
-\subsubsection{BCSL as annotation in SBML export}
-
-Since platform allows export of models in SBML format, we employ resolvable identifier links~\cite{juty2011identifiers}. These links are included in generated SBML file and point to appropriate rules and entities in BCS. 
+Since CMP allows export of models in SBML format, we employ resolvable identifier links~\cite{juty2011identifiers}. These links are included in generated SBML file and point to appropriate rules and entities in BCS.
 
 \subsection{Model Repository}
 \label{model}
@@ -560,7 +528,7 @@ There are several aspects which must be considered when defining new language. F
 
 \section{Desired abstraction level}
 
-In section~\ref{level_of_abstraction}, we have motivated the level of abstraction we need to use in BCS. To achieve that, we decided to neglect structural details, i.e. we do not employ binding approach. We consider binding as too low level of details. Instead, we improve definition of interacting agents to higher level, when it agent itself might express some kind of structural description. This way, we avoid complicated creation of complexes and reduce complicated syntax.
+In section~\ref{bcs_general}, we have motivated the level of abstraction we need to use in BCS. To achieve that, we decided to neglect structural details, i.e. we do not employ binding approach. We consider binding as too low level of details. Instead, we improve definition of interacting agents to higher level, when it agent itself might express some kind of structural description. This way, we avoid complicated creation of complexes and reduce complicated syntax.
 
 \begin{figure}[!h]
 \begin{center}
@@ -584,9 +552,18 @@ However, this indirect approach had several disadvantages. First of all, Kappa h
 
 From the implementation point of view, executing models was delayed by conversion to Kappa and then calling Kappa core to apply it's semantics. Moreover, Kappa uses network-free simulator, which is very efficient the models, because the rules are executed directly. Each rule is being matched on current state and then matched objects are replaced according the rule. The problem is when model is more complex. The number of rules does not cause significant change, however number of different interacting agents does. Once there are many agents, the time of one match \& replace step rises dramatically. Compared to indirect methods when first reaction network is enumerated, the initial step takes some time, but then rule application itself is fast regardless number of agents.
 
-\section{Formal preliminaries}
+\chapter{Formal definition}
+\label{formal_definition}
 
-In this section, we recall some basic notations and provide all necessary definition in order to build formal definition for the language.
+In this chapter, we define Biochemical Space Language formally. First, we define all the required objects, then we define syntax of the language and finally give semantics to the BCSL models.
+
+The semantics we give is indirect, i.e. we don't give semantic sense to rules themselves, rather provide a procedure how to generate reactions from the rules and give semantics to them.
+
+For better readability, we provide examples of syntax for most important object during their definition. However, the formal definition of syntax itself and the relation to the objects will be given later.
+
+Before we proceed, we recall some basic notations and provide all necessary definition in order to build formal definition for the language.
+
+\section{Formal preliminaries}
 
 \begin{definition}{Labelled transition system}\label{lts}
 \textit{Labelled transition system} (LTS) $\mathcal{L}$ is a quadruple $(S, A, \Delta, s_0)$ where:
@@ -645,14 +622,6 @@ Finally, we also need to use permutations product. For this purpose, we use comm
 Let $S$ be a set. By $\sigma(S)$ we denote set of all possible permutations created from the set $S$ with length $|S|$.
 \end{notation}
 
-\chapter{Formal definition}
-\label{formal_definition}
-
-In this chapter, we define Biochemical Space Language formally. First, we define all the required objects, then we define syntax of the language and finally give semantics to the BCSL models.
-
-The semantics we give is indirect, i.e. we don't give semantic sense to rules themselves, rather provide a procedure how to generate reactions from the rules and give semantics to them.
-
-For better readability, we provide examples of syntax for most important object during their definition. However, the formal definition of syntax itself and the relation to the objects will be given later.
 
 \section{Objects definition}
 
@@ -1795,6 +1764,31 @@ it would be great to somehow demonstrate defined statical analysis here
 -- also the context reduced network -- a more complicated model which is small after reduction, show that something is not reachable
 
 practical examples of defined objects
+
+\chapter{Discussion}
+
+\subsubsection{The difference between BCS and BCSL}
+
+It is important to realise the difference between Biochemical Space and Biochemical Space Language which we are about to define.
+
+The general goal of BCS is to provide knowledge base for mathematical models. In order to achieve that, Biochemical Space is formed by a database of biochemical entities. This allows us to describe particular objects with their attributes and properties and form space hierarchy. Each entity should be properly annotated by description and links to suitable external databases. However, entities are not enough for describing models since it requires also process hierarchy. Therefore, alongside with space hierarchy of entities, process hierarchy is build via interactive schemes. The hierarchy allows us to zoom on individual rules which present atomic operations happening on the entities.
+
+To improve usability and verifiability of the BCS, we define Biochemical Space Language. The language formally describes the entities and the rules. It has rule-based semantics, what allows compact description of the objects. Moreover, the syntax was designed in order to be very concise and human-readable. Hence it is very suitable for our needs.
+
+The whole BCS is defined in BCSL. This fact makes sure the entities and the rules are defined with all appropriate properties. Moreover, it helps us to relate objects from the models to BCS objects. Note that due to rule-based nature of the BCSL, in BCS there are defined only abstract objects representing types. Therefore, when relating for example an model variable to BCS entity, we might need to specify it's properties. 
+
+\begin{figure}[!h]
+\begin{center}
+  \includegraphics[scale=0.13]{pics/bcsl_vs_bcs.pdf}
+\end{center}
+\caption{BCS domain serves for improved BCSL models definition, which leads to better model readability and results.}
+\end{figure}
+
+Once BCS is build, we can use it to reference the models. It means to relate all the variables and reactions of the model and to entities and rules of BCS. In particular, each variable should have assigned an entity for BCS. It increases information value of the variable (due to annotation of BCS entity). Since reactions of the model are composed from its variables, this way we also rewrite general reactions to reactions written in BCSL. The result of relating all the entities is model written in BCSL. 
+
+Model defined in BCSL has two main advantages -- formal analysis can be applied on the model and the biological meaning of the whole model is fully reconstructed.
+
+To sum it up, BCS serves as definition domain for models written in BCSL (so called signature). It defines what can and what cannot be written in models and also increases rule compactness due to syntactic extensions. For example, some context might be omitted from the rule because it can be reconstructed from the signature.
 
 \chapter{Conclusions}
 
