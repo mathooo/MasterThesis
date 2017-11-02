@@ -60,13 +60,13 @@
 
 \definecolor{mydarkgreen}{RGB}{48, 129, 7}
 
-\usepackage{titlesec}
+% \usepackage{titlesec}
 
-\titleformat{\subsubsection}
-  {\bfseries}
-  {\thesubsubsection}
-  {10em}
-  {}
+% \titleformat{\subsubsection}
+%   {\bfseries}
+%   {\thesubsubsection}
+%   {10em}
+%   {}
 
 % FI THESIS settings
 \thesistitle{Formal biochemical space for specification and analysis of biochemical processes}
@@ -108,16 +108,16 @@ key words
 
 \chapter{Background}
 
-In this chapter, we introduce all relevant terms which will be used in the thesis. Namely, we give an introduction to rule-based modelling and compare it to usual reaction-based approach. Then we describe typical representatives of the rule-based languages and highlight their key features. We also introduce Comprehensive Modeling Platform with it core parts and provide motivation behind Biochemical Space, as a key feature of the platform.
+In this chapter, we introduce all relevant terms which will be used in the thesis. Namely, we give an introduction to rule-based modelling and compare it to usual reaction-based approach. Then we describe typical representatives of the rule-based languages and highlight their key features. We also introduce Comprehensive Modeling Platform with its core parts and provide motivation for Biochemical Space, as a key feature of the platform.
 
 \section{Rule-based modelling}
 \label{Rule-based basics}
 
-Modelling complex systems in biology is necessary with respect to its complexity and size. The more complex the system is, the harder it is to describe it formally. The typical approach in modelling is using chemical reactions or ordinary differential equations. The general problem with these approached is that number of interacting objects and interactions themselves are often too high to be effectively enumerated. Rule-based modelling offers a solution for this problem. It is a natural extension of reaction-based approach, when instead of operating with object, we operate with \emph{types} of objects. The semantics of the model are defined via \emph{rules} on the given types. Typically, rule-based models are more concise.
+Modelling complex systems in biology, such as individual cells, is necessary with respect to their complexity and size. The more complex the system is, the harder it is to describe it formally. The typical approach in modelling is using chemical reactions or ordinary differential equations~\cite{coddington1955theory}. The general problem with these approaches is that they require to enumerate all interacting objects and interactions themselves. However, this number is often too high to be effectively processed. Rule-based modelling offers a solution for this problem. It is a natural extension of reaction-based approach. Instead of operating with objects, we operate with \emph{types} of objects. The semantics of the model are defined via \emph{rules} on the given types. Typically, rule-based models are more concise.
 
-There are multiple approaches to rule-based modelling, but all of them match in principle described above. 
+There are multiple approaches to rule-based modelling, but all of them match in principle described above.
 
-We represent model $\mathds{M}$ as set of rules and an initial solution of interacting entities. We understand solution as a mixture of individual objects which are randomly distributed (Fig.~\ref{solutions:fig}a). Therefore, we cannot assign them any order and we do not see them as expressions but rather as multisets. For us, this representation of solution is the closest to the reality.
+We represent a rule-based model $\mathds{M}$ as a set of rules and an initial solution of interacting objects. We understand solution as a mixture of individual objects which are randomly distributed (Fig.~\ref{solutions:fig}a). Therefore, we cannot assign them any order and we do not see as multisets. From biological perspective, this representation of solution is as close as is possible to the reality while preserving conciseness.
 
 \begin{figure}[!h]
 \begin{center}
@@ -129,20 +129,9 @@ We represent model $\mathds{M}$ as set of rules and an initial solution of inter
 \end{center}
 \end{figure}
 
-On the other hand, the rules are expressions which describe behavior of groups of objects. A rule has form of a chemical reaction, where substrates and products take place. The difference is that reaction only operates on particular objects. Therefore, a reaction can be seen as a special case of rule (Fig.~\ref{rules:fig}), where the types match exactly one element.
+The rules are patterns which describe behavior of groups of objects. A rule has form of an abstract chemical reaction, where substrates and products take place. The difference is that reaction only operates on particular objects, while in rule groups of objects are interacting. Therefore, a reaction can be seen as a special case of a rule (Fig.~\ref{rules:fig}), where the type represents exactly one object.
 
-The rule can be mapped on a solution. Then, if it is mapped, it can be applied and a new solution is produced. The mapping is not always successful (Fig.~\ref{solutions:fig}, application of rule \textit{c}). By repeating map-apply action, we obtain a \textit{Labelled transition system} $\mathcal{L}$ (Definition~\ref{lts}).
-
-\begin{definition}{Labelled transition system}\label{lts}
-\textit{Labelled transition system} (LTS) $\mathcal{L}$ is a tuple $(S, A, \Delta, s_0)$ where:
-
-\begin{itemize}
-  \item $S$ is a (potentially infinite) set of states (solutions),
-  \item $A$ is a set of labels (reactions),
-  \item $\Delta \subseteq S \times A \times S$ is a transition relation (the map-apply action),
-  \item $s_0 \in S$ is the initial state (initial solution).
-\end{itemize}
-\end{definition}
+The rule is mapped on a solution. Then, it can be applied and a new solution is produced. The mapping is not always successful (Fig.~\ref{solutions:fig}, application of rule \textit{c}). %By repeating map-apply action, we obtain a \textit{Labelled transition system} $\mathcal{L}$ (Definition~\ref{lts}).
 
 \begin{figure}[!h]
 \begin{center}
@@ -166,12 +155,14 @@ The rule can be mapped on a solution. Then, if it is mapped, it can be applied a
   \begin{minipage}[r]{0.6\textwidth}
     {\hspace*{1.3cm}\includegraphics[scale=0.2]{pics/rule_diss}}
 \end{minipage}
-\caption{\textbf{Examples of rules}. Rule \textbf{(a)}: a $\square$ and a $\bigcirc$ can form a complex $\square$--$\bigcirc$ regardless their colors. Rule \textbf{(b)}: a $\square$ is allowed to change it's color from red to green only if it formed a complex with a $\bigcirc$ regardless it's color. Rule \textbf{(c)}: the rule can disassemble the complex only if the $\bigcirc$ is yellow.}
+\caption{\textbf{Examples of rules}. Rule \textbf{(a)}: a $\square$ and a $\bigcirc$ can form a complex $\square$--$\bigcirc$ regardless their colors. Rule \textbf{(b)}: a $\square$ is allowed to change it's color from red to green only if is in a complex with a $\bigcirc$ regardless it's color. Rule \textbf{(c)}: the rule can disassemble the complex only if the $\bigcirc$ is yellow.}
 \label{rules:fig}
 \end{center}
 \end{figure}
 
-The mapping of a rule on a solution can be seen as a particular moment, when the objects in the solution have just the conformation suitable for the rule and therefore the rule can be applied. However, since the distribution of objects is random, we can assume a sequence of objects needed for rule (if there are such objects) is always available.
+The mapping of a rule on a solution can be understood as a particular moment when the objects in the solution have just the conformation suitable for the rule and therefore the rule can be applied. However, since the distribution of objects is random, we can assume a sequence of objects needed for rule (if there are such objects) is always available.
+
+Moreover, the mapping can also be seen as assigning particular objects from the solution to types on the left-hand-side of the rule. The rule application then represents the change of the mapped objects to new objects according to the right-hand-side of the rule (i.e., particular objects are assigned to the right-hand-side). As a by-product, we obtain an instance of the rule -- a reaction (Fig.~\ref{map-apply:fig}). %This is how we construct the set of labels (reactions) $A$ in the LTS $\mathcal{L}$.
 
 \begin{figure}[!h]
 \begin{center}
@@ -200,36 +191,34 @@ The mapping of a rule on a solution can be seen as a particular moment, when the
 \end{center}
 \end{figure}
 
-Moreover, the mapping can be seen as assigning particular objects from the solution to objects on the left-hand-side of the rule. The rule application can be then seen as changing the mapped objects to new objects according to the right-hand-side of the rule (i.e., particular objects are assigned to the right-hand-side). As a by-product, we obtain an instance of the rule -- a reaction (Fig.~\ref{map-apply:fig}). This is how we construct the set of labels (reactions) $A$ in the LTS $\mathcal{L}$.
+Since this kind of graphical representation is not very suitable for machine processing and analyses, we define a formal language which is built on principles described in this chapter.
 
-Since this kind of graphical representation is not very suitable for describing the processes and for machine processing, we define a formal language which is built on principles described in this chapter.
+\section{Rule-based vs. reaction-based modelling}
 
-\section{Rule-based vs. reaction-based}
-
-A rule is a generalized reaction. This is how the difference can be characterized. From the application point of view (ref), reaction can be applied on a solution only in a particular way whilst rule can be applied in multiple ways (see ref mapping picture). It allows to write models, where many similar processes might occur via rules, by defining a pattern (or context) in which the action can happen. Since there might be many features we need to express, there are several languages focusing on different form of details.  
+A rule is a generalised reaction (Figure~\ref{reaction_vs_rule}). This is how the difference can be characterised. From the application point of view, reaction can be applied on a solution only in a particular way whilst rule can be applied in multiple ways. It allows to write models where many similar processes might occur with rules, by defining a pattern in which the action can happen. Since there might be many features we need to express, there are several languages focusing on different level of details.
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[scale=0.5]{pics/reaction_vs_rule}
 \end{center}
-\caption{Graphical comparison of rule-based and reaction-based approaches. There can be seen combinatorial explosion in number of possible particular interactions (reactions), which can be depicted in a few simple rules.}
+\caption{Graphical comparison of rule-based and reaction-based approaches. There can be seen combinatorial explosion in number of possible particular interactions (reactions), which can be depicted in a few simple rules.}\label{reaction_vs_rule}
 \end{figure}
 
-From static analysis point of view, using rules directly is not the best choice. The main reason is so-called side effects, which might happen during rule application. These side-effect differ from language to language, and it is a feature we tried to avoid in BCS as much as is possible. There is no such thing for reaction, because all the context is enumerated explicitly. Therefore, we cannot statically say how exactly will be the rule used.
+Analysis of rules directly is not the best choice. The main reason is so-called side effects, which might happen during rule application. These side-effects differ from language to language, and it is a feature we tried to avoid in BCS as much as is possible (and therefore it was not mentioned in previous section). There is no such thing for reaction, because entire the context is enumerated explicitly. Therefore, we cannot directly know how exactly will be the rule used.
 
-The rule and reaction differ in level of abstraction. In this context we mean how stringent it is, not what sort of features particular language uses. This is universal attribute for all rule-based languages -- the rule is always more abstract than it's instance -- a reaction. Then, analysis of such abstract object statically is a challenge. (cite ?) The reason is that most of the structural information is encoded in rules implicitly. For static analysis, explicit data are more suitable.
+The rule and reaction differ in level of abstraction. In this context we mean how stringent it is, not what sort of features particular language uses. This is universal attribute for all rule-based languages -- the rule is always more abstract than it's instance -- a reaction. Then, analysis of such abstract object statically is a challenge. The reason is that most of the structural information is encoded in rules implicitly. For static analysis, explicit data are more suitable.
 
 \section{Rule-based languages}
 \label{rule_based_languages}
 
-There are several rule-based languages dedicated for modeling of biological systems. Each of them uses different features and abstractions. In this chapter, we will try to highlight the key features for some representatives of them.
+There are several rule-based languages dedicated for modeling of biological systems. Each of them uses different features and abstractions. In this chapter, we will highlight the key features for some representatives of them.
 
 \subsection{Kappa}
 \label{kappa}
 
-This language was developed for modeling of protein-protein interactions. Therefore, the key feature of the language are it's so called \textit{agents} with \textit{binding sites}, which allow formation of bonds between the agents. Each binding site must be unique and at most one bond. Moreover, each site can occur in one of several pre-defined states.
+The Kappa language~\cite{kappa_formal} was developed for modeling of protein-protein interactions. The key feature of the language are so called \textit{agents} with \textit{binding sites}, which allow formation of bonds between the agents. Each binding site must be unique with at most one bond. Moreover, each site can occur in one of several pre-defined states.
 
-The \textit{Kappa rules} are changing properties of the agents. Particularly, it might add/delete/change a bond or a state of one or multiple agents at once. Such as all the other rule-based languages, when we do not care about some context, we simply omit it. Example of a rule is in Figure~\ref{kappa-rule}.
+The Kappa \textit{rules} are changing properties of the agents. Particularly, it might add/delete/change a bond or a state of one or multiple agents at once. The rules are just patterns where on both sides is a sequence of agents delimited by a comma. Such as all the other rule-based languages, when they do not care about some context, we simply omit it. Example of a rule is in Figure~\ref{kappa-rule}.
 
 \begin{figure}[!h]
 \begin{center}
@@ -238,15 +227,15 @@ The \textit{Kappa rules} are changing properties of the agents. Particularly, it
 (b) & A(bsa), B(bsb$\sim$a) $\rightarrow$ A(bsa!1), B(bsb$\sim$a!1) \\
 \end{tabular}
 \end{center}
-\caption{Example of a Kappa rule. (a) Definition of associated agents. (b) The rule itself. Note the context which has no importance for the interaction is omitted.}\label{kappa-rule}
+\caption{Example of a Kappa rule. (a) Definition of associated agents. There are allowed two agents, A and B, both with a binding site which might occur in two possible states. (b) The rule itself. It defines creation of bond on the sites of agents A and B such that site of agent B must be in a active (a) state. Note the context which has no importance for the interaction is omitted.}\label{kappa-rule}
 \end{figure}
 
-The general problem we have to face with in Kappa is too detailed description. For biological systems as defined in chapter~\ref{Rule-based basics}, it might be often hard to deal with all the bonds, especially in cases when we do not need such detail.
+The general problem we have to face with in Kappa is too detailed description. For biological systems as defined in chapter~\ref{Rule-based basics}, it might be often hard to deal with all the bonds, especially in cases when we do not need such details.
 
 \subsection{BioNetGen Language}
 \label{bngl}
 
-BioNetGen Language (BNGL,~\cite{BNGL}) is very similar to Kappa (Section~\ref{kappa}). There are a few general differences: (1) it is allowed to define multiple binding sites with same name for an agent; (2) one binding site is allowed to have multiple bonds; (3) in the rules BNGL uses `+' and `.' for expressing reaction complex and complex of agents respectively. Example of a rule is in Figure~\ref{bngl-rule}.
+BioNetGen Language (BNGL) \cite{BNGL} is very similar to Kappa language and also has similar disadvantages. There are a few general differences: (1) it is allowed to define multiple binding sites with same name for an agent; (2) one binding site is allowed to have multiple bonds; (3) in the rules BNGL uses `+' and `.' for expressing reaction complex and complex of agents respectively. Example of a rule is in Figure~\ref{bngl-rule}.
 
 \begin{figure}[!h]
 \begin{center}
@@ -256,12 +245,12 @@ BioNetGen Language (BNGL,~\cite{BNGL}) is very similar to Kappa (Section~\ref{ka
 (b) & A(bsa) + B(bsb$\sim$a) $\rightarrow$ A(bsa!1).B(bsb$\sim$a!1) \\
 \end{tabular}
 \end{center}
-\caption{Example of a BGNL rule. (a) Definition of associated agents. (b) The rule itself. Note the A and B agents must first create \emph{reaction complex} denoted with `+' (i.e., they must be close to each other) and then they create \emph{complex of agents} denoted as `.' (i.e., they are physically connected).}\label{bngl-rule}
+\caption{Example of a BGNL rule. (a) Definition of associated agents. There are allowed two agents, A and B, both with a binding site which might occur in two possible states. (b) The rule itself. Note the A and B agents must first create \emph{reaction complex} denoted with `+' (i.e., they must be close to each other) and then they create \emph{complex of agents} denoted as `.' (i.e., they are physically connected).}\label{bngl-rule}
 \end{figure}
 
 \subsection{Chromar}
 
-The language allows to define attributes for agents and range them over pre-defined domains. The qualitative semantics are given by rule match on multisets composed from these agents producing reaction. It is followed by standard application of the reaction (in manner of multiset operations). The language is very useful when creating a model where we need to create new distinct objects and control population of these objects.
+The Chromar language~\cite{honorato2017chromar} allows to define attributes for agents and range them over pre-defined domains. The qualitative semantics are given by rule match on multisets composed from these agents producing reaction. It is followed by standard application of the reaction (in manner of multiset operations). The language is very useful when creating a model where we need to create new distinct objects and control population of these objects.
 
 Embedding this language to functional programming language Haskell increases its expressive power while making the ability of some analysis more expensive. Moreover, one needs to learn Haskell (at least it's basics) in order to use Chromar.
 
@@ -269,16 +258,16 @@ Embedding this language to functional programming language Haskell increases its
 \begin{center}
 A(a = x), A(a = y) $\xrightarrow[]{\text{f(x,y)}}$ A(a = x + y), A(a = y - 1) [g(x, y)]
 \end{center}
-\caption{Example of a Chromar rule.}\label{chromar-rule}
+\caption{Example of a Chromar rule. Arithmetic operations can be used in order to change properties of individual agents. Moreover, a rate function $f$ and conditional function $g$ increase applicability and practical use of the rule.}\label{chromar-rule}
 \end{figure}
 
-It want to highlight an important feature of stochastic semantics which this language offers. Compared to other rule-based languages, it is capable of specifying rates for individual reactions inherited from the rule. This is allowed by variable value bindings and type-determination between left- and right-hand-side of the rule.
+It is important to highlight a feature of stochastic semantics which this language offers. Compared to other rule-based languages, it is capable of specifying rates for individual reactions inherited from the rule. This is allowed by variable value bindings and type-determination between left- and right-hand-side of the rule.
 
 However, when it comes to readability and presentation to the user, the language is not a best-fit. All the biologically relevant terms such as states must be encoded to natural numbers.
 
 \subsection{PySB}
 
-This language works as a package to Python language. The definition of models directly in the code allows to use the full syntax of Python, what dramatically increases expression power of PySB. On the other hand, it might be hard to follow abstraction which are this way possible and models themselves are hard to analyze. Moreover, the core of the language is made by translating to BGNL~\ref{bngl}.
+The PySB language~\cite{Lopez646} works as a package in Python programming language. The definition of models directly in the code allows to use the full syntax of Python, what dramatically increases expression power of PySB. On the other hand, it might be hard to follow abstraction which are this way possible and models themselves are hard to analyze. Moreover, the core of the language is made by translating to BGNL~\ref{bngl}.
 
 \begin{figure}[!h]
 \begin{center}
@@ -291,12 +280,12 @@ Monomer('R', ['s'])
 Rule(L(s=None) + R(s=None) <> L(s=1) % R(s=1), kf, kr)
 \end{python}
 \end{center}
-\caption{Example of a PySB rule.}\label{PySB-rule}
+\caption{Example of a PySB rule. The rule describes creation of a bond between agents $\mathtt{R}$ and $\mathtt{L}$.}\label{PySB-rule}
 \end{figure}
 
 \subsection{SBML-multi package}
 
-Systems Biology Markup Language (SBML) is a standard established for systems biology. It is able to describe all necessary rule-based features and therefore it is possible to export each such language in this format. It is the most suitable format for exchange and storage of the models, but less for analysis and direct representation to the users (it is an XML format). It serves as intermediate language.
+Systems Biology Markup Language (SBML)~\cite{hucka2003systems} is a standard established for systems biology. A SBML-multi package~\cite{zhang2015sbml} is able to describe all necessary rule-based features and therefore it is possible to export each such language in this format. It is the most suitable format for exchange and storage of the models, but less for analysis and direct representation to the users (it is an XML format). It serves as intermediate language.
 
 \begin{figure}[!h]
 \lstset{language=XML}
@@ -599,7 +588,18 @@ From the implementation point of view, executing models was delayed by conversio
 
 In this section, we recall some basic notations and provide all necessary definition in order to build formal definition for the language.
 
-In following we define projection $\pi_i$ to enable iterating through multidimensional structures.
+\begin{definition}{Labelled transition system}\label{lts}
+\textit{Labelled transition system} (LTS) $\mathcal{L}$ is a quadruple $(S, A, \Delta, s_0)$ where:
+
+\begin{itemize}
+  \item $S$ is a (potentially infinite) set of states (solutions),
+  \item $A$ is a set of labels (reactions),
+  \item $\Delta \subseteq S \times A \times S$ is a transition relation (the map-apply action),
+  \item $s_0 \in S$ is the initial state (initial solution).
+\end{itemize}
+\end{definition}
+
+We define projection $\pi_i$ to enable iterating through multidimensional structures.
 
 \begin{definition}{Projection}
 Projection $\pi_i : X^n \rightarrow X $ is defined as follows:
