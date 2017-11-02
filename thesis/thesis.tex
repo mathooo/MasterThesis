@@ -593,18 +593,13 @@ However, this indirect approach had several disadvantages. First of all, Kappa h
 
 -- picture of examples, different approach to complexes
 
-From the implementation point of view, executing models was delayed by conversion to Kappa and then calling Kappa core to apply it's semantics. Moreover, Kappa uses network-free simulator, which is very efficient the models, because the rules are executed directly. Each rule is being matched on current state and then matched objects are replaced according the rule. The problem is when model is more complex. The number of rules does not cause significant change, however number of different interacting agents does. Once there are many agents, the time of one match \& replace step rises dramatically. Compared to indirect methods when first reaction network is enumerated, the initial step takes some time, but then rule application itself is fast regardless number of agents. 
+From the implementation point of view, executing models was delayed by conversion to Kappa and then calling Kappa core to apply it's semantics. Moreover, Kappa uses network-free simulator, which is very efficient the models, because the rules are executed directly. Each rule is being matched on current state and then matched objects are replaced according the rule. The problem is when model is more complex. The number of rules does not cause significant change, however number of different interacting agents does. Once there are many agents, the time of one match \& replace step rises dramatically. Compared to indirect methods when first reaction network is enumerated, the initial step takes some time, but then rule application itself is fast regardless number of agents.
 
-\chapter{Formal definition}
-\label{formal_definition}
+\section{Formal preliminaries}
 
-In this chapter, we define Biochemical Space Language formally. First, we define all the required objects, then we define syntax of the language and finally give semantics to the BCSL models.
+In this section, we recall some basic notations and provide all necessary definition in order to build formal definition for the language.
 
-The semantics we give is indirect, i.e. we don't give semantic sense to rules themselves, rather provide a procedure how to generate reactions from the rules and give semantics to them.
-
-For better readability, we provide examples of syntax for most important object during their definition. However, the formal definition of syntax itself and the relation to the objects will be given later.
-
-Before we proceed, we need to define projection $\pi_i$ to enable iterating through multidimensional structures.
+In following we define projection $\pi_i$ to enable iterating through multidimensional structures.
 
 \begin{definition}{Projection}
 Projection $\pi_i : X^n \rightarrow X $ is defined as follows:
@@ -616,7 +611,48 @@ $ \pi_i(x_1, \ldots, x_n) = x_i $
 for some $i, n \in \mathbb{N}$ and $i \leq n$.
 \end{definition}
 
-We also need to define permutations...
+Next, we need to define tuples concatenation, since we work with them quite often want to make sure this operation is clear.
+
+\begin{definition}{Tuples concatenation}
+
+Let $X = (x_1, \ldots, x_n), Y = (y_1, \ldots, y_m)$ be two tuples for some $n, m \in \mathbb{N}$. Concatenation of two tuples, written $X \mdoubleplus Y$, is defined as:
+
+\begin{center}
+$X \mdoubleplus Y = (x_1, \ldots, x_n, y_1, \ldots, y_m)$.
+\end{center}
+\end{definition}
+
+Then, we can generalise concatenation operation to multiple tuples.
+
+\begin{definition}{Sum of concatenations}
+
+Let $T = (T_1, T_2, \ldots, T_n)$ be sequence of tuples. Concatenation of sequence of tuples $\mdoubleplus_{i=1}^n T_i$ is defined as:
+
+\begin{center}
+$\mdoubleplus_{i=1}^n T_i = T_1 \mdoubleplus T_2 \mdoubleplus \ldots \mdoubleplus T_n $
+\end{center}
+\end{definition}
+
+A non-crossing partition of $S$ is a partition in which no two blocks "cross" each other.
+
+\begin{definition}{Non-crossing partition}
+A partition $\mathcal{P} = B_1/B_2/\ldots/B_k$ of $S = [1,\ldots,n]$ is non-crossing if  whenever a quadruple of elements $1 \leq a < b < c < d \leq n$ satisfies $a, c \in B_i$ and $b, d \in B_j$ for some $1 \leq i, j \leq k$, then in fact $i = j$; thus, the blocks do not cross.
+\end{definition}
+
+Finally, we also need to use permutations product. For this purpose, we use common notion $\sigma$.
+
+\begin{notation}
+Let $S$ be a set. By $\sigma(S)$ we denote set of all possible permutations created from the set $S$ with length $|S|$.
+\end{notation}
+
+\chapter{Formal definition}
+\label{formal_definition}
+
+In this chapter, we define Biochemical Space Language formally. First, we define all the required objects, then we define syntax of the language and finally give semantics to the BCSL models.
+
+The semantics we give is indirect, i.e. we don't give semantic sense to rules themselves, rather provide a procedure how to generate reactions from the rules and give semantics to them.
+
+For better readability, we provide examples of syntax for most important object during their definition. However, the formal definition of syntax itself and the relation to the objects will be given later.
 
 \section{Objects definition}
 
@@ -755,7 +791,7 @@ Rule $\mathtt{R}$ is a 5-tuple $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt
 \item $\omega \in (\mathds{A} \cup \mathds{T})^m$ is a sequence of atomic and structure agents,
 \item $\mathtt{I} \in \{ 1, \ldots, n \}$ is an index determining start of right-hand-side,
 \item $\mathtt{map} \in \mathbb{N}^m$ is an index map between $\omega$ and $\chi$,
-\item $\mathtt{Indices} \subseteq (\{-\} \cup \mathbb{N})^2$ is an index map between agents from left- and right-hand side (always sorted lexicographically such that $'-' > i$ for every $i \in \mathbb{N}$)
+\item $\mathtt{Indices} \in ((\{-\} \cup \mathbb{N})^2)^n$ is an index map between agents from left- and right-hand side.
 \end{itemize}
 
 where $n, m \in \mathbb{N}$.
@@ -888,36 +924,14 @@ BCSL model $\mathds{M}$ is a 4-tuple $(\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\m
 
 Before we proceed, there are few necessary definitions. These definitions are required in next section in order to generate reactions from rules.
 
-First of all, we need to define tuples concatenation, since we work with them quite often want to make sure this operation is clear.
-
-\begin{definition}{Tuples concatenation}
-
-Let $X = (x_1, \ldots, x_n), Y = (y_1, \ldots, y_m)$ be two tuples for some $n, m \in \mathbb{N}$. Concatenation of two tuples, written $X \mdoubleplus Y$, is defined as:
-
-\begin{center}
-$X \mdoubleplus Y = (x_1, \ldots, x_n, y_1, \ldots, y_m)$.
-\end{center}
-\end{definition}
-
-Then, we can generalise concatenation operation to multiple tuples.
-
-\begin{definition}{Sum of concatenations}
-
-Let $T = (T_1, T_2, \ldots, T_n)$ be sequence of tuples. Concatenation of sequence of tuples $\Xi_{i=1}^n T_i$ is defined as:
-
-\begin{center}
-$\Xi_{i=1}^n T_i = T_1 \mdoubleplus T_2 \mdoubleplus \ldots \mdoubleplus T_n $
-\end{center}
-\end{definition}
-
-Reassembly operation is again quite simple action on tuples. Intuitively, we need to reorganise tuple which has form $((a_1, b_1), (a_2, b_2),\\ \ldots, (a_n, b_n))$ to a tuple of form $(a_1, a_2, \ldots, a_n, b_1, b_2, \ldots,  b_n)$. We define reassembly generally on a set of tuples. 
+Reassembly operation is quite a simple action on tuples. Intuitively, we need to reorganise tuple which has form $((a_1, b_1), (a_2, b_2),\\ \ldots, (a_n, b_n))$ to a tuple of form $(a_1, a_2, \ldots, a_n, b_1, b_2, \ldots,  b_n)$. We define reassembly generally on a set of tuples. 
 
 \begin{definition}{Reassembly}
 
 Let $Y$ be a set of tuples of particular form, where each $y \in Y$ has particular form $((a_1, b_1), (a_2, b_2), \ldots, (a_n, b_n))$. Then:
 
 \begin{center}
-$\mathtt{reassembly}(Y) = \{~  x ~|~ y \in Y \wedge x = \Xi_{i=1}^{|y|} \pi_1(y_i) \mdoubleplus \Xi_{i=1}^{|y|} \pi_2(y_i) ~\}$
+$\mathtt{reassembly}(Y) = \{~  x ~|~ y \in Y \wedge x = (\mdoubleplus_{i=1}^{|y|} \pi_1(y_i)) \mdoubleplus (\mdoubleplus_{i=1}^{|y|} \pi_2(y_i)) ~\}$
 \end{center}
 \end{definition}
 
@@ -941,10 +955,6 @@ Let $\mathtt{T}$ be a structure agent and $\Sigma_T(\mathtt{T})$ appropriate sig
 \begin{center}
 $\gamma(\mathtt{T}) \ominus \Sigma_T(\mathtt{T}) \myeq \{ \eta_\Sigma ~|~ \eta_\Sigma \in \Sigma_T(\mathtt{T}) \wedge \not\exists \mathtt{A}: (\mathtt{A} \in \gamma(\mathtt{T}) \wedge \eta(\mathtt{A}) \equiv \eta_\Sigma)\}$
 \end{center}
-\end{definition}
-
-\begin{definition}{Non-crossing partition}
-A partition $\mathcal{P} = B_1/B_2/\ldots/B_k$ of $[1,\ldots,n]$ is non-crossing if  whenever a quadruple of elements $1 \leq a < b < c < d \leq n$ satisfies $a, c \in B_i$ and $b, d \in B_j$ for some $1 \leq i, j \leq k$, then in fact $i = j$; thus, the blocks do not cross.
 \end{definition}
 
 \section{Semantic function}
@@ -974,7 +984,7 @@ $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices}) \in \mathds{R}$~ suc
 \begin{center}
 \begin{itemize}
 \item $\chi = (\mathtt{F} \llbracket ~\Gamma_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_n~ \rrbracket, \mathtt{F} \llbracket ~\Gamma_{n+1}~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_m~ \rrbracket)$,
-\item $\omega = \Xi_{i=1}^{|\chi|} \mu(\pi_i(\chi))$,
+\item $\omega = \mdoubleplus_{i=1}^{|\chi|} \mu(\pi_i(\chi))$,
 \item $\mathtt{I} = n$,
 \item $\mathtt{map} = (J_1, \ldots, J_m): J_k = \sum\limits_{i=1}^{k} | \mu(\pi_i(\chi)) |$,
 {\small
@@ -988,6 +998,8 @@ $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices}) \in \mathds{R}$~ suc
 \end{tabular}
 \\}
 
+\vspace*{0.5cm} where $\mathtt{Indices}$ is lexicographically sorted such that $'-' > i$ for every $i \in \mathbb{N}$.
+
 \end{itemize}
 \end{center}
 
@@ -1000,11 +1012,14 @@ Please note by applying semantic function $\mathtt{F}$ on expressions from Examp
 
 Ground form represents appending context to agents according to signature (we assume signature is always available and therefore we omit it in ground from function arguments). Particularly, this process means adding details to partial compositions and adding states of atomic agents according to defined signatures. Since there are typically multiple allowed states for an atomic agent, this processes leads to multiple options how to add a context. This is natural consequence of fact that a is an abstract representation of multiple reactions. 
 
-Objects are transformed to their ground forms by ground form function $\mathcal{G}$ defined as following:
+Please note that $\mathtt{A} = (\eta, \delta)$, $\mathtt{A}' = (\eta', \delta')$, $\mathtt{T} = (\eta, \gamma)$, and $\mathtt{T}' = (\eta', \gamma')$.
 
+Objects (middle column) of particular type (left column) are transformed to their ground forms by ground form function $\mathcal{G}$ (right column) defined as following:
+
+{\small
 \begin{center}
 \begin{tabular}{ c c l }
-Object type & Notation & Ground form \\
+Type & Notation & Ground form \\
 \hline
  & & \\
 $\mathds{A}$ & $\mathcal{G}(\eta, \epsilon)$ & $\{~ (\eta, \delta) ~|~ \delta \in \Sigma_A(\eta) ~\}$\\
@@ -1016,8 +1031,9 @@ $\mathds{A}$ & $\mathcal{G}(\eta, \epsilon)$ & $\{~ (\eta, \delta) ~|~ \delta \i
  & & \\
  \hline
  & & \\
-$\mathds{T}$ & $\mathcal{G}(\eta, \gamma)$ & $\{~ (\eta, \gamma_\alpha) ~|~ \gamma_\alpha \equiv \gamma \cup \gamma_\Sigma \wedge \gamma_\Sigma = \{~ \mathtt{A}_1, \ldots, \mathtt{A}_n ~\} \wedge$\\
- & & $\wedge~ \mathtt{A}_i \in \mathcal{G}((\eta, \emptyset)) \wedge \eta \in \gamma \ominus \Sigma_T(\mathtt{T}) ~\}$ \\
+$\mathds{T}$ & $\mathcal{G}(\eta, \gamma)$ & $\{~ (\eta, \gamma') ~|~ \gamma'
+ \equiv \gamma \cup \gamma_\Sigma \wedge$\\ 
+& & $\gamma_\Sigma = \{~ \mathtt{A}_i \in \mathcal{G}((\eta', \emptyset)) ~|~ i \in [1, \ldots,n] \wedge \eta' \in \gamma \ominus \Sigma_T(\eta) ~\} ~\}$ \\
  & & \\
  \hline
  & & \\
@@ -1026,14 +1042,16 @@ $\mathds{T}^2$ & $\mathcal{G}(\mathtt{T}, \mathtt{T}')$ & $\{~ (t, t') ~|~ t \in
   & & \\
  \hline
  & & \\
-$\mathds{R}$ & $\mathcal{G}(\mathtt{R})$ & $ \displaystyle \prod_{i = 1}^{|\mathcal{G}(\mathtt{Indices})|} \mathcal{G}(\mathtt{Indices})_i $ \\
-
- & $\mathcal{G}(\mathtt{Indices})$ & $\{~\mathcal{G}(\pi_i(\omega), \pi_j(\omega)) ~|~ (i,j) \in \mathtt{Indices}\}$\\
- 
+$\mathds{R}$ & $\mathcal{G}(\mathtt{R})$ & $ \displaystyle \prod_{k = 1}^{|\mathcal{G}(\mathtt{Indices})|} \mathcal{G}(\mathtt{Indices})_k $ \\ 
 \end{tabular}
 \end{center}
 
-where $\mathcal{G}(\mathtt{Indices})$ is an ordered set according to order function $f: \mathtt{Indices} \rightarrow \mathbb{N}$. This function assigns to each item $(i,j) \in \mathtt{Indices}$ a unique position $f(i,j) = k$. An item $\mathcal{G}(\pi_i(\omega), \pi_j(\omega)) \in \mathcal{G}(\mathtt{Indices})$ preserves this position $k$.
+where $\mathcal{G}(\mathtt{Indices})_k = \mathcal{G}(\pi_i(\omega), \pi_j(\omega))$ such that $(i,j) = \pi_k(\mathtt{Indices})$ 
+
+and $\mathtt{R} = (\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$.
+}
+
+\vspace*{1cm} Moreover, $\mathcal{G}(\mathtt{Indices})$ is an ordered set according to order function $f: \mathtt{Indices} \rightarrow \mathbb{N}$. This function assigns to each item $(i,j) \in \mathtt{Indices}$ a unique position $f(i,j) = k$. An item $\mathcal{G}(\mathtt{Indices})_k$ preserves this position $k$.
 
 \noindent\rule{\textwidth}{2pt}
 
@@ -1817,7 +1835,7 @@ $\mathds{M}$ & & BCSL model\\
 
 \begin{tabular}{c c | l}
 $X \mdoubleplus Y$ & & tuples concatenation\\
-$\Xi_{i=1}^n T_i$ & & generalised concatenation\\
+$\mdoubleplus_{i=1}^n T_i$ & & generalised concatenation\\
 $\pi_i$ & & projection on dimension i\\
 $\mathtt{reassembly}(Y)$ & & reassembly of tuples\\
 $\gamma \ominus \gamma'$ & & difference of partial compositions\\
