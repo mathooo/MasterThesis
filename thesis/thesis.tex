@@ -27,6 +27,7 @@
 \usepackage{pythonhighlight}
 \usepackage[hidelinks]{hyperref}
 \usepackage{bbm}
+\usepackage{braket}
 
 \newcounter{counter}[section]
 \renewcommand{\thecounter}{\thesection.\arabic{counter}}
@@ -614,9 +615,8 @@ A partition $\mathcal{P} = B_1/B_2/\ldots/B_k$ of $S = [1,\ldots,n]$ is non-cros
 Finally, we also need to use permutations product. For this purpose, we use common notion $\sigma$.
 
 \begin{notation}
-Let $S$ be a set. By $\sigma(S)$ we denote set of all possible permutations created from the set $S$ with length $|S|$.
+Let $\vv{v} = (x_1, \ldots, x_n)$ be a vector. By $\sigma(\vv{v})$ we denote set of all possible permutations with length $n$ of the vector $\vv{v}$.
 \end{notation}
-
 
 \section{Objects definition}
 
@@ -914,10 +914,10 @@ Similarly as in previous definition, we need to be able to find difference in co
 
 \begin{definition}{Difference of partial composition and structure signature}
 
-Let $\mathtt{T}$ be a structure agent and $\Sigma_T(\mathtt{T})$ appropriate signature. We define difference of partial composition $\gamma(\mathtt{T})$ and structure signature $\Sigma_T(\mathtt{T})$ as follows:
+Let $\mathtt{T}$ be a structure agent, $\eta$ its name, and $\Sigma_T(\mathtt{T})$ appropriate signature. We define difference of partial composition $\gamma(\mathtt{T})$ and structure signature $\Sigma_T(\mathtt{T})$ as follows:
 
 \begin{center}
-$\gamma(\mathtt{T}) \ominus \Sigma_T(\mathtt{T}) \myeq \{ \eta_\Sigma ~|~ \eta_\Sigma \in \Sigma_T(\mathtt{T}) \wedge \not\exists \mathtt{A}: (\mathtt{A} \in \gamma(\mathtt{T}) \wedge \eta(\mathtt{A}) \equiv \eta_\Sigma)\}$
+$\Sigma_T(\mathtt{\eta}) \ominus \gamma(\mathtt{T}) \myeq \{ \eta_\Sigma ~|~ \eta_\Sigma \in \Sigma_T(\mathtt{\eta}) \wedge \not\exists \mathtt{A}: (\mathtt{A} \in \gamma(\mathtt{T}) \wedge \eta(\mathtt{A}) \equiv \eta_\Sigma)\}$
 \end{center}
 \end{definition}
 
@@ -995,14 +995,20 @@ $\mathds{A}$ & $\mathcal{G}(\eta, \epsilon)$ & $\{~ (\eta, \delta) ~|~ \delta \i
  & & \\
  \hline
  & & \\
-$\mathds{T}$ & $\mathcal{G}(\eta, \gamma)$ & $\{~ (\eta, \gamma') ~|~ \gamma'
- \equiv \gamma \cup \gamma_\Sigma \wedge$\\ 
-& & $\gamma_\Sigma = \{~ \mathtt{A}_i \in \mathcal{G}((\eta', \emptyset)) ~|~ i \in [1, \ldots,n] \wedge \eta' \in \gamma \ominus \Sigma_T(\eta) ~\} ~\}$ \\
+$\mathds{T}$ & $\mathcal{G}(\eta, \gamma)$ & $
+  \Set{ (\eta, \gamma')\ | \begin{array}{l}
+  \gamma' \equiv \gamma \cup \gamma_\Sigma \wedge \gamma_\Sigma \subseteq \mathcal{G}(\eta', \epsilon) ~\wedge \\
+  \wedge~ |\gamma_\Sigma| = |\Sigma_T(\eta) \ominus \gamma| \wedge \eta' \in \Sigma_T(\eta) \ominus \gamma \wedge\\
+  \wedge~ \forall \widetilde{\eta} \in \Sigma_T(\eta) \ominus \gamma : \widetilde{\eta} \in  \gamma_\Sigma
+  \end{array}}$\\
  & & \\
  \hline
  & & \\
-$\mathds{T}^2$ & $\mathcal{G}(\mathtt{T}, \mathtt{T}')$ & $\{~ (t, t') ~|~ t \in \mathcal{G}(\mathtt{T}) \wedge t' \in \mathcal{G}(\mathtt{T}') \wedge$\\
- & & $\wedge~ \gamma(t) \ominus \gamma(\mathtt{T}) \equiv \gamma(t') \ominus \gamma(\mathtt{T}') ~\} $ \\
+$\mathds{T}^2$ & $\mathcal{G}(\mathtt{T}, \mathtt{T}')$ & $
+  \Set{ (t, t')\ | \begin{array}{l}
+  t \in \mathcal{G}(\mathtt{T}) \wedge t' \in \mathcal{G}(\mathtt{T}') ~\wedge \\
+  \wedge~ \gamma(t) \ominus \gamma(\mathtt{T}) \equiv \gamma(t') \ominus \gamma(\mathtt{T}')
+  \end{array}}$\\
   & & \\
  \hline
  & & \\
@@ -1015,7 +1021,7 @@ where $\mathcal{G}(\mathtt{Indices})_k = \mathcal{G}(\pi_i(\omega), \pi_j(\omega
 and $\mathtt{R} = (\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$.
 }
 
-\vspace*{1cm} Moreover, $\mathcal{G}(\mathtt{Indices})$ is an ordered set according to order function $f: \mathtt{Indices} \rightarrow \mathbb{N}$. This function assigns to each item $(i,j) \in \mathtt{Indices}$ a unique position $f(i,j) = k$. An item $\mathcal{G}(\mathtt{Indices})_k$ preserves this position $k$.
+%\vspace*{1cm} Moreover, $\mathcal{G}(\mathtt{Indices})$ is an ordered set according to order function $f: \mathtt{Indices} \rightarrow \mathbb{N}$. This function assigns to each item $(i,j) \in \mathtt{Indices}$ a unique position $f(i,j) = k$. An item $\mathcal{G}(\mathtt{Indices})_k$ preserves this position $k$.
 
 \noindent\rule{\textwidth}{2pt}
 
@@ -1463,7 +1469,7 @@ The reason is that complex agents actually encapsulate all other agent types inc
 
 \begin{definition}{Compatible sets}
 \label{compatible_set}
-Sets $\mathbbmss{X}_1, \ldots, \mathbbmss{X}_n \subseteq \mathds{X}_\sqsubseteq$ are \emph{compatible sets} iff for each compatible set $\mathbbmss{X}$ hold the following conditions:
+Sets $\mathbbmss{X}_1, \ldots, \mathbbmss{X}_n \subseteq \mathds{X}_\sqsubseteq$ are \emph{compatible sets} iff for each set $\mathbbmss{X}_i$ such that $i \in [1,\ldots,n]$ hold the following conditions:
 \begin{center}
 \begin{enumerate}
 	\item \label{compatible_cond} $ \forall \mathtt{X}_1, \mathtt{X}_2 \in \mathbbmss{X} ~\exists~ \mathtt{X}' \in \mathbbmss{X}: \mathtt{X}_1 \lhd \mathtt{X}' \wedge \mathtt{X}_2 \lhd \mathtt{X}'$ such that $\mathtt{X}_1 \neq \mathtt{X}_2$,
@@ -1799,7 +1805,7 @@ To sum it up, BCS serves as definition domain for models written in BCSL (so cal
 \chapter{Cheat sheet}
 
 \begin{tabular}{c c | l}
-$\sigma(X)$ & & set of permutations of set (or tuple) $X$ of length $|X|$\\
+$\sigma(\vv{v})$ & & set of permutations of vector $\vv{v}$ of length $|\vv{v}|$\\
 $\Sigma_{\mathtt{A}}$ & & atomic signature \\
 $\Sigma_{\mathtt{T}}$ & & structure signature \\
 $\mathtt{A}$ & & atomic agent \\
@@ -1842,7 +1848,7 @@ $\mdoubleplus_{i=1}^n T_i$ & & generalised concatenation\\
 $\pi_i$ & & projection on dimension i\\
 $\mathtt{reassembly}(Y)$ & & reassembly of tuples\\
 $\gamma \ominus \gamma'$ & & difference of partial compositions\\
-$\gamma(\mathtt{T}) \ominus \Sigma_T(\mathtt{T})$ & & difference of partial composition and\\
+$\Sigma_T(\mathtt{\eta(\mathtt{T})}) \ominus \gamma(\mathtt{T})$ & & difference of partial composition and\\
  & & structure signature\\
 $\mathtt{F}$ & & semantic function\\
 $\mathcal{G}$ & & ground form function\\
