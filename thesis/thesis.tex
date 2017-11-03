@@ -44,6 +44,29 @@
 \newcommand\myeq{\stackrel{\mathclap{\scriptsize\mbox{def}}}{\Leftrightarrow}}
 \newcommand*{\QEDA}{\hfill\ensuremath{\blacksquare}}%
 
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{graybright}{rgb}{0.5,0.5,0.5}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  showstringspaces=false,
+  commentstyle=\color{gray}\upshape
+}
+
+\lstdefinelanguage{XML}
+{
+  morestring=[b]",
+  morestring=[s]{>}{<},
+  morecomment=[s]{<?}{?>},
+  stringstyle=\color{black},
+  identifierstyle=\color{darkblue},
+  keywordstyle=\color{cyan},
+  morekeywords={xmlns,version,type}% list your attributes here
+}
+
 \usetikzlibrary{fit, hobby}
 \usetikzlibrary{chains}
 \usetikzlibrary{arrows,positioning,decorations.markings} 
@@ -150,7 +173,7 @@ The rules are patterns which describe behavior of groups of objects. A rule has 
   \begin{minipage}[r]{0.6\textwidth}
     {\hspace*{1.3cm}\includegraphics[scale=0.2]{pics/rule_diss}}
 \end{minipage}
-\caption{\textbf{Examples of rules}. Rule \textbf{(a)}: a \raisebox{-0.02cm}[0cm]{{\large $\square$}} and a $\bigcirc$ can form a complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$ regardless their colors. Rule \textbf{(b)}: a \raisebox{-0.02cm}[0cm]{{\large $\square$}} is allowed to change it's color from red to green only if is in a complex with a $\bigcirc$ regardless it's color. Rule \textbf{(c)}: the rule can disassemble the complex only if the $\bigcirc$ is yellow.}
+\caption{\textbf{Examples of rules}. Rule \textbf{(a)}: a \raisebox{-0.02cm}[0cm]{{\large $\square$}} and a $\bigcirc$ can form a complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$ regardless their colors. Rule \textbf{(b)}: a \raisebox{-0.02cm}[0cm]{{\large $\square$}} is allowed to change its color from red to green only if is in a complex with a $\bigcirc$ regardless its color. Rule \textbf{(c)}: the rule can disassemble the complex only if the $\bigcirc$ is yellow.}
 \label{rules:fig}
 \end{center}
 \end{figure}
@@ -201,9 +224,9 @@ A rule is a generalised reaction (Figure~\ref{reaction_vs_rule}). This is how th
 \caption{Graphical comparison of rule-based and reaction-based approaches. There can be seen combinatorial explosion in number of possible particular interactions (reactions), which can be depicted in a few simple rules.}\label{reaction_vs_rule}
 \end{figure}
 
-Analysis of rules directly is not the best choice. The main reason are \emph{side effects}, which might happen during rule application. These side effects differ from language to language, and it is a feature we tried to avoid in BCS as much as is possible (and therefore it was not mentioned in previous section). There is no such thing for reaction, because entire the context is enumerated explicitly. Therefore, we cannot directly know how exactly will be the rule used.
+Analysis of rules directly is not the best choice. The main reason are \emph{side effects}, which might happen during rule application. These side effects differ from language to language. There is no such thing for reaction because the entire context is enumerated explicitly. Therefore, we cannot directly know how exactly the rule will be used.
 
-The rule and reaction differ in level of abstraction. In this context we mean how stringent it is, not what sort of features particular language uses. This is universal attribute for all rule-based languages -- the rule is always more abstract than it's instance -- a reaction. Then, analysis of such abstract object statically is a challenge. The reason is that most of the structural information is encoded in rules implicitly. For static analysis, explicit data are more suitable.
+The rule and reaction differ in level of abstraction. In this context we mean how stringent it is, not what sort of features particular language uses. This is universal attribute for all rule-based languages -- the rule is always more abstract than its instance -- a reaction. The analysis of such abstract object statically is a challenge. The reason is that most of the structural information is encoded in rules implicitly. Explicit data are more suitable for static analysis.
 
 \section{Rule-based languages}
 \label{rule_based_languages}
@@ -213,9 +236,9 @@ There are several rule-based languages dedicated for modeling of biological syst
 \subsection{Kappa}
 \label{kappa}
 
-The Kappa language~\cite{kappa_formal} was developed for modeling of protein-protein interactions. The key feature of the language are so called \textit{agents} with \textit{binding sites}, which allow formation of bonds between the agents. Each binding site must be unique with at most one bond. Moreover, each site can occur in one of several pre-defined states.
+The Kappa language~\cite{kappa_formal} was developed for modeling of protein-protein interactions. The key structures used in the language are \textit{agents} with \textit{binding sites}, which allow formation of \emph{bonds} between the agents. Each binding site must be unique with at most one bond. Each site can occur in one of several pre-defined states.
 
-The Kappa \textit{rules} are changing properties of the agents. Particularly, it might add/delete/change a bond or a state of one or multiple agents at once. The rules are just patterns where on both sides is a sequence of agents delimited by a comma. Such as all the other rule-based languages, when they do not care about some context, we simply omit it. Example of a rule is in Figure~\ref{kappa-rule}.
+The Kappa \textit{rules} are changing properties of the agents. Particularly, it might add/delete/change a bond or a state of one or multiple agents at once. The rules are just patterns where on both sides is a sequence of agents delimited by a comma. Same as all the other rule-based languages, when some context is not relevant, the just omit it. Example of a rule is in Figure~\ref{kappa-rule}.
 
 \begin{figure}[!h]
 \begin{center}
@@ -224,15 +247,23 @@ The Kappa \textit{rules} are changing properties of the agents. Particularly, it
 (b) & A(bsa), B(bsb$\sim$a) $\rightarrow$ A(bsa!1), B(bsb$\sim$a!1) \\
 \end{tabular}
 \end{center}
-\caption{Example of a Kappa rule. (a) Definition of associated agents. There are allowed two agents, A and B, both with a binding site which might occur in two possible states. (b) The rule itself. It defines creation of bond on the sites of agents A and B such that site of agent B must be in a active (a) state. Note the context which has no importance for the interaction is omitted.}\label{kappa-rule}
+\caption{Example of a Kappa rule. (a) Definition of associated agents. There are allowed two agents, A and B, both with a binding site which might occur in two possible states. (b) The rule itself. It defines creation of bond on the sites of agents A and B such that site of agent B must be in a active state. Note the context which has no importance for the interaction is omitted.}\label{kappa-rule}
 \end{figure}
 
-The general problem we have to face with in Kappa is too detailed description. For biological systems as defined in chapter~\ref{Rule-based basics}, it might be often hard to deal with all the bonds, especially in cases when we do not need such details.
+The general problem they have to handle in Kappa is too detailed description. For biological systems as defined in Chapter~\ref{Rule-based basics}, it might be often hard to deal with all the bonds, especially in cases when we do not need such details.
 
 \subsection{BioNetGen Language}
 \label{bngl}
 
-BioNetGen Language (BNGL) \cite{BNGL} is very similar to Kappa language and also has similar disadvantages. There are a few general differences: (1) it is allowed to define multiple binding sites with same name for an agent; (2) one binding site is allowed to have multiple bonds; (3) in the rules BNGL uses `+' and `.' for expressing reaction complex and complex of agents respectively. Example of a rule is in Figure~\ref{bngl-rule}.
+BioNetGen Language (BNGL) \cite{BNGL} is very similar to Kappa language and also has similar disadvantages. There are a few general differences: 
+
+\begin{enumerate}
+	\item it is allowed to define multiple binding sites with same name for an agent,
+	\item one binding site is allowed to have multiple bonds,
+	\item in the rules BNGL uses `+' and `.' for expressing reaction complex and complex of agents respectively.
+\end{enumerate}
+
+Example of a rule is given in Figure~\ref{bngl-rule}.
 
 \begin{figure}[!h]
 \begin{center}
@@ -249,22 +280,22 @@ BioNetGen Language (BNGL) \cite{BNGL} is very similar to Kappa language and also
 
 The Chromar language~\cite{honorato2017chromar} allows to define attributes for agents and range them over pre-defined domains. The qualitative semantics are given by rule match on multisets composed from these agents producing reaction. It is followed by standard application of the reaction (in manner of multiset operations). The language is very useful when creating a model where we need to create new distinct objects and control population of these objects.
 
-Embedding this language to functional programming language Haskell increases its expressive power while making the ability of some analysis more expensive. Moreover, one needs to learn Haskell (at least it's basics) in order to use Chromar.
+Embedding this language to functional programming language Haskell increases its expressive power while making the ability of some analysis more expensive. Moreover, a user needs to understand Haskell (at least its basics) in order to use Chromar.
+
+It is important to highlight a feature of stochastic semantics which this language offers. Compared to other rule-based languages, it is capable of specifying rates for individual reactions inherited from the rule (Figure~\ref{chromar_rule}). It is allowed by variable value bindings and type-determination between left- and right-hand-side of the rule.
 
 \begin{figure}[!h]
 \begin{center}
 A(a = x), A(a = y) $\xrightarrow[]{\text{f(x,y)}}$ A(a = x + y), A(a = y - 1) [g(x, y)]
 \end{center}
-\caption{Example of a Chromar rule. Arithmetic operations can be used in order to change properties of individual agents. Moreover, a rate function $f$ and conditional function $g$ increase applicability and practical use of the rule.}\label{chromar-rule}
+\caption{Example of a Chromar rule. Arithmetic operations can be used in order to change properties of individual agents. Moreover, a rate function $f$ and conditional function $g$ increase applicability and practical use of the rule.}\label{chromar-rule}\label{chromar_rule}
 \end{figure}
 
-It is important to highlight a feature of stochastic semantics which this language offers. Compared to other rule-based languages, it is capable of specifying rates for individual reactions inherited from the rule. This is allowed by variable value bindings and type-determination between left- and right-hand-side of the rule.
-
-However, when it comes to readability and presentation to the user, the language is not a best-fit. All the biologically relevant terms such as states must be encoded to natural numbers.
+However, when it comes to readability and presentation to the user, the language is not a best choice. All the biologically relevant terms such as states must be encoded to natural numbers.
 
 \subsection{PySB}
 
-The PySB language~\cite{Lopez646} works as a package in Python programming language. The definition of models directly in the code allows to use the full syntax of Python, what dramatically increases expression power of PySB. On the other hand, it might be hard to follow abstraction which are this way possible and models themselves are hard to analyze. Moreover, the core of the language is made by translating to BGNL~\ref{bngl}.
+The PySB language~\cite{Lopez646} works as a package in Python programming language. The definition of models directly in the code allows to use the full syntax of Python, what significantly increases expression power of PySB. On the other hand, it might be hard to follow abstraction which possible is this way and models themselves are hard to analyze. Moreover, the core of the language is made by translating to BGNL~\ref{bngl}. An example of a rule is given in Figure~\ref{pysb_rule}.
 
 \begin{figure}[!h]
 \begin{center}
@@ -277,12 +308,12 @@ Monomer('R', ['s'])
 Rule(L(s=None) + R(s=None) <> L(s=1) % R(s=1), kf, kr)
 \end{python}
 \end{center}
-\caption{Example of a PySB rule. The rule describes creation of a bond between agents $\mathtt{R}$ and $\mathtt{L}$.}\label{PySB-rule}
+\caption{Example of a PySB rule. The rule describes creation of a bond between agents $\mathtt{R}$ and $\mathtt{L}$.}\label{PySB-rule}\label{pysb_rule}
 \end{figure}
 
 \subsection{SBML-multi package}
 
-Systems Biology Markup Language (SBML)~\cite{hucka2003systems} is a standard established for systems biology. A SBML-multi package~\cite{zhang2015sbml} is able to describe all necessary rule-based features and therefore it is possible to export each such language in this format. It is the most suitable format for exchange and storage of the models, but less for analysis and direct representation to the users (it is an XML format). It serves as intermediate language.
+Systems Biology Markup Language (SBML)~\cite{hucka2003systems} is a standard established for systems biology. A SBML-multi package~\cite{zhang2015sbml} is able to describe all necessary rule-based features and therefore it is possible to export each such language in this format. It is the most suitable format for exchange and storage of the models but less for analysis and direct representation to the users (it is an XML format). It serves as intermediate language.
 
 \begin{figure}[!h]
 \lstset{language=XML}
@@ -339,7 +370,7 @@ Systems Biology Markup Language (SBML)~\cite{hucka2003systems} is a standard est
 \section{Comprehensive Modeling Platform}
 \label{cmp}
 
-Comprehensive Modeling Platform~\cite{cs2bio2013} is an online platform providing tools for public sharing, annotation, analysis, and visualization of dynamical models and wet-lab experiments related to domain-specific systems. The platform is unique in integrating abstract mathematical models with a precise consortium-agreed biochemical description provided in a rule-based formalism. The general aim is to stimulate collaboration between experimental and computational systems biologists to achieve better understanding of the domain-specific system.
+Comprehensive Modeling Platform (CMP)~\cite{cs2bio2013} is an online platform providing tools for public sharing, annotation, analysis, and visualization of dynamical models and \emph{wet-lab} experiments related to domain-specific systems. The platform is unique in integrating abstract mathematical models with a precise consortium-agreed biochemical description provided in a rule-based formalism. The general aim is to stimulate collaboration between experimental and computational systems biologists to achieve better understanding of the domain-specific system.
 
 \begin{figure}[!h]
 \begin{center}
@@ -365,6 +396,10 @@ Comprehensive Modeling Platform~\cite{cs2bio2013} is an online platform providin
 \node [draw=mydarkgreen, boxed] (sbml) at (6,24) {\textbf{SBML export}};
 \node [draw=mydarkgreen, boxed] (analysis) at (-2, 24) {\textbf{Analysis}};
 
+\node [color=graybright] (1) at (-4, 28) {(1)};
+\node [color=graybright] (2) at (-4, 26) {(2)};
+\node [color=graybright] (3) at (-4, 24) {(3)};
+
 % arrows ------------------------------------------------------------------------
 \draw[myarrow, draw=mydarkgreen, fill=mydarkgreen, shorten <=-3pt, shorten >=1pt, line width=1pt] (numbers.south east) to (bcs.north west);
 \draw[myarrow, draw=mydarkgreen, fill=mydarkgreen, shorten >=1pt, line width=1pt] (exper) to (bcs);
@@ -379,6 +414,9 @@ Comprehensive Modeling Platform~\cite{cs2bio2013} is an online platform providin
 \draw[myarrow, draw=mydarkgreen, fill=mydarkgreen, shorten >=1pt, line width=1pt] (bcs) to (sbml.north west);
 
 \draw[myarrow, draw=mydarkgreen, fill=mydarkgreen, shorten >=1pt, line width=1pt] (models) to (sbml);
+
+\draw[thick, dash dot, draw=graybright, fill=graybright] (-4.5, 27) -- (7.5, 27);
+\draw[thick, dash dot, draw=graybright, fill=graybright] (-4.5, 25) -- (7.5, 25);
 \end{tikzpicture}
 \end{center}
 \caption{An overview of Comprehensive Modeling Platform. It is composed by three layers: (1) input to the platform, all the relevant data; (2) Biochemical Space as a intermediate format for the data; (3) output of the platform, results of analyses and visualisations.}\label{cmp_overview}
@@ -407,7 +445,7 @@ When building the BCS, emphasis is put on well-defined and complete annotations.
 \caption{Description, links, and notes information for an entity.}\label{database_links}
 \end{figure}
 
-The fact that most attributes in entity and rule definitions are tightly coupled with information from linked ontologies is the reason why we have started with describing annotation attributes. In the first place, one of these attributes is \emph{name}, which is taken from ontologies or follows the standard naming conventions. \emph{ID} of every entity is fixed by the consortium. KEGG ID, ChEBI ID or internal ID is used if no reasonable \emph{ID} is available. \emph{ID}s of rules are internal and assigned automatically.
+The fact that most attributes in entity and rule definitions are tightly coupled with information from linked ontologies is the reason why we have started with describing annotation attributes. In the first place, one of these attributes is \emph{name}, which is taken from ontologies or follows the standard naming conventions. ID of every entity is fixed by the consortium. KEGG ID, ChEBI ID or internal ID is used if no reasonable ID is available. IDs of rules are internal.
 
 \begin{figure}[!h]
 \begin{center}
@@ -430,11 +468,11 @@ The fact that most attributes in entity and rule definitions are tightly coupled
 \caption{Complete information given for an atomic entity.}\label{entity_example}
 \end{figure}
 
-An entity in our interpretation is a bounded space (a so-called \emph{compartment}) or a structural part of a specific organism (for an example, see Figure~\ref{entity_example}). BCS covers a hierarchy of \emph{entities} (or \emph{agents}) ranging from small molecules (\emph{atomic entity}) through composite structures (\emph{structure entity}) to large complex molecules (\emph{complex entity}). Our goal is to make BCS as simple as possible. In existing ontologies, entities residing in several different states (oxidised, reduced, etc.) are usually treated as separate entities, thus causing the total number of entities to be enormous. To reduce this complexity, the concept of \emph{states} is defined in BCS. They allow to define allowed set of states, in which an atomic entity might occur.
+An entity in our interpretation is a bounded space (a so-called \emph{compartment}) or a structural part of a specific organism (for an example see Figure~\ref{entity_example}). BCS covers a hierarchy of \emph{entities} (or \emph{agents}) ranging from small molecules (\emph{atomic entity}) through composite structures (\emph{structure entity}) to large complex molecules (\emph{complex entity}). Our goal is to make BCS as simple as possible. In existing ontologies, entities residing in several different states (oxidised, reduced, etc.) are usually treated as separate entities, thus causing the total number of entities to be enormous. To reduce this complexity, the concept of \emph{states} is defined in BCS. They allow to define allowed set of states, in which an atomic entity can occur.
 
 BCS extends the traditional concept of compartmentalisation with a hierarchy at the level of entities. A particular entity can reside in several different compartments. Additionally, \emph{classification} specifies the type of an entity in a sense of functional or structural characterisation.
 
-An atomic entity can be a part of a structurally more complex entity. We consider two kinds of composite entities: structure (Figure~\ref{structure_example}) and complex entities. Structure entity represents partially specified composite species, e.g. a photosystem complex partially specified with prosthetic groups of interest. Complex entity represents fully specified composite species, e.g., a homodimer of KaiC protein.
+An atomic entity can be a part of a structurally more complex entity. We consider two kinds of composite entities: structure (Figure~\ref{structure_example}) and complex entities. Structure entity represents partially specified composite species, for example a photosystem complex partially specified with prosthetic groups of interest. Complex entity represents fully specified composite species, for example, a homodimer of KaiC protein.
 
 \begin{figure}[!h]
 \begin{center}
@@ -457,7 +495,7 @@ An atomic entity can be a part of a structurally more complex entity. We conside
 \caption{Complete information given for a structure entity.}\label{structure_example}
 \end{figure}
 
-Rules are specified by \emph{rule equations} enriched with additional annotation information. When defining a rule equation, identifiers of substrates and products are used to make the notation of rules compact. Every entity appearing in a \emph{rule equation} has to be followed by the localisation operator associating it with a particular compartment. This is important especially for rules that act on both sides of a membrane. That way, a rule is always precisely localised in/inbetween compartments. A natural stoichiometric coefficient can be placed before any entity in a rule equation. Irreversible and reversible rules are distinguished by the operators `$\Rightarrow$', `$\Leftrightarrow$'. The `$+$' symbol is used as a separator between individual substrates and individual products. A rule can also have an assigned classification. Rule classification assigns a list of higher level biophysical processes in which the rule is involved. For an example, see Figure~\ref{rule_example}.
+Rules are specified by \emph{rule equations} enriched with additional annotation information. When defining a rule equation, identifiers of substrates and products are used to make the notation of the rules compact. Every entity appearing in a \emph{rule equation} has to be followed by the localisation operator associating it with a particular compartment. This is important especially for rules that act on both sides of a membrane. That way, a rule is always precisely localised in or between compartments. A natural stoichiometric coefficient can be placed before any entity in a rule equation. Irreversible and reversible rules are distinguished by the operators `$\Rightarrow$', `$\Leftrightarrow$'. The `$+$' symbol is used as a separator between individual substrates and individual products. A rule can also have an assigned classification. Rule classification assigns a list of higher level biophysical processes in which the rule is involved. For an example, see Figure~\ref{rule_example}.
 
 \begin{figure}[!h]
 \begin{center}
@@ -478,7 +516,7 @@ Rules are specified by \emph{rule equations} enriched with additional annotation
 \caption{Complete information for a rule.}\label{rule_example}
 \end{figure}
 
-In some cases, emphasis on a detailed description leads to very complex BCS models. Abstraction of some processes is therefore needed to keep BCS models as simple as possible. To this end, rules expressing enzymatic reactions are considered in a simplified form. In fact, there should be at least two different rules describing an enzymatic reaction (one for a substrate binding and another for a catalytic step). Instead, since an enzyme is not affected during the reaction, it is affiliated to the rule as a \emph{modifier}. However, it is difficult to define precise meaning of a modifier in this case. We rather treat the modifier attribute informally as an entity \textit{which has to be present} for the rule to be enabled. The exact reaction mechanism of an enzyme is not always clear and therefore it is abstracted out.
+In some cases, emphasis on a detailed description leads to very complex BCS models. Abstraction of some processes is needed to keep BCS models as simple as possible. To this end, rules expressing enzymatic reactions are considered in a simplified form. In fact, there should be at least two different rules describing an enzymatic reaction (one for a substrate binding and another for a catalytic step). Instead, since an enzyme is not affected during the reaction, it is affiliated to the rule as a \emph{modifier}. However, it is difficult to define precise meaning of a modifier in this case. We rather treat the modifier attribute informally as an entity \textit{which has to be present} for the rule to be enabled. The exact reaction mechanism of an enzyme is not always clear and therefore it is abstracted out.
 
 \begin{figure}[!h]
 \begin{center}
@@ -496,27 +534,27 @@ In some cases, emphasis on a detailed description leads to very complex BCS mode
 \end{tabular}}
 }
 \end{center}
-\caption{A rule employing structure entity state change. A Threonine ($Thr$) amino acid residue of a $FGF$ protein inside a $FGFR2$ complex can change it's state from unphosphorylated ($u$) to phosphorylated ($p$).}
+\caption{A rule employing structure entity state change. A Threonine ($Thr$) amino acid residue of a $FGF$ protein inside a $FGFR2$ complex can change its state from unphosphorylated ($u$) to phosphorylated ($p$).}
 \end{figure}
 
 Higher abstraction comes into account when several electrons play `musical chairs' inside protein complexes. The issue is that parts of processing protein complex can have different unstable states during a short period of time. When one tries to define all rules among these proteins, combinatorial explosion of the number of states of the complex arises. Not all of these combinations are biologically correct. Even when excluding biologically inadmissible cases, the number of states is still enormous. For the purpose of BCS, we introduce a solution -- we treat a protein complex as a structure entity on which structurally simpler atomic entities change their states (not necessarily proteins) and we abstract from background processes.
 
-When describing particular process or object, we can go almost infinitely deeper into details. Even if the depth is not infinite, it is deep enough to lead into state when the description larger than object itself. Imagine that you want to describe a molecule as position of each atom. You definitely need more space to store such information than the molecule itself occupies.
+When describing particular process or object we can go almost infinitely deeper into details. Even if the depth is not infinite, it is deep enough to lead into state when the description is larger than object itself. Imagine that you want to describe a molecule as position of each atom. You definitely need more space to store such information than the molecule itself occupies.
 
-Therefore, when creating a BCS, we choose a level of details which we do not exceed. This ensures the size of BCS will not exponentially increase with additional details. The problem might occur when we try to map a model which uses more detailed description of the system than BCS does. However, we simply allow relating multiple model objects to BCS objects and \emph{vice versa}. For example, multiple model reactions might be mapped on one BCS rule denoting the fact the process represented by the rule can be described in more details by the reactions. On the other hand, model might neglect some details. Then for example, a reaction can be mapped on multiple rules with similar meaning than in previous case.
+When creating a BCS, we choose a level of details which we do not exceed. This ensures the size of BCS will not exponentially increase with additional details. The problem can occur when we try to map a model which uses more detailed description of the system than BCS does. However, we simply allow relating multiple model objects to BCS objects and \emph{vice versa}. For example, multiple model reactions might be mapped on one BCS rule denoting the fact the process represented by the rule can be described in more details by the reactions. On the other hand, model might neglect some details. Then for example, a reaction can be mapped on multiple rules with similar meaning than in previous case.
 
 Since CMP allows export of models in SBML format, we employ resolvable identifier links~\cite{juty2011identifiers}. These links are included in generated SBML file and point to appropriate rules and entities in BCS.
 
 \subsection{Model Repository}
 \label{model}
 
-Model repository is a collection of implemented mathematical models describing particular parts of biological processes. Every model is represented as a set of ordinary differential equations generated from the model reaction network. Models are integrated within BCS. In particular, each model component should be related to some BCS entity and each model reaction should be related to some BCS rule. Moreover, a model is associated with some parameter value sets (data sets) that enable simulation in a particular biologically-relevant scenarios. Additionally, several basic non-parameter-specific static analysis techniques based on model stoichiometry are also provided.
+Model repository is a collection of implemented mathematical models describing particular parts of biological processes. Every model is represented as a set of ordinary differential equations generated from the model reaction network. Models are integrated within BCS. In particular, each model component should be related to some BCS entity and each model reaction should be related to some BCS rule. The model is associated with some parameter value sets (data sets) that enable simulation in a particular biologically-relevant scenarios. Additionally, several basic non-parameter-specific static analysis techniques based on model stoichiometry are also provided.
 
 An implemented model then includes complete biological annotation of all components and reactions that is provided by mapping to BCS. This might help to find connections and overlaps among models. Further, implemented model can be exported to SBML.
 
 \subsection{Experiments Repository}
 
-Experiments repository is a module for storage and presentation of time-series data from wet-lab experiments. Every experiment is well-grounded by precise description (device, medium, organism, etc.) and appropriate annotations. Experiments are structured -- several time series data can be attached to a single experiment. Every time series targets a specific list of measured substances together with time stamps of the individual measurements. Data can be imported and exported in simple text formats. Time series are visualised in a chart.ommi	
+Experiments repository is a module for storage and presentation of time-series data from wet-lab experiments. Every experiment is well-grounded by precise description (device, medium, organism, etc.) and appropriate annotations. Experiments are structured -- several time series data can be attached to a single experiment. Every time series targets a specific list of measured substances together with time stamps of the individual measurements. Data can be imported and exported in simple text formats. Time series are visualised in a chart.	
 
 \chapter{Problem formulation}
 \label{problem_formulation}
@@ -538,7 +576,7 @@ However, this indirect approach had several disadvantages. First of all, Kappa h
 \caption{Comparison of a complex in biology (on the left) to abstraction used in BCS (on the right). In biology, one must consider all possible graph isomorphisms which result from combinatorial options how edges can be placed to create a connected graph~\cite{Chartrand1985}. In BCS we neglect such details and see created structure only in sense of coexistence (a multiset), which significantly reduces number of possible deviations.}\label{abstraction_comparision}
 \end{figure}
 
-From the implementation point of view, executing models was delayed by conversion to Kappa and then calling Kappa core to apply it's semantics. Moreover, Kappa uses network-free simulator, which is very efficient for small models, because the rules are executed directly. Each rule is being matched on current state and then matched objects are replaced according the rule. The problem is when model is more complex. The number of rules does not cause significant change, however number of different interacting agents does. Once there are many agents, the time of one match \& replace step rises dramatically. Compared to indirect methods when first reaction network is enumerated, the initial step takes some time, but then rule application itself is fast regardless number of agents.
+From the implementation point of view, executing models was delayed by conversion to Kappa and then calling Kappa core to apply its semantics. Moreover, Kappa uses network-free simulator, which is very efficient for small models, because the rules are executed directly. Each rule is being matched on current state and then matched objects are replaced according the rule. The problem is when model is more complex. The number of rules does not cause significant change, however number of different interacting agents does. Once there are many agents, the time of one match \& replace step rises dramatically. Compared to indirect methods when first reaction network is enumerated, the initial step takes some time, but then rule application itself is fast regardless number of agents.
 
 For the above-mentioned reasons we decided to redefine the BCSL language itself. Particularly, the syntax definition had to be refined in order to make the usability more clear. From semantic point of view, we needed a straightforward definition which would have practical use in implementation. With experiences from previous iteration, it showed that direct rule-based semantics where quite complicated mechanism of matching and replacement is used, is not very efficient. Therefore we chose indirect definition via reactions -- `practical' definition (Section~\ref{formal_definition}). The practical part means that this approach could be efficiently used in implementation.
 
@@ -1355,7 +1393,7 @@ In the previous chapters, we defined BCS language itself. From the provided exam
 
 However, descriptive properties are not enough for using computational methods in order to analyse particular processes. In this chapter we describe basic approaches we employ for our language and propose several methods which could be potentially used in context of static analysis.
 
-We distinguish two general approached in model analysis -- dynamic and static. Dynamic analyses are enabled by some form of executing the model. It requires either enumerating all possible scenarios of model's behavior (so called state space) or applying assumptions in order to calculate average behavior (simulation). On the other hand, static analyses provide information without execution of the model, just by investigating it's structure. Both approaches require to build particular mechanisms which enable application of the analyses.
+We distinguish two general approached in model analysis -- dynamic and static. Dynamic analyses are enabled by some form of executing the model. It requires either enumerating all possible scenarios of model's behavior (so called state space) or applying assumptions in order to calculate average behavior (simulation). On the other hand, static analyses provide information without execution of the model, just by investigating its structure. Both approaches require to build particular mechanisms which enable application of the analyses.
 
 \section{Dynamic analyses}
 
@@ -1597,7 +1635,7 @@ We want to check whether an complex agent $\mathtt{X}$ is non-reachable in the L
 If supremum $\mathtt{sup}(\mathbbmss{X})$ is non-reachable in reduced model $\widetilde{\mathds{M}}$ constructed with respect to given model $\mathds{M}$, then agent $\mathtt{X}$ is also non-reachable in the LTS of the original model $\mathds{M}$.
 \end{theorem}
 
-If we are checking whether an agent is reachable for given model $\mathds{M}$, we might first check whether it's super-ancestor is reachable in created reduced model $\widetilde{\mathds{M}}$. If so, then we are still not certain about reachability of agent itself and it has to be checked in the original model. However, when it comes to non-reachability (Theorem~\ref{non-reachability_in_reduced}), agent which is non-reachable in $\widetilde{\mathds{M}}$ is not reachable in the original model $\mathds{M}$ too.
+If we are checking whether an agent is reachable for given model $\mathds{M}$, we might first check whether its super-ancestor is reachable in created reduced model $\widetilde{\mathds{M}}$. If so, then we are still not certain about reachability of agent itself and it has to be checked in the original model. However, when it comes to non-reachability (Theorem~\ref{non-reachability_in_reduced}), agent which is non-reachable in $\widetilde{\mathds{M}}$ is not reachable in the original model $\mathds{M}$ too.
 
 \begin{proof}
 
@@ -1744,7 +1782,7 @@ The following processes of cyanobacteria are covered in BCS: environmental proce
 
 Entire biochemical space of cyanobacteria is formed from over 1000 entities and 600 rules. Therefore, we will not explain them all here, we just provide a several cases which demonstrate how different BCSL features can be used for describing real biological problems.
 
-The circadian clock of cyanobacteria~\cite{CCR} is formed by three kinases KaiA, kaiB, and KaiC (with additional presence of ATP). The key role plays KaiC. Compared to the other two proteins, it is physically the biggest one. As every protein, it's primary structure is a sequence of amino acids, where two particular are important for the modelling -- threonine and serine. These two amino acids can be enriched by phosphoryl group in process commonly known as phosphorylation~\cite{cohen2002origins}. However, the sites are accessible only when the protein forms a homohexamer -- a structure of six KaiC proteins. For the phosphorylation itself are responsible KaiA proteins while KaiB proteins inactivate KaiA's, which leads to auto-dephosphorylation of KaiC kinases. There are several complexes which can be formed from mentioned proteins according to situation which is currently happening with the KaiC hexamer.
+The circadian clock of cyanobacteria~\cite{CCR} is formed by three kinases KaiA, kaiB, and KaiC (with additional presence of ATP). The key role plays KaiC. Compared to the other two proteins, it is physically the biggest one. As every protein, its primary structure is a sequence of amino acids, where two particular are important for the modelling -- threonine and serine. These two amino acids can be enriched by phosphoryl group in process commonly known as phosphorylation~\cite{cohen2002origins}. However, the sites are accessible only when the protein forms a homohexamer -- a structure of six KaiC proteins. For the phosphorylation itself are responsible KaiA proteins while KaiB proteins inactivate KaiA's, which leads to auto-dephosphorylation of KaiC kinases. There are several complexes which can be formed from mentioned proteins according to situation which is currently happening with the KaiC hexamer.
 
 It is important to note the KaiA and KaiB kinases only \emph{enhance} the phosphorylation process, but do not enable/disable it completely. Therefore, when it comes to quantitative description of the system, it is necessary to depict all possible actions. Particularly, we need to express the fact the phosphorylation process happens regardless the complex KaiC hexamer is currently in. 
 
@@ -1778,7 +1816,7 @@ The general goal of BCS is to provide knowledge base for mathematical models. In
 
 To improve usability and verifiability of the BCS, we define Biochemical Space Language. The language formally describes the entities and the rules. It has rule-based semantics, what allows compact description of the objects. Moreover, the syntax was designed in order to be very concise and human-readable. Hence it is very suitable for our needs.
 
-The whole BCS is defined in BCSL. This fact makes sure the entities and the rules are defined with all appropriate properties. Moreover, it helps us to relate objects from the models to BCS objects. Note that due to rule-based nature of the BCSL, in BCS there are defined only abstract objects representing types. Therefore, when relating for example an model variable to BCS entity, we might need to specify it's properties. 
+The whole BCS is defined in BCSL. This fact makes sure the entities and the rules are defined with all appropriate properties. Moreover, it helps us to relate objects from the models to BCS objects. Note that due to rule-based nature of the BCSL, in BCS there are defined only abstract objects representing types. Therefore, when relating for example an model variable to BCS entity, we might need to specify its properties. 
 
 \begin{figure}[!h]
 \begin{center}
