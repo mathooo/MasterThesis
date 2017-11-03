@@ -556,9 +556,9 @@ The semantics we give is indirect, i.e. we don't give semantic sense to rules th
 
 For better readability, we provide examples of syntax for most important object during their definition. However, the formal definition of syntax itself and the relation to the objects will be given later.
 
-Before we proceed, we recall some basic notations and provide all necessary definition in order to build formal definition for the language.
-
 \section{Formal preliminaries}
+
+Before we proceed, we recall some basic notations and provide all necessary definition in order to build formal definition for the language.
 
 \begin{definition}{Labelled transition system}\label{lts}
 \textit{Labelled transition system} (LTS) $\mathcal{L}$ is a quadruple $(S, A, \Delta, s_0)$ where:
@@ -1463,7 +1463,7 @@ The reason is that complex agents actually encapsulate all other agent types inc
 
 \begin{definition}{Compatible sets}
 \label{compatible_set}
-Sets $\mathbbmss{X}_1, \ldots, \mathbbmss{X}_n \subseteq \mathds{X}$ are \emph{compatible sets} if for each compatible set $\mathbbmss{X}$ hold the following conditions:
+Sets $\mathbbmss{X}_1, \ldots, \mathbbmss{X}_n \subseteq \mathds{X}_\sqsubseteq$ are \emph{compatible sets} iff for each compatible set $\mathbbmss{X}$ hold the following conditions:
 \begin{center}
 \begin{enumerate}
 	\item \label{compatible_cond} $ \forall \mathtt{X}_1, \mathtt{X}_2 \in \mathbbmss{X} ~\exists~ \mathtt{X}' \in \mathbbmss{X}: \mathtt{X}_1 \lhd \mathtt{X}' \wedge \mathtt{X}_2 \lhd \mathtt{X}'$ such that $\mathtt{X}_1 \neq \mathtt{X}_2$,
@@ -1530,7 +1530,7 @@ There might be cases when there are redundant rules defined in a model. This mig
 
 Lets have two rules $\mathtt{R}, \mathtt{R}'$ of form:
 
-$$ \Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \ldots + \Gamma_{m} $$
+$$ \Gamma_1 + \Gamma_2 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \Gamma_{n+2} + \ldots + \Gamma_{m} $$
 
 for some $m,n \in \mathbb{N}$ such that both $\mathtt{R}, \mathtt{R}'$ are well-formed rules.
 
@@ -1612,7 +1612,7 @@ Since we have defined compatibility operator for agents, we can apply static rea
 
 \begin{theorem}
 \label{static_reach}
-We can declare a complex agent $\mathtt{X}$ as non-reachable for a set of rules $\mathcal{R}_f$ iff there does not exist a rule $\mathtt{R} = (\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices}) \in \mathcal{R}_f$ such that $\exists \mathtt{X}' \in \chi: \mathtt{X}' \lhd \mathtt{X}$.
+We can declare a complex agent $\mathtt{X}$ as non-reachable w.r.t. set of rules $\mathcal{R}_f$ iff there does not exist a rule $\mathtt{R} = (\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices}) \in \mathcal{R}_f$ such that $\exists \mathtt{X}' \in \chi: \mathtt{X}' \lhd \mathtt{X}$.
 \end{theorem}
 
 The Theorem~\ref{static_reach} states a very powerful fact in context of non-reachability analyses. Compared to dynamic non-reachability analyses, it completely avoids any combinatorial explosion and gives answer only by linear testing of structural properties of rules.
@@ -1650,9 +1650,13 @@ The BCSL model definition as given in Section~\ref{BCSl_model} can be reduced by
 	\begin{enumerate}
 	  \item \textbf{if} $\exists x \in \Sigma_\mathtt{T}: \eta(\mathtt{T}) \equiv \pi_1(x) $
 
-	  \textbf{then} $\forall \mathtt{A} \in \gamma(\mathtt{T}): \eta(\mathtt{A}) \mapsto \pi_2(y)$ and do step~\ref{atomic_iter} with atomic agent $\mathtt{A}$
+	  \textbf{then} $\forall \mathtt{A} \in \gamma(\mathtt{T}): \eta(\mathtt{A}) \mapsto \pi_2(y)$ and 
 
-	  \textbf{else} $(\eta(\mathtt{T}), \{ \eta(\mathtt{A}) ~|~ \mathtt{A} \in \gamma(\mathtt{T}) \}) \mapsto \Sigma_\mathtt{T}$ (also do step~\ref{atomic_iter} with atomic agent $\mathtt{A}$).
+	  \hspace*{1cm} do step~\ref{atomic_iter} with every atomic agent $\mathtt{A}$
+
+	  \textbf{else} $(\eta(\mathtt{T}), \{ \eta(\mathtt{A}) ~|~ \mathtt{A} \in \gamma(\mathtt{T}) \}) \mapsto \Sigma_\mathtt{T}$ 
+
+	  \hspace*{0.75cm} (also do step~\ref{atomic_iter} with every atomic agent $\mathtt{A}$).
 	\end{enumerate}
 \end{enumerate}
 \end{enumerate}
