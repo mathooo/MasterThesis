@@ -105,7 +105,7 @@ key words
 
 \chapter{Background}
 
-In this chapter, we introduce all relevant terms which will be used in the thesis. Namely, we give an introduction to rule-based modelling and compare it to usual reaction-based approach. Then we describe typical representatives of the rule-based languages and highlight their key features. We also introduce Comprehensive Modeling Platform with its core parts and provide motivation for Biochemical Space, as a key feature of the platform.
+In this chapter, we introduce all relevant terms which will be used in the thesis. Namely, we give an introduction to rule-based modelling and compare it to usual reaction-based approach. Then we describe typical representatives of the rule-based languages and highlight their key features. We also introduce Comprehensive Modeling Platform with its core parts and provide motivation for Biochemical Space as a key feature of the platform.
 
 \section{Rule-based modelling}
 \label{Rule-based basics}
@@ -116,19 +116,17 @@ There are multiple approaches to rule-based modelling, but all of them match in 
 
 We represent a rule-based model $\mathds{M}$ as a set of rules and an initial solution of interacting objects. We understand solution as a mixture of individual objects which are randomly distributed (Fig.~\ref{solutions:fig}a). Therefore, we cannot assign them any order and we do not see as multisets. From biological perspective, this representation of solution is as close as is possible to the reality while preserving conciseness.
 
+The rules are patterns which describe behavior of groups of objects. A rule has form of an abstract chemical reaction, where substrates and products take place. The difference is that reaction only operates on particular objects, while in rule groups of objects are interacting. Therefore, a reaction can be seen as a special case of a rule (Fig.~\ref{rules:fig}), where the type represents exactly one object.
+
 \begin{figure}[!h]
 \begin{center}
 \subfloat[]{\includegraphics[scale=0.23]{pics/solution_first}\label{sol:s1}}
 \hspace*{1cm}
 \subfloat[]{\includegraphics[scale=0.23]{pics/solution_second}\label{sol:s2}}
-\caption{\textbf{Examples of solutions}. \textbf{(a)} An example of graphical representation of a solution. \textbf{(b)} Updated solution after rules from Fig.~\ref{rules:fig} were applied. The first rule \textit{(a)} was applied on the yellow $\square$ and green $\bigcirc$ and produced yellow-green complex $\square$--$\bigcirc$. Note there are more options how the rule could be mapped -- each combination of free $\square$ and $\bigcirc$. The second rule \textit{(b)} was applied on red-cyan complex $\square$--$\bigcirc$ where the color of $\square$ was changed from red to green. The third rule \textit{(c)} couldn't be applied because there is no such complex with yellow $\bigcirc$. }
+\caption{\textbf{Examples of solutions}. \textbf{(a)} An example of graphical representation of a solution. \textbf{(b)} Updated solution after rules from Fig.~\ref{rules:fig} were applied. The first rule \textit{(a)} was applied on the yellow \raisebox{-0.02cm}[0cm]{{\large $\square$}} and green $\bigcirc$ and produced yellow-green complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$. Note there are more options how the rule could be mapped -- each combination of free \raisebox{-0.02cm}[0cm]{{\large $\square$}} and $\bigcirc$. The second rule \textit{(b)} was applied on red-cyan complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$ where the color of \raisebox{-0.02cm}[0cm]{{\large $\square$}} was changed from red to green. The third rule \textit{(c)} couldn't be applied because there is no such complex with yellow $\bigcirc$. }
 \label{solutions:fig}
 \end{center}
 \end{figure}
-
-The rules are patterns which describe behavior of groups of objects. A rule has form of an abstract chemical reaction, where substrates and products take place. The difference is that reaction only operates on particular objects, while in rule groups of objects are interacting. Therefore, a reaction can be seen as a special case of a rule (Fig.~\ref{rules:fig}), where the type represents exactly one object.
-
-The rule is mapped on a solution. Then, it can be applied and a new solution is produced. The mapping is not always successful (Fig.~\ref{solutions:fig}, application of rule \textit{c}). %By repeating map-apply action, we obtain a \textit{Labelled transition system} $\mathcal{L}$ (Definition~\ref{lts}).
 
 \begin{figure}[!h]
 \begin{center}
@@ -152,14 +150,14 @@ The rule is mapped on a solution. Then, it can be applied and a new solution is 
   \begin{minipage}[r]{0.6\textwidth}
     {\hspace*{1.3cm}\includegraphics[scale=0.2]{pics/rule_diss}}
 \end{minipage}
-\caption{\textbf{Examples of rules}. Rule \textbf{(a)}: a $\square$ and a $\bigcirc$ can form a complex $\square$--$\bigcirc$ regardless their colors. Rule \textbf{(b)}: a $\square$ is allowed to change it's color from red to green only if is in a complex with a $\bigcirc$ regardless it's color. Rule \textbf{(c)}: the rule can disassemble the complex only if the $\bigcirc$ is yellow.}
+\caption{\textbf{Examples of rules}. Rule \textbf{(a)}: a \raisebox{-0.02cm}[0cm]{{\large $\square$}} and a $\bigcirc$ can form a complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$ regardless their colors. Rule \textbf{(b)}: a \raisebox{-0.02cm}[0cm]{{\large $\square$}} is allowed to change it's color from red to green only if is in a complex with a $\bigcirc$ regardless it's color. Rule \textbf{(c)}: the rule can disassemble the complex only if the $\bigcirc$ is yellow.}
 \label{rules:fig}
 \end{center}
 \end{figure}
 
-The mapping of a rule on a solution can be understood as a particular moment when the objects in the solution have just the conformation suitable for the rule and therefore the rule can be applied. However, since the distribution of objects is random, we can assume a sequence of objects needed for rule (if there are such objects) is always available.
+The rule is mapped on a solution. Then it can be applied and a new solution is produced. The mapping is not always successful (Fig.~\ref{solutions:fig}, application of rule \textit{c}). %By repeating map-apply action, we obtain a \textit{Labelled transition system} $\mathcal{L}$ (Definition~\ref{lts}).
 
-Moreover, the mapping can also be seen as assigning particular objects from the solution to types on the left-hand-side of the rule. The rule application then represents the change of the mapped objects to new objects according to the right-hand-side of the rule (i.e., particular objects are assigned to the right-hand-side). As a by-product, we obtain an instance of the rule -- a reaction (Fig.~\ref{map-apply:fig}). %This is how we construct the set of labels (reactions) $A$ in the LTS $\mathcal{L}$.
+The mapping of a rule on a solution can be understood as a particular moment when the objects in the solution have just the conformation suitable for the rule and therefore the rule can be applied. Since the distribution of objects is random, we can assume a sequence of objects needed for rule (if there are such objects) is always available.
 
 \begin{figure}[!h]
 \begin{center}
@@ -183,10 +181,12 @@ Moreover, the mapping can also be seen as assigning particular objects from the 
   \begin{minipage}[r]{0.6\textwidth}
     {\hspace*{1.3cm}\includegraphics[scale=0.2]{pics/rule_reaction}}
 \end{minipage}
-\caption{\textbf{Example of a map-apply action}. As a solution, we use solution \textit{(a)} from Fig.~\ref{solutions:fig}. \textbf{(a)} Rule can be mapped on a $\square$ and a $\bigcirc$ regardless their colors and form a complex $\square$--$\bigcirc$.  \textbf{(b)} Let's choose yellow $\square$ and green $\bigcirc$ from our solution. The rule was mapped on chosen objects and they were assigned to the left-hand-side of the rule. \textbf{(c)} The rule was applied and new object (yellow-green complex $\square$--$\bigcirc$) was created. We obtained the reaction describing the particular action which has just happened.}
+\caption{\textbf{Example of a map-apply action}. As a solution, we use solution \textit{(a)} from Fig.~\ref{solutions:fig}. \textbf{(a)} Rule can be mapped on a \raisebox{-0.02cm}[0cm]{{\large $\square$}} and a $\bigcirc$ regardless their colors and form a complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$.  \textbf{(b)} Let's choose yellow \raisebox{-0.02cm}[0cm]{{\large $\square$}} and green $\bigcirc$ from our solution. The rule was mapped on chosen objects and they were assigned to the left-hand-side of the rule. \textbf{(c)} The rule was applied and new object (yellow-green complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$) was created. We obtained the reaction describing the particular action which has just happened.}
 \label{map-apply:fig}
 \end{center}
 \end{figure}
+
+The mapping can also be seen as assigning particular objects from the solution to types on the left-hand-side of the rule. The rule application then represents the change of the mapped objects to new objects according to the right-hand-side of the rule (i.e., particular objects are assigned to the right-hand-side). As a by-product, we obtain an instance of the rule -- a reaction (Fig.~\ref{map-apply:fig}). %This is how we construct the set of labels (reactions) $A$ in the LTS $\mathcal{L}$.
 
 Since this kind of graphical representation is not very suitable for machine processing and analyses, we define a formal language which is built on principles described in this chapter.
 
@@ -201,7 +201,7 @@ A rule is a generalised reaction (Figure~\ref{reaction_vs_rule}). This is how th
 \caption{Graphical comparison of rule-based and reaction-based approaches. There can be seen combinatorial explosion in number of possible particular interactions (reactions), which can be depicted in a few simple rules.}\label{reaction_vs_rule}
 \end{figure}
 
-Analysis of rules directly is not the best choice. The main reason is so-called side effects, which might happen during rule application. These side-effects differ from language to language, and it is a feature we tried to avoid in BCS as much as is possible (and therefore it was not mentioned in previous section). There is no such thing for reaction, because entire the context is enumerated explicitly. Therefore, we cannot directly know how exactly will be the rule used.
+Analysis of rules directly is not the best choice. The main reason are \emph{side effects}, which might happen during rule application. These side effects differ from language to language, and it is a feature we tried to avoid in BCS as much as is possible (and therefore it was not mentioned in previous section). There is no such thing for reaction, because entire the context is enumerated explicitly. Therefore, we cannot directly know how exactly will be the rule used.
 
 The rule and reaction differ in level of abstraction. In this context we mean how stringent it is, not what sort of features particular language uses. This is universal attribute for all rule-based languages -- the rule is always more abstract than it's instance -- a reaction. Then, analysis of such abstract object statically is a challenge. The reason is that most of the structural information is encoded in rules implicitly. For static analysis, explicit data are more suitable.
 
@@ -529,15 +529,7 @@ However, we realised this approach is not very beneficial since we are not fully
 
 In the previous version of language development, both definition and implementation were made via translation to Kappa. It particularly means there was defined a translation function, which was able to convert BCSL expressions to Kappa expressions. The huge advantage was that the conversion was quite easy-to-do and this way we could apply all analyses Kappa language has.
 
-However, this indirect approach had several disadvantages. First of all, Kappa has only one type of agent (no hierarchy). It follows all additional information encoded in different agent types are lost during conversion. This particularly means atomic agents had to be considered as binding sites and structure agents as Kappa agents. But it was not always suitable, especially when atomic agents had independent role in a rule. Moreover, complex treatment in Kappa requires explicit bonds between individual agents. Therefore, when translating our multiset-like complex agent to Kappa complex, one needs to choose one of many possible isomorphisms. Multiple default options are available, such as circular layout, linear layout etc. But it was not possible to express fact that order does not matter.
-
--- picture of examples, different approach to complexes
-
-From the implementation point of view, executing models was delayed by conversion to Kappa and then calling Kappa core to apply it's semantics. Moreover, Kappa uses network-free simulator, which is very efficient for small models, because the rules are executed directly. Each rule is being matched on current state and then matched objects are replaced according the rule. The problem is when model is more complex. The number of rules does not cause significant change, however number of different interacting agents does. Once there are many agents, the time of one match \& replace step rises dramatically. Compared to indirect methods when first reaction network is enumerated, the initial step takes some time, but then rule application itself is fast regardless number of agents.
-
-For the above-mentioned reasons we decided to redefine the BCSL language itself. Particularly, the syntax definition had to be refined in order to make the usability more clear. From semantic point of view, we needed a straightforward definition which would have practical use in implementation. With experiences from previous iteration, it showed that direct rule-based semantics where quite complicated mechanism of matching and replacement is used, is not very efficient. Therefore we chose indirect definition via reactions -- `practical' definition (Section~\ref{formal_definition}). The practical part means that this approach could be efficiently used in implementation.
-
-In section~\ref{bcs_general}, we have motivated the level of abstraction we need to use in BCS. To achieve that, we decided to neglect structural details, i.e. we do not employ binding approach. We consider binding as too low level of details. Instead, we improve definition of interacting agents to higher level, when it agent itself might express some kind of structural description (Figure~\ref{abstraction_comparision}). This way, we avoid complicated creation of complexes and reduce complicated syntax.
+However, this indirect approach had several disadvantages. First of all, Kappa has only one type of agent (no hierarchy). It follows all additional information encoded in different agent types are lost during conversion. This particularly means atomic agents had to be considered as binding sites and structure agents as Kappa agents. But it was not always suitable, especially when atomic agents had independent role in a rule. Moreover, complex treatment in Kappa requires explicit bonds between individual agents. Therefore, when translating our multiset-like complex agent to Kappa complex, one needs to choose one of many possible isomorphisms (Figure~\ref{abstraction_comparision}, the biology corresponds to Kappa approach). Multiple default options are available, such as circular layout, linear layout etc. But it was not possible to express fact that order does not matter.
 
 \begin{figure}[!h]
 \begin{center}
@@ -545,6 +537,12 @@ In section~\ref{bcs_general}, we have motivated the level of abstraction we need
 \end{center}
 \caption{Comparison of a complex in biology (on the left) to abstraction used in BCS (on the right). In biology, one must consider all possible graph isomorphisms which result from combinatorial options how edges can be placed to create a connected graph~\cite{Chartrand1985}. In BCS we neglect such details and see created structure only in sense of coexistence (a multiset), which significantly reduces number of possible deviations.}\label{abstraction_comparision}
 \end{figure}
+
+From the implementation point of view, executing models was delayed by conversion to Kappa and then calling Kappa core to apply it's semantics. Moreover, Kappa uses network-free simulator, which is very efficient for small models, because the rules are executed directly. Each rule is being matched on current state and then matched objects are replaced according the rule. The problem is when model is more complex. The number of rules does not cause significant change, however number of different interacting agents does. Once there are many agents, the time of one match \& replace step rises dramatically. Compared to indirect methods when first reaction network is enumerated, the initial step takes some time, but then rule application itself is fast regardless number of agents.
+
+For the above-mentioned reasons we decided to redefine the BCSL language itself. Particularly, the syntax definition had to be refined in order to make the usability more clear. From semantic point of view, we needed a straightforward definition which would have practical use in implementation. With experiences from previous iteration, it showed that direct rule-based semantics where quite complicated mechanism of matching and replacement is used, is not very efficient. Therefore we chose indirect definition via reactions -- `practical' definition (Section~\ref{formal_definition}). The practical part means that this approach could be efficiently used in implementation.
+
+In section~\ref{bcs_general}, we have motivated the level of abstraction we need to use in BCS. To achieve that, we decided to neglect structural details, i.e. we do not employ binding approach. We consider binding as too low level of details. Instead, we improve definition of interacting agents to higher level, when it agent itself might express some kind of structural description (Figure~\ref{abstraction_comparision}). This way, we avoid complicated creation of complexes and reduce complicated syntax.
 
 Also, we determine two types of complexes. Actually, none of them is literally a complex, we rather see it as a coexistence. It allows us to express even other types of interaction. We also determine whether the expresses complex is complete, i.e. the enumerated subparts are all which actually form the complex. The other type of complex expresses the fact that subparts play an important role in the complex, but there are more parts which we do not model, but this fact is somehow important for semantics of the model.
 
