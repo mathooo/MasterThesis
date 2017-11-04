@@ -951,10 +951,12 @@ $\Sigma_T(\mathtt{\eta}) \ominus \gamma(\mathtt{T}) \myeq \{ \eta_\Sigma ~|~ \et
 \section{Semantic function}
 \label{semantic_function}
 
-In the previous sections, we defined BCSL objects and BCSL model. Now, we need to connect them in order to we give semantic meaning to the model $\mathds{M}$. For this purpose, we define semantic function $\mathtt{F}$. It is defined recursively for a model $\mathds{M}$ according to expression given as argument:
+In the previous sections, we defined BCSL objects and BCSL model. Now, we need to connect them in order to we give semantic meaning to the model $\mathds{M}$. For this purpose, we define semantic function $\mathtt{F}$ (Definition~\ref{semantic_function}). It is defined recursively for a model $\mathds{M}$ according to expression given as an argument.
 
+\begin{definition}{Semantic function}
+\label{semantic_function}
 \begin{center}
-\begin{tabular}{ r c l}
+\begin{tabular}{ c c l}
 $\mathtt{F} \llbracket ~\eta\{\varepsilon\}~ \rrbracket$ & = & $(\eta, \varepsilon) \in \mathds{A}$\\
  & & \\
 $\mathtt{F} \llbracket ~\eta\{s\}~ \rrbracket$ & = & $(\eta, s) \in \mathds{A}$\\
@@ -968,7 +970,7 @@ $\mathtt{F} \llbracket ~\alpha_1~.~\ldots~.~\alpha_n :: c~ \rrbracket$ & = &
 $(~(\mathtt{F} \llbracket ~\alpha_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\alpha_n~ \rrbracket), ~c~) \in \mathds{X}$\\
  & & \\
 $\mathtt{F} \llbracket ~\Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \ldots + \Gamma_m~ \rrbracket$ & = &
-$(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices}) \in \mathds{R}$~ such that:\\
+$(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices}) \in \mathds{R}$ :\\
 \end{tabular}
 \end{center}
 
@@ -993,18 +995,21 @@ $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices}) \in \mathds{R}$~ suc
 
 \end{itemize}
 \end{center}
+\end{definition}
 
 Please note by applying semantic function $\mathtt{F}$ on expressions from Examples~\ref{example:atomic} to \ref{example:rule}, we obtain agents (resp. complex or rule) from appropriate examples. Moreover, semantic function works \emph{only} on BCSL object and rules well-defined by the given grammar (Section~\ref{syntax}).
 
 \section{Ground forms}
 \label{ground_forms}
 
-\emph{Ground form} represents appending context to agents according to signature (we assume signature is always available and therefore we omit it in ground from function arguments). Particularly, this process means adding details to partial compositions and adding states of atomic agents according to defined signatures. Since there are typically multiple allowed states for an atomic agent, this processes leads to multiple options how to add a context. This is natural consequence of fact that a is an abstract representation of multiple reactions. 
+\emph{Ground form} represents appending context to agents according to signature (we assume signature is always available and therefore we omit it in ground from function arguments). Particularly, this process means adding details to partial compositions and adding states of atomic agents according to defined signatures. Since there are typically multiple states allowed for an atomic agent, this processes leads to multiple options how to add a context. This is natural consequence of fact that a rule is an abstract representation of multiple reactions. 
 
-Please note that $\mathtt{A} = (\eta, \delta)$, $\mathtt{A}' = (\eta', \delta')$, $\mathtt{T} = (\eta, \gamma)$, and $\mathtt{T}' = (\eta', \gamma')$.
+In the Definition~\ref{ground_form}, objects (middle column) of particular type (left column) are transformed to their ground forms by ground form function $\mathcal{G}$ (right column).
 
-Objects (middle column) of particular type (left column) are transformed to their ground forms by ground form function $\mathcal{G}$ (right column) defined as following:
+bla bla goes here
 
+\begin{definition}{Ground form}
+\label{ground_form}
 {\small
 \begin{center}
 \begin{tabular}{ c c l }
@@ -1043,12 +1048,13 @@ $\mathds{R}$ & $\mathcal{G}(\mathtt{R})$ & $ \displaystyle \prod_{k = 1}^{|\math
 
 where $\mathcal{G}(\mathtt{Indices})_k = \mathcal{G}(\pi_i(\omega), \pi_j(\omega))$ such that $(i,j) = \pi_k(\mathtt{Indices})$ 
 
-and $\mathtt{R} = (\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$.
+and $\mathtt{R} = (\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$. Moreover, $\mathtt{A} = (\eta, \delta)$, $\mathtt{A}' = (\eta', \delta')$, 
+
+$\mathtt{T} = (\eta, \gamma)$, and $\mathtt{T}' = (\eta', \gamma')$.
 }
+\end{definition}
 
-%\vspace*{1cm} Moreover, $\mathcal{G}(\mathtt{Indices})$ is an ordered set according to order function $f: \mathtt{Indices} \rightarrow \mathbb{N}$. This function assigns to each item $(i,j) \in \mathtt{Indices}$ a unique position $f(i,j) = k$. An item $\mathcal{G}(\mathtt{Indices})_k$ preserves this position $k$.
-
-\noindent\rule{\textwidth}{2pt}
+bla bla continues here
 
 \section{Construction of reactions}
 \label{Generating reactions}
@@ -1067,11 +1073,9 @@ where $\mathtt{seq} =$ & $ \big(\mathtt{X}(y(0, \ldots, \pi_0(\mathtt{map}) - 1)
 
 & ~~$\mathtt{X}(y(\pi_{|\mathtt{map}| - 1}(\mathtt{map}), \ldots, \pi_{|\mathtt{map}|}(\mathtt{map}) - 1), \mathtt{com}(\pi_{|\mathtt{map}|}(\chi)))\big) $\\
 
-and $ \mathtt{I} \in \mathtt{R}$ & and $\chi \in \mathtt{R}$ and $\mathtt{map} \in \mathtt{R}.$\\
+ & ~~and $ \mathtt{I} \in \mathtt{R}$, $\chi \in \mathtt{R}$, $\mathtt{map} \in \mathtt{R}.$\\
 \end{tabular}
 \end{definition}
-
-\noindent\rule{\textwidth}{1pt}
 
 \section{Chemical Reaction Networks}
 
@@ -1099,16 +1103,14 @@ $(\vv{\upsilon}, \vv{\mathtt{r}}, \vv{\mathtt{u}}) \in \varrho \myeq \vv{\mathtt
 Note some values in chemical reactions might be negative. When applying reaction on state, the resulting state cannot contain any negative values (negative number of entities does not give biological sense). Therefore, application is allowed only if the resulting vector contains non-negative values.
 
 \begin{definition}{CRN semantics}
-Let $\mathcal{M}$ be a Chemical Reaction Model. The quantitative semantics are given in terms of a discrete-states produced by iterative reaction application on initial vector $\vv{\nu}$ and all consequently created state vectors. This way we obtain an LTS (Definition~\ref{lts}).
+Let $\mathcal{M}$ be a Chemical Reaction Model. The quantitative semantics are given in terms of a \emph{discrete-states} produced by iterative reaction application on initial vector $\vv{\nu}$ and all consequently created state vectors. This way we obtain an LTS (Definition~\ref{lts}).
 \end{definition}
 
 CRN semantics might lead to possibly infinite LTS. This process can be limited by a global bound, which makes sure the produced LTS is finite (Section~\ref{optimal_bound}).
 
-\noindent\rule{\textwidth}{1pt}
-
 \section{Production of model}
 
-In previous sections we defined all what was required to actually create Chemical Reaction Model (Definition~\ref{crn}) from a BCSL model. This procedure is necessary in order to allow operational semantics to be applied.
+In previous sections we defined all required constructs to create a Chemical Reaction Model (Definition~\ref{crn}) from a BCSL model. This procedure is necessary in order to allow operational semantics to be applied.
 
 \begin{definition}{Reference vector}\label{reference_vector}
 
@@ -1148,14 +1150,14 @@ $\vv{r} = \lambda(RHS(\mathtt{r}), \theta) - \lambda(LHS(\mathtt{r}), \theta)$
 
 \end{enumerate}
 
-In order to accomplish the process of giving semantics to an BCSL model, it is necessary to note how we revive information which is missing in produced LTS (Definition~\ref{lts}). This procedure is quite straightforward since we still have define reference vector $\theta$. Similarly as we translated multisets of BCSL agents to vectors (Definition~\ref{state_to_vector}), we can apply a reverse procedure, when we build a multiset of agents from a vector according to the reference vector $\theta$. This is how we obtain an LTS.  
+In order to accomplish the process of giving semantics to an BCSL model, it is necessary to note how we revive information which is missing in produced LTS (Definition~\ref{lts}). This procedure is quite straightforward since we have defined reference vector $\theta$. Similarly as we translated multisets of BCSL agents to vectors (Definition~\ref{state_to_vector}), we can apply a reverse procedure, when we build a multiset of agents from a vector according to the reference vector $\theta$.
 
 \section{Syntactic extensions}
 \label{syntactic_extensions}
 
-We define several syntactic extensions for better readability of the rules. Note that each rule in a extended form can be always translated to basic form defined above. All rules containing the following extensions must be converted to basic form before semantics can be applied.
+We define several syntactic extensions for better readability of the rules. Note that each rule in an extended form can be always translated to basic form defined above. All rules containing the following extensions must be converted to basic form before semantics can be applied.
 
-For better demonstration, we give running example, which will go through all syntactic extensions. Please note there is no biological sense of the model, it has only demonstrative purpose.
+For better demonstration we provide a running example, which will go through all syntactic extensions. Please note there is no biological sense of the model, it has only demonstrative purpose.
 
 \begin{runningExample}{The example model $\mathds{M}$}
 \label{run1}
@@ -1331,7 +1333,7 @@ We define necessary condition which must hold when semantic function $\mathtt{F}
 \end{enumerate}
 \end{definition}
 
-For each pair of agents $(\alpha, \beta)$ with allowed `::' operator between them $\alpha :: \beta$, we can construct just one agent $\beta'$ without the operator by taking most-left agent $\alpha'$ from full (resp. partial) composition of the agent $\beta$ such that it is \emph{compatible with} the agent $\alpha$ ($\alpha' \lhd \alpha$). Then, agent $\alpha'$ is simply replaced by agent $\alpha$ and agent $\beta'$ is constructed.
+For each pair of agents $(\alpha, \beta)$ with allowed `::' operator between them $\alpha :: \beta$, we can construct just one agent $\beta'$ without the operator by taking the most left agent $\alpha'$ from full (resp. partial) composition of the agent $\beta$ such that it is \emph{compatible with} the agent $\alpha$ ($\alpha' \lhd \alpha$). Then, agent $\alpha'$ is simply replaced by agent $\alpha$ and agent $\beta'$ is constructed.
 
 \begin{runningExample}{The example model $\mathds{M}$}
 \label{run7}
@@ -1351,11 +1353,11 @@ You can see localisation operator allowed us to fully use the complex signatures
 
 \subsection{Variables}
 
-In the Running example~\ref{run7} there is still space for syntax reduction. Rule 1 and 2 are very similar except context of complex they take place in. Therefore, we will substitute this context with a variable with given domain.
+In the Running example~\ref{run7} there is still space for syntax reduction. Rules 1 and 2 are very similar except context of complex they take place in. Therefore, we will substitute this context with a variable with given domain.
 
 In a rule, one rule agent might be referenced using variable $\upsilon$ as a set of rule agents it can be replaced with. Such a rule agent is referenced as $?X$. Moreover, in case when a $?X$ is used in a location, it must hold conditions from Definition~\ref{locations:conditions}.
 
-Once again, each rule associated with variable can be easily rewritten as several rules where variable is replaced with agent from set of agents attached to the variable. Please note only one variable can be used per rule.
+Each rule associated with variable can be easily rewritten as several rules where variable is replaced with agent from set of agents attached to the variable. Please note only one variable can be used per rule.
 
 \begin{runningExample}{The example model $\mathds{M}$}
 \label{run8}
@@ -1370,7 +1372,7 @@ Once again, each rule associated with variable can be easily rewritten as severa
 
 \noindent Definition of rules 1 and 2 from Running example~\ref{run7} was replaced as a single rule using a variable.
 
-This is final syntactic extension. Compared to original model (Running example~\ref{run1}), the resulting model is much more concise and readable. More examples can be seen in Section~\ref{case_study}.
+This is final syntactic extension. Compared to original model (Running example~\ref{run1}), the resulting model is more concise and readable. More examples are in Section~\ref{case_study}.
 
 \chapter{Analysis}
 
