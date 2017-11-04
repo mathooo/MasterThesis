@@ -911,6 +911,10 @@ BCSL model $\mathds{M}$ is a quadruple $(\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_
 
 BCSL model is formed by a set of rule expressions $\mathcal{R}$, which define behavior of the model. The initial multiset $\mathtt{init}$ defines the state of the model in the beginning. Atomic signature $\Sigma_\mathtt{A}$ define allowed states for all atomic agents used in the rules. FInally, structure signature $\Sigma_\mathtt{T}$ defines allowed atomic agents for all structure agents used in the rules.
 
+\begin{remark}
+At this point it is useful to sum up what is Biochemical Space as described in Section~\ref{bcs_general}. The BCS is formed by a database of entities and rules. These entities are actually a signature, i.e. they predefine a domain on which rules can be defined. Neglecting an initial state (which is not important for entire space), the BCS is actually a BCSL model.
+\end{remark}
+
 \section{Additional definitions}
 
 Before we proceed, there are a few necessary definitions. These definitions are required in next section in order to generate reactions from rules.
