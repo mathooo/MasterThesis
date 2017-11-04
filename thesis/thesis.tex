@@ -85,8 +85,8 @@
 \definecolor{mydarkgreen}{RGB}{48, 129, 7}
 
 % uncomment in case of \subsubsection usage
-%\usepackage{titlesec}
-%\titleformat{\subsubsection}{}{\thesubsubsection}{1em}{\bfseries}
+% \usepackage{titlesec}
+% \titleformat{\subsubsection}{}{\thesubsubsection}{1em}{\bfseries}
 
 % FI THESIS settings
 \thesistitle{Formal biochemical space for specification and analysis of biochemical processes}
@@ -561,41 +561,87 @@ Experiments repository is a module for storage and presentation of time-series d
 
 Biochemical Space as described in Section~\ref{bcs_general} can grow to quite a huge size. It means keep it consistent on an informal level is almost impossible. It is necessary to be able to detect inconsistency with automatic tools and enable further analysis of the space.
 
-In our last paper~\cite{Ded201627}, we defined Biochemical Space Language (BCSL) such that syntax was defined independently, but semantics were defined via translating to Kappa language~\cite{kappa_formal}. First of all, we wanted to keep the language as concise as is possible. Rule-based approach was the best hit, because it is capable to capture required details for biological systems while keeping the description concise. It was supposed to be human-readable, which in this context means easy to read, write and maintain by humans even from other disciplines than computer science. However, there are many rule-based languages and each of them is slightly different in syntactic and semantic level and also on level of abstraction. After a deep research (Section~\ref{rule_based_languages}), we have evaluated all existing languages as not suitable for our purposes. The closest representation to the desired one was Kappa language (Section~\ref{kappa}). That is the reason why in first iteration we have chosen translation to Kappa for definition of semantics.
+In our last paper~\cite{Ded201627}, we defined Biochemical Space Language (BCSL) such that syntax was defined independently, but semantics were defined via translating to Kappa language~\cite{kappa_formal}. First of all, we wanted to keep the language as concise as is possible. Rule-based approach was the best hit, because it is capable to capture required details for biological systems while keeping the description concise. It was supposed to be human-readable, which in this context means easy to read, write and maintain by humans even from other disciplines than computer science. However, there are many rule-based languages and each of them is slightly different in syntactic and semantic level and also on level of abstraction. After a research (Section~\ref{rule_based_languages}), we have evaluated all existing languages as not suitable for our purposes. The closest representation to the desired one was Kappa language (Section~\ref{kappa}). That is the reason why in first iteration we have chosen translation to Kappa for definition of semantics.
 
-However, we realised this approach is not very beneficial since we are not fully using the expressive power of our language this way. The thing is Kappa operates purely on expressions. We want to promote our language to a higher level when it operates on objects in multisets. By translating to Kappa we loose such abstraction. 
+However, we realised this approach is not very beneficial since we are not fully using the expressive power of our language this way. The problem is Kappa operates purely on expressions. We want to promote our language to a higher level when it operates on objects in multisets. By translating to Kappa we loose such abstraction. 
 
-In the previous version of language development, both definition and implementation were made via translation to Kappa. It particularly means there was defined a translation function, which was able to convert BCSL expressions to Kappa expressions. The huge advantage was that the conversion was quite easy-to-do and this way we could apply all analyses Kappa language has.
+In the previous version of language development, both definition and implementation were made via translation to Kappa. It particularly means there was defined a translation function, which was able to convert BCSL expressions to Kappa expressions. The huge advantage was that the conversion was quite straightforward and this way we could apply all analyses Kappa language has.
 
-However, this indirect approach had several disadvantages. First of all, Kappa has only one type of agent (no hierarchy). It follows all additional information encoded in different agent types are lost during conversion. This particularly means atomic agents had to be considered as binding sites and structure agents as Kappa agents. But it was not always suitable, especially when atomic agents had independent role in a rule. Moreover, complex treatment in Kappa requires explicit bonds between individual agents. Therefore, when translating our multiset-like complex agent to Kappa complex, one needs to choose one of many possible isomorphisms (Figure~\ref{abstraction_comparision}, the biology corresponds to Kappa approach). Multiple default options are available, such as circular layout, linear layout etc. But it was not possible to express fact that order does not matter.
+The indirect approach had several disadvantages. First of all, Kappa has only one type of agent (no hierarchy). It follows all additional information encoded in different agent types are lost during the conversion. This particularly means atomic agents had to be considered as binding sites and structure agents as Kappa agents. But it was not always suitable, especially when atomic agents had independent role in a rule. Complex treatment in Kappa requires explicit bonds between individual agents. Therefore, when translating our multiset-based complex agent to Kappa complex, we need to choose one of many possible isomorphisms (Figure~\ref{abstraction_comparision}, the biology corresponds to Kappa approach). Multiple default options are available, such as circular layout, linear layout etc. But it was not possible to express fact that order does not matter.
 
 \begin{figure}[!h]
 \begin{center}
   \includegraphics[scale=0.35]{pics/abstraction}
 \end{center}
-\caption{Comparison of a complex in biology (on the left) to abstraction used in BCS (on the right). In biology, one must consider all possible graph isomorphisms which result from combinatorial options how edges can be placed to create a connected graph~\cite{Chartrand1985}. In BCS we neglect such details and see created structure only in sense of coexistence (a multiset), which significantly reduces number of possible deviations.}\label{abstraction_comparision}
+\caption{Comparison of a complex in biology (on the left) to abstraction used in BCS (on the right). In biology, all possible graph isomorphisms must be considered which results from combinatorial options how edges can be placed to create a connected graph~\cite{Chartrand1985}. In BCS we neglect such details and see created structure only in sense of coexistence (a multiset), which significantly reduces number of possible deviations.}\label{abstraction_comparision}
 \end{figure}
 
-From the implementation point of view, executing models was delayed by conversion to Kappa and then calling Kappa core to apply its semantics. Moreover, Kappa uses network-free simulator, which is very efficient for small models, because the rules are executed directly. Each rule is being matched on current state and then matched objects are replaced according the rule. The problem is when model is more complex. The number of rules does not cause significant change, however number of different interacting agents does. Once there are many agents, the time of one match \& replace step rises dramatically. Compared to indirect methods when first reaction network is enumerated, the initial step takes some time, but then rule application itself is fast regardless number of agents.
+From the implementation point of view, executing models was delayed by conversion to Kappa and then calling Kappa core to execute its semantics. Moreover, Kappa uses network-free simulator, which is very efficient for small models, because the rules are executed directly. Each rule is being matched on current state and then matched objects are replaced according the rule. The problem is when model is more complex. The number of rules does not cause significant change, however number of different interacting agents does. Once there are many agents, the time of one \emph{match \& replace} step rises dramatically. Compared to indirect methods when first reaction network is enumerated, the initial step can be resources consuming, but then rule application itself is fast regardless number of agents.
 
-For the above-mentioned reasons we decided to redefine the BCSL language itself. Particularly, the syntax definition had to be refined in order to make the usability more clear. From semantic point of view, we needed a straightforward definition which would have practical use in implementation. With experiences from previous iteration, it showed that direct rule-based semantics where quite complicated mechanism of matching and replacement is used, is not very efficient. Therefore we chose indirect definition via reactions -- `practical' definition (Section~\ref{formal_definition}). The practical part means that this approach could be efficiently used in implementation.
+For the reasons mentioned above we decided to redefine the BCSL language itself. Particularly, the syntax definition had to be refined in order to make the usability more clear. From semantic point of view, we needed a straightforward definition which would have practical use in implementation. With experiences from previous iteration, it showed that direct rule-based semantics where not very efficient mechanism to be is used. For that reason, we have chosen an indirect definition via translation to reactions -- \emph{practical} definition (Section~\ref{formal_definition}). The practical part means that this approach can be efficiently used in implementation.
 
-In section~\ref{bcs_general}, we have motivated the level of abstraction we need to use in BCS. To achieve that, we decided to neglect structural details, i.e. we do not employ binding approach. We consider binding as too low level of details. Instead, we improve definition of interacting agents to higher level, when it agent itself might express some kind of structural description (Figure~\ref{abstraction_comparision}). This way, we avoid complicated creation of complexes and reduce complicated syntax.
+In section~\ref{bcs_general}, we have motivated the level of abstraction we need to use in BCS. To achieve that, we decided to neglect structural details, i.e. we do not employ binding approach. We consider binding as too low level of details. Instead, we improve definition of interacting agents to higher level, when an agent might expresses some kind of structural description (Figure~\ref{abstraction_comparision}). This way we avoid complicated creation of complexes and reduce complicated syntax.
 
-Also, we determine two types of complexes. Actually, none of them is literally a complex, we rather see it as a coexistence. It allows us to express even other types of interaction. We also determine whether the expresses complex is complete, i.e. the enumerated subparts are all which actually form the complex. The other type of complex expresses the fact that subparts play an important role in the complex, but there are more parts which we do not model, but this fact is somehow important for semantics of the model.
+Also, we determine two types of complexes. None of them is literally a complex, we rather see it as a coexistence. It allows us to express even other types of interaction. We also determine whether the expresses complex is complete, i.e. the enumerated subparts are all which form the complex. The other type of complex expresses the fact that subparts play an important role in the complex, but there are more parts which we do not model, but this fact is important for semantics of the model.
 
 \chapter{Formal definition}
 \label{formal_definition}
 
-In this chapter, we define Biochemical Space Language formally. First, we define all the required objects, then we define syntax of the language and finally give semantics to the BCSL models.
+In this chapter, we define Biochemical Space Language formally. First, we define all the required objects, then we define syntax of the language and semantics of the BCSL models.
 
-The semantics we give is indirect, i.e. we don't give semantic sense to rules themselves, rather provide a procedure how to generate reactions from the rules and give semantics to them.
+The defined semantics is indirect, i.e. we don't give semantic sense to rules themselves, rather provide a procedure how to generate reactions from the rules and give semantics to them.
 
-For better readability, we provide examples of syntax for most important object during their definition. However, the formal definition of syntax itself and the relation to the objects will be given later.
+For better readability, we provide examples of syntax for most important object during their definition. However, the formal definition of syntax and the relation to the objects will be given later.
 
 \section{Formal preliminaries}
 
 Before we proceed, we recall some basic notations and provide all necessary definition in order to build formal definition for the language.
+
+%We define projection $\pi_i$ to enable iterating through multidimensional structures.
+
+\begin{definition}{Projection}
+Projection $\pi_i : X^n \rightarrow X $ is defined as follows:
+
+\begin{center}
+$ \pi_i(x_1, \ldots, x_n) = x_i $
+\end{center}
+
+for some $i, n \in \mathbb{N}$ and $i \leq n$.
+\end{definition}
+
+%Next, we need to define tuples concatenation, since we work with them quite often want to make sure this operation is clear.
+
+\begin{definition}{Tuples concatenation}
+
+Let $X = (x_1, \ldots, x_n), Y = (y_1, \ldots, y_m)$ be two tuples for some $n, m \in \mathbb{N}$. Concatenation of two tuples, written $X \mdoubleplus Y$, is defined as:
+
+\begin{center}
+$X \mdoubleplus Y = (x_1, \ldots, x_n, y_1, \ldots, y_m)$.
+\end{center}
+\end{definition}
+
+%Then, we can generalise concatenation operation to multiple tuples.
+
+\begin{definition}{Sum of concatenations}
+
+Let $T = (T_1, T_2, \ldots, T_n)$ be sequence of tuples. Concatenation of sequence of tuples $\mdoubleplus_{i=1}^n T_i$ is defined as:
+
+\begin{center}
+$\mdoubleplus_{i=1}^n T_i = T_1 \mdoubleplus T_2 \mdoubleplus \ldots \mdoubleplus T_n $
+\end{center}
+\end{definition}
+
+%A non-crossing partition of $S$ is a partition in which no two blocks "cross" each other.
+
+\begin{definition}{Non-crossing partition}
+A partition $\mathcal{P} = B_1/B_2/\ldots/B_k$ of $S = [1,\ldots,n]$ is non-crossing if  whenever a quadruple of elements $1 \leq a < b < c < d \leq n$ satisfies $a, c \in B_i$ and $b, d \in B_j$ for some $1 \leq i, j \leq k$, then in fact $i = j$; thus, the blocks do not cross.
+\end{definition}
+
+%We also need to use permutations product. For this purpose, we use common notion $\sigma$.
+
+\begin{notation}
+Let $\vv{v} = (x_1, \ldots, x_n)$ be a vector. By $\sigma(\vv{v})$ we denote set of all possible permutations with length $n$ of the vector $\vv{v}$.
+\end{notation}
 
 \begin{definition}{Labelled transition system}\label{lts}
 \textit{Labelled transition system} (LTS) $\mathcal{L}$ is a quadruple $(S, A, \Delta, s_0)$ where:
@@ -608,55 +654,9 @@ Before we proceed, we recall some basic notations and provide all necessary defi
 \end{itemize}
 \end{definition}
 
-We define projection $\pi_i$ to enable iterating through multidimensional structures.
-
-\begin{definition}{Projection}
-Projection $\pi_i : X^n \rightarrow X $ is defined as follows:
-
-\begin{center}
-$ \pi_i(x_1, \ldots, x_n) = x_i $
-\end{center}
-
-for some $i, n \in \mathbb{N}$ and $i \leq n$.
-\end{definition}
-
-Next, we need to define tuples concatenation, since we work with them quite often want to make sure this operation is clear.
-
-\begin{definition}{Tuples concatenation}
-
-Let $X = (x_1, \ldots, x_n), Y = (y_1, \ldots, y_m)$ be two tuples for some $n, m \in \mathbb{N}$. Concatenation of two tuples, written $X \mdoubleplus Y$, is defined as:
-
-\begin{center}
-$X \mdoubleplus Y = (x_1, \ldots, x_n, y_1, \ldots, y_m)$.
-\end{center}
-\end{definition}
-
-Then, we can generalise concatenation operation to multiple tuples.
-
-\begin{definition}{Sum of concatenations}
-
-Let $T = (T_1, T_2, \ldots, T_n)$ be sequence of tuples. Concatenation of sequence of tuples $\mdoubleplus_{i=1}^n T_i$ is defined as:
-
-\begin{center}
-$\mdoubleplus_{i=1}^n T_i = T_1 \mdoubleplus T_2 \mdoubleplus \ldots \mdoubleplus T_n $
-\end{center}
-\end{definition}
-
-A non-crossing partition of $S$ is a partition in which no two blocks "cross" each other.
-
-\begin{definition}{Non-crossing partition}
-A partition $\mathcal{P} = B_1/B_2/\ldots/B_k$ of $S = [1,\ldots,n]$ is non-crossing if  whenever a quadruple of elements $1 \leq a < b < c < d \leq n$ satisfies $a, c \in B_i$ and $b, d \in B_j$ for some $1 \leq i, j \leq k$, then in fact $i = j$; thus, the blocks do not cross.
-\end{definition}
-
-Finally, we also need to use permutations product. For this purpose, we use common notion $\sigma$.
-
-\begin{notation}
-Let $\vv{v} = (x_1, \ldots, x_n)$ be a vector. By $\sigma(\vv{v})$ we denote set of all possible permutations with length $n$ of the vector $\vv{v}$.
-\end{notation}
-
 \section{Objects definition}
 
-Let $\mathcal{N}_{A},~\mathcal{N}_{T},~\mathcal{N}_{\delta},~\mathcal{N}_{c}$ be mutually exclusive finite sets of atomic, structure, states, and compartments, respectively. Moreover, $\varepsilon$ is reserver symbol and does not belong to any of these sets.
+Let $\mathcal{N}_{A},~\mathcal{N}_{T},~\mathcal{N}_{\delta},~\mathcal{N}_{c}$ be mutually exclusive finite sets of atomic names, structure names, states, and compartments, respectively. Moreover, $\varepsilon$ is reserved symbol and does not belong to any of these sets.
 
 \begin{definition}{Signature}
 Atomic signature $\Sigma_{\mathtt{A}} \subseteq \mathcal{N}_{A} \times 2^{\mathcal{N}_{\delta}}$ associates atomic names with set of state names. 
@@ -673,27 +673,27 @@ Signatures define for an atomic name allowed set of states and for a structure n
 \end{itemize}
 \end{example}
 
-\noindent\rule{\textwidth}{1pt}
-
 \begin{definition}{Atomic agent}
 Atomic agent $\mathtt{A}$ is a pair $(\eta, \delta)$ where $\eta \in \mathcal{N}_{A}$ is a name and \\ $\delta~\in~\mathcal{N}_{\delta} \cup \{ \varepsilon \}$ is a state.
 \end{definition}
+
+Atomic agents are the simplest objects used for describing biological entities. An atomic signature with the same name as the atomic agent defines all allowed states for it (with additional $\varepsilon$ state).
 
 \begin{notation}
 Let $\mathtt{A}$ be an atomic agent. We denote by $\eta(\mathtt{A})$ its name and by $\delta(\mathtt{A})$ its state.
 \end{notation}
 
 \begin{definition}{Equivalence of atomic agents}
-Let $\mathtt{A}, \mathtt{A}'$ be atomic agents. $\mathtt{A}$ is \emph{equivalent} to $\mathtt{A}'$, written $\mathtt{A} \equiv \mathtt{A}'$, iff $\eta(\mathtt{A}) \equiv \eta(\mathtt{A}') \wedge \delta(\mathtt{A}) \equiv \delta(\mathtt{A}')$.
+Let $\mathtt{A},~ \mathtt{A}'$ be atomic agents. $\mathtt{A}$ is \emph{equivalent} to $\mathtt{A}'$, written $\mathtt{A} \equiv \mathtt{A}'$, iff $\eta(\mathtt{A}) \equiv \eta(\mathtt{A}') \wedge \delta(\mathtt{A}) \equiv \delta(\mathtt{A}')$.
 \end{definition}
-
-Note: maybe the definition of equivalence should be done only on names (due tu partial composition in structs).
 
 \begin{notation}
 Let $\mathds{A}$ be universe of all possible atomic agents.
 \end{notation}
 
-Atomic agents are the simplest objects used for describing biological entities. An atomic signature with the same name as the atomic agent defines all allowed states for it (with additional $\varepsilon$ state).
+Universe $\mathds{A}$ represents all atomic agents which can be formed according to defined sets of atomic names and states.
+
+Atomic agents are usually used to express small biological entities which can change their state, for example amino acids, small inorganic molecules etc.
 
 \begin{example}{Atomic agents}\label{example:atomic}
 
@@ -711,13 +711,11 @@ Atomic agents are the simplest objects used for describing biological entities. 
 
 Please note state $\varepsilon$ does not mean the agent is in \emph{none} state, but rather the state is unknown or not important.
 
-\noindent\rule{\textwidth}{1pt}
-
 \begin{definition}{Structure agent}
 Structure agent $\mathtt{T}$ is a pair $(\eta, \gamma)$ where $\eta \in \mathcal{N}_{T}$ is a name and $\gamma \subseteq \mathds{A}$ is a set of atomic agents called partial composition.
 \end{definition}
 
-A structure agent represents a biochemical object that is composed from several known atomic agents provided that we know that such a composition is abstract and not necessarily complete. To incorporate such an abstraction of biological structures into our language, a structure agent is defined to be labeled with a unique name and it is constructed only from atomic agents considered in the same physical compartment.
+A structure agent represents a biochemical object that is composed from several known atomic agents while we know that a composition is abstract and not necessarily complete. To incorporate such an abstraction of biological structures into our language, a structure agent is defined to be labeled with a unique name and it is constructed only from atomic agents considered in the same physical compartment.
 
 \begin{notation}
 Let $\mathtt{T}$ be a structure agent. We denote by $\eta(\mathtt{T})$ its name and by $\gamma(\mathtt{A})$ its partial composition.
@@ -729,11 +727,13 @@ Let $\mathtt{T}, \mathtt{T}'$ be structure agents. $\mathtt{T}$ is \emph{equival
 %\forall \mathtt{A} \in \gamma(\mathtt{T}) ~\exists \mathtt{A}' \in \gamma(\mathtt{T}') : \mathtt{A} \equiv \mathtt{A}' \wedge \forall \mathtt{A}' \in \gamma(\mathtt{T}') ~\exists \mathtt{A} \in \gamma(\mathtt{T}) : \mathtt{A}' \equiv \mathtt{A}$.
 \end{definition}
 
-The key construct of a structure agent is \emph{partial composition} defined as a list of atomic agents which are considered to be relevant parts of the structure agent. We allow this list to be empty, in that case the meaning is a biological structure for which we do not know its composition.
+The key construct of a structure agent is \emph{partial composition} defined as a list of atomic agents which are considered to be relevant parts of the structure agent. We allow this list to be empty with the meaning of a biological structure for which we do not know its composition.
 
 \begin{notation}
 Let $\mathds{T}$ be universe of all possible structure agents.
 \end{notation}
+
+Universe $\mathds{T}$ represents all structure agents which can be formed according to defined sets of atomic names, structure names, and states.
 
 A typical example of a structure agent is a protein where the atomic agents are individual amino acids that are of interest in the particular setting.
 
@@ -750,13 +750,11 @@ A typical example of a structure agent is a protein where the atomic agents are 
 \end{itemize}
 \end{example}
 
-\noindent\rule{\textwidth}{1pt}
-
 \begin{definition}{Complex agent}
 Complex agent $\mathtt{X}$ is a pair $(\mu, \mathtt{com})$ where $\mu \in (\mathds{A} \cup \mathds{T})^n$ is a sequence of agents, $\mathtt{com} \in \mathcal{N}_{c}$ is a compartment, and $n \in \mathbb{N}$.
 \end{definition}
 
-A complex agent represents a non-trivial composite biochemical object that is (inductively) constructed from already known biological objects. In common rule-based languages this is typically defined by introducing some kind of bonds between individual biochemical objects. In BCSL we abstract from detailed specification of bonds and we rather assume a complex as a coexistence of certain objects in a particular group. Moreover, a complex agent resides in a compartment, which gives it a space position. 
+A complex agent represents a non-trivial composite biochemical object that is inductively constructed from already known biological objects. In common rule-based languages this is typically defined by introducing bonds between individual biochemical objects. In BCSL we abstract from detailed specification of bonds and we rather assume a complex as a coexistence of certain objects in a particular group. Moreover, a complex agent resides in a compartment which gives it a space position. 
 
 \begin{definition}{Equivalence of complex agents}\label{rule_equiv}
 Let $\mathtt{X}, \mathtt{X}'$ be complexes. $\mathtt{X}$ is \emph{equivalent} to $\mathtt{X}'$, written $\mathtt{X} \equiv \mathtt{X}'$, iff $|\mu(\mathtt{X})| \equiv |\mu(\mathtt{X'})| \wedge \exists \mu' \in \sigma(\mu(\mathtt{X}'))$ such that $\forall i~\in~[1,~n]: \pi_i(\mu(\mathtt{X})) \equiv \pi_i(\mu')$.
@@ -765,7 +763,7 @@ Let $\mathtt{X}, \mathtt{X}'$ be complexes. $\mathtt{X}$ is \emph{equivalent} to
 The key element of a complex agent is \emph{sequence} describing inductively constructed coexistence expressions from existing agents. In contrast to partial composition in structure agent, we allow replication at the level of sequence (an agent of a certain name can appear more than once in a sequence).
 
 \begin{notation}
-Let $\mathds{X}$ be universe of all possible complex agents. Moreover, we denote $\mathds{U} = \mathds{A} \cup \mathds{T} \cup \mathds{X}$ as universe of all possible agents.
+Let $\mathds{X}$ be universe of all possible complex agents. Additionally, we denote $\mathds{U}~=~\mathds{A}~\cup~\mathds{T}~\cup~\mathds{X}$ as universe of all possible agents.
 \end{notation}
 
 \begin{example}{Complex}\label{example:complex}
@@ -778,26 +776,25 @@ Let $\mathds{X}$ be universe of all possible complex agents. Moreover, we denote
 \end{itemize}
 \end{example}
 
-The complex agents have very important role in the language. In the rules defined in following, we can always use only complexes. It means, an atomic or structure agent cannot exist on its own, it must be encapsulated in a complex -- it might have only one item in its sequence. Moreover, this guarantees each atomic and structure agent has indirectly given space location -- the compartment.
-
-\noindent\rule{\textwidth}{1pt}
+The complex agents have very important role in the language. It means, an atomic or structure agent cannot exist on its own, it must be encapsulated in a complex (which might have only one item in its sequence). This guarantees each atomic and structure agent has indirectly given space location -- the compartment.
 
 \begin{definition}{Rule}
+\label{rule_definition}
 
-Rule $\mathtt{R}$ is a 5-tuple $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$ where:
+Rule $\mathtt{R}$ is a quintuple $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$ where:
 
 \begin{itemize}
 \item $\chi \in \mathds{X}^n$ is a sequence of complexes,
 \item $\omega \in (\mathds{A} \cup \mathds{T})^m$ is a sequence of atomic and structure agents,
 \item $\mathtt{I} \in \{ 1, \ldots, n \}$ is an index determining start of right-hand-side,
 \item $\mathtt{map} \in \mathbb{N}^m$ is an index map between $\omega$ and $\chi$,
-\item $\mathtt{Indices} \in ((\{-\} \cup \mathbb{N})^2)^n$ is an index map between agents from left- and right-hand side.
+\item $\mathtt{Indices} \in ((\{-\} \cup \mathbb{N})^2)^n$ is an index map between agents from left and right-hand side.
 \end{itemize}
 
 where $n, m \in \mathbb{N}$.
 \end{definition}
 
-As can be seen, rule is quite a complicated structure. The reason is the practical definition of semantics which can bes seen in following sections. Also, it is necessary to capture relationship between left- and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map between the agents in $\mathtt{Indices}$. Another index map $\mathtt{map}$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, by index $\mathtt{I}$ we determine the end of left-hand side of the rule.
+The rule is quite a complicated structure. The reason is the practical definition of semantics which can be seen in following sections. Also, it is necessary to capture relationship between left and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map between the agents in $\mathtt{Indices}$. Another index map $\mathtt{map}$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, by index $\mathtt{I}$ we determine the end of left-hand side of the rule.
 
 \begin{notation}
 Let $\mathds{R}$ be universe of all possible rules.
@@ -840,7 +837,7 @@ $\Rightarrow K(S\{p\}).B(\varnothing).C(\varnothing)::cyt + D\{a\}.A\{\varepsilo
 \end{center}
 \end{example}
 
-We need to specify, when a rule is well-formed. For now on, we assume all used rules are well-defined. 
+Not every rule gives a sense. We need to specify, when a rule is \emph{well-formed}, i.e. it gives semantically sense.
 
 \begin{definition}{Well-formed rule}
 Let $\mathtt{R}$ be a rule and $i,j \in \mathbb{N}$ natural numbers. We say the rule $\mathtt{R} = (\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$ is \emph{well-formed} if the following conditions hold:
@@ -852,11 +849,9 @@ Let $\mathtt{R}$ be a rule and $i,j \in \mathbb{N}$ natural numbers. We say the 
 
 \end{definition}
 
-A rule is well-formed if it does any action. It means, some change has to occur during rule application. This is ensured by condition~(\ref{cond1}), which requires at least one pair of complexes from left- and right-hand side of the rule to be different. The other condition ~(\ref{cond2}) has to hold on order to guarantee pairs of structure and atomic agents in $\omega$ of the rule have the same name. This condition is crutial for ground form function $\mathcal{G}$~(Section~\ref{ground_forms}), where adding context to different agents do not give a sense. 
+A rule is well-formed if it does any action. It means, some change has to occur during rule application. This is ensured by condition~(\ref{cond1}), which requires at least one pair of complexes from left and right-hand side of the rule to be different. The second condition~(\ref{cond2}) has to hold on order to guarantee pairs of structure and atomic agents in $\omega$ of the rule have the same name. This condition is crutial for ground form function $\mathcal{G}$ defined in Section~\ref{ground_forms}, where adding context to different agents do not give a sense. 
 
-Please note the conditions for well-formed rules do not apply on those agents, which do not have a pair on the other side of the rule.
-
-\noindent\rule{\textwidth}{1pt}
+Please note the conditions for well-formed rules do not apply on those agents which do not have a pair on the other side of the rule.
 
 \begin{definition}{Reaction}
 
@@ -876,12 +871,10 @@ Reaction is similar structure than rule, but much simpler. The reaction is just 
 We denote left-hand-side of the reaction $(\pi_1(\mathtt{seq}), \ldots, \pi_{\mathtt{I}-1}(\mathtt{seq}))$ as $LHS(\mathtt{r})$ and right-hand-side of the reaction $(\pi_\mathtt{I}(\mathtt{seq}), \ldots, \pi_n(\mathtt{seq}))$ as $RHS(\mathtt{r})$.
 \end{notation}
 
-\noindent\rule{\textwidth}{2pt}
-
 \section{Syntax}
 \label{syntax}
 
-In this section, we define grammar for the BCSL. As proposed in Section~\ref{problem_formulation}, the syntax must be simple and readable. It was already defined in~\cite{Ded201627}, here we give just simplified version of the definition.
+In this section, we define grammar for the BCSL. As proposed in Section~\ref{problem_formulation}, the syntax must be simple and readable. It was already defined in~\cite{Ded201627}, here we provide an improved and simplified version of the definition.
 
 \begin{definition}{Grammar}
 \begin{center}
@@ -907,24 +900,22 @@ where $m,n \in \mathbb{N}_0 \wedge m > n \wedge m + n \neq 0$ and $k \in \mathbb
 
 Examples of syntax can be seen in the previous examples (Example~\ref{example:atomic} to \ref{example:rule}).
 
-\noindent\rule{\textwidth}{1pt}
-
 \section{BCSL model}
 \label{BCSl_model}
 
-Once we have defined syntax of BCSL, we can proceed to BCSL model. We always consider initialised model, which means the definition contains an initial state of the system. The definition also contains rule expressions and signatures. 
+When we have defined syntax of BCSL, we can proceed to BCSL model. We always consider initialised model, which means the definition contains an initial state of the system. The definition also contains rule expressions and signatures.
 
 \begin{definition}{BCSL model}
-BCSL model $\mathds{M}$ is a 4-tuple $(\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ where $\mathcal{R}$ is set of rule expressions, $\Sigma_\mathtt{A}$ is atomic signature, $\Sigma_\mathtt{T}$ is structure signature, and $\mathtt{init}$ is initial multiset of complex expressions $\Gamma$.
+BCSL model $\mathds{M}$ is a quadruple $(\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ where $\mathcal{R}$ is set of rule expressions, $\Sigma_\mathtt{A}$ is atomic signature, $\Sigma_\mathtt{T}$ is structure signature, and $\mathtt{init}$ is initial multiset of complex expressions $\Gamma$.
 \end{definition}
 
-\noindent\rule{\textwidth}{1pt}
+BCSL model is formed by a set of rule expressions $\mathcal{R}$, which define behavior of the model. The initial multiset $\mathtt{init}$ defines the state of the model in the beginning. Atomic signature $\Sigma_\mathtt{A}$ define allowed states for all atomic agents used in the rules. FInally, structure signature $\Sigma_\mathtt{T}$ defines allowed atomic agents for all structure agents used in the rules.
 
 \section{Additional definitions}
 
-Before we proceed, there are few necessary definitions. These definitions are required in next section in order to generate reactions from rules.
+Before we proceed, there are a few necessary definitions. These definitions are required in next section in order to generate reactions from rules.
 
-Reassembly operation is quite a simple action on tuples. Intuitively, we need to reorganise tuple which has form $((a_1, b_1), (a_2, b_2),\\ \ldots, (a_n, b_n))$ to a tuple of form $(a_1, a_2, \ldots, a_n, b_1, b_2, \ldots,  b_n)$. We define reassembly generally on a set of tuples. 
+Reassembly operation is quite a simple action on tuples. Basically, we need to reorganise tuple which has form $((a_1, b_1), (a_2, b_2),\\ \ldots, (a_n, b_n))$ to a tuple of form $(a_1, a_2, \ldots, a_n, b_1, b_2, \ldots,  b_n)$. We define reassembly generally on a set of tuples. 
 
 \begin{definition}{Reassembly}
 
@@ -960,7 +951,7 @@ $\Sigma_T(\mathtt{\eta}) \ominus \gamma(\mathtt{T}) \myeq \{ \eta_\Sigma ~|~ \et
 \section{Semantic function}
 \label{semantic_function}
 
-In the previous sections, we defined BCSL objects and BCSL model. Now, we need to connect them such that we give semantic meaning to the model $\mathds{M}$. For this purpose, we define semantic function $\mathtt{F}$. It is defined recursively for a model $\mathds{M}$ according to expression given as argument:
+In the previous sections, we defined BCSL objects and BCSL model. Now, we need to connect them in order to we give semantic meaning to the model $\mathds{M}$. For this purpose, we define semantic function $\mathtt{F}$. It is defined recursively for a model $\mathds{M}$ according to expression given as argument:
 
 \begin{center}
 \begin{tabular}{ r c l}
@@ -1005,12 +996,10 @@ $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices}) \in \mathds{R}$~ suc
 
 Please note by applying semantic function $\mathtt{F}$ on expressions from Examples~\ref{example:atomic} to \ref{example:rule}, we obtain agents (resp. complex or rule) from appropriate examples. Moreover, semantic function works \emph{only} on BCSL object and rules well-defined by the given grammar (Section~\ref{syntax}).
 
-\noindent\rule{\textwidth}{2pt}
-
 \section{Ground forms}
 \label{ground_forms}
 
-Ground form represents appending context to agents according to signature (we assume signature is always available and therefore we omit it in ground from function arguments). Particularly, this process means adding details to partial compositions and adding states of atomic agents according to defined signatures. Since there are typically multiple allowed states for an atomic agent, this processes leads to multiple options how to add a context. This is natural consequence of fact that a is an abstract representation of multiple reactions. 
+\emph{Ground form} represents appending context to agents according to signature (we assume signature is always available and therefore we omit it in ground from function arguments). Particularly, this process means adding details to partial compositions and adding states of atomic agents according to defined signatures. Since there are typically multiple allowed states for an atomic agent, this processes leads to multiple options how to add a context. This is natural consequence of fact that a is an abstract representation of multiple reactions. 
 
 Please note that $\mathtt{A} = (\eta, \delta)$, $\mathtt{A}' = (\eta', \delta')$, $\mathtt{T} = (\eta, \gamma)$, and $\mathtt{T}' = (\eta', \gamma')$.
 
