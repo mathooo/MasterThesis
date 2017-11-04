@@ -28,6 +28,7 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{bbm}
 \usepackage{braket}
+\usepackage{mathrsfs}
 
 \newcounter{counter}[section]
 \renewcommand{\thecounter}{\thesection.\arabic{counter}}
@@ -1457,50 +1458,50 @@ The compatibility operator generates partial order of $\mathds{A}, \mathds{T}$, 
 
 $$ \mathds{X}_\sqsubseteq = \mathtt{X}_1 \sqsubseteq \mathtt{X}_2 \sqsubseteq \ldots \sqsubseteq \mathtt{X}_n $$
 
-The reason is that complex agents actually encapsulate all other agent types including compartments. However, partial order of entire universe of complex agents is not very useful, since most of agents cannot be compared. We are interested in particular subsets $\mathbbmss{X}$ which are formed from all complexes of the same type, i.e. those sets where each pair of complexes holds the compatibility conditions (in arbitrary some direction).
+The reason is that complex agents actually encapsulate all other agent types including compartments. However, partial order of entire universe of complex agents is not very useful, since most of agents cannot be compared. We are interested in particular subsets $\mathscr{X}$ which are formed from all complexes of the same type, i.e. those sets where each pair of complexes holds the compatibility conditions (in arbitrary some direction).
 
 \begin{definition}{Compatible sets}
 \label{compatible_set}
-Sets $\mathbbmss{X}_1, \ldots, \mathbbmss{X}_n \subseteq \mathds{X}_\sqsubseteq$ are \emph{compatible sets} iff for each set $\mathbbmss{X}_i$ such that $i \in [1,\ldots,n]$ hold the following conditions:
+Sets $\mathscr{X}_1, \ldots, \mathscr{X}_n \subseteq \mathds{X}_\sqsubseteq$ are \emph{compatible sets} iff for each set $\mathscr{X}_i$ such that $i \in [1,\ldots,n]$ hold the following conditions:
 \begin{center}
 \begin{enumerate}
-	\item \label{compatible_cond} $ \forall \mathtt{X}_1, \mathtt{X}_2 \in \mathbbmss{X} ~\exists~ \mathtt{X}' \in \mathbbmss{X}: \mathtt{X}_1 \lhd \mathtt{X}' \wedge \mathtt{X}_2 \lhd \mathtt{X}'$ such that $\mathtt{X}_1 \neq \mathtt{X}_2$,
-	\item \label{finite_cond} the set $\mathbbmss{X}$ is finite,
+	\item \label{compatible_cond} $ \forall \mathtt{X}_1, \mathtt{X}_2 \in \mathscr{X} ~\exists~ \mathtt{X}' \in \mathscr{X}: \mathtt{X}_1 \lhd \mathtt{X}' \wedge \mathtt{X}_2 \lhd \mathtt{X}'$ such that $\mathtt{X}_1 \neq \mathtt{X}_2$,
+	\item \label{finite_cond} the set $\mathscr{X}$ is finite,
 
-\hspace*{-1cm} and for each pair of compatible sets $\mathbbmss{X}_i, \mathbbmss{X}_j$ holds:
+\hspace*{-1cm} and for each pair of compatible sets $\mathscr{X}_i, \mathscr{X}_j$ holds:
 
-	\item \label{non_compatible_cond} $\forall \mathtt{X} \in \mathbbmss{X}_i \forall \mathtt{X}' \in \mathbbmss{X}_j: \neg (\mathtt{X} ~\Delta~ \mathtt{X}') $.
+	\item \label{non_compatible_cond} $\forall \mathtt{X} \in \mathscr{X}_i \forall \mathtt{X}' \in \mathscr{X}_j: \neg (\mathtt{X} ~\Delta~ \mathtt{X}') $.
 \end{enumerate}
 \end{center}
 
 \end{definition}
 
 \begin{theorem}
-In every compatible set $\mathbbmss{X}$, there always exists a supremum, what is an ancestor of all the remaining agents in the set.
+In every compatible set $\mathscr{X}$, there always exists a supremum, what is an ancestor of all the remaining agents in the set.
 \end{theorem}
 
 \begin{proof}
-The theorem follows from Definition~\ref{compatible_set} condition~(\ref{compatible_cond}) which basically claims that there is a supremum (in manner of compatibility) for each two complex agents in the compatible set $\mathbbmss{X}$. Since there exists a supremum for every two items of the set and the set $\mathbbmss{X}$ is finite (condition~\ref{finite_cond}), there must exists a global supremum for the entire set. $\QEDA$
+The theorem follows from Definition~\ref{compatible_set} condition~(\ref{compatible_cond}) which basically claims that there is a supremum (in manner of compatibility) for each two complex agents in the compatible set $\mathscr{X}$. Since there exists a supremum for every two items of the set and the set $\mathscr{X}$ is finite (condition~\ref{finite_cond}), there must exists a global supremum for the entire set. $\QEDA$
 \end{proof}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[scale=0.13]{pics/partial_order}
 \end{center}
-\caption{An example of compatible set $\mathbbmss{X}$. The partial order is depicted by a tree. For better readability, the agents are written in BCSL syntax. In this case, it is formed by a complex in $cyt$ compartment, which has only one structure agent $K$ in its sequence. The structure agent $K$ has allowed atomic agents $T$ and $S$ in its partial composition. These two atomic agents might occur in two states -- $u$ and $p$. The set is complete -- there are all relevant agents bounded by compatibility operator.}
+\caption{An example of compatible set $\mathscr{X}$. The partial order is depicted by a tree. For better readability, the agents are written in BCSL syntax. In this case, it is formed by a complex in $cyt$ compartment, which has only one structure agent $K$ in its sequence. The structure agent $K$ has allowed atomic agents $T$ and $S$ in its partial composition. These two atomic agents might occur in two states -- $u$ and $p$. The set is complete -- there are all relevant agents bounded by compatibility operator.}
 \end{figure}
 
 \begin{theorem}
-Each agent $\mathtt{X}$ belongs to exactly one set $\mathbbmss{X}$.
+Each agent $\mathtt{X}$ belongs to exactly one set $\mathscr{X}$.
 \end{theorem}
 
 \begin{proof}
 
 [Proof by contradiction.]
 
-Lets assume a complex agent $\mathtt{X}$ belongs to two compatible sets, namely $\mathtt{X} \in \mathbbmss{X}_1, \mathbbmss{X}_2$. From the Definition~\ref{compatible_set} condition~(\ref{compatible_cond}) follows that there exists a $\mathtt{X}_1 \in \mathbbmss{X}_1$ such that $\mathtt{X} \lhd \mathtt{X}_1$. 
+Lets assume a complex agent $\mathtt{X}$ belongs to two compatible sets, namely $\mathtt{X} \in \mathscr{X}_1, \mathscr{X}_2$. From the Definition~\ref{compatible_set} condition~(\ref{compatible_cond}) follows that there exists a $\mathtt{X}_1 \in \mathscr{X}_1$ such that $\mathtt{X} \lhd \mathtt{X}_1$. 
 
-Then, the condition~(\ref{non_compatible_cond}) claims that no complex agent from $\mathbbmss{X}_1$ and no complex agent from $\mathbbmss{X}_2$ can be compatible. Namely, $\mathtt{X}_1 \in \mathbbmss{X}_1$ cannot be compatible with $\mathtt{X} \in \mathbbmss{X}_2$. However, $\mathtt{X}$ and $\mathtt{X}_1$ are compatible ($\mathtt{X} \lhd \mathtt{X}_1$). It follows $\mathtt{X} \not\in \mathbbmss{X}_2$, what is a contradiction. $\QEDA$
+Then, the condition~(\ref{non_compatible_cond}) claims that no complex agent from $\mathscr{X}_1$ and no complex agent from $\mathscr{X}_2$ can be compatible. Namely, $\mathtt{X}_1 \in \mathscr{X}_1$ cannot be compatible with $\mathtt{X} \in \mathscr{X}_2$. However, $\mathtt{X}$ and $\mathtt{X}_1$ are compatible ($\mathtt{X} \lhd \mathtt{X}_1$). It follows $\mathtt{X} \not\in \mathscr{X}_2$, what is a contradiction. $\QEDA$
 
 % via identity?
 \end{proof}
@@ -1511,11 +1512,11 @@ Practically, relation following from compatibility operator can be used in sever
 \label{generating_vs_compatibility}
 Note that in the process generating reactions from the rules (Section~\ref{Generating reactions}), we are using ground form function (Section~\ref{ground_forms}). What the function basically does is it adds context to individual complex agents (and its substructures). In the definition of the function we provided exact procedure how to generate such agents.
 
-However, when we look at the process more theoretically, a set of appropriate complex agents is generated for every complex agent $\mathtt{X}$ in the rule $\mathtt{R}$ and then they are connected to multiple unique reaction. These sets are actually subsets $\mathbbmss{X}_\subseteq$ of compatible sets $\mathbbmss{X}$ such that 
+However, when we look at the process more theoretically, a set of appropriate complex agents is generated for every complex agent $\mathtt{X}$ in the rule $\mathtt{R}$ and then they are connected to multiple unique reaction. These sets are actually subsets $\mathscr{X}_\subseteq$ of compatible sets $\mathscr{X}$ such that 
 
-$$ \mathbbmss{X}_\subseteq \subseteq \mathbbmss{X}: \forall \mathtt{X}' \in \mathbbmss{X}_\subseteq: \mathtt{X}' \lhd \mathtt{X}$$
+$$ \mathscr{X}_\subseteq \subseteq \mathscr{X}: \forall \mathtt{X}' \in \mathscr{X}_\subseteq: (\mathtt{X}' \lhd \mathtt{X} \wedge \nexists \mathtt{X}'' \in \mathscr{X}_\subseteq: \mathtt{X}'' \lhd \mathtt{X}' )$$
 
-where $\mathtt{X} \in \mathbbmss{X}$.
+where $\mathtt{X} \in \mathscr{X}$. In other words, the agents in $\mathscr{X}_\subseteq$ are all minimal items from compatible set $\mathscr{X}$ which are compatible with agent $\mathtt{X}$.
 
 \end{remark}
 
@@ -1539,18 +1540,52 @@ $$ \forall i \in [ 1, m ]: \mathtt{F}(\Gamma_i) \lhd \mathtt{F}(\Gamma'_i). $$
 
 In other words, the rule $\mathtt{R}$ does not add any semantic details or the rule itself has no effect.
 
--- add an example
+\begin{example}{Redundant rules}
+Lets have two rules:
 
-For the proof we can use compatible sets of complex agents $\mathbbmss{X}$ and the fact that when we are generating reactions from rules, we are actually enumerating all agents from the set $\mathbbmss{X}$ which are \emph{compatible with} original agent in the rule (Remark~\ref{generating_vs_compatibility}).
+\begin{enumerate}
+	\item \label{rule_red_1} $K(S\{u\}).K::cell \Rightarrow K(S\{p\}).K::cell$
+	\item \label{rule_red_2} $K(S\{u\}, T\{i\}).K::cell \Rightarrow K(S\{p\}, T\{i\}).K::cell$
+\end{enumerate}
+
+Considering structure signature $\Sigma_\mathtt{T}(K) = \{ S, T \} $ and atomic signatures $\Sigma_\mathtt{A}(S) = \{ u, p \} $ and $\Sigma_\mathtt{A}(T) = \{ a, i \} $, the rule (\ref{rule_red_1}) produces following set of eight reactions:
+
+{\small
+\begin{center}
+$K(S\{u\}, T\{a\}).K(S\{u\}, T\{a\})::cell \Rightarrow K(S\{p\}, T\{a\}).K(S\{u\}, T\{a\})::cell$
+$K(S\{u\}, T\{a\}).K(S\{u\}, T\{i\})::cell \Rightarrow K(S\{p\}, T\{a\}).K(S\{u\}, T\{i\})::cell$
+$K(S\{u\}, T\{a\}).K(S\{p\}, T\{a\})::cell \Rightarrow K(S\{p\}, T\{a\}).K(S\{p\}, T\{a\})::cell$
+$K(S\{u\}, T\{a\}).K(S\{p\}, T\{i\})::cell \Rightarrow K(S\{p\}, T\{a\}).K(S\{p\}, T\{i\})::cell$
+$K(S\{u\}, T\{i\}).K(S\{u\}, T\{a\})::cell \Rightarrow K(S\{p\}, T\{i\}).K(S\{u\}, T\{a\})::cell$
+$K(S\{u\}, T\{i\}).K(S\{u\}, T\{i\})::cell \Rightarrow K(S\{p\}, T\{i\}).K(S\{u\}, T\{i\})::cell$
+$K(S\{u\}, T\{i\}).K(S\{p\}, T\{a\})::cell \Rightarrow K(S\{p\}, T\{i\}).K(S\{p\}, T\{a\})::cell$
+$K(S\{u\}, T\{i\}).K(S\{p\}, T\{i\})::cell \Rightarrow K(S\{p\}, T\{i\}).K(S\{p\}, T\{i\})::cell$
+\end{center}
+}
+
+while the rule (\ref{rule_red_2}) produces set of reaction which a subset of the previous one:
+
+{\small
+\begin{center}
+$K(S\{u\}, T\{i\}).K(S\{u\}, T\{a\})::cell \Rightarrow K(S\{p\}, T\{i\}).K(S\{u\}, T\{a\})::cell$
+$K(S\{u\}, T\{i\}).K(S\{u\}, T\{i\})::cell \Rightarrow K(S\{p\}, T\{i\}).K(S\{u\}, T\{i\})::cell$
+$K(S\{u\}, T\{i\}).K(S\{p\}, T\{a\})::cell \Rightarrow K(S\{p\}, T\{i\}).K(S\{p\}, T\{a\})::cell$
+$K(S\{u\}, T\{i\}).K(S\{p\}, T\{i\})::cell \Rightarrow K(S\{p\}, T\{i\}).K(S\{p\}, T\{i\})::cell$
+\end{center}
+}
+
+\end{example}
+
+For the proof we can use compatible sets of complex agents $\mathscr{X}$ and the fact that when we are generating reactions from rules, we are actually enumerating all agents from the set $\mathscr{X}$ which are \emph{compatible with} original agent in the rule (Remark~\ref{generating_vs_compatibility}).
 
 \begin{proof}
-The problem whether the elimination of redundant rules preserves semantics can be reduced to a simple question -- if it holds for single pair of complex agents for a position $k$ in the rules, then it generally holds for entire rule.
+The problem whether the elimination of redundant rules preserves semantics can be reduced to a simple question -- if it holds for single pair of complex agents for a position $k$ in the rules, then it generally holds for entire rule, because the condition of redundancy holds for each pair of complexes independently.
 
-The complex agents $\mathtt{X}_k = \mathtt{F}(\Gamma_k)$ and $\mathtt{X}'_k = \mathtt{F}(\Gamma'_i)$ both belong to the same compatible set $\mathbbmss{X}$ since $\mathtt{X}_k \lhd \mathtt{X}'_k$, which follows from the condition of the theorem. 
+The complex agents $\mathtt{X}_k = \mathtt{F}(\Gamma_k)$ and $\mathtt{X}'_k = \mathtt{F}(\Gamma'_k)$ both belong to the same compatible set $\mathscr{X}$ since $\mathtt{X}_k \lhd \mathtt{X}'_k$, which follows from the condition of the theorem. 
 
-Then, we can create subsets $\mathbbmss{X}_\subseteq, \mathbbmss{X}'_\subseteq \subseteq \mathbbmss{X}$ for both complex agents respectively (Remark~\ref{generating_vs_compatibility}). Because the agents are compatible ($\mathtt{X}_k \lhd \mathtt{X}'_k$ ), the compatible subset $\mathbbmss{X}_\subseteq$ of agent $\mathtt{X}_k$ is either subset or equal to set $\mathbbmss{X}'_\subseteq$ of agent $\mathtt{X}'_k$:
+Then, we can create subsets $\mathscr{X}_\subseteq, \mathscr{X}'_\subseteq \subseteq \mathscr{X}$ for both complex agents respectively (Remark~\ref{generating_vs_compatibility}). Because the complex agents are compatible ($\mathtt{X}_k \lhd \mathtt{X}'_k$ ), the subset $\mathscr{X}_\subseteq$ of agent $\mathtt{X}_k$ is either subset or equal to set $\mathscr{X}'_\subseteq$ of agent $\mathtt{X}'_k$:
 
-$$\mathbbmss{X}_\subseteq \subseteq \mathbbmss{X}'_\subseteq.$$
+$$\mathscr{X}_\subseteq \subseteq \mathscr{X}'_\subseteq.$$
 
 Therefore, the produced set of reactions from the redundant rule is actually a subset of reactions produced from the non-redundant rule. $\QEDA$
 \end{proof}
@@ -1558,7 +1593,7 @@ Therefore, the produced set of reactions from the redundant rule is actually a s
 \subsection{Context-based reduction}
 \label{context_reduction}
 
-Reduced model $\widetilde{\mathds{M}}$ is created form given BCSL model by reducing context of complexes in rules to maximum level. This is achieved by taking supremum from compatible set $\mathbbmss{X}$. This procedure might produce rules with no action, i.e. not well-formed rules -- such rules might be omitted. Then, only rules creating/destroying agents and complex formation/dissociation should remain, providing reduced network. Since we are reducing context, the resulting network can be equal or smaller than the original one.
+Reduced model $\widetilde{\mathds{M}}$ is created form given BCSL model by reducing context of complexes in rules to maximum level. This is achieved by taking supremum from compatible set $\mathscr{X}$. This procedure might produce rules with no action, i.e. not well-formed rules -- such rules might be omitted. Then, only rules creating/destroying agents and complex formation/dissociation should remain, providing reduced network. Since we are reducing context, the resulting network can be equal or smaller than the original one.
 
 \begin{definition}{Reduced model}
 \label{reduced_model}
@@ -1567,12 +1602,12 @@ Reduced model $\widetilde{\mathds{M}}$ is a pair $(\widetilde{\mathcal{R}}, \wid
 \begin{enumerate}
 	\item for every rule $\mathtt{F}(\widetilde{\rho}) = (\widetilde{\chi}, \widetilde{\omega}, \widetilde{\iota}, \widetilde{\varphi}, \widetilde{\psi}) \in \mathds{R}$ such that $\widetilde{\rho} \in \widetilde{\mathcal{R}}$ and appropriate original rule $\mathtt{F}(\rho) = (\chi, \omega, \iota, \varphi, \psi) \in \mathds{R}$ such that $\rho \in \mathcal{R}$ holds:
 
-	$$\forall i \in [1, k]: \pi_i(\widetilde{\chi}) \equiv \mathtt{sup}(\mathbbmss{X})$$ where $\mathbbmss{X}$ is a compatible set such that $\pi_i(\chi) \in \mathbbmss{X}$,
+	$$\forall i \in [1, k]: \pi_i(\widetilde{\chi}) \equiv \mathtt{sup}(\mathscr{X})$$ where $\mathscr{X}$ is a compatible set such that $\pi_i(\chi) \in \mathscr{X}$,
 
 	\item for every complex agent $\widetilde{\mathtt{X}} = \mathtt{F}(\widetilde{\Gamma}) \in \widetilde{\mathtt{init}}$ and appropriate original complex agent $\mathtt{X} = \mathtt{F}(\Gamma) \in \mathtt{init}$ the following condition holds:
 
 	\begin{center}
-	$ \widetilde{\mathtt{X}} \equiv \mathtt{sup}(\mathbbmss{X}) $ such that $\mathtt{X} \in \mathbbmss{X}$
+	$ \widetilde{\mathtt{X}} \equiv \mathtt{sup}(\mathscr{X}) $ such that $\mathtt{X} \in \mathscr{X}$
 	\end{center}
 
 \end{enumerate}
@@ -1586,9 +1621,9 @@ A reduced model $\widetilde{\mathds{M}}$ is actually an over-approximation of an
 
 \begin{theorem}
 \label{non-reachability_in_reduced}
-We want to check whether an complex agent $\mathtt{X}$ is non-reachable in the LTS of a given BCSL model $\mathds{M}$. Let $\mathbbmss{X}$ be a compatible set for $\mathtt{X}$.
+We want to check whether an complex agent $\mathtt{X}$ is non-reachable in the LTS of a given BCSL model $\mathds{M}$. Let $\mathscr{X}$ be a compatible set for $\mathtt{X}$.
 
-If supremum $\mathtt{sup}(\mathbbmss{X})$ is non-reachable in reduced model $\widetilde{\mathds{M}}$ constructed with respect to given model $\mathds{M}$, then agent $\mathtt{X}$ is also non-reachable in the LTS of the original model $\mathds{M}$.
+If supremum $\mathtt{sup}(\mathscr{X})$ is non-reachable in reduced model $\widetilde{\mathds{M}}$ constructed with respect to given model $\mathds{M}$, then agent $\mathtt{X}$ is also non-reachable in the LTS of the original model $\mathds{M}$.
 \end{theorem}
 
 If we are checking whether an agent is reachable for given model $\mathds{M}$, we might first check whether its super-ancestor is reachable in created reduced model $\widetilde{\mathds{M}}$. If so, then we are still not certain about reachability of agent itself and it has to be checked in the original model. However, when it comes to non-reachability (Theorem~\ref{non-reachability_in_reduced}), agent which is non-reachable in $\widetilde{\mathds{M}}$ is not reachable in the original model $\mathds{M}$ too.
@@ -1597,9 +1632,9 @@ If we are checking whether an agent is reachable for given model $\mathds{M}$, w
 
 [Proof by contradiction.]
 
-Lets assume a complex agent $\mathtt{sup}(\mathbbmss{X})$ is non-reachable in LTS of reduced model $\widetilde{\mathds{M}}$, but $\mathtt{X} \in \mathbbmss{X}$ is reachable in LTS of the given model $\mathds{M}$.
+Lets assume a complex agent $\mathtt{sup}(\mathscr{X})$ is non-reachable in LTS of reduced model $\widetilde{\mathds{M}}$, but $\mathtt{X} \in \mathscr{X}$ is reachable in LTS of the given model $\mathds{M}$.
 
-Generally, there is a path formed from rules in the original LTS such that we transform complex agents from initial agents to desired complex agent $\mathtt{X}$. However, once we move to context of reduced model $\widetilde{\mathds{M}}$, there is no such path for $\mathtt{sup}(\mathbbmss{X})$. However, according to Definition~\ref{reduced_model}, for every such rule there exist a reduced rule, such that all interacting complexes are reduced to their supremas. Therefore, if we could apply a original rule on a complex agent, we can do the same with reduced rule and its supremum. It follows there must exist such path also in reduced LTS and the complex agent $\mathtt{sup}(\mathbbmss{X})$ is reachable, what is a contradiction. $\QEDA$
+Generally, there is a path formed from rules in the original LTS such that we transform complex agents from initial agents to desired complex agent $\mathtt{X}$. However, once we move to context of reduced model $\widetilde{\mathds{M}}$, there is no such path for $\mathtt{sup}(\mathscr{X})$. However, according to Definition~\ref{reduced_model}, for every such rule there exist a reduced rule, such that all interacting complexes are reduced to their supremas. Therefore, if we could apply a original rule on a complex agent, we can do the same with reduced rule and its supremum. It follows there must exist such path also in reduced LTS and the complex agent $\mathtt{sup}(\mathscr{X})$ is reachable, what is a contradiction. $\QEDA$
 \end{proof}
 
 This approach can be generalised for non-reachability of a (multi)set of complex agents, but we consider it as a future work.
