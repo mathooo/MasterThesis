@@ -1006,17 +1006,26 @@ Please note by applying semantic function $\mathtt{F}$ on expressions from Examp
 
 In the Definition~\ref{ground_form}, objects (middle column) of particular type (left column) are transformed to their ground forms by ground form function $\mathcal{G}$ (right column).
 
-bla bla goes here
+In case of single atomic agent $\mathtt{A}$, there are two options -- either the state is $\varepsilon$ or the state $\delta$ is given. In first case, we construct a set of all possible atomic agents according to the given atomic signature $\Sigma_A(\eta(\mathtt{A}))$. In the second case, we construct a set containing only the original agent itself.
+
+For a pair of atomic agents $\mathtt{A}, \mathtt{A}'$ we create a set of all possible pairs $(a, a')$ such that these pairs has equal names.
+
+Ground form of a structure agent $\mathtt{T}$ is a set of structure agents $\mathtt{T}'$ such that we \emph{insert} all neglected context information into its partial composition. In other words, we need to determine which atomic agents are missing in the partial composition, which can be obtained from the signature $\Sigma_T(\eta(\mathtt{T}))$. Then we create all possible combinations of inserted atomic agents recursively.
+
+For a pair of structure agents $\mathtt{T}, \mathtt{T}'$ we expand both partial compositions recursively such that the expanded parts are equal, i.e. we add the same context to both agents. Similarly as in previous cases, we create set of all possibilities of such pairs.
+
+Finally, ground form of a rule $\mathtt{R}$ is a Cartesian product of sets created for each pair of agents by applying ground from function. The pairs are given by order in index map $\psi$.
 
 \begin{definition}{Ground form}
 \label{ground_form}
 {\small
 \begin{center}
-\begin{tabular}{ c c l }
-Type & Notation & Ground form \\
+\begin{tabular}{ c c c }
+\textbf{Type} & \textbf{Notation} & \textbf{Ground form} \\
+ & & \\
 \hline
  & & \\
-$\mathds{A}$ & $\mathcal{G}(\eta, \epsilon)$ & $\{~ (\eta, \delta) ~|~ \delta \in \Sigma_A(\eta) ~\}$\\
+$\mathds{A}$ & $\mathcal{G}(\eta, \varepsilon)$ & $\{~ (\eta, \delta) ~|~ \delta \in \Sigma_A(\eta) ~\}$\\
  & $\mathcal{G}(\eta, \delta)$ & $\{~(\eta, \delta) ~\}$\\
  & & \\
   \hline
@@ -1027,7 +1036,7 @@ $\mathds{A}$ & $\mathcal{G}(\eta, \epsilon)$ & $\{~ (\eta, \delta) ~|~ \delta \i
  & & \\
 $\mathds{T}$ & $\mathcal{G}(\eta, \gamma)$ & $
   \Set{ (\eta, \gamma')\ | \begin{array}{l}
-  \gamma' \equiv \gamma \cup \gamma_\Sigma \wedge \gamma_\Sigma \subseteq \mathcal{G}(\eta', \epsilon) ~\wedge \\
+  \gamma' \equiv \gamma \cup \gamma_\Sigma \wedge \gamma_\Sigma \subseteq \mathcal{G}(\eta', \varepsilon) ~\wedge \\
   \wedge~ |\gamma_\Sigma| = |\Sigma_T(\eta) \ominus \gamma| \wedge \eta' \in \Sigma_T(\eta) \ominus \gamma \wedge\\
   \wedge~ \forall \widetilde{\eta} \in \Sigma_T(\eta) \ominus \gamma : \widetilde{\eta} \in  \gamma_\Sigma
   \end{array}}$\\
@@ -1049,8 +1058,6 @@ $\mathds{R}$ & $\mathcal{G}(\mathtt{R})$ & $ \displaystyle \prod_{k = 1}^{|\math
 \noindent where $\mathcal{G}(\psi)_k = \mathcal{G}(\pi_i(\omega), \pi_j(\omega))$ such that $(i,j) = \pi_k(\psi)$ and $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi)$. Moreover, $\mathtt{A} = (\eta, \delta)$, $\mathtt{A}' = (\eta', \delta')$, $\mathtt{T} = (\eta, \gamma)$, and $\mathtt{T}' = (\eta', \gamma')$.
 }
 \end{definition}
-
-bla bla continues here
 
 \section{Construction of reactions}
 \label{Generating reactions}
@@ -1413,48 +1420,6 @@ In case of explicit-state model checking, we need to enumerate entire state spac
 Once we want to simulate BCSL model, regardless the approach we choose it is necessary to enrich the rule by kinetic rates. These rates basically mean how quickly or slowly a rule takes place. However, assigning a rate to the rule is not as simple as it might seem. This is discussed in Section~\ref{rates_discussion}.
 
 Lets assume we have an optimal solution for assigning rates to the rules. Then we are able to provide deterministic simulation~\cite{Poole2000} by translating rules to reactions and consequently construct Ordinary Differential Equations (ODEs) from them. It is possible to enable also stochastic simulation, either by network-free simulators such as NFsim~\cite{sneddon2011efficient} or using indirect approach on generated reactions (e.g. Gillespie algorithm~\cite{GILLESPIE1976403}).
-
-\subsection{Discussion about rates and how they could be solved}
-\label{rates_discussion}
-
-In order to provide numerical simulation, we need to assign a reaction rate to each rule. However, this is quite a challenging task and we will briefly explain why.
-
-The general problem is that typical kinetic rules in biology require usage of concentration of an agent in volume of the system. This is often solved via absolute numbers (the number of repetitions). The number might be either natural number of we are working with stochastic simulation or even real number if we compute average traces such as in deterministic simulation (make this more precise with citations!!!).
-
-Compared to reaction-based models, we work with fully defined objects which we can simply reference in the kinetics without any limitations. We can do the very same in rule-based models, but it is not desired solution. The thing is we would like to express the context of the rule also in the kinetics. That typically means when context in which the rule is being applied changes, we want appropriate change in the kinetics. To make this more clear, we provide an example.
-
-Example goes here...
-
-There are several solutions of this problem. However, none of them is an optimal one and therefore this remains an open problem. In other languages... they solved it as... finish this...
-
-Another general problem which causes issues is stoichiometry. The problem is if we reference an agent which has multiple enumerations in the rule, it is not clear which one should be used as reference in kinetics. Therefore we distinguish two types of solutions:
-
-\textbf{Solutions with forbidden stoichiometry}:
-
-\begin{enumerate}
-\item unique agents
-
-In this case, we allow arbitrary kinetics, but with a restriction. It is not allowed to use two identical agents in the same rule (including both sides of the rule). Moreover, in kinetics it is allowed to use only agents which are already used in the rule (in the very same form). This restriction decreases the expressiveness of the rules -- for example, it is not possible to define agents which are required but not consumed in the rule. However, mapping between agents in rule and kinetics are clear.
-
-\item almost optimal solution
-
-In order to make sure the agent from kinetics and rule are connected properly, we would have to extend the syntax of the language itself. For example, and agent might be enriched by `$\sim\mathbb{N}$' in both places. Then, the mapping would be unambiguous. However, such s syntax extension leads to decreases readability of the language, which definitely not desired solution. Optionally, the numbering of agents might be implicit, what does not change syntax of the language, but makes it harder to write w.r.t. language simplicity.
-
-\end{enumerate}
-
-
-\textbf{Solutions with allowed stoichiometry}:
-
-\begin{enumerate}
-\item we allow only \emph{mass action} kinetics
-
-The positive thing about this kinetics is that all it needs is a given parameter. The rate is computed as multiple of the parameter with all agents on the left-hand-side of the rule. Since the stoichiometry is allowed in this case, the mapping is not always clear. For this reason we multiply all possible mappings together, which gives appropriate results.
-
-\item the first left agent
-
-Arbitrary kinetics might be used, but both rule and kinetics must be defined very carefully. The method for mapping rate agent to rule agent is very simple -- whenever an agent is referenced in kinetics, first suitable rule-agent from the left is chosen. This solution is very simple to use, but rules are not that easy to write.
-
-\end{enumerate}
 
 \section{Static analyses}
 
@@ -1883,5 +1848,47 @@ $\varrho$ & & chemical reaction application\\
 $\mathtt{S}$ & & a multiset of agents\\
 $\lambda(\mathtt{S}, \theta)$ & & multiset to vector translation\\
 \end{tabular}
+
+\chapter{Discussion about rates and how they could be solved}
+\label{rates_discussion}
+
+In order to provide numerical simulation, we need to assign a reaction rate to each rule. However, this is quite a challenging task and we will briefly explain why.
+
+The general problem is that typical kinetic rules in biology require usage of concentration of an agent in volume of the system. This is often solved via absolute numbers (the number of repetitions). The number might be either natural number of we are working with stochastic simulation or even real number if we compute average traces such as in deterministic simulation (make this more precise with citations!!!).
+
+Compared to reaction-based models, we work with fully defined objects which we can simply reference in the kinetics without any limitations. We can do the very same in rule-based models, but it is not desired solution. The thing is we would like to express the context of the rule also in the kinetics. That typically means when context in which the rule is being applied changes, we want appropriate change in the kinetics. To make this more clear, we provide an example.
+
+Example goes here...
+
+There are several solutions of this problem. However, none of them is an optimal one and therefore this remains an open problem. In other languages... they solved it as... finish this...
+
+Another general problem which causes issues is stoichiometry. The problem is if we reference an agent which has multiple enumerations in the rule, it is not clear which one should be used as reference in kinetics. Therefore we distinguish two types of solutions:
+
+\textbf{Solutions with forbidden stoichiometry}:
+
+\begin{enumerate}
+\item unique agents
+
+In this case, we allow arbitrary kinetics, but with a restriction. It is not allowed to use two identical agents in the same rule (including both sides of the rule). Moreover, in kinetics it is allowed to use only agents which are already used in the rule (in the very same form). This restriction decreases the expressiveness of the rules -- for example, it is not possible to define agents which are required but not consumed in the rule. However, mapping between agents in rule and kinetics are clear.
+
+\item almost optimal solution
+
+In order to make sure the agent from kinetics and rule are connected properly, we would have to extend the syntax of the language itself. For example, and agent might be enriched by `$\sim\mathbb{N}$' in both places. Then, the mapping would be unambiguous. However, such s syntax extension leads to decreases readability of the language, which definitely not desired solution. Optionally, the numbering of agents might be implicit, what does not change syntax of the language, but makes it harder to write w.r.t. language simplicity.
+
+\end{enumerate}
+
+
+\textbf{Solutions with allowed stoichiometry}:
+
+\begin{enumerate}
+\item we allow only \emph{mass action} kinetics
+
+The positive thing about this kinetics is that all it needs is a given parameter. The rate is computed as multiple of the parameter with all agents on the left-hand-side of the rule. Since the stoichiometry is allowed in this case, the mapping is not always clear. For this reason we multiply all possible mappings together, which gives appropriate results.
+
+\item the first left agent
+
+Arbitrary kinetics might be used, but both rule and kinetics must be defined very carefully. The method for mapping rate agent to rule agent is very simple -- whenever an agent is referenced in kinetics, first suitable rule-agent from the left is chosen. This solution is very simple to use, but rules are not that easy to write.
+
+\end{enumerate}
 
 \end{document}
