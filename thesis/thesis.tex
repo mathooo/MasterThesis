@@ -781,20 +781,20 @@ The complex agents have very important role in the language. It means, an atomic
 \begin{definition}{Rule}
 \label{rule_definition}
 
-Rule $\mathtt{R}$ is a quintuple $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$ where:
+Rule $\mathtt{R}$ is a quintuple $(\chi, \omega, \iota, \varphi, \psi)$ where:
 
 \begin{itemize}
 \item $\chi \in \mathds{X}^n$ is a sequence of complexes,
 \item $\omega \in (\mathds{A} \cup \mathds{T})^m$ is a sequence of atomic and structure agents,
-\item $\mathtt{I} \in \{ 1, \ldots, n \}$ is an index determining start of right-hand-side,
-\item $\mathtt{map} \in \mathbb{N}^m$ is an index map between $\omega$ and $\chi$,
-\item $\mathtt{Indices} \in ((\{-\} \cup \mathbb{N})^2)^n$ is an index map between agents from left and right-hand side.
+\item $\iota \in \{ 1, \ldots, n \}$ is an index determining start of right-hand-side,
+\item $\varphi \in \mathbb{N}^m$ is an index map between $\omega$ and $\chi$,
+\item $\psi \in ((\{-\} \cup \mathbb{N})^2)^n$ is an index map between agents from left and right-hand side.
 \end{itemize}
 
 where $n, m \in \mathbb{N}$.
 \end{definition}
 
-The rule is quite a complicated structure. The reason is the practical definition of semantics which can be seen in following sections. Also, it is necessary to capture relationship between left and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map between the agents in $\mathtt{Indices}$. Another index map $\mathtt{map}$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, by index $\mathtt{I}$ we determine the end of left-hand side of the rule.
+The rule is quite a complicated structure. The reason is the practical definition of semantics which can be seen in following sections. Also, it is necessary to capture relationship between left and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map between the agents in $\psi$. Another index map $\varphi$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, by index $\iota$ we determine the end of left-hand side of the rule.
 
 \begin{notation}
 Let $\mathds{R}$ be universe of all possible rules.
@@ -824,9 +824,9 @@ $\chi = \begin{bmatrix}
 (B, \textcolor{red}{\emptyset}), (C, \textcolor{red}{\emptyset}), (D, a), (A, \varepsilon), (H, u)
 \end{bmatrix}$
 
-\item $\mathtt{I} = 3$
-\item $\mathtt{map} = (2,4,5,8,10,11)$
-\item $\mathtt{Indices} = [ (1,6) ; (2,7) ; (3,8) ; (4,9) ; (5,10) ; (-,11) ] $
+\item $\iota = 3$
+\item $\varphi = (2,4,5,8,10,11)$
+\item $\psi = [ (1,6) ; (2,7) ; (3,8) ; (4,9) ; (5,10) ; (-,11) ] $
 \end{itemize}
  written as:
 
@@ -840,11 +840,11 @@ $\Rightarrow K(S\{p\}).B(\varnothing).C(\varnothing)::cyt + D\{a\}.A\{\varepsilo
 Not every rule gives a sense. We need to specify, when a rule is \emph{well-formed}, i.e. it gives semantically sense.
 
 \begin{definition}{Well-formed rule}
-Let $\mathtt{R}$ be a rule and $i,j \in \mathbb{N}$ natural numbers. We say the rule $\mathtt{R} = (\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$ is \emph{well-formed} if the following conditions hold:
+Let $\mathtt{R}$ be a rule and $i,j \in \mathbb{N}$ natural numbers. We say the rule $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi)$ is \emph{well-formed} if the following conditions hold:
 
 \begin{enumerate}
-	\item \label{cond1} $\exists (i,j) \in \mathtt{Indices}: \pi_i(\chi) \not\equiv \pi_j(\chi) $,
-	\item \label{cond2} $\forall (i,j) \in \mathtt{Indices}: \eta(\pi_i(\omega)) \equiv \eta(\pi_j(\omega))$.
+	\item \label{cond1} $\exists (i,j) \in \psi: \pi_i(\chi) \not\equiv \pi_j(\chi) $,
+	\item \label{cond2} $\forall (i,j) \in \psi: \eta(\pi_i(\omega)) \equiv \eta(\pi_j(\omega))$.
 \end{enumerate}
 
 \end{definition}
@@ -855,11 +855,11 @@ Please note the conditions for well-formed rules do not apply on those agents wh
 
 \begin{definition}{Reaction}
 
-Reaction $\mathtt{r}$ is a pair $(\mathtt{seq}, \mathtt{I})$ where:
+Reaction $\mathtt{r}$ is a pair $(\mathtt{seq}, \iota)$ where:
 
 \begin{itemize}
 \item $\mathtt{seq} \in \mathds{X}^n$ is a sequence of complexes,
-\item $\mathtt{I} \in \{ 1, \ldots, n \}$ is an index determining start of right-hand-side
+\item $\iota \in \{ 1, \ldots, n \}$ is an index determining start of right-hand-side
 \end{itemize}
 
 where $n, m \in \mathbb{N}$.
@@ -868,7 +868,7 @@ where $n, m \in \mathbb{N}$.
 Reaction is similar structure than rule, but much simpler. The reaction is just mediate format for giving semantics to BCSL models and it only holds information about complex contents of the rule.
 
 \begin{notation}
-We denote left-hand-side of the reaction $(\pi_1(\mathtt{seq}), \ldots, \pi_{\mathtt{I}-1}(\mathtt{seq}))$ as $LHS(\mathtt{r})$ and right-hand-side of the reaction $(\pi_\mathtt{I}(\mathtt{seq}), \ldots, \pi_n(\mathtt{seq}))$ as $RHS(\mathtt{r})$.
+We denote left-hand-side of the reaction $(\pi_1(\mathtt{seq}), \ldots, \pi_{\iota-1}(\mathtt{seq}))$ as $LHS(\mathtt{r})$ and right-hand-side of the reaction $(\pi_\iota(\mathtt{seq}), \ldots, \pi_n(\mathtt{seq}))$ as $RHS(\mathtt{r})$.
 \end{notation}
 
 \section{Syntax}
@@ -970,7 +970,7 @@ $\mathtt{F} \llbracket ~\alpha_1~.~\ldots~.~\alpha_n :: c~ \rrbracket$ & = &
 $(~(\mathtt{F} \llbracket ~\alpha_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\alpha_n~ \rrbracket), ~c~) \in \mathds{X}$\\
  & & \\
 $\mathtt{F} \llbracket ~\Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \ldots + \Gamma_m~ \rrbracket$ & = &
-$(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices}) \in \mathds{R}$ :\\
+$(\chi, \omega, \iota, \varphi, \psi) \in \mathds{R}$ :\\
 \end{tabular}
 \end{center}
 
@@ -978,20 +978,20 @@ $(\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices}) \in \mathds{R}$ :\\
 \begin{itemize}
 \item $\chi = (\mathtt{F} \llbracket ~\Gamma_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_n~ \rrbracket, \mathtt{F} \llbracket ~\Gamma_{n+1}~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_m~ \rrbracket)$,
 \item $\omega = \mdoubleplus_{i=1}^{|\chi|} \mu(\pi_i(\chi))$,
-\item $\mathtt{I} = n$,
-\item $\mathtt{map} = (J_1, \ldots, J_m): J_k = \sum\limits_{i=1}^{k} | \mu(\pi_i(\chi)) |$,
-{\small
+\item $\iota = n$,
+\item $\varphi = (J_1, \ldots, J_m): J_k = \sum\limits_{i=1}^{k} | \mu(\pi_i(\chi)) |$,
+
 \item \begin{tabular}{l l}
 
-& \hspace*{-0.3cm} $\{~ (i,j) ~|~ i \in [1, \pi_\mathtt{I}(\mathtt{map})] \wedge j \in [\pi_\mathtt{I}(\mathtt{map}), |\omega|] \wedge |i-j| \equiv \pi_\mathtt{I}(\mathtt{map})~\} ~\cup$ \\
+& \hspace*{-0.3cm} $\{~ (i,j) ~|~ i \in [1, \pi_\iota(\varphi)] \wedge j \in [\pi_\iota(\varphi), |\omega|] \wedge |i-j| \equiv \pi_\iota(\varphi)~\} ~\cup$ \\
 
-\hspace*{-0.3cm}$\mathtt{Indices} =$ & \hspace*{-0.3cm} $\{~ (i, -) ~|~ i \in [k, \pi_\mathtt{I}(\mathtt{map})] \wedge k = |~ \{ \pi_\mathtt{I}(\mathtt{map}) + 1, \ldots, | \alpha | \} ~| ~\} ~\cup$\\
+\hspace*{-0.3cm}$\psi =$ & \hspace*{-0.3cm} $\{~ (i, -) ~|~ i \in [k, \pi_\iota(\varphi)] \wedge k = |~ \{ \pi_\iota(\varphi) + 1, \ldots, | \alpha | \} ~| ~\} ~\cup$\\
 
-& \hspace*{-0.3cm} $ \{~ (-, j) ~|~ j \in [k, |\alpha|] \wedge k = 2 * \pi_\mathtt{I}(\mathtt{map}) ~\}$
+& \hspace*{-0.3cm} $ \{~ (-, j) ~|~ j \in [k, |\alpha|] \wedge k = 2 * \pi_\iota(\varphi) ~\}$
 \end{tabular}
-\\}
 
-\vspace*{0.5cm} where $\mathtt{Indices}$ is lexicographically sorted such that $'-' > i$ for every $i \in \mathbb{N}$.
+
+\vspace*{0.5cm} where $\psi$ is lexicographically sorted such that $'-' > i$ for every $i \in \mathbb{N}$.
 
 \end{itemize}
 \end{center}
@@ -1042,15 +1042,11 @@ $\mathds{T}^2$ & $\mathcal{G}(\mathtt{T}, \mathtt{T}')$ & $
   & & \\
  \hline
  & & \\
-$\mathds{R}$ & $\mathcal{G}(\mathtt{R})$ & $ \displaystyle \prod_{k = 1}^{|\mathcal{G}(\mathtt{Indices})|} \mathcal{G}(\mathtt{Indices})_k $ \\ 
+$\mathds{R}$ & $\mathcal{G}(\mathtt{R})$ & $ \displaystyle \prod_{k = 1}^{|\mathcal{G}(\psi)|} \mathcal{G}(\psi)_k $ \\ 
 \end{tabular}
 \end{center}
 
-where $\mathcal{G}(\mathtt{Indices})_k = \mathcal{G}(\pi_i(\omega), \pi_j(\omega))$ such that $(i,j) = \pi_k(\mathtt{Indices})$ 
-
-and $\mathtt{R} = (\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$. Moreover, $\mathtt{A} = (\eta, \delta)$, $\mathtt{A}' = (\eta', \delta')$, 
-
-$\mathtt{T} = (\eta, \gamma)$, and $\mathtt{T}' = (\eta', \gamma')$.
+\noindent where $\mathcal{G}(\psi)_k = \mathcal{G}(\pi_i(\omega), \pi_j(\omega))$ such that $(i,j) = \pi_k(\psi)$ and $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi)$. Moreover, $\mathtt{A} = (\eta, \delta)$, $\mathtt{A}' = (\eta', \delta')$, $\mathtt{T} = (\eta, \gamma)$, and $\mathtt{T}' = (\eta', \gamma')$.
 }
 \end{definition}
 
@@ -1063,17 +1059,17 @@ Given a rule $\mathtt{R}$, we can produce appropriate reactions using ground for
 
 \begin{definition}{Construction of reactions}\label{generate_reactions}
 \hspace*{-0.8cm}\begin{tabular}{ r l }
-$\mathtt{Reactions}(\mathtt{R}) =$ & $\{~ \mathtt{r}(\mathtt{seq}, \mathtt{I}) ~|~ y \in \mathtt{reassembly}(\mathcal{G}(\mathtt{R})) ~\}$,\\
+$\mathtt{Reactions}(\mathtt{R}) =$ & $\{~ \mathtt{r}(\mathtt{seq}, \iota) ~|~ y \in \mathtt{reassembly}(\mathcal{G}(\mathtt{R})) ~\}$,\\
 
-where $\mathtt{seq} =$ & $ \big(\mathtt{X}(y(0, \ldots, \pi_0(\mathtt{map}) - 1), \mathtt{com}(\pi_0(\chi))),$ \\
+where $\mathtt{seq} =$ & $ \big(\mathtt{X}(y(0, \ldots, \pi_0(\varphi) - 1), \mathtt{com}(\pi_0(\chi))),$ \\
 
-& ~~$\mathtt{X}(y(\pi_0(\mathtt{map}), \ldots, \pi_1(\mathtt{map}) - 1), \mathtt{com}(\pi_1(\chi))), $\\
+& ~~$\mathtt{X}(y(\pi_0(\varphi), \ldots, \pi_1(\varphi) - 1), \mathtt{com}(\pi_1(\chi))), $\\
 
 & ~~\ldots,\\
 
-& ~~$\mathtt{X}(y(\pi_{|\mathtt{map}| - 1}(\mathtt{map}), \ldots, \pi_{|\mathtt{map}|}(\mathtt{map}) - 1), \mathtt{com}(\pi_{|\mathtt{map}|}(\chi)))\big) $\\
+& ~~$\mathtt{X}(y(\pi_{|\varphi| - 1}(\varphi), \ldots, \pi_{|\varphi|}(\varphi) - 1), \mathtt{com}(\pi_{|\varphi|}(\chi)))\big) $\\
 
- & ~~and $ \mathtt{I} \in \mathtt{R}$, $\chi \in \mathtt{R}$, $\mathtt{map} \in \mathtt{R}.$\\
+ & ~~and $ \iota \in \mathtt{R}$, $\chi \in \mathtt{R}$, $\varphi \in \mathtt{R}.$\\
 \end{tabular}
 \end{definition}
 
@@ -1108,7 +1104,7 @@ Let $\mathcal{M}$ be a Chemical Reaction Model. The quantitative semantics are g
 
 CRN semantics might lead to possibly infinite LTS. This process can be limited by a global bound, which makes sure the produced LTS is finite (Section~\ref{optimal_bound}).
 
-\section{Production of model}
+\section{Construction of model}
 
 In previous sections we defined all required constructs to create a Chemical Reaction Model (Definition~\ref{crn}) from a BCSL model. This procedure is necessary in order to allow operational semantics to be applied.
 
@@ -1600,7 +1596,7 @@ Reduced model $\widetilde{\mathds{M}}$ is created form given BCSL model by reduc
 Reduced model $\widetilde{\mathds{M}}$ is a pair $(\widetilde{\mathcal{R}}, \widetilde{\mathtt{init}})$ where $\widetilde{\mathcal{R}}$ is set of rule expression and $\widetilde{\mathtt{init}}$ is initial multiset of complex agent expressions constructed from given BCSL model $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ such that the following condition holds:
 
 \begin{enumerate}
-	\item for every rule $\mathtt{F}(\widetilde{\rho}) = (\widetilde{\chi}, \widetilde{\omega}, \widetilde{\mathtt{I}}, \widetilde{\mathtt{map}}, \widetilde{\mathtt{Indices}}) \in \mathds{R}$ such that $\widetilde{\rho} \in \widetilde{\mathcal{R}}$ and appropriate original rule $\mathtt{F}(\rho) = (\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices}) \in \mathds{R}$ such that $\rho \in \mathcal{R}$ holds:
+	\item for every rule $\mathtt{F}(\widetilde{\rho}) = (\widetilde{\chi}, \widetilde{\omega}, \widetilde{\iota}, \widetilde{\varphi}, \widetilde{\psi}) \in \mathds{R}$ such that $\widetilde{\rho} \in \widetilde{\mathcal{R}}$ and appropriate original rule $\mathtt{F}(\rho) = (\chi, \omega, \iota, \varphi, \psi) \in \mathds{R}$ such that $\rho \in \mathcal{R}$ holds:
 
 	$$\forall i \in [1, k]: \pi_i(\widetilde{\chi}) \equiv \mathtt{sup}(\mathbbmss{X})$$ where $\mathbbmss{X}$ is a compatible set such that $\pi_i(\chi) \in \mathbbmss{X}$,
 
@@ -1645,7 +1641,7 @@ Since we have defined compatibility operator for agents, we can apply static rea
 
 \begin{theorem}
 \label{static_reach}
-We can declare a complex agent $\mathtt{X}$ as non-reachable w.r.t. set of rules $\mathcal{R}_f$ iff there does not exist a rule $\mathtt{R} = (\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices}) \in \mathcal{R}_f$ such that $\exists \mathtt{X}' \in \chi: \mathtt{X}' \lhd \mathtt{X}$.
+We can declare a complex agent $\mathtt{X}$ as non-reachable w.r.t. set of rules $\mathcal{R}_f$ iff there does not exist a rule $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi) \in \mathcal{R}_f$ such that $\exists \mathtt{X}' \in \chi: \mathtt{X}' \lhd \mathtt{X}$.
 \end{theorem}
 
 The Theorem~\ref{static_reach} states a very powerful fact in context of non-reachability analyses. Compared to dynamic non-reachability analyses, it completely avoids any combinatorial explosion and gives answer only by linear testing of structural properties of rules.
@@ -1668,7 +1664,7 @@ The BCSL model definition as given in Section~\ref{BCSl_model} can be reduced by
 
 \begin{enumerate}
 \item prepare empty signature sets $\Sigma_\mathtt{A}$ and $\Sigma_\mathtt{T}$, 
-\item create rule $\mathtt{R} = (\chi, \omega, \mathtt{I}, \mathtt{map}, \mathtt{Indices})$ for every rule expression $\rho$ using semantic function $\mathtt{F}$,
+\item create rule $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi)$ for every rule expression $\rho$ using semantic function $\mathtt{F}$,
 \item iterate through all $\omega \in \mathtt{R}$ and:
 \begin{enumerate}
   \item \label{atomic_iter} for every atomic agent $\mathtt{A}$ do the following:
@@ -1852,9 +1848,9 @@ $\mathds{U}$ & & universe of all possible agents\\
 $\mathtt{R}$ & & rule\\
  & $\chi$ & sequence of complexes\\
  & $\omega$ & sequence of atomic and structure agents\\
- & $\mathtt{I}$ & index determining start of right-hand-side\\
- & $\mathtt{map}$ & index map between $\omega$ and $\chi$\\
- & $\mathtt{Indices}$ & is an index map between agents from left-\\
+ & $\iota$ & index determining start of right-hand-side\\
+ & $\varphi$ & index map between $\omega$ and $\chi$\\
+ & $\psi$ & is an index map between agents from left-\\
  & & and right-hand side\\
 $\mathds{R}$ & & universe of all possible rules\\
 $\mathtt{r}$ & & reaction\\
