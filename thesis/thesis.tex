@@ -1800,27 +1800,53 @@ As a future work for the tool we are planning to reimplement it to a web-based v
 \chapter{Case study}
 \label{case_study}
 
-To demonstrate Biochemical Space has practical use, we introduce an instance of CMP, where BCS is used in practice. E-cyanobacterium.org~\cite{Trojak2016} is an online platform providing tools for public sharing, annotation, analysis, and visualization of dynamical models and wet-lab experiments related to cyanobacteria. The general aim is to stimulate collaboration between experimental and computational systems biologists to achieve better understanding of cyanobacteria. As an instance of CMP, it covers all the features of the platform.
+%To demonstrate Biochemical Space has practical use, we introduce an instance of CMP, where it is used in practice.
+E-cyanobacterium.org~\cite{Trojak2016} is an online platform providing tools for public sharing, annotation, analysis, and visualization of dynamical models and wet-lab experiments related to cyanobacteria. The general aim is to stimulate collaboration between experimental and computational systems biologists to achieve better understanding of cyanobacteria. As an instance of CMP, it covers all the features of the platform.
 
 The following processes of cyanobacteria are covered in BCS: environmental processes, respiration and photosynthesis, carbon concentrating mechanism, circadian clock, and metabolism. Currently, the repository of models contains two models describing circadian clock (Miyoshi et al. 2007~\cite{Miyoshi01022007}, Hertel et al. 2013~\cite{Hertel2013}) and a kinetic model of metabolism (Jablonsky et al. 2014~\cite{Jablonsky2014}). Two other models present unpublished results -- dynamics of carbon fluxes (M\"{u}ller et al.) and photosynthesis (Plyusnina et al.). Additionally, two models in development describing carbon concentrating mechanism are Clark et al. 2014~\cite{clark2014insights} and Fridlyand et al. 1995~\cite{fridlyand1996quantitative}. Each of them was properly mapped on the BCS and helped to form suitable space covering all the mentioned processes.
 
-Entire biochemical space of cyanobacteria is formed from over 1000 entities and 600 rules. Therefore, we will not explain them all here, we just provide a several cases which demonstrate how different BCSL features can be used for describing real biological problems.
+Entire biochemical space of cyanobacteria is formed from over 1000 entities and 600 rules. Therefore, we will not explain all of them here, we just provide a several cases which demonstrate how different BCSL features can be used for describing real biological problems.
 
-The circadian clock of cyanobacteria~\cite{CCR} is formed by three kinases KaiA, kaiB, and KaiC (with additional presence of ATP). The key role plays KaiC. Compared to the other two proteins, it is physically the biggest one. As every protein, its primary structure is a sequence of amino acids, where two particular are important for the modelling -- threonine and serine. These two amino acids can be enriched by phosphoryl group in process commonly known as phosphorylation~\cite{cohen2002origins}. However, the sites are accessible only when the protein forms a homohexamer -- a structure of six KaiC proteins. For the phosphorylation itself are responsible KaiA proteins while KaiB proteins inactivate KaiA's, which leads to auto-dephosphorylation of KaiC kinases. There are several complexes which can be formed from mentioned proteins according to situation which is currently happening with the KaiC hexamer.
+The circadian clock of cyanobacteria~\cite{CCR} is formed by three kinases $KaiA$, $kaiB$, and $KaiC$ (with additional presence of $ATP$). The key role plays $KaiC$. Compared to the other two proteins, it is physically the biggest one. As every protein, its primary structure is a sequence of amino acids, where two particular are important for the modelling -- threonine and serine. These two amino acids can be enriched by phosphoryl group in process commonly known as phosphorylation~\cite{cohen2002origins}. However, the sites are accessible only when the protein forms a homohexamer -- a structure of six $KaiC$ proteins. For the phosphorylation itself are responsible KaiA proteins while KaiB proteins inactivate KaiA's, which leads to auto-dephosphorylation of $KaiC$ kinases. There are several complexes which can be formed from mentioned proteins according to situation which is currently happening with the $KaiC$ hexamer (Figure~\ref{phospho_rule}).
 
-It is important to note the KaiA and KaiB kinases only \emph{enhance} the phosphorylation process, but do not enable/disable it completely. Therefore, when it comes to quantitative description of the system, it is necessary to depict all possible actions. Particularly, we need to express the fact the phosphorylation process happens regardless the complex KaiC hexamer is currently in. 
+It is important to note the KaiA and KaiB kinases only \emph{enhance} the phosphorylation process, but do not enable/disable it completely. Therefore, when it comes to quantitative description of the system, it is necessary to depict all possible actions. Particularly, we need to express the fact the phosphorylation process happens regardless the complex $KaiC$ hexamer is currently in. 
 
--- phosphorylation example rule goes here
+\begin{figure}[!h]
+{\small
+\begin{center}
+$ S\{u\}::KaiC::~?X::cyt \Leftrightarrow S\{p\}::KaiC::~?X::cyt ~;~$
 
-Another interesting aspect of the circadian clock is formation of KaiC hexamers. The condition that a KaiC protein can be (de)phosphorylated \emph{only} inside a hexamer leads to one important fact -- it does not mean the hexamer must be assembled from/dissociated to unphosphorylated KaiC proteins. The hexamer can be dissociated at any point in time, for example when three KaiCs are phosphorylated on the serine residue, other two are phosphorylated on both residues, and the last one is not phosphorylated. It is quite obvious the number of possible combinations is quite huge. But still we need to describe this fact in the system we are modelling.
+$ ?X = \{~KaiC6, KaiA2C6, KaiA4C6, KaiB6C6, KaiA4B6C6, KaiA6B6C6~\} $
+\end{center}
+}
+\caption{Phosphorylation rule of serine residue for all possible of complexes with $KaiC$ included. A variable $?X$ is used in place of all possible complexes. Notice there is also a $KaiC6$ complex, which corresponds to auto-(de)phosphorylation.}\label{phospho_rule}
+\end{figure}
 
-Fortunately, rule-based languages including BCSL are very suitable for such cases. What we actually need to express is situation, when a complex needs to be formed (or dissolveed) regardless the context (states) of the interacting entities (six KaiC proteins).
+Another interesting aspect of the cyanobacterial circadian clock mechanism is formation of $KaiC$ hexamers. The condition that a $KaiC$ protein can be (de)phosphorylated \emph{only} inside a hexamer leads to one important fact -- it does not mean the hexamer must be assembled from/dissociated to unphosphorylated $KaiC$ proteins. The hexamer can be dissociated at any point in time, for example when three $KaiC$s are phosphorylated on the serine residue, other two are phosphorylated on both residues, and the last one is not phosphorylated. It should be obvious the number of possible combinations is quite huge. But we need to describe this fact in the system we are modelling.
 
--- kaic formation rule goes here
+Rule-based languages including BCSL are very suitable for such cases. What we actually need to express is situation, when a complex is formed (or dissolveed) regardless the context (particular states) of the interacting entities (Figure~\ref{hexamer_rule}).
 
-Another interesting process inside cyanobacteria is photosynthesis. It is performed on internal membranes called thylakoids. In general, photosynthesis in cyanobacteria uses water as an electron donor and produces oxygen as a product. Electron transport is performed though multiple protein complexes, which together form the thylakoid membrane itself. Such complexes are for example photosystem I. and II. However, model the complexes directly is not very efficient. The typical rules in photosynthesis are just electron transfers between the complexes or reduction/oxidation of individual parts. Therefore, such action usually happen regardless the context of the rest of the complexes in a photosystem. The best approach with respect to BCSL language is to usage structure agent for defining the protein complexes and its individual parts model as partial composition.
+\begin{figure}[!h]
+{\small
+\begin{center}
+$ 6 ~KaiC::cyt \Leftrightarrow KaiC6::cyt $
+\end{center}
+}
+\caption{Formation of KaiC hexamer from six KaiC proteins and its dissociation. The rule requires to have a defined complex name $KaiC6$ in the corresponding BCS.}\label{hexamer_rule}
+\end{figure}
 
--- example rule ID 4 and 33 
+Another interesting process inside cyanobacteria is photosynthesis. It is performed on internal membranes called thylakoids. In general, photosynthesis in cyanobacteria uses water as an electron donor and produces oxygen as a product. Electron transport is performed though multiple protein complexes, which together form the thylakoid membrane itself. Such complexes are for example photosystem I. and II (Figure~\ref{ps2_rule}). However, model the complexes directly is not very efficient. The typical rules in photosynthesis are just electron transfers between the complexes or reduction/oxidation of individual parts. Therefore, such action usually happen regardless the context of the rest of the complexes in a photosystem. The best approach with respect to BCSL language is to use structure agent for defining the protein complexes and its individual parts model as partial composition.
+
+\begin{figure}[!h]
+{\small
+\begin{center}
+$ ps2(oec\{2+\}, yz\{+\})::tlm \Leftrightarrow ps2(oec\{3+\}, yz\{n\})::tlm $
+\end{center}
+}
+\caption{Oxidation of S2-state of the oxygen-evolving complex $oec{2+}$ by $Yz{+}$ in photosystem II. There are many more subparts of photosystem II. (e.g. chlorophyl, pheophytin), but their states are not important in this case.}\label{ps2_rule}
+\end{figure}
+
+------
 
 it would be great to somehow demonstrate defined statical analysis here
 
