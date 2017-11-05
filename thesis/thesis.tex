@@ -1708,44 +1708,55 @@ We could discuss the fact that desired signature might be in some manner \emph{b
 
 Transition systems produced by semantics of BCSL models are infinite in general. Despite the fact the underlaying reaction networks are always finite (Section~\ref{optimal_bound}), there are types of reactions which can increase number of occurrences in a state with no limitations. Typically, such reactions form interface between the modelled system and the environment.
 
-However, the process of applying vector reactions on states can be extended by a control system. This system does not allow to grow individual values inside the state vector above given bound. Simply, if produced vector should obtain an integer higher than the bound, the action is not taken. This procedure is very similar to checking whether all values in the vector are positive.
+However, the process of applying vector reactions on states can be extended by a control system. This system does not allow to grow individual values inside the state vector above given \emph{bound} $\mathtt{B}$. Simply, if produced vector should obtain an integer higher than the bound, the action is not taken. This procedure is very similar to checking whether all values in the vector are positive. Instead of just lower bound we have actually two bounds $<0, \mathtt{B}>$.
 
 The only remaining issue is what is an optimal value for the bound. The universal solution is to let the modeller decide. It follows extension of model definition by the bound. However, this process requires the user to know additional information about the model and additional effort. It does not fit to purposes of the language.
 
 Therefore we decided to apply a static analysis on the model. We will not provide a formal definition of this analysis, rather give intuition and reason about this particular solution.
 
-We decided to find a minimal bound, which is in this context optimal for generating all required objects. It means that all the complexes which are potentially encoded in rules (reactions) will be produced, but only in one repetition. In other words, with this bound a minimal network should be created. In such network, every agent reachable in boundless network is reachable also in minimal network.
+We decided to find a minimal bound, which is in this context optimal for generating all required objects. It means that all the complexes which are potentially encoded in rules  will be produced in at least one repetition. In other words, with this bound a minimal network should be created. In such network, every agent reachable in boundless network is reachable also in minimal network (which does not hold when we take stoichiometry into the account).
 
 To actually calculate the minimal bound, we take maximum value from the following measurements:
 
-\begin{itemize}
-  \item count the highest number of occurrences from all agents in initial state,
-  \item count the highest number of unique agents in all complexes of all rules,
-  \item count the highest stoichiometry in all left- and hand-sides of the rules.
-\end{itemize}
+\begin{enumerate}
+  \item \label{count_init} count the highest number of occurrences from all agents in initial state,
+  \item \label{count_unique} count the highest number of unique agents in all complexes of all rules,
+  \item \label{count_stoi} count the highest stoichiometry in all left- and hand-sides of the rules.
+\end{enumerate}
+
+The step~(\ref{count_init}) ensures the bound $\mathtt{B}$ will not be lower than highest number of equivalent agents in the initial state. In the step~(\ref{count_unique}) we count repetitions of equivalent atomic and structure agents inside all complexes, which ensures will be able to have enough agents for creation of every complex agent. The last step~(\ref{count_stoi}) takes into the account stoichiometry used in context of complexes themselves.
 
 This should guarantee that it is possible to achieve high enough number of occurrence to produce any complex or combination of complexes.
 
 \subsection{Translation to Petri Net}
 
-By generating reaction-based model from rule-based, which is always possible (Section~\ref{Generating reactions}), we can furthermore translate such model to Petri Net~\cite{petri}.
+By generating reaction-based model from rule-based, which is always possible (Section~\ref{Generating reactions}), we can furthermore translate such model to a Petri Net~\cite{petri}.
 
-definition of petri net goes here
+\begin{definition}{Petri Net}
+Petri Net is a quadruple $\mathcal{N} = (P, T, F, m_0)$ where:
+
+\begin{itemize}
+	\item $P$ is a finite non-empty set of \emph{places},
+	\item $T$ is a finite non-empty set of \emph{transitions},
+	\item $F \subset ((P \times T) \cup (T \times P)) $ is a set of \emph{arcs},
+	\item $m_0 : P \rightarrow \mathbb{N}$ is an initial \emph{marking}.
+\end{itemize}
+\end{definition}
 
 The translation is quite straight-forward: 
 
 \begin{enumerate}
-\item as described in (section XY), we have finite number of unique agents -- these are all the places \emph{p}
-\item transitions \emph{t} are constructed as follows:
+\item since BCSL rules produce a finite number of reactions, we have also a finite number of unique agents -- these are the places \emph{P},
+\item for each reaction, create a transition -- these are the transitions \emph{T},
+\item set of arcs $F$ is created from all reactions as following:
 \begin{itemize}
-  \item for each reaction, create a transition,
-  \item place input edge from each place which has label in left-hand-side of the rule (with appropriate multiplicity),
-  \item do the same for output edges for right-hand-side of the rule,
+  \item place input arc from each place which has label in left-hand-side of the reaction (with appropriate multiplicity),
+  \item do the same for output arcs for right-hand-side of the reaction,
 \end{itemize}
 \item finally, we create initial marking \emph{m} from given initial state of the model by similar procedure described above.
 \end{enumerate}
 
-Once the model is translated, we are allowed apply all available analysis which are provided by Petri Nets. For example, P and T invariants, deadlock detection, coverability etc. (see~\cite{petri}).
+Once the model is translated, we are allowed apply all available analyses which are provided by Petri Nets. For example, P and T invariants, deadlock detection, coverability etc. (see~\cite{petri}).
 
 \chapter{Implementation}
 
