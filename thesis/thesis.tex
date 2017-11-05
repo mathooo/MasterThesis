@@ -1244,6 +1244,7 @@ Additionally, this extension can be done more precisely by omitting $(\varnothin
 This syntactic extension bring lot of readability to the syntax while preserving all information in context of the model $\mathds{M}$.
 
 \subsection{Complex signature}
+\label{complex_signature}
 
 We extend model definition by complex signature $\Sigma_\mathtt{X}$ on syntactic level. In this signature, there are defined aliases for valid complex agent expressions. Then, simple \emph{replace} method is used to substitute original expression by the alias.
 
@@ -1651,20 +1652,20 @@ We can declare a complex agent $\mathtt{X}$ as non-reachable w.r.t. set of rules
 The Theorem~\ref{static_reach} states a very powerful fact in context of non-reachability analyses. Compared to dynamic non-reachability analyses, it completely avoids any combinatorial explosion and gives answer only by testing structural properties of rules linearly.
 
 \begin{proof}
-It does not matter how many rules we have to apply in order to create desired agent from the initial state. At some point on the path we inevitably have to create a complex agent $\mathtt{X}_2 \lhd \mathtt{X}$ from a complex agent $\mathtt{X}_1$ applying a rule $\mathtt{R}$. 
+Lets assume we have a path of states constructed by applying corresponding reactions created from rules $\mathcal{R}_f$. It does not matter how many rules we have to apply in order to create desired agent from the initial state. At some point on the path we inevitably have to create a complex agent $\mathtt{X}_2 \lhd \mathtt{X}$ from a complex agent $\mathtt{X}_1$ applying a rule $\mathtt{R}$. 
 
 \begin{center}
 \includegraphics[scale=0.15]{pics/static_reach}
 \end{center}
 
-In order to happen such action, there has to be at least one rule which has on its right-hand-side a complex agent compatible with the given complex agent. $\QEDA$
+In order to apply such action, there has to be at least one rule which has on its right-hand-side a complex agent compatible with the given complex agent. $\QEDA$
 \end{proof}
 
 This procedure can be extended for checking reachability of multiple complex agents, however, it does not consider stoichiometry.
 
 \subsection{Automatic synthesis of signatures}
 
-The BCSL model definition as given in Section~\ref{BCSl_model} can be reduced by signatures. Note we do not mean extended signatures by complex names -- just the basic signatures for atomic and structure agents. These can be obtained statically from the rules (and the initial state) linearly. The process comprises these steps:
+The BCSL model definition as given in Section~\ref{BCSl_model} can be reduced by signatures. Note we do not mean extended signatures by complex names (Section~\ref{complex_signature}) -- just the basic signatures for atomic and structure agents. These can be obtained statically from the rules (and the initial state) in a  linear process. The process comprises these steps:
 
 \begin{enumerate}
 \item prepare empty signature sets $\Sigma_\mathtt{A}$ and $\Sigma_\mathtt{T}$, 
@@ -1694,7 +1695,9 @@ The BCSL model definition as given in Section~\ref{BCSl_model} can be reduced by
 \end{enumerate}
 \end{enumerate}
 
-We could discuss fact that desired signature might be in some manner \emph{bigger} than the collected ones. However, if for example we want to have more states defined for an atomic agent, they should be definitely used somewhere in the model. In other case, it does not play any role in the model behavior and therefore its definition is senseless. In other words, the described procedure guarantees collecting all signature details which play any role in the model.
+The described process basically iterates through all rules and collects all atomic names and states associated with them. Similarly, it collects all structure names and appropriate names of atomic names used in their partial compositions. In this case, atomic information has to be collected recursively because some atomic agents might be used only in partial composition, not independently in a complex agent.
+
+We could discuss the fact that desired signature might be in some manner \emph{bigger} than the collected ones. However, if for example we want to have more states defined for an atomic agent, they should be definitely used somewhere in the model. In other case, it does not play any role in the model behavior and therefore its definition is senseless. In other words, the described procedure guarantees collecting all signature details which play any role in the model.
 
 % \begin{proof}
 % Let $\mathcal{M}$ be a BCSL model and $\Sigma$ its minimal signatures (i.e., all states and partial compositions defined in the signatures are actually used in the rules). Then, signatures $\Sigma'$ obtained by procedure (ref blah) has to be equal to the original signature $\Sigma$. In case its not, it means either there is some extra data in the $\Sigma'$ or some data is missing. Since we create $\Sigma'$ by iterating through all the rules, we construct complete signature with complete states used in the model. Therefore, if some data are missing in $\Sigma'$, then it follows given signature $\Sigma$ is not minimal. On the other hand, if there are some extra data in $\Sigma'$, then given signature $\Sigma$ is incorrect -- its missing some structure details which are being used in the model. $\QEDA$
