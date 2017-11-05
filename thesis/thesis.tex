@@ -1597,17 +1597,17 @@ Reduced model $\widetilde{\mathds{M}}$ is created form given BCSL model by reduc
 
 \begin{definition}{Reduced model}
 \label{reduced_model}
-Reduced model $\widetilde{\mathds{M}}$ is a pair $(\widetilde{\mathcal{R}}, \widetilde{\mathtt{init}})$ where $\widetilde{\mathcal{R}}$ is set of rule expression and $\widetilde{\mathtt{init}}$ is initial multiset of complex agent expressions constructed from given BCSL model $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ such that the following condition holds:
+Reduced model $\widetilde{\mathds{M}}$ is a pair $(\widetilde{\mathcal{R}}, \mathtt{I})$ where $\widetilde{\mathcal{R}}$ is set of rule expression and $\mathtt{I}$ is initial multiset of complex agent expressions constructed from given BCSL model $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ such that the following condition holds:
 
 \begin{enumerate}
-	\item for every rule $\mathtt{F}(\widetilde{\rho}) = (\widetilde{\chi}, \widetilde{\omega}, \widetilde{\iota}, \widetilde{\varphi}, \widetilde{\psi}) \in \mathds{R}$ such that $\widetilde{\rho} \in \widetilde{\mathcal{R}}$ and appropriate original rule $\mathtt{F}(\rho) = (\chi, \omega, \iota, \varphi, \psi) \in \mathds{R}$ such that $\rho \in \mathcal{R}$ holds:
+	\item for every rule $\mathtt{F}(\rho') = (\chi', \omega', \iota', \varphi', \psi') \in \mathds{R}$ such that $\rho' \in \widetilde{\mathcal{R}}$ and appropriate original rule $\mathtt{F}(\rho) = (\chi, \omega, \iota, \varphi, \psi) \in \mathds{R}$ such that $\rho \in \mathcal{R}$ holds:
 
-	$$\forall i \in [1, k]: \pi_i(\widetilde{\chi}) \equiv \mathtt{sup}(\mathscr{X})$$ where $\mathscr{X}$ is a compatible set such that $\pi_i(\chi) \in \mathscr{X}$,
+	$$\forall i \in [1, k]: \pi_i(\chi') \equiv \mathtt{sup}(\mathscr{X})$$ where $\mathscr{X}$ is a compatible set such that $\pi_i(\chi) \in \mathscr{X}$,
 
-	\item for every complex agent $\widetilde{\mathtt{X}} = \mathtt{F}(\widetilde{\Gamma}) \in \widetilde{\mathtt{init}}$ and appropriate original complex agent $\mathtt{X} = \mathtt{F}(\Gamma) \in \mathtt{init}$ the following condition holds:
+	\item for every complex agent $\mathtt{X}' = \mathtt{F}(\Gamma') \in \mathtt{I}$ and appropriate original complex agent $\mathtt{X} = \mathtt{F}(\Gamma) \in \mathtt{init}$ the following condition holds:
 
 	\begin{center}
-	$ \widetilde{\mathtt{X}} \equiv \mathtt{sup}(\mathscr{X}) $ such that $\mathtt{X} \in \mathscr{X}$
+	$ \mathtt{X}' \equiv \mathtt{sup}(\mathscr{X}) $ such that $\mathtt{X} \in \mathscr{X}$
 	\end{center}
 
 \end{enumerate}
@@ -1617,13 +1617,13 @@ where length $k$ of each pair of rules $\mathtt{F}(\widetilde{\rho}$) and $\math
 Moreover, all rules which are not well-formed are removed afterwards.
 \end{definition}
 
-A reduced model $\widetilde{\mathds{M}}$ is actually an over-approximation of an BCSL model $\mathds{M}$. Therefore it can be used for some analyses, which would avoid combinatorial explosion of the original model.
+A reduced model $\widetilde{\mathds{M}}$ is actually an over-approximation of an BCSL model $\mathds{M}$. It can be used for some analyses which avoids combinatorial explosion of the original model.
 
 \begin{theorem}
 \label{non-reachability_in_reduced}
 We want to check whether an complex agent $\mathtt{X}$ is non-reachable in the LTS of a given BCSL model $\mathds{M}$. Let $\mathscr{X}$ be a compatible set for $\mathtt{X}$.
 
-If supremum $\mathtt{sup}(\mathscr{X})$ is non-reachable in reduced model $\widetilde{\mathds{M}}$ constructed with respect to given model $\mathds{M}$, then agent $\mathtt{X}$ is also non-reachable in the LTS of the original model $\mathds{M}$.
+If supremum $\mathtt{sup}(\mathscr{X})$ is non-reachable in LTS of reduced model $\widetilde{\mathds{M}}$ constructed with respect to given model $\mathds{M}$, then agent $\mathtt{X}$ is also non-reachable in the LTS of the original model $\mathds{M}$.
 \end{theorem}
 
 If we are checking whether an agent is reachable for given model $\mathds{M}$, we might first check whether its super-ancestor is reachable in created reduced model $\widetilde{\mathds{M}}$. If so, then we are still not certain about reachability of agent itself and it has to be checked in the original model. However, when it comes to non-reachability (Theorem~\ref{non-reachability_in_reduced}), agent which is non-reachable in $\widetilde{\mathds{M}}$ is not reachable in the original model $\mathds{M}$ too.
@@ -1634,7 +1634,7 @@ If we are checking whether an agent is reachable for given model $\mathds{M}$, w
 
 Lets assume a complex agent $\mathtt{sup}(\mathscr{X})$ is non-reachable in LTS of reduced model $\widetilde{\mathds{M}}$, but $\mathtt{X} \in \mathscr{X}$ is reachable in LTS of the given model $\mathds{M}$.
 
-Generally, there is a path formed from rules in the original LTS such that we transform complex agents from initial agents to desired complex agent $\mathtt{X}$. However, once we move to context of reduced model $\widetilde{\mathds{M}}$, there is no such path for $\mathtt{sup}(\mathscr{X})$. However, according to Definition~\ref{reduced_model}, for every such rule there exist a reduced rule, such that all interacting complexes are reduced to their supremas. Therefore, if we could apply a original rule on a complex agent, we can do the same with reduced rule and its supremum. It follows there must exist such path also in reduced LTS and the complex agent $\mathtt{sup}(\mathscr{X})$ is reachable, what is a contradiction. $\QEDA$
+Generally, there is a path formed from rules in the original LTS such that we transform complex agents from initial agents to desired complex agent $\mathtt{X}$. When we move to context of reduced model $\widetilde{\mathds{M}}$, there is no such path for $\mathtt{sup}(\mathscr{X})$. However, according to Definition~\ref{reduced_model}, for every such rule there exist a reduced rule, such that all interacting complexes are reduced to their supremas. Therefore, if we could apply a original rule on a complex agent, we can do the same with reduced rule and its supremum. It follows there must exist such path also in reduced LTS and the complex agent $\mathtt{sup}(\mathscr{X})$ is reachable, what is a contradiction. $\QEDA$
 \end{proof}
 
 This approach can be generalised for non-reachability of a (multi)set of complex agents, but we consider it as a future work.
@@ -1648,10 +1648,10 @@ Since we have defined compatibility operator for agents, we can apply static rea
 We can declare a complex agent $\mathtt{X}$ as non-reachable w.r.t. set of rules $\mathcal{R}_f$ iff there does not exist a rule $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi) \in \mathcal{R}_f$ such that $\exists \mathtt{X}' \in \chi: \mathtt{X}' \lhd \mathtt{X}$.
 \end{theorem}
 
-The Theorem~\ref{static_reach} states a very powerful fact in context of non-reachability analyses. Compared to dynamic non-reachability analyses, it completely avoids any combinatorial explosion and gives answer only by linear testing of structural properties of rules.
+The Theorem~\ref{static_reach} states a very powerful fact in context of non-reachability analyses. Compared to dynamic non-reachability analyses, it completely avoids any combinatorial explosion and gives answer only by testing structural properties of rules linearly.
 
 \begin{proof}
-It does not matter how many rules we have to apply in order to create desired agent from the initial state. Important is that at some point on the path we have to create a complex agent $\mathtt{X}_2 \lhd \mathtt{X}$ from a complex agent $\mathtt{X}_1$ applying a rule $\mathtt{R}$. 
+It does not matter how many rules we have to apply in order to create desired agent from the initial state. At some point on the path we inevitably have to create a complex agent $\mathtt{X}_2 \lhd \mathtt{X}$ from a complex agent $\mathtt{X}_1$ applying a rule $\mathtt{R}$. 
 
 \begin{center}
 \includegraphics[scale=0.15]{pics/static_reach}
