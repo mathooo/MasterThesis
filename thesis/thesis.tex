@@ -38,6 +38,7 @@
 \newenvironment{proof}{\bigskip\refstepcounter{counter}\noindent\textbf{Proof \thecounter}\par\nopagebreak}{\bigskip}
 \newenvironment{runningExample}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Running example \thecounter} \textit{#1} \par\nopagebreak}{\bigskip}
 \newenvironment{theorem}{\bigskip\refstepcounter{counter}\noindent\textbf{Theorem \thecounter }\par\nopagebreak}{\bigskip}
+\newenvironment{lemma}{\bigskip\refstepcounter{counter}\noindent\textbf{Lemma \thecounter }\par\nopagebreak}{\bigskip}
 \newenvironment{remark}{\bigskip\refstepcounter{counter}\noindent\textbf{Remark \thecounter }\par\nopagebreak}{\bigskip}
 
 \newcommand\mdoubleplus{\mathbin{+\mkern-7mu+}}
@@ -685,7 +686,7 @@ Let $\mathtt{A}$ be an atomic agent. We denote by $\eta(\mathtt{A})$ its name an
 \end{notation}
 
 \begin{definition}{Equivalence of atomic agents}
-Let $\mathtt{A},~ \mathtt{A}'$ be atomic agents. $\mathtt{A}$ is \emph{equivalent} to $\mathtt{A}'$, written $\mathtt{A} \equiv \mathtt{A}'$, iff $\eta(\mathtt{A}) \equiv \eta(\mathtt{A}') \wedge \delta(\mathtt{A}) \equiv \delta(\mathtt{A}')$.
+Let $\mathtt{A},~ \mathtt{A}'$ be atomic agents. $\mathtt{A}$ is \emph{equivalent} to $\mathtt{A}'$, written $\mathtt{A} \equiv \mathtt{A}'$, \emph{iff} $\eta(\mathtt{A}) \equiv \eta(\mathtt{A}') \wedge \delta(\mathtt{A}) \equiv \delta(\mathtt{A}')$.
 \end{definition}
 
 \begin{notation}
@@ -723,7 +724,7 @@ Let $\mathtt{T}$ be a structure agent. We denote by $\eta(\mathtt{T})$ its name 
 \end{notation}
 
 \begin{definition}{Equivalence of structure agents}
-Let $\mathtt{T}, \mathtt{T}'$ be structure agents. $\mathtt{T}$ is \emph{equivalent} to $\mathtt{T}'$, written $\mathtt{T} \equiv \mathtt{T}'$, iff $\eta(\mathtt{T}) \equiv \eta(\mathtt{T}') \wedge \gamma(\mathtt{T}) \equiv \gamma(\mathtt{T'})$.
+Let $\mathtt{T}, \mathtt{T}'$ be structure agents. $\mathtt{T}$ is \emph{equivalent} to $\mathtt{T}'$, written $\mathtt{T} \equiv \mathtt{T}'$, \emph{iff} $\eta(\mathtt{T}) \equiv \eta(\mathtt{T}') \wedge \gamma(\mathtt{T}) \equiv \gamma(\mathtt{T'})$.
 
 %\forall \mathtt{A} \in \gamma(\mathtt{T}) ~\exists \mathtt{A}' \in \gamma(\mathtt{T}') : \mathtt{A} \equiv \mathtt{A}' \wedge \forall \mathtt{A}' \in \gamma(\mathtt{T}') ~\exists \mathtt{A} \in \gamma(\mathtt{T}) : \mathtt{A}' \equiv \mathtt{A}$.
 \end{definition}
@@ -758,7 +759,7 @@ Complex agent $\mathtt{X}$ is a pair $(\mu, \mathtt{com})$ where $\mu \in (\math
 A complex agent represents a non-trivial composite biochemical object that is inductively constructed from already known biological objects. In common rule-based languages this is typically defined by introducing bonds between individual biochemical objects. In BCSL we abstract from detailed specification of bonds and we rather assume a complex as a coexistence of certain objects in a particular group. Moreover, a complex agent resides in a compartment which gives it a space position. 
 
 \begin{definition}{Equivalence of complex agents}\label{rule_equiv}
-Let $\mathtt{X}, \mathtt{X}'$ be complexes. $\mathtt{X}$ is \emph{equivalent} to $\mathtt{X}'$, written $\mathtt{X} \equiv \mathtt{X}'$, iff $|\mu(\mathtt{X})| \equiv |\mu(\mathtt{X'})| \wedge \exists \mu' \in \sigma(\mu(\mathtt{X}'))$ such that $\forall i~\in~[1,~n]: \pi_i(\mu(\mathtt{X})) \equiv \pi_i(\mu')$.
+Let $\mathtt{X}, \mathtt{X}'$ be complexes. $\mathtt{X}$ is \emph{equivalent} to $\mathtt{X}'$, written $\mathtt{X} \equiv \mathtt{X}'$, \emph{iff} $|\mu(\mathtt{X})| \equiv |\mu(\mathtt{X'})| \wedge \exists \mu' \in \sigma(\mu(\mathtt{X}'))$ such that $\forall i~\in~[1,~n]: \pi_i(\mu(\mathtt{X})) \equiv \pi_i(\mu')$.
 \end{definition}
 
 The key element of a complex agent is \emph{sequence} describing inductively constructed coexistence expressions from existing agents. In contrast to partial composition in structure agent, we allow replication at the level of sequence (an agent of a certain name can appear more than once in a sequence).
@@ -1428,6 +1429,7 @@ Once we want to simulate BCSL model, regardless the approach we choose it is nec
 Lets assume we have an optimal solution for assigning rates to the rules. Then we are able to provide deterministic simulation~\cite{Poole2000} by translating rules to reactions and consequently construct Ordinary Differential Equations (ODEs) from them. It is possible to enable also stochastic simulation, either by network-free simulators such as NFsim~\cite{sneddon2011efficient} or using indirect approach on generated reactions (e.g. Gillespie algorithm~\cite{GILLESPIE1976403}).
 
 \section{Static analyses}
+\label{static_analyses}
 
 The language itself offers interesting capabilities in order to provide static analyses of given models. In order to provide such properties we define \emph{compatibility} operator $\lhd$ for each type of agents.
 
@@ -1438,13 +1440,13 @@ Let $\mathtt{A}_1$, $\mathtt{A}_2$ be atomic agents. Then, we say $\mathtt{A}_1$
 Note that compatibility of two atomic agents is very close to their equivalence, but the left-hand-side agent is allowed to have its state undefined. 
 
 \begin{definition}{Compatibility of structure agents}
-Let $\mathtt{T}_1$, $\mathtt{T}_2$ be structure agents. We say $\mathtt{T}_1$ is \emph{compatible with} $\mathtt{T}_2$, written $\mathtt{T}_1 \lhd \mathtt{T}_2$, iff either $\mathtt{T}_1 \equiv \mathtt{T}_2$ or $\eta(\mathtt{T}_1) \equiv \eta(\mathtt{T}_2) \wedge \forall \mathtt{A}_1$ : $\mathtt{A}_1 \in \gamma(\mathtt{T}_1) ~\exists \mathtt{A}_2 : \mathtt{A}_2 \in \gamma(\mathtt{T}_2)$ : $\mathtt{A}_1 \lhd \mathtt{A}_2$.
+Let $\mathtt{T}_1$, $\mathtt{T}_2$ be structure agents. We say $\mathtt{T}_1$ is \emph{compatible with} $\mathtt{T}_2$, written $\mathtt{T}_1 \lhd \mathtt{T}_2$, \emph{iff} either $\mathtt{T}_1 \equiv \mathtt{T}_2$ or $\eta(\mathtt{T}_1) \equiv \eta(\mathtt{T}_2) \wedge \forall \mathtt{A}_1$ : $\mathtt{A}_1 \in \gamma(\mathtt{T}_1) ~\exists \mathtt{A}_2 : \mathtt{A}_2 \in \gamma(\mathtt{T}_2)$ : $\mathtt{A}_1 \lhd \mathtt{A}_2$.
 \end{definition}
 
 In other words, structure agents are compatible, if we can create pairs from atomic agents of left-hand-side agent's composition with the right-hand-ones such that these atomic agents are all unique. For such pairs, the agents in each pair must be compatible.
 
 \begin{definition}{Compatibility of complex agents}
-Let $\mathtt{X}_1$, $\mathtt{X}_2$ be complex agents. We say $\mathtt{X}_1$ is \emph{compatible with} $\mathtt{X}_2$, written $\mathtt{X}_1 \lhd \mathtt{X}_2$, iff either $\mathtt{X}_1 \equiv \mathtt{X}_2$ or $\mathtt{com}(\mathtt{X}_1) \equiv \mathtt{com}(\mathtt{X}_2) \wedge \exists \mu' \in \sigma(\mu(\mathtt{X}_2))$ such that $ \forall i \in [1, n] : \pi_i(\mu(\mathtt{X}_1)) \lhd \pi_i(\mu') $, where $n$ is length of sequence which is same for both sequences.
+Let $\mathtt{X}_1$, $\mathtt{X}_2$ be complex agents. We say $\mathtt{X}_1$ is \emph{compatible with} $\mathtt{X}_2$, written $\mathtt{X}_1 \lhd \mathtt{X}_2$, \emph{iff} either $\mathtt{X}_1 \equiv \mathtt{X}_2$ or $\mathtt{com}(\mathtt{X}_1) \equiv \mathtt{com}(\mathtt{X}_2) \wedge \exists \mu' \in \sigma(\mu(\mathtt{X}_2))$ such that $ \forall i \in [1, n] : \pi_i(\mu(\mathtt{X}_1)) \lhd \pi_i(\mu') $, where $n$ is length of sequence which is same for both sequences.
 \end{definition}
 
 Compatibility for complexes means that every pair of agents through the sequences of complexes must be compatible.
@@ -1452,37 +1454,41 @@ Compatibility for complexes means that every pair of agents through the sequence
 From first chapters it should be clear that an agent might have its ancestors and successors. The compatibility operator formulates this relationship formally. Each successor is compatible with its ancestor, but the reverse relation does not hold. The successor had always more details specified.
 
 \begin{notation}
-Let $\beta_1, \beta_2$ be two agents. We denote $\beta_1 \Delta \beta_2$ the fact the agents are compatible iff either $\beta_1 \lhd \beta_2$ or $\beta_2 \lhd \beta_1$ holds.
+Let $\beta_1, \beta_2$ be two agents. We denote $\beta_1 \Delta \beta_2$ the fact the agents are compatible \emph{iff} either $\beta_1 \lhd \beta_2$ or $\beta_2 \lhd \beta_1$ holds.
 \end{notation}
 
-The compatibility operator generates partial order of $\mathds{A}, \mathds{T}$, and $\mathds{X}$ sets. For our purposes, partial order of $\mathds{X}$ is interesting:
+\begin{definition}{Partial order of agents}
+\label{partial_order}
+Let $x_1, x_2 \in P$ be agents and $P$ a universe of agents. Agents $x_1$ and $x_2$ are in \emph{partial order} relation, written $x_1 \leq x_2$, \emph{iff} $ x_1 \lhd x_2 $.
+\end{definition}
 
-$$ \mathds{X}_\sqsubseteq = \mathtt{X}_1 \sqsubseteq \mathtt{X}_2 \sqsubseteq \ldots \sqsubseteq \mathtt{X}_n $$
+\begin{notation}
+We consider partial order on complex agents $\mathtt{X}$ (Definition~\ref{partial_order}). We denote this order on set $\mathds{X}$ as a partially ordered set $\mathds{X}_\sqsubseteq$.
+\end{notation}
 
-The reason is that complex agents actually encapsulate all other agent types including compartments. However, partial order of entire universe of complex agents is not very useful, since most of agents cannot be compared. We are interested in particular subsets $\mathscr{X}$ which are formed from all complexes of the same type, i.e. those sets where each pair of complexes holds the compatibility conditions (in arbitrary some direction).
+The compatibility operator generates partial order of $\mathds{A}, \mathds{T}$, and $\mathds{X}$ sets. For our purposes, partially ordered set $\mathds{X}_\sqsubseteq$ is interesting. The reason is that complex agents actually encapsulate all other agent types including compartments. However, partial order of entire universe of complex agents is not very useful, since most of agents cannot be compared. We are interested in particular subsets which are formed from all complexes of the same type, i.e. those sets where each pair of complexes holds the compatibility conditions (in arbitrary some direction).
 
-\begin{definition}{Compatible sets}
+\begin{definition}{Compatible set}
 \label{compatible_set}
-Sets $\mathscr{X}_1, \ldots, \mathscr{X}_n \subseteq \mathds{X}_\sqsubseteq$ are \emph{compatible sets} iff for each set $\mathscr{X}_i$ such that $i \in [1,\ldots,n]$ hold the following conditions:
+A finite set $\mathscr{X} \subseteq \mathds{X}_\sqsubseteq$ is a \emph{compatible set} \emph{iff}:
 \begin{center}
 \begin{enumerate}
 	\item \label{compatible_cond} $ \forall \mathtt{X}_1, \mathtt{X}_2 \in \mathscr{X} ~\exists~ \mathtt{X}' \in \mathscr{X}: \mathtt{X}_1 \lhd \mathtt{X}' \wedge \mathtt{X}_2 \lhd \mathtt{X}'$ such that $\mathtt{X}_1 \neq \mathtt{X}_2$,
-	\item \label{finite_cond} the set $\mathscr{X}$ is finite,
 
-\hspace*{-1cm} and for each pair of compatible sets $\mathscr{X}_i, \mathscr{X}_j$ holds:
+ and for each finite set $\mathscr{X}' \subseteq \mathds{X}_\sqsubseteq$ such that $\mathscr{X} \neq \mathscr{X}'$ holds:
 
-	\item \label{non_compatible_cond} $\forall \mathtt{X} \in \mathscr{X}_i \forall \mathtt{X}' \in \mathscr{X}_j: \neg (\mathtt{X} ~\Delta~ \mathtt{X}') $.
+	\item \label{non_compatible_cond} $\forall \mathtt{X} \in \mathscr{X} \forall \mathtt{X}' \in \mathscr{X}': \neg (\mathtt{X} ~\Delta~ \mathtt{X}') $.
 \end{enumerate}
 \end{center}
 
 \end{definition}
 
-\begin{theorem}
+\begin{lemma}
 In every compatible set $\mathscr{X}$, there always exists a supremum, what is an ancestor of all the remaining agents in the set.
-\end{theorem}
+\end{lemma}
 
 \begin{proof}
-The theorem follows from Definition~\ref{compatible_set} condition~(\ref{compatible_cond}) which basically claims that there is a supremum (in manner of compatibility) for each two complex agents in the compatible set $\mathscr{X}$. Since there exists a supremum for every two items of the set and the set $\mathscr{X}$ is finite (condition~\ref{finite_cond}), there must exists a global supremum for the entire set. $\QEDA$
+The theorem follows from Definition~\ref{compatible_set} condition~(\ref{compatible_cond}) which basically claims that there is a supremum (in manner of compatibility) for each two complex agents in the compatible set $\mathscr{X}$. Since there exists a supremum for every two items of the set and the set $\mathscr{X}$ is finite, there must exists a global supremum for the entire set. $\QEDA$
 \end{proof}
 
 \begin{figure}[!h]
@@ -1492,9 +1498,9 @@ The theorem follows from Definition~\ref{compatible_set} condition~(\ref{compati
 \caption{An example of compatible set $\mathscr{X}$. The partial order is depicted by a tree. For better readability, the agents are written in BCSL syntax. In this case, it is formed by a complex in $cyt$ compartment, which has only one structure agent $K$ in its sequence. The structure agent $K$ has allowed atomic agents $T$ and $S$ in its partial composition. These two atomic agents might occur in two states -- $u$ and $p$. The set is complete -- there are all relevant agents bounded by compatibility operator.}
 \end{figure}
 
-\begin{theorem}
+\begin{lemma}
 Each agent $\mathtt{X}$ belongs to exactly one set $\mathscr{X}$.
-\end{theorem}
+\end{lemma}
 
 \begin{proof}
 
@@ -1509,15 +1515,19 @@ Then, the condition~(\ref{non_compatible_cond}) claims that no complex agent fro
 
 Practically, relation following from compatibility operator can be used in several ways. It is suitable for deeper static analysis on level of complexes~\ref{context_reduction} and for finding nontrivial relationships between the rules~\ref{rule_redundancy}.
 
+\begin{definition}{Compatible subset}
+\label{compatible_subset}
+Let $\mathscr{X}$ be a compatible set and $\mathtt{X}$ a complex agent such that $\mathtt{X} \in \mathscr{X}$. A set $\mathscr{X}_\subseteq$ is a \emph{compatible subset} w.r.t. $\mathtt{X}$ \emph{iff}:
+
+$$ \mathscr{X}_\subseteq \subseteq \mathscr{X}: \forall \mathtt{X}' \in \mathscr{X}_\subseteq: (\mathtt{X}' \lhd \mathtt{X} \wedge \forall \mathtt{X}'' \in \mathscr{X}_\subseteq: \neg (\mathtt{X}'' \lhd \mathtt{X}') )$$
+
+\end{definition}
+
 \begin{remark}
 \label{generating_vs_compatibility}
 Note that in the process generating reactions from the rules (Section~\ref{Generating reactions}), we are using ground form function (Section~\ref{ground_forms}). What the function basically does is it adds context to individual complex agents (and its substructures). In the definition of the function we provided exact procedure how to generate such agents.
 
-However, when we look at the process more theoretically, a set of appropriate complex agents is generated for every complex agent $\mathtt{X}$ in the rule $\mathtt{R}$ and then they are connected to multiple unique reaction. These sets are actually subsets $\mathscr{X}_\subseteq$ of compatible sets $\mathscr{X}$ such that 
-
-$$ \mathscr{X}_\subseteq \subseteq \mathscr{X}: \forall \mathtt{X}' \in \mathscr{X}_\subseteq: (\mathtt{X}' \lhd \mathtt{X} \wedge \nexists \mathtt{X}'' \in \mathscr{X}_\subseteq: \mathtt{X}'' \lhd \mathtt{X}' )$$
-
-where $\mathtt{X} \in \mathscr{X}$. In other words, the agents in $\mathscr{X}_\subseteq$ are all minimal items from compatible set $\mathscr{X}$ which are compatible with agent $\mathtt{X}$.
+However, when we look at the process more theoretically, a set of appropriate complex agents is generated for every complex agent $\mathtt{X}$ in the rule $\mathtt{R}$ and then they are connected to multiple unique reactions. This set is actually a compatible subset $\mathscr{X}_\subseteq$ of compatible set $\mathscr{X}$ such that $\mathtt{X} \in \mathscr{X}$. In other words, the agents in $\mathscr{X}_\subseteq$ are all minimal items from compatible set $\mathscr{X}$ which are compatible with agent $\mathtt{X}$.
 
 \end{remark}
 
@@ -1534,7 +1544,7 @@ $$ \Gamma_1 + \Gamma_2 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \Gamma_{n+
 
 for some $m,n \in \mathbb{N}$ such that both $\mathtt{R}, \mathtt{R}'$ are well-formed rules.
 
-We declare rule $\mathtt{R}$ as a \emph{redundant} rule iff
+We declare rule $\mathtt{R}$ as a \emph{redundant} rule \emph{iff}
 
 $$ \forall i \in [ 1, m ]: \mathtt{F}(\Gamma_i) \lhd \mathtt{F}(\Gamma'_i). $$
 \end{theorem}
@@ -1584,7 +1594,7 @@ The problem whether the elimination of redundant rules preserves semantics can b
 
 The complex agents $\mathtt{X}_k = \mathtt{F}(\Gamma_k)$ and $\mathtt{X}'_k = \mathtt{F}(\Gamma'_k)$ both belong to the same compatible set $\mathscr{X}$ since $\mathtt{X}_k \lhd \mathtt{X}'_k$, which follows from the condition of the theorem. 
 
-Then, we can create subsets $\mathscr{X}_\subseteq, \mathscr{X}'_\subseteq \subseteq \mathscr{X}$ for both complex agents respectively (Remark~\ref{generating_vs_compatibility}). Because the complex agents are compatible ($\mathtt{X}_k \lhd \mathtt{X}'_k$ ), the subset $\mathscr{X}_\subseteq$ of agent $\mathtt{X}_k$ is either subset or equal to set $\mathscr{X}'_\subseteq$ of agent $\mathtt{X}'_k$:
+Then, we can create subsets $\mathscr{X}_\subseteq, \mathscr{X}'_\subseteq \subseteq \mathscr{X}$ for both complex agents respectively (Definition~\ref{compatible_subset}). Because the complex agents are compatible ($\mathtt{X}_k \lhd \mathtt{X}'_k$ ), the subset $\mathscr{X}_\subseteq$ of agent $\mathtt{X}_k$ is either subset or equal to set $\mathscr{X}'_\subseteq$ of agent $\mathtt{X}'_k$:
 
 $$\mathscr{X}_\subseteq \subseteq \mathscr{X}'_\subseteq.$$
 
@@ -1613,7 +1623,7 @@ Reduced model $\widetilde{\mathds{M}}$ is a pair $(\widetilde{\mathcal{R}}, \mat
 
 \end{enumerate}
 
-where length $k$ of each pair of rules $\mathtt{F}(\widetilde{\rho}$) and $\mathtt{F}((\rho)$ is equal (i.e., number of complex agent expression is the same on both sides).
+where length $k = |\chi'| = |\chi|$ (i.e., number of complex agent expression is the same including both sides of the rules).
 
 Moreover, all rules which are not well-formed are removed afterwards.
 \end{definition}
@@ -1641,12 +1651,13 @@ Generally, there is a path formed from rules in the original LTS such that we tr
 This approach can be generalised for non-reachability of a (multi)set of complex agents, but we consider it as a future work.
 
 \subsection{Static reachability analysis}
+\label{static_reachability_analysis}
 
 Since we have defined compatibility operator for agents, we can apply static reachability analysis before enumerating whole state space of the model $\mathds{M}$. This analysis has its limitations, but can serve for checking whether a complex agent $\mathtt{X}$ is non-reachable (similarly as in the previous section). For that, all we need is set of rules $\mathcal{R}_f$ created from set of rule expressions $\mathcal{R}$ of model $\mathds{M}$ with semantic function $\mathtt{F}$.
 
 \begin{theorem}
 \label{static_reach}
-We can declare a complex agent $\mathtt{X}$ as non-reachable w.r.t. set of rules $\mathcal{R}_f$ iff there does not exist a rule $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi) \in \mathcal{R}_f$ such that $\exists \mathtt{X}' \in \chi: \mathtt{X}' \lhd \mathtt{X}$.
+A complex agent $\mathtt{X}$ is non-reachable w.r.t. set of rules $\mathcal{R}_f$ \emph{iff} there does not exist a rule $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi) \in \mathcal{R}_f$ such that $\exists \mathtt{X}' \in \chi: \mathtt{X}' \lhd \mathtt{X}$.
 \end{theorem}
 
 The Theorem~\ref{static_reach} states a very powerful fact in context of non-reachability analyses. Compared to dynamic non-reachability analyses, it completely avoids any combinatorial explosion and gives answer only by testing structural properties of rules linearly.
@@ -1846,9 +1857,47 @@ $ ps2(oec\{2+\}, yz\{+\})::tlm \Leftrightarrow ps2(oec\{3+\}, yz\{n\})::tlm $
 \caption{Oxidation of S2-state of the oxygen-evolving complex $oec{2+}$ by $Yz{+}$ in photosystem II. There are many more subparts of photosystem II. (e.g. chlorophyl, pheophytin), but their states are not important in this case.}\label{ps2_rule}
 \end{figure}
 
-------
+Next, we need to demonstrate practical purposes of static analyses defined in Section~\ref{static_analyses}. Yamada et al. 2004~\cite{yamada2004model} is a model of FGF signaling pathway. The model represents a signaling pathway, which is typically a cascade of signal transduction. It means if something goes wrong on a particular point in the cascade, it will influence the rest of the pathway. Entire model written in BCSL syntax is provided in Appendix~\ref{yamada_complete}. It consists of 20 entities interacting in 56 rules. Most of proteins can undergo prosphorylation (state change from $u$ to $p$ on some amino acid residues). Lets we consider initial conditions such that there are all required entities in one or two repetitions (some complexes require multiplicity). In such case, the number of reachable state grows up to $2^{72}$ (which corresponds to the number of grains of sand on
+the earth). The actual number is lower but still too high to be effectively enumerated.
 
+In Figure~\ref{fgf_fragment}, there is the model defined in BCSL syntax. Note this model is just a fragment of the entire model. Please focus on rule~(\ref{focus_rule}). It requires both Threonine residues ($Thr$) on $FGF$ proteins to be phosphorylated ($p$). In other words, it is not possible to create a complex from $FRS$ and unphosphorylated ($u$) $FGF$ proteins.
 
+For example, we want to check whether a given complex agent \\{\small $FRS(Thr\{u\}, Tyr\{u\}).FGF(Thr\{u\}).R.FGF(Thr\{u\}).R::cyt$} is reachable. Normally we have to enumerate entire state space of the model (which is quite an issue) and then use dynamic model-checking method to check it. In our case, we could first check if it is non-reachable using static reachability analysis (Section~\ref{static_reachability_analysis}). Particularly, we can use Theorem~\ref{static_reach}. It results to conclusion that there is no compatible agent on any right-hand-side of the rules. It follows the complex agent is non-reachable.
+
+{\scriptsize (We just saved years of computing and terabytes of memory.)\\}
+
+\begin{figure}[!h]
+{\footnotesize
+\begin{center}
+\begin{enumerate}
+\item $FGF::cyt + R::cyt \Leftrightarrow FGF.R::cyt$ 
+\item $2~ FGF.R::cyt \Leftrightarrow FGF.R.FGF.R::cyt$
+\item $FGF(Thr\{u\}).R.FGF.R::cyt \Leftrightarrow FGF(Thr\{p\}).R.FGF.R::cyt$ 
+\item \label{focus_rule} $FRS(Thr\{u\})::cyt + FGF(Thr\{p\}).R.FGF(Thr\{p\}).R::cyt \Rightarrow$ 
+
+$\Rightarrow FRS(Thr\{u\}).FGF(Thr\{p\}).R.FGF(Thr\{p\}).R::cyt$ 
+
+\item $FRS(Thr\{u\}).FGF.R.FGF.R::cyt \Rightarrow FRS(Thr\{p\}).FGF.R.FGF.R::cyt$ 
+
+\end{enumerate}
+
+$\vdots$
+
+\vspace*{0.5cm}
+Initial conditions:
+\begin{tabular}{l}
+$2~ FGF(Thr\{u\})::cyt$\\
+$2~ R::cyt$\\
+$1~ FRS(Thr\{u\}, Tyr\{u\})::cyt$\\
+\end{tabular}
+
+$\vdots$
+
+\end{center}
+
+}
+\caption{A fragment of the model Yamada 2004~\cite{yamada2004model} of FGF signaling pathway written in BCSL. The complete model can find in Appendix~\ref{yamada_complete}.}\label{fgf_fragment}
+\end{figure}
 
 it would be great to somehow demonstrate defined statical analysis here
 
@@ -1990,121 +2039,70 @@ The positive thing about this kinetics is that all it needs is a given parameter
 Arbitrary kinetics might be used, but both rule and kinetics must be defined very carefully. The method for mapping rate agent to rule agent is very simple -- whenever an agent is referenced in kinetics, first suitable rule-agent from the left is chosen. This solution is very simple to use, but rules are not that easy to write.
 
 \chapter{Model Yamada 2004}
+\label{yamada_complete}
 
 \begin{figure}
 {\tiny
-$FGF::cyt + R::cyt \Leftrightarrow FGF.R::cyt$
-
-$2 FGF.R::cyt \Leftrightarrow FGF.R.FGF.R::cyt$
-
-$FGF(Thr\{u\}).R.FGF.R::cyt \Leftrightarrow FGF(Thr\{p\}).R.FGF.R::cyt$
-
-$FRS(Thr\{u\})::cyt + FGF(Thr\{p\}).R.FGF(Thr\{p\}).R::cyt \Rightarrow FGF(Thr\{p\}).R.FGF(Thr\{p\}).R.FRS(Thr\{u\})::cyt$
-
-$FRS(Thr\{u\}).FGF.R.FGF.R::cyt \Rightarrow FRS(Thr\{p\}).FGF.R.FGF.R::cyt$
-
-$FRS(Thr\{p\}).FGF.R.FGF.R::cyt \Rightarrow FRS(Thr\{p\})::cyt + FGF.R.FGF.R::cyt$
-
-$FRS(Thr\{p\})::cyt + SHP::cyt \Rightarrow SHP.FRS(Thr\{p\})::cyt$
-
-$FRS(Thr\{p\}).SHP::cyt \Rightarrow FRS(Thr\{u\}).SHP::cyt$
-
-$FRS(Thr\{u\}).SHP::cyt \Rightarrow FRS(Thr\{u\})::cyt + SHP::cyt$
-
-$GS(Thr\{p\})::cyt + GPP::cyt \Rightarrow GPP.GS(Thr\{p\})::cyt$
-
-$GS(Thr\{p\}).GPP::cyt \Rightarrow GS(Thr\{u\}).GPP::cyt$
-
-$GS(Thr\{u\}).GPP::cyt \Rightarrow GS(Thr\{u\})::cyt + GPP::cyt$
-
-$GS(Thr\{u\})::cyt + ERK(Tyr\{p\},Thr\{p\})::cyt \Rightarrow ERK(Tyr\{p\},Thr\{p\}).GS(Thr\{u\})::cyt$
-
-$GS(Thr\{u\}).ERK::cyt \Rightarrow GS(Thr\{p\}).ERK::cyt$
-
-$GS(Thr\{p\}).ERK::cyt \Rightarrow GS(Thr\{p\})::cyt + ERK::cyt$
-
-$FRS(Thr\{p\},Tyr\{u\})::cyt + GS(Thr\{u\})::cyt \Leftrightarrow FRS(Thr\{p\},Tyr\{u\}).GS(Thr\{u\})::cyt$
-
-$Ras(Thr\{u\})::cyt + FRS(Thr\{p\},Tyr\{u\}).GS(Thr\{u\})::cyt \Rightarrow FRS(Thr\{p\},Tyr\{u\}).GS(Thr\{u\}).Ras(Thr\{u\})::cyt$
-
-$Ras(Thr\{u\}).FRS.GS::cyt \Rightarrow Ras(Thr\{p\}).FRS.GS::cyt$
-
-$Ras(Thr\{p\}).FRS.GS::cyt \Rightarrow Ras(Thr\{p\})::cyt + FRS.GS::cyt$
-
-$Ras(Thr\{p\})::cyt + GAP::cyt \Rightarrow GAP.Ras(Thr\{p\})::cyt$
-
-$Ras(Thr\{p\}).GAP::cyt \Rightarrow Ras(Thr\{u\}).GAP::cyt$
-
-$Ras(Thr\{u\}).GAP::cyt \Rightarrow Ras(Thr\{u\})::cyt + GAP::cyt$
-
-$Raf(Thr\{u\})::cyt + Ras(Thr\{p\})::cyt \Rightarrow Ras(Thr\{p\}).Raf(Thr\{u\})::cyt$
-
-$Raf(Thr\{u\}).Ras::cyt \Rightarrow Raf(Thr\{p\}).Ras::cyt$
-
-$Raf(Thr\{p\}).Ras::cyt \Rightarrow Raf(Thr\{p\})::cyt + Ras::cyt$
-
-$Raf(Thr\{p\})::cyt + PP::cyt \Rightarrow PP.Raf(Thr\{p\})::cyt$
-
-$Raf(Thr\{p\}).PP::cyt \Rightarrow Raf(Thr\{u\}).PP::cyt$
-
-$Raf(Thr\{u\}).PP::cyt \Rightarrow Raf(Thr\{u\})::cyt + PP::cyt$
-
-$MEK(Ser212\{u\})::cyt + Raf(Thr\{p\})::cyt \Rightarrow Raf(Thr\{p\}).MEK(Ser212\{u\})::cyt$
-
-$MEK(Ser212\{u\}).Raf::cyt \Rightarrow MEK(Ser212\{p\}).Raf::cyt$
-
-$MEK(Ser212\{p\}).Raf::cyt \Rightarrow MEK(Ser212\{p\})::cyt + Raf::cyt$
-
-$MEK(Ser298\{u\})::cyt + Raf(Thr\{p\})::cyt \Rightarrow Raf(Thr\{p\}).MEK(Ser298\{u\})::cyt$
-
-$MEK(Ser298\{u\}).Raf::cyt \Rightarrow MEK(Ser298\{p\}).Raf::cyt$
-
-$MEK(Ser298\{p\}).Raf::cyt \Rightarrow MEK(Ser298\{p\})::cyt + Raf::cyt$
-
-$MEK(Ser212\{p\})::cyt + XPP::cyt \Rightarrow XPP.MEK(Ser212\{p\})::cyt$
-
-$MEK(Ser212\{p\}).XPP::cyt \Rightarrow MEK(Ser212\{u\}).XPP::cyt$
-
-$MEK(Ser212\{u\}).XPP::cyt \Rightarrow MEK(Ser212\{u\})::cyt + XPP::cyt$
-
-$MEK(Ser298\{p\})::cyt + XPP::cyt \Rightarrow XPP.MEK(Ser298\{p\})::cyt$
-
-$MEK(Ser298\{p\}).XPP::cyt \Rightarrow MEK(Ser298\{u\}).XPP::cyt$
-
-$MEK(Ser298\{u\}).XPP::cyt \Rightarrow MEK(Ser298\{u\})::cyt + XPP::cyt$
-
-$ERK(Thr\{u\})::cyt + MEK(Ser212\{p\},Ser298\{p\})::cyt \Rightarrow MEK(Ser212\{p\},Ser298\{p\}).ERK(Thr\{u\})::cyt$
-
-$ERK(Thr\{u\}).MEK::cyt \Rightarrow ERK(Thr\{p\}).MEK::cyt$
-
-$ERK(Thr\{p\}).MEK::cyt \Rightarrow ERK(Thr\{p\})::cyt + MEK::cyt$
-
-$ERK(Tyr\{u\})::cyt + MEK(Ser212\{p\},Ser298\{p\})::cyt \Rightarrow MEK(Ser212\{p\},Ser298\{p\}).ERK(Tyr\{u\})::cyt$
-
-$ERK(Tyr\{u\}).MEK::cyt \Rightarrow ERK(Tyr\{p\}).MEK::cyt$
-
-$ERK(Tyr\{p\}).MEK::cyt \Rightarrow ERK(Tyr\{p\})::cyt + MEK::cyt$
-
-$ERK(Thr\{p\})::cyt + MKP::cyt \Rightarrow MKP.ERK(Thr\{p\})::cyt$
-
-$ERK(Thr\{p\}).MKP::cyt \Rightarrow ERK(Thr\{u\}).MKP::cyt$
-
-$ERK(Thr\{u\}).MKP::cyt \Rightarrow ERK(Thr\{u\})::cyt + MKP::cyt$
-
-$ERK(Tyr\{p\})::cyt + MKP::cyt \Rightarrow MKP.ERK(Tyr\{p\})::cyt$
-
-$ERK(Tyr\{p\}).MKP::cyt \Rightarrow ERK(Tyr\{u\}).MKP::cyt$
-
-$ERK(Tyr\{u\}).MKP::cyt \Rightarrow ERK(Tyr\{u\})::cyt + MKP::cyt$
-
-$FRS(Tyr\{u\})::cyt + ERK(Tyr\{p\},Thr\{p\})::cyt \Rightarrow ERK(Tyr\{p\},Thr\{p\}).FRS(Tyr\{u\})::cyt$
-
-$FRS(Tyr\{u\}).ERK::cyt \Rightarrow FRS(Thr\{u\},Tyr\{p\}).ERK::cyt$
-
-$FRS(Thr\{u\},Tyr\{p\}).ERK::cyt \Rightarrow FRS(Thr\{u\},Tyr\{p\})::cyt + ERK::cyt$
-
-$FRS(Tyr\{p\})::cyt \Rightarrow FRS(Tyr\{u\})::cyt$
-
+\begin{center}
+\begin{tabular}{l}
+$FGF::cyt + R::cyt \Leftrightarrow FGF.R::cyt$\\
+$2 FGF.R::cyt \Leftrightarrow FGF.R.FGF.R::cyt$\\
+$FGF(Thr\{u\}).R.FGF.R::cyt \Leftrightarrow FGF(Thr\{p\}).R.FGF.R::cyt$\\
+$FRS(Thr\{u\})::cyt + FGF(Thr\{p\}).R.FGF(Thr\{p\}).R::cyt \Rightarrow FGF(Thr\{p\}).R.FGF(Thr\{p\}).R.FRS(Thr\{u\})::cyt$\\
+$FRS(Thr\{u\}).FGF.R.FGF.R::cyt \Rightarrow FRS(Thr\{p\}).FGF.R.FGF.R::cyt$\\
+$FRS(Thr\{p\}).FGF.R.FGF.R::cyt \Rightarrow FRS(Thr\{p\})::cyt + FGF.R.FGF.R::cyt$\\
+$FRS(Thr\{p\})::cyt + SHP::cyt \Rightarrow SHP.FRS(Thr\{p\})::cyt$\\
+$FRS(Thr\{p\}).SHP::cyt \Rightarrow FRS(Thr\{u\}).SHP::cyt$\\
+$FRS(Thr\{u\}).SHP::cyt \Rightarrow FRS(Thr\{u\})::cyt + SHP::cyt$\\
+$GS(Thr\{p\})::cyt + GPP::cyt \Rightarrow GPP.GS(Thr\{p\})::cyt$\\
+$GS(Thr\{p\}).GPP::cyt \Rightarrow GS(Thr\{u\}).GPP::cyt$\\
+$GS(Thr\{u\}).GPP::cyt \Rightarrow GS(Thr\{u\})::cyt + GPP::cyt$\\
+$GS(Thr\{u\})::cyt + ERK(Tyr\{p\},Thr\{p\})::cyt \Rightarrow ERK(Tyr\{p\},Thr\{p\}).GS(Thr\{u\})::cyt$\\
+$GS(Thr\{u\}).ERK::cyt \Rightarrow GS(Thr\{p\}).ERK::cyt$\\
+$GS(Thr\{p\}).ERK::cyt \Rightarrow GS(Thr\{p\})::cyt + ERK::cyt$\\
+$FRS(Thr\{p\},Tyr\{u\})::cyt + GS(Thr\{u\})::cyt \Leftrightarrow FRS(Thr\{p\},Tyr\{u\}).GS(Thr\{u\})::cyt$\\
+$Ras(Thr\{u\})::cyt + FRS(Thr\{p\},Tyr\{u\}).GS(Thr\{u\})::cyt \Rightarrow FRS(Thr\{p\},Tyr\{u\}).GS(Thr\{u\}).Ras(Thr\{u\})::cyt$\\
+$Ras(Thr\{u\}).FRS.GS::cyt \Rightarrow Ras(Thr\{p\}).FRS.GS::cyt$\\
+$Ras(Thr\{p\}).FRS.GS::cyt \Rightarrow Ras(Thr\{p\})::cyt + FRS.GS::cyt$\\
+$Ras(Thr\{p\})::cyt + GAP::cyt \Rightarrow GAP.Ras(Thr\{p\})::cyt$\\
+$Ras(Thr\{p\}).GAP::cyt \Rightarrow Ras(Thr\{u\}).GAP::cyt$\\
+$Ras(Thr\{u\}).GAP::cyt \Rightarrow Ras(Thr\{u\})::cyt + GAP::cyt$\\
+$Raf(Thr\{u\})::cyt + Ras(Thr\{p\})::cyt \Rightarrow Ras(Thr\{p\}).Raf(Thr\{u\})::cyt$\\
+$Raf(Thr\{u\}).Ras::cyt \Rightarrow Raf(Thr\{p\}).Ras::cyt$\\
+$Raf(Thr\{p\}).Ras::cyt \Rightarrow Raf(Thr\{p\})::cyt + Ras::cyt$\\
+$Raf(Thr\{p\})::cyt + PP::cyt \Rightarrow PP.Raf(Thr\{p\})::cyt$\\
+$Raf(Thr\{p\}).PP::cyt \Rightarrow Raf(Thr\{u\}).PP::cyt$\\
+$Raf(Thr\{u\}).PP::cyt \Rightarrow Raf(Thr\{u\})::cyt + PP::cyt$\\
+$MEK(Ser212\{u\})::cyt + Raf(Thr\{p\})::cyt \Rightarrow Raf(Thr\{p\}).MEK(Ser212\{u\})::cyt$\\
+$MEK(Ser212\{u\}).Raf::cyt \Rightarrow MEK(Ser212\{p\}).Raf::cyt$\\
+$MEK(Ser212\{p\}).Raf::cyt \Rightarrow MEK(Ser212\{p\})::cyt + Raf::cyt$\\
+$MEK(Ser298\{u\})::cyt + Raf(Thr\{p\})::cyt \Rightarrow Raf(Thr\{p\}).MEK(Ser298\{u\})::cyt$\\
+$MEK(Ser298\{u\}).Raf::cyt \Rightarrow MEK(Ser298\{p\}).Raf::cyt$\\
+$MEK(Ser298\{p\}).Raf::cyt \Rightarrow MEK(Ser298\{p\})::cyt + Raf::cyt$\\
+$MEK(Ser212\{p\})::cyt + XPP::cyt \Rightarrow XPP.MEK(Ser212\{p\})::cyt$\\
+$MEK(Ser212\{p\}).XPP::cyt \Rightarrow MEK(Ser212\{u\}).XPP::cyt$\\
+$MEK(Ser212\{u\}).XPP::cyt \Rightarrow MEK(Ser212\{u\})::cyt + XPP::cyt$\\
+$MEK(Ser298\{p\})::cyt + XPP::cyt \Rightarrow XPP.MEK(Ser298\{p\})::cyt$\\
+$MEK(Ser298\{p\}).XPP::cyt \Rightarrow MEK(Ser298\{u\}).XPP::cyt$\\
+$MEK(Ser298\{u\}).XPP::cyt \Rightarrow MEK(Ser298\{u\})::cyt + XPP::cyt$\\
+$ERK(Thr\{u\})::cyt + MEK(Ser212\{p\},Ser298\{p\})::cyt \Rightarrow MEK(Ser212\{p\},Ser298\{p\}).ERK(Thr\{u\})::cyt$\\
+$ERK(Thr\{u\}).MEK::cyt \Rightarrow ERK(Thr\{p\}).MEK::cyt$\\
+$ERK(Thr\{p\}).MEK::cyt \Rightarrow ERK(Thr\{p\})::cyt + MEK::cyt$\\
+$ERK(Tyr\{u\})::cyt + MEK(Ser212\{p\},Ser298\{p\})::cyt \Rightarrow MEK(Ser212\{p\},Ser298\{p\}).ERK(Tyr\{u\})::cyt$\\
+$ERK(Tyr\{u\}).MEK::cyt \Rightarrow ERK(Tyr\{p\}).MEK::cyt$\\
+$ERK(Tyr\{p\}).MEK::cyt \Rightarrow ERK(Tyr\{p\})::cyt + MEK::cyt$\\
+$ERK(Thr\{p\})::cyt + MKP::cyt \Rightarrow MKP.ERK(Thr\{p\})::cyt$\\
+$ERK(Thr\{p\}).MKP::cyt \Rightarrow ERK(Thr\{u\}).MKP::cyt$\\
+$ERK(Thr\{u\}).MKP::cyt \Rightarrow ERK(Thr\{u\})::cyt + MKP::cyt$\\
+$ERK(Tyr\{p\})::cyt + MKP::cyt \Rightarrow MKP.ERK(Tyr\{p\})::cyt$\\
+$ERK(Tyr\{p\}).MKP::cyt \Rightarrow ERK(Tyr\{u\}).MKP::cyt$\\
+$ERK(Tyr\{u\}).MKP::cyt \Rightarrow ERK(Tyr\{u\})::cyt + MKP::cyt$\\
+$FRS(Tyr\{u\})::cyt + ERK(Tyr\{p\},Thr\{p\})::cyt \Rightarrow ERK(Tyr\{p\},Thr\{p\}).FRS(Tyr\{u\})::cyt$\\
+$FRS(Tyr\{u\}).ERK::cyt \Rightarrow FRS(Thr\{u\},Tyr\{p\}).ERK::cyt$\\
+$FRS(Thr\{u\},Tyr\{p\}).ERK::cyt \Rightarrow FRS(Thr\{u\},Tyr\{p\})::cyt + ERK::cyt$\\
+$FRS(Tyr\{p\})::cyt \Rightarrow FRS(Tyr\{u\})::cyt$\\
+\end{tabular}
+\end{center}
 }
 \caption{A complete model Yamada 2004~\cite{yamada2004model} of FGF signaling pathway written in BCSL.}
 \end{figure}
