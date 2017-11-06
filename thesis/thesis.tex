@@ -1864,8 +1864,6 @@ In Figure~\ref{fgf_fragment}, there is the model defined in BCSL syntax. Note th
 
 For example, we want to check whether a given complex agent \\{\small $FRS(Thr\{u\}, Tyr\{u\}).FGF(Thr\{u\}).R.FGF(Thr\{u\}).R::cyt$} is reachable. Normally we have to enumerate entire state space of the model (which is quite an issue) and then use dynamic model-checking method to check it. In our case, we could first check if it is non-reachable using static reachability analysis (Section~\ref{static_reachability_analysis}). Particularly, we can use Theorem~\ref{static_reach}. It results to conclusion that there is no compatible agent on any right-hand-side of the rules. It follows the complex agent is non-reachable.
 
-{\scriptsize (We just saved years of computing and terabytes of memory.)\\}
-
 \begin{figure}[!h]
 {\footnotesize
 \begin{center}
@@ -1896,16 +1894,45 @@ $\vdots$
 \end{center}
 
 }
-\caption{A fragment of the model Yamada 2004~\cite{yamada2004model} of FGF signaling pathway written in BCSL. The complete model can find in Appendix~\ref{yamada_complete}.}\label{fgf_fragment}
+\caption{A fragment of the model Yamada et al. 2004~\cite{yamada2004model} of FGF signaling pathway written in BCSL. The complete model can find in Appendix~\ref{yamada_complete}.}\label{fgf_fragment}
 \end{figure}
 
-it would be great to somehow demonstrate defined statical analysis here
+Demonstration of context-based reduction (Section~\ref{context_reduction}) is provided on the same model as in previous case. Now we can compute with entire model since we will reduce its context to minimum. In Figure~\ref{reduced_yamada} there are 16 bidirectional rules which we created by applying Definition~\ref{reduced_model}. The size of state space has significantly decreased -- it has 606 states 2015 edges (Figure~\ref{visual_yamada}).
 
--- could be defined a small model with question of reachability of some agent, which can be answered directly without enumerating state space
+\begin{figure}
+\begin{center}
+{\small
+\begin{tabular}{r c l}
+$FGF::cyt + R::cyt $ & $ \Leftrightarrow $ & $ FGF.R::cyt$\\
+$FGF.R::cyt + FGF.R::cyt $ & $ \Leftrightarrow $ & $ FGF.R.FGF.R::cyt$\\
+$FRS::cyt + FGF.R.FGF.R::cyt $ & $ \Leftrightarrow $ & $ FGF.R.FGF.R.FRS::cyt$\\
+$FRS::cyt + SHP::cyt $ & $ \Leftrightarrow $ & $ FRS.SHP::cyt$\\
+$GS::cyt + GPP::cyt $ & $ \Leftrightarrow $ & $ GS.GPP::cyt$\\
+$GS::cyt + ERK::cyt $ & $ \Leftrightarrow $ & $ GS.ERK::cyt$\\
+$FRS::cyt + GS::cyt $ & $ \Leftrightarrow $ & $ FRS.GS::cyt$\\
+$Ras::cyt + FRS.GS::cyt $ & $ \Leftrightarrow $ & $ FRS.GS.Ras::cyt$\\
+$Ras::cyt + GAP::cyt $ & $ \Leftrightarrow $ & $ GAP.Ras::cyt$\\
+$Raf::cyt + Ras::cyt $ & $ \Leftrightarrow $ & $ Ras.Raf::cyt$\\
+$Raf::cyt + PP::cyt $ & $ \Leftrightarrow $ & $ PP.Raf::cyt$\\
+$MEK::cyt + Raf::cyt $ & $ \Leftrightarrow $ & $ Raf.MEK::cyt$\\
+$MEK::cyt + XPP::cyt $ & $ \Leftrightarrow $ & $ XPP.MEK::cyt$\\
+$ERK::cyt + MEK::cyt $ & $ \Leftrightarrow $ & $ MEK.ERK::cyt$\\
+$ERK::cyt + MKP::cyt $ & $ \Leftrightarrow $ & $ MKP.ERK::cyt$\\
+$ERK::cyt + FRS::cyt $ & $ \Leftrightarrow $ & $ ERK.FRS::cyt$\\
+\end{tabular}
+}
+\end{center}
+\caption{Model Yamada et al. 2004~\cite{yamada2004model} with reduced context according to Definition~\ref{reduced_model}.}\label{reduced_yamada}
+\end{figure}
 
--- also the context reduced network -- a more complicated model which is small after reduction, show that something is not reachable
+For the analysis itself, we could for example ask about reachability of a complex agent {\small $Raf(Thr\{p\}).ERK(Tyr\{p\},Thr\{p\})::cyt$} in the original model. We can first check whether its supremum (from the corresponding compatible set $\mathscr{X}$) {\small $Raf.ERK::cyt$} is non-reachable in the reduced model. Since the state space of the model is relatively small, it is not a problem using dynamical model checking. Using the Theorem~\ref{non-reachability_in_reduced}, the answer is non-reachable.
 
-practical examples of defined objects
+\begin{figure}
+\begin{center}
+  \includegraphics[scale=0.4]{pics/yamada_reduced_lts.png}
+\end{center}
+\caption{Visualisation of state space for reduced Yamada model in tool BCSgen.}\label{visual_yamada}
+\end{figure}
 
 \chapter{Discussion}
 
