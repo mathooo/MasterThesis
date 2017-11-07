@@ -660,6 +660,8 @@ Let $\vv{v} = (x_1, \ldots, x_n)$ be a vector. By $\sigma(\vv{v})$ we denote set
 
 Let $\mathcal{N}_{A},~\mathcal{N}_{T},~\mathcal{N}_{\delta},~\mathcal{N}_{c}$ be mutually exclusive finite sets of atomic names, structure names, states, and compartments, respectively. Moreover, $\varepsilon$ is reserved symbol and does not belong to any of these sets.
 
+\subsection{Signature}
+
 \begin{definition}{Signature}
 Atomic signature $\Sigma_{\mathtt{A}} \subseteq \mathcal{N}_{A} \times 2^{\mathcal{N}_{\delta}}$ associates atomic names with set of state names. 
 
@@ -674,6 +676,8 @@ Signatures define for an atomic name allowed set of states and for a structure n
 \item A structure signature $(KaiC, \{S, Q\})$
 \end{itemize}
 \end{example}
+
+\subsection{Atomic agent}
 
 \begin{definition}{Atomic agent}
 Atomic agent $\mathtt{A}$ is a pair $(\eta, \delta)$ where $\eta \in \mathcal{N}_{A}$ is a name and \\ $\delta~\in~\mathcal{N}_{\delta} \cup \{ \varepsilon \}$ is a state.
@@ -712,6 +716,8 @@ Atomic agents are usually used to express small biological entities which can ch
 \end{example}
 
 Please note state $\varepsilon$ does not mean the agent is in \emph{none} state, but rather the state is unknown or not important.
+
+\subsection{Structure agent}
 
 \begin{definition}{Structure agent}
 Structure agent $\mathtt{T}$ is a pair $(\eta, \gamma)$ where $\eta \in \mathcal{N}_{T}$ is a name and $\gamma \subseteq \mathds{A}$ is a set of atomic agents called partial composition.
@@ -752,6 +758,8 @@ A typical example of a structure agent is a protein where the atomic agents are 
 \end{itemize}
 \end{example}
 
+\subsection{Complex agent}
+
 \begin{definition}{Complex agent}
 Complex agent $\mathtt{X}$ is a pair $(\mu, \mathtt{com})$ where $\mu \in (\mathds{A} \cup \mathds{T})^n$ is a sequence of agents, $\mathtt{com} \in \mathcal{N}_{c}$ is a compartment, and $n \in \mathbb{N}$.
 \end{definition}
@@ -779,6 +787,8 @@ Let $\mathds{X}$ be universe of all possible complex agents. Additionally, we de
 \end{example}
 
 The complex agents have very important role in the language. It means, an atomic or structure agent cannot exist on its own, it must be encapsulated in a complex (which might have only one item in its sequence). This guarantees each atomic and structure agent has indirectly given space location -- the compartment.
+
+\subsection{Rule}
 
 \begin{definition}{Rule}
 \label{rule_definition}
@@ -854,6 +864,8 @@ Let $\mathtt{R}$ be a rule and $i,j \in \mathbb{N}$ natural numbers. We say the 
 A rule is well-formed if it does any action. It means, some change has to occur during rule application. This is ensured by condition~(\ref{cond1}), which requires at least one pair of complexes from left and right-hand side of the rule to be different. The second condition~(\ref{cond2}) has to hold on order to guarantee pairs of structure and atomic agents in $\omega$ of the rule have the same name. This condition is crutial for ground form function $\mathcal{G}$ defined in Section~\ref{ground_forms}, where adding context to different agents do not give a sense. 
 
 Please note the conditions for well-formed rules do not apply on those agents which do not have a pair on the other side of the rule.
+
+\subsection{Reaction}
 
 \begin{definition}{Reaction}
 
@@ -1086,14 +1098,14 @@ where $\mathtt{seq} =$ & $ \big(\mathtt{X}(y(0, \ldots, \pi_0(\varphi) - 1), \ma
 \end{tabular}
 \end{definition}
 
-\section{Chemical Reaction Networks}
+\section{Chemical reaction networks}
 
-\begin{definition}{Chemical Reaction Model (CRN)}
+\begin{definition}{Chemical reaction model (CRN)}
 \label{crn}
-Chemical Reaction Model $\mathcal{M}$ is a triple $(\mathfrak{R}, \vv{\nu}, \theta)$ such that $\mathfrak{R} \subseteq \mathbb{Z}^n$ is set of chemical reactions, $\vv{\nu} \in \mathbb{N}_0^n$ is initial vector, and $\theta \in \mathds{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
+Chemical reaction model $\mathcal{M}$ is a triple $(\mathfrak{R}, \vv{\nu}, \theta)$ such that $\mathfrak{R} \subseteq \mathbb{Z}^n$ is set of chemical reactions, $\vv{\nu} \in \mathbb{N}_0^n$ is initial vector, and $\theta \in \mathds{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
 \end{definition}
 
-Chemical Reaction Model is a simple model, where chemical reactions and initial state are vectors over integers. Moreover, there is a reference vector of complex agents, which servers for identifying underlaying agents behind the integers (according to particular position in vectors).
+Chemical reaction model is a simple model, where chemical reactions and initial state are vectors over integers. Moreover, there is a reference vector of complex agents, which servers for identifying underlaying agents behind the integers (according to particular position in vectors).
 
 \begin{notation}\label{nonnegative}
 We denote $N(\vv{\nu})$ condition $\forall i \in \vv{\nu}: i \in \mathbb{N}_0$.
@@ -1112,14 +1124,14 @@ $(\vv{\upsilon}, \vv{\mathtt{r}}, \vv{\mathtt{u}}) \in \varrho \myeq \vv{\mathtt
 Note some values in chemical reactions might be negative. When applying reaction on state, the resulting state cannot contain any negative values (negative number of entities does not give biological sense). Therefore, application is allowed only if the resulting vector contains non-negative values.
 
 \begin{definition}{CRN semantics}
-Let $\mathcal{M}$ be a Chemical Reaction Model. The quantitative semantics are given in terms of a \emph{discrete-states} produced by iterative reaction application on initial vector $\vv{\nu}$ and all consequently created state vectors. This way we obtain an LTS (Definition~\ref{lts}).
+Let $\mathcal{M}$ be a Chemical reaction model. The quantitative semantics are given in terms of a \emph{discrete-states} produced by iterative reaction application on initial vector $\vv{\nu}$ and all consequently created state vectors. This way we obtain an LTS (Definition~\ref{lts}).
 \end{definition}
 
 CRN semantics might lead to possibly infinite LTS. This process can be limited by a global bound, which makes sure the produced LTS is finite (Section~\ref{optimal_bound}).
 
 \section{Construction of model}
 
-In previous sections we defined all required constructs to create a Chemical Reaction Model (Definition~\ref{crn}) from a BCSL model. This procedure is necessary in order to allow operational semantics to be applied.
+In previous sections we defined all required constructs to create a Chemical reaction model (Definition~\ref{crn}) from a BCSL model. This procedure is necessary in order to allow operational semantics to be applied.
 
 \begin{definition}{Reference vector}\label{reference_vector}
 
@@ -1145,7 +1157,7 @@ $a_i$ =
 \hspace{15pt} where $n = |\theta|$ and $|\mathtt{S}(\pi_i)|$ is number of occurrences of agent $\pi_i$ in the multiset $\mathtt{S}$.
 \end{definition}
 
-Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. In order to construct Chemical Reaction Model $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \theta)$ from the model $\mathds{M}$, we need to apply the following steps:
+Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. In order to construct Chemical reaction model $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \theta)$ from the model $\mathds{M}$, we need to apply the following steps:
 
 \begin{enumerate}
 \item generate reactions for all rules $\mathtt{F}(\mathtt{R}) \in \mathcal{R}$ (Definition~\ref{generate_reactions}),
@@ -2010,7 +2022,7 @@ $\Sigma_T(\mathtt{\eta(\mathtt{T})}) \ominus \gamma(\mathtt{T})$ & & difference 
  & & structure signature\\
 $\mathtt{F}$ & & semantic function\\
 $\mathcal{G}$ & & ground form function\\
-$\mathcal{M}$ & & Chemical Reaction Model\\
+$\mathcal{M}$ & & Chemical reaction model\\
  & $\mathfrak{R}$ & set of chemical reactions\\
  & $\vv{\nu}$ & initial vector\\
  & $\theta$ & vector of reference complexes\\
