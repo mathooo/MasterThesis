@@ -1409,7 +1409,9 @@ Reachability analysis is a particular task of model checking for determining whe
 For an LTS $\mathcal{L} = (S, A, T, s_0)$ the reachability relation of $\mathcal{L}$ is the transitive closure of $T$, which is to say the set of all ordered pairs $(s,t)$ of states in $S$ for which there exists a sequence of states $s = s_0, s_1, s_2, \ldots, s_k = t$ such that the transition $(s_{i-1}, a, s_i)$ is in $T$ for all $1 \leq i \leq k$ and for some $a$ in $A$.
 \end{definition}
 
-In our case, reachability analysis can be generalised to checking whether for some multiset of complex agents $\mathtt{S}$ there exists a state $s \in S$ of an LTS $\mathcal{L}$ such that $\mathtt{S} \subseteq s$. In other words, we are interested only in particular agents regardless other context in the reachable rule. This might generally lead to multiple reachable states and then we can for example consider a shortest path etc.
+In our case, reachability analysis can be generalised to checking whether for some multiset of complex agents $\mathtt{S}$ there exists a reachable state $s \in S$ of an LTS $\mathcal{L}$ such that $\mathtt{S} \subseteq s$. In other words, we are interested only in particular agents regardless other context in the reachable state. This might generally lead to multiple reachable states and then we can for example consider a shortest path etc.
+
+In the case when we consider reachability \emph{only} from the initial state $s_0$, the task becomes simpler. The reason is all other states are actually reachable, because the entire state space was generated from this space. Then we are only searching for a state $s \in S$ such that $\mathtt{S} \subseteq s$.
 
 \subsection{Simulation}
 \label{simulation}
