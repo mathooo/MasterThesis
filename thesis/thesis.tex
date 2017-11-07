@@ -1390,7 +1390,7 @@ In the previous chapters, we defined BCS language itself. From the provided exam
 
 However, descriptive properties are not enough for using computational methods in order to analyse particular processes. In this chapter we describe basic approaches we employ for our language and propose several methods which could be potentially used in context of static analysis.
 
-We distinguish two general approached in model analysis -- dynamic and static. Dynamic analyses are enabled by some form of executing the model. It requires either enumerating all possible scenarios of model's behavior (so called \emph{state space}) or applying assumptions in order to calculate average behavior (simulation). On the other hand, static analyses provide information without execution of the model, just by investigating its structure. Both approaches require to build particular mechanisms which enable application of the analyses.
+We distinguish two general approached in model analysis -- dynamic and static. Dynamic analyses are enabled by some form of executing the model. It requires either enumerating all possible scenarios of behavior of a model (so called \emph{state space}) or applying assumptions in order to calculate average behavior (simulation). On the other hand, static analyses provide information without execution of the model, just by investigating its structure. Both approaches require to build particular mechanisms which enable application of the analyses.
 
 \section{Dynamic analyses}
 
@@ -1409,14 +1409,14 @@ Reachability analysis is a particular task of model checking for determining whe
 For an LTS $\mathcal{L} = (S, A, T, s_0)$ the reachability relation of $\mathcal{L}$ is the transitive closure of $T$, which is to say the set of all ordered pairs $(s,t)$ of states in $S$ for which there exists a sequence of states $s = s_0, s_1, s_2, \ldots, s_k = t$ such that the transition $(s_{i-1}, a, s_i)$ is in $T$ for all $1 \leq i \leq k$ and for some $a$ in $A$.
 \end{definition}
 
-In our case, reachability analysis can be generalised to checking whether for some multiset of complex agents $\mathtt{S}$ there exists a reachable state $s \in S$ of an LTS $\mathcal{L}$ such that $\mathtt{S} \subseteq s$. In other words, we are interested only in particular agents regardless other context in the reachable state. This might generally lead to multiple reachable states and then we can for example consider a shortest path etc.
+In our case, reachability analysis can be generalised to checking whether for some multiset of complex agents $\mathtt{s}'$ there exists a reachable state $s \in S$ of an LTS $\mathcal{L}$ such that $\mathtt{s}' \subseteq s$. In other words, we are interested only in particular agents regardless other context in the reachable state. This might generally lead to multiple reachable states and then we can for example consider a shortest path etc.
 
-In the case when we consider reachability \emph{only} from the initial state $s_0$, the task becomes simpler. The reason is all other states are actually reachable, because the entire state space was generated from this space. Then we are only searching for a state $s \in S$ such that $\mathtt{S} \subseteq s$.
+In the case when we consider reachability \emph{only} from the initial state $s_0$, the task becomes simpler. The reason is all other states are actually reachable, because the entire state space was generated from this state. Then we are only searching for a state $s \in S$ such that $\mathtt{s}' \subseteq s$ if we are not interested in how exactly was the state reached.
 
 \subsection{Simulation}
 \label{simulation}
 
-Once we want to simulate BCSL model, regardless the approach we choose it is necessary to enrich the rule by kinetic rates. The rates basically express the speed of the rule. However, assigning a rate to the rule is not as simple as it might seem. This is discussed in Appendix~\ref{rates_discussion}.
+Computer simulations reproduce the behavior of a system using a mathematical model.  The numerical solution will try to mimic the behavior of the real system over time -- this is a simulation. Once we want to simulate BCSL model, regardless the approach we choose it is necessary to enrich the rules by kinetic rates. The rates basically express the speed of the rule. However, assigning a rate to the rule is not as simple as it might seem. This is discussed in Appendix~\ref{rates_discussion}.
 
 Lets assume we have an optimal solution for assigning rates to the rules. Then we are able to provide deterministic simulation~\cite{Poole2000} by translating rules to reactions and consequently construct Ordinary Differential Equations (ODEs) from them~\cite{higham2008modeling}. It is possible to enable also stochastic simulation, either by network-free simulators such as NFsim~\cite{sneddon2011efficient} or using indirect approach on generated reactions (e.g. Gillespie algorithm~\cite{GILLESPIE1976403}).
 
