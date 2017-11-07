@@ -646,12 +646,12 @@ Let $\vv{v} = (x_1, \ldots, x_n)$ be a vector. By $\sigma(\vv{v})$ we denote set
 \end{notation}
 
 \begin{definition}{Labelled transition system}\label{lts}
-\textit{Labelled transition system} (LTS) $\mathcal{L}$ is a quadruple $(S, A, \Delta, s_0)$ where:
+\textit{Labelled transition system} (LTS) $\mathcal{L}$ is a quadruple $(S, A, T, s_0)$ where:
 
 \begin{itemize}
   \item $S$ is a (potentially infinite) set of states (solutions),
   \item $A$ is a set of labels (reactions),
-  \item $\Delta \subseteq S \times A \times S$ is a transition relation (the map-apply action),
+  \item $T \subseteq S \times A \times S$ is a transition relation (the map-apply action),
   \item $s_0 \in S$ is the initial state (initial solution).
 \end{itemize}
 \end{definition}
@@ -1386,47 +1386,37 @@ This is final syntactic extension. Compared to original model (Running example~\
 
 \chapter{Analysis}
 
-* discuss problems, pros and cons, etc
-
-multisets compared to graphs (isomorphisms) - other languages
-
 In the previous chapters, we defined BCS language itself. From the provided examples and case study (Section~\ref{case_study}) it should be clear that it provides concise and readable notation when it comes to describing biological systems. Moreover, accompanied with relevant annotation information, it is suitable for building huge models.
 
 However, descriptive properties are not enough for using computational methods in order to analyse particular processes. In this chapter we describe basic approaches we employ for our language and propose several methods which could be potentially used in context of static analysis.
 
-We distinguish two general approached in model analysis -- dynamic and static. Dynamic analyses are enabled by some form of executing the model. It requires either enumerating all possible scenarios of model's behavior (so called state space) or applying assumptions in order to calculate average behavior (simulation). On the other hand, static analyses provide information without execution of the model, just by investigating its structure. Both approaches require to build particular mechanisms which enable application of the analyses.
+We distinguish two general approached in model analysis -- dynamic and static. Dynamic analyses are enabled by some form of executing the model. It requires either enumerating all possible scenarios of model's behavior (so called \emph{state space}) or applying assumptions in order to calculate average behavior (simulation). On the other hand, static analyses provide information without execution of the model, just by investigating its structure. Both approaches require to build particular mechanisms which enable application of the analyses.
 
 \section{Dynamic analyses}
 
-briefly explain how (non)deterministic simulations work, give citations
-
- - difference, when which of them can be used, explain biological meaning behind
- - all the distributions etc
-
-problem of model checking, why it is problem, how it works (see my BT) 
-
- - we focus on reachability in general in this theses, later could be extended to entire model checking problem
-
-such as simulation, model checking (reachability)
-
-explain that state space might be unbounded, disscuss what does it mean, use definition from petri net
-
- - ref to static analysis for obtaining optimal upper bound for agents
-
-Dynamic analyses are very common ways how to analyse models written in formal representations. These analyses are usually trying to predict behavior of the modelled system using formal description of the system -- the model. In this case, we have a BCSL model $\mathds{M}$. 
+Dynamic analyses are very common ways how to analyse models written in formal representations. These analyses are usually trying to predict behavior of the modelled system using formal description of the system -- the model. In this case, we have a BCSL model $\mathds{M}$.
 
 \subsection{Model checking}
 
-Model checking is an approach of checking whether given model meets a given specification~\cite{clarke1999model}. Typically this is done by specifying given requirements in a temporal logic and then its check whether a given structure satisfies a given logical formula. There are two version of model checking -- explicit-state and symbolic. We will focus on the first one because it is quite strait-forward, and we let the second approach as a future work.
+Model checking is an approach of checking whether given model meets a given specification~\cite{clarke1999model}. Typically this is done by specifying given requirements in a temporal logic formula and then check whether a given structure satisfies the formula. There are two version of model checking -- explicit-state and symbolic.
 
-In case of explicit-state model checking, we need to enumerate entire state space and then check given specification on it. We will not discuss this approach anymore since we have given the BCSL models semantics, which are able to generate LTSs. These structures are suitable for model checking analysis and can be applied in external tools including temporal properties specification.
+We will not discuss this approach anymore since we have given semantics to the BCSL models, which are able to generate LTS. It is suitable for model checking analysis and can be applied in external tools including temporal properties specification.
+
+Reachability analysis is a particular task of model checking for determining whether a chosen state is reachable in the LTS of a model.
+
+\begin{definition}{Reachability relation}
+\label{reachability_relation}
+For an LTS $\mathcal{L} = (S, A, T, s_0)$ the reachability relation of $\mathcal{L}$ is the transitive closure of $T$, which is to say the set of all ordered pairs $(s,t)$ of states in $S$ for which there exists a sequence of states $s = s_0, s_1, s_2, \ldots, s_k = t$ such that the transition $(s_{i-1}, a, s_i)$ is in $T$ for all $1 \leq i \leq k$ and for some $a$ in $A$.
+\end{definition}
+
+In our case, reachability analysis can be generalised to checking whether for some multiset of complex agents $\mathtt{S}$ there exists a state $s \in S$ of an LTS $\mathcal{L}$ such that $\mathtt{S} \subseteq s$. In other words, we are interested only in particular agents regardless other context in the reachable rule. This might generally lead to multiple reachable states and then we can for example consider a shortest path etc.
 
 \subsection{Simulation}
 \label{simulation}
 
-Once we want to simulate BCSL model, regardless the approach we choose it is necessary to enrich the rule by kinetic rates. These rates basically mean how quickly or slowly a rule takes place. However, assigning a rate to the rule is not as simple as it might seem. This is discussed in Section~\ref{rates_discussion}.
+Once we want to simulate BCSL model, regardless the approach we choose it is necessary to enrich the rule by kinetic rates. The rates basically express the speed of the rule. However, assigning a rate to the rule is not as simple as it might seem. This is discussed in Appendix~\ref{rates_discussion}.
 
-Lets assume we have an optimal solution for assigning rates to the rules. Then we are able to provide deterministic simulation~\cite{Poole2000} by translating rules to reactions and consequently construct Ordinary Differential Equations (ODEs) from them. It is possible to enable also stochastic simulation, either by network-free simulators such as NFsim~\cite{sneddon2011efficient} or using indirect approach on generated reactions (e.g. Gillespie algorithm~\cite{GILLESPIE1976403}).
+Lets assume we have an optimal solution for assigning rates to the rules. Then we are able to provide deterministic simulation~\cite{Poole2000} by translating rules to reactions and consequently construct Ordinary Differential Equations (ODEs) from them~\cite{higham2008modeling}. It is possible to enable also stochastic simulation, either by network-free simulators such as NFsim~\cite{sneddon2011efficient} or using indirect approach on generated reactions (e.g. Gillespie algorithm~\cite{GILLESPIE1976403}).
 
 \section{Static analyses}
 \label{static_analyses}
@@ -1820,7 +1810,7 @@ The following processes of cyanobacteria are covered in BCS: environmental proce
 
 Entire biochemical space of cyanobacteria is formed from over 1000 entities and 600 rules. Therefore, we will not explain all of them here, we just provide a several cases which demonstrate how different BCSL features can be used for describing particular biological problems.
 
-The circadian clock of cyanobacteria~\cite{CCR} is formed by three proteins $KaiA$, $KaiB$, and $KaiC$ (with additional presence of $ATP$). The key role plays $KaiC$. Compared to the other two proteins, it is physically the largest one. Its primary structure is a sequence of amino acids, where two particular are important for the modelling -- threonine 432 and serine 431. These two amino acids can be enriched by phosphoryl group in process commonly known as phosphorylation~\cite{cohen2002origins}. However, the sites are accessible only when the protein forms a homohexamer -- a structure of six $KaiC$ proteins. For the phosphorylation itself are responsible $KaiA$ proteins while $KaiB$ proteins inactivate $KaiA$s, which leads to auto-dephosphorylation of $KaiC$ protein. There are several complexes which can be formed from mentioned proteins according to situation which is currently happening with the $KaiC$ hexamer (Figure~\ref{phospho_rule}).
+The circadian clock of cyanobacteria~\cite{CCR} is formed by three proteins $KaiA$, $KaiB$, and $KaiC$ (with additional presence of $ATP$). The key role plays $KaiC$. Compared to the other two proteins, it is physically the largest one. Its primary structure is a sequence of amino acids, where two particular are important for the modelling -- threonine 432 and serine 431. These two amino acids can be enriched by phosphoryl group in process commonly known as phosphorylation~\cite{cohen2002origins}. However, the sites are accessible only when the protein forms a homohexamer -- a structure of six $KaiC$ proteins. For the phosphorylation itself are responsible $KaiA$ proteins while $KaiB$ proteins inactivate $KaiA$s, which leads to autodephosphorylation of $KaiC$ protein. There are several complexes which can be formed from mentioned proteins according to situation which is currently happening with the $KaiC$ hexamer (Figure~\ref{phospho_rule}).
 
 It is important to note the $KaiA$ and $KaiB$ proteins only \emph{enhance} the phosphorylation process, but do not enable/disable it completely. When it comes to quantitative description of the system, it is necessary to depict all possible actions. Particularly, we need to express the fact the phosphorylation process happens regardless the particular complex $KaiC$ protein is currently in. 
 
