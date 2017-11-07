@@ -213,7 +213,7 @@ The mapping of a rule on a solution can be understood as a particular moment whe
 
 The mapping can also be seen as assigning particular objects from the solution to types on the left-hand-side of the rule. The rule application then represents the change of the mapped objects to new objects according to the right-hand-side of the rule (i.e., particular objects are assigned to the right-hand-side). As a by-product, we obtain an instance of the rule -- a reaction (Fig.~\ref{map-apply:fig}). %This is how we construct the set of labels (reactions) $A$ in the LTS $\mathcal{L}$.
 
-Since this kind of graphical representation is not very suitable for machine processing and analyses, we define a formal language which is built on principles described in this chapter.
+Since this kind of graphical representation is not very suitable for machine processing and analysis, we define a formal language which is built on principles described in this chapter.
 
 \section{Rule-based vs. reaction-based modelling}
 
@@ -421,7 +421,7 @@ Comprehensive Modeling Platform (CMP)~\cite{cs2bio2013} is an online platform pr
 \draw[thick, dash dot, draw=graybright, fill=graybright] (-4.5, 25) -- (7.5, 25);
 \end{tikzpicture}
 \end{center}
-\caption{An overview of Comprehensive Modeling Platform. It is composed by three layers: (1) input to the platform, all the relevant data; (2) Biochemical Space as a intermediate format for the data; (3) output of the platform, results of analyses and visualisations.}\label{cmp_overview}
+\caption{An overview of Comprehensive Modeling Platform. It is composed by three layers: (1) input to the platform, all the relevant data; (2) Biochemical Space as a intermediate format for the data; (3) output of the platform, results of analysis and visualisation.}\label{cmp_overview}
 \end{figure}
 
 \subsection{Biochemical Space}
@@ -567,7 +567,7 @@ In our last paper~\cite{Ded201627}, we defined Biochemical Space Language (BCSL)
 
 However, we realised this approach is not very beneficial since we are not fully using the expressive power of our language this way. The problem is Kappa operates purely on expressions. We want to promote our language to a higher level when it operates on objects in multisets. By translating to Kappa we loose such abstraction. 
 
-In the previous version of language development, both definition and implementation were made via translation to Kappa. It particularly means there was defined a translation function, which was able to convert BCSL expressions to Kappa expressions. The huge advantage was that the conversion was quite straightforward and this way we could apply all analyses Kappa language has.
+In the previous version of language development, both definition and implementation were made via translation to Kappa. It particularly means there was defined a translation function, which was able to convert BCSL expressions to Kappa expressions. The huge advantage was that the conversion was quite straightforward and this way we could apply all types of analyses Kappa language offers.
 
 The indirect approach had several disadvantages. First of all, Kappa has only one type of agent (no hierarchy). It follows all additional information encoded in different agent types are lost during the conversion. This particularly means atomic agents had to be considered as binding sites and structure agents as Kappa agents. But it was not always suitable, especially when atomic agents had independent role in a rule. Complex treatment in Kappa requires explicit bonds between individual agents. Therefore, when translating our multiset-based complex agent to Kappa complex, we need to choose one of many possible isomorphisms (Figure~\ref{abstraction_comparision}, the biology corresponds to Kappa approach). Multiple default options are available, such as circular layout, linear layout etc. But it was not possible to express fact that order does not matter.
 
@@ -1402,11 +1402,11 @@ In the previous chapters, we defined BCS language itself. From the provided exam
 
 However, descriptive properties are not enough for using computational methods in order to analyse particular processes. In this chapter we describe basic approaches we employ for our language and propose several methods which could be potentially used in context of static analysis.
 
-We distinguish two general approached in model analysis -- dynamic and static. Dynamic analyses are enabled by some form of executing the model. It requires either enumerating all possible scenarios of behavior of a model (so called \emph{state space}) or applying assumptions in order to calculate average behavior (simulation). On the other hand, static analyses provide information without execution of the model, just by investigating its structure. Both approaches require to build particular mechanisms which enable application of the analyses.
+We distinguish two general approached in model analysis -- dynamic and static. Dynamic analysis is enabled by some form of executing the model. It requires either enumerating all possible scenarios of behavior of a model (so called \emph{state space}) or applying assumptions in order to calculate average behavior (simulation). On the other hand, static analysis provides information without execution of the model, just by investigating its structure. Both approaches require to build particular mechanisms which enable application of the analysis.
 
-\section{Dynamic analyses}
+\section{Dynamic analysis}
 
-Dynamic analyses are very common ways how to analyse models written in formal representations. These analyses are usually trying to predict behavior of the modelled system using formal description of the system -- the model. In this case, we have a BCSL model $\mathds{M}$.
+Dynamic analysis is a very common way how to analyse models written in formal representations. There are several types of analyses and they are usually trying to predict behavior of the modelled system using formal description of the system -- the model. In this case, we have a BCSL model $\mathds{M}$.
 
 \subsection{Model checking}
 
@@ -1434,10 +1434,10 @@ However, assigning a rate to the rule is not as simple as it might seem. The sim
 
 Assigning rates to the rules enables deterministic simulation~\cite{Poole2000} by translating rules to reactions and consequently construct Ordinary Differential Equations (ODEs) from them~\cite{higham2008modeling}. It is possible to enable also stochastic simulation, either by network-free simulators such as NFsim~\cite{sneddon2011efficient} or using indirect approach on generated reactions (e.g. Gillespie algorithm~\cite{GILLESPIE1976403}).
 
-\section{Static analyses}
+\section{Static analysis}
 \label{static_analyses}
 
-The language itself offers interesting capabilities in order to provide static analyses of given models. In order to provide such properties we define \emph{compatibility} operator $\lhd$ for each type of agents.
+The language itself offers interesting capabilities in order to provide static analysis of given models. In order to provide such properties we define \emph{compatibility} operator $\lhd$ for each type of agents.
 
 \begin{definition}{Compatibility of atomic agents}
 Let $\mathtt{A}_1$, $\mathtt{A}_2$ be atomic agents. Then, we say $\mathtt{A}_1$ is \emph{compatible with} $\mathtt{A}_2$, written $\mathtt{A}_1 \lhd \mathtt{A}_2$, if either $\mathtt{A}_1 \equiv \mathtt{A}_2$ or $\eta(\mathtt{A}_1) \equiv \eta(\mathtt{A}_2) \wedge \delta(\mathtt{A}_1) \equiv \varepsilon $.
@@ -1636,7 +1636,7 @@ where length $k = |\chi'| = |\chi|$ (i.e., number of complex agent expression is
 Moreover, all rules which are not well-formed are removed afterwards.
 \end{definition}
 
-A reduced model $\widetilde{\mathds{M}}$ is actually an over-approximation of an BCSL model $\mathds{M}$. It can be used for some analyses which avoids combinatorial explosion of the original model.
+A reduced model $\widetilde{\mathds{M}}$ is actually an over-approximation of an BCSL model $\mathds{M}$. It can be used for some types of analyses which avoids combinatorial explosion of the original model.
 
 \begin{theorem}
 \label{non-reachability_in_reduced}
@@ -1668,7 +1668,7 @@ Since we have defined compatibility operator for agents, we can apply static rea
 A complex agent $\mathtt{X}$ is non-reachable w.r.t. set of rules $\mathcal{R}_f$ \emph{iff} there does not exist a rule $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi) \in \mathcal{R}_f$ such that $\exists \mathtt{X}' \in \chi: \mathtt{X}' \lhd \mathtt{X}$.
 \end{theorem}
 
-The Theorem~\ref{static_reach} states a very powerful fact in context of non-reachability analyses. Compared to dynamic non-reachability analyses, it completely avoids any combinatorial explosion and gives answer only by testing structural properties of rules linearly.
+The Theorem~\ref{static_reach} states a very powerful fact in context of non-reachability analysis. Compared to dynamic non-reachability analysis, it completely avoids any combinatorial explosion and gives answer only by testing structural properties of rules linearly.
 
 \begin{proof}
 Lets assume we have a path of states constructed by applying corresponding reactions created from rules $\mathcal{R}_f$. It does not matter how many rules we have to apply in order to create desired agent from the initial state. At some point on the path we inevitably have to create a complex agent $\mathtt{X}_2 \lhd \mathtt{X}$ from a complex agent $\mathtt{X}_1$ applying a rule $\mathtt{R}$. 
@@ -1775,7 +1775,7 @@ The translation is quite straight-forward:
 \item finally, we create initial marking \emph{m} from given initial state of the model by similar procedure described above.
 \end{enumerate}
 
-Once the model is translated, we are allowed apply all available analyses which are provided by Petri Nets. For example, P and T invariants, deadlock detection, coverability etc. (see~\cite{petri}).
+Once the model is translated, we are allowed apply all available types of analyses which are provided by Petri Nets. For example, P and T invariants, deadlock detection, coverability etc. (see~\cite{petri}).
 
 \chapter{Implementation}
 
@@ -1865,7 +1865,7 @@ $ ps2(oec\{2+\}, yz\{+\})::tlm \Leftrightarrow ps2(oec\{3+\}, yz\{n\})::tlm $
 \caption{Oxidation of S2-state of the oxygen-evolving complex $oec{2+}$ by $Yz{+}$ in photosystem II. There are many more subparts of photosystem II. (e.g. chlorophyl, pheophytin), but their states are not important in this case.}\label{ps2_rule}
 \end{figure}
 
-Next, we need to demonstrate practical purposes of static analyses defined in Section~\ref{static_analyses}. Yamada et al. 2004~\cite{yamada2004model} is a model of FGF signaling pathway. The model represents a signaling pathway, which is typically a cascade of signal transduction. It means if something goes wrong on a particular point in the cascade, it will influence the rest of the pathway. Entire model written in BCSL syntax is provided in Appendix~\ref{yamada_complete}. It consists of 20 entities interacting in 56 rules. Most of proteins can undergo phosphorylation (state change from $u$ to $p$ on some amino acid residues). We consider initial conditions such that there are all required entities in one or two repetitions (some complexes require multiplicity). In such case, the number of reachable state grows up to $2^{72}$ (which corresponds to the number of grains of sand on
+Next, we need to demonstrate practical purposes of a few types of static analyses defined in Section~\ref{static_analyses}. Yamada et al. 2004~\cite{yamada2004model} is a model of FGF signaling pathway. The model represents a signaling pathway, which is typically a cascade of signal transduction. It means if something goes wrong on a particular point in the cascade, it will influence the rest of the pathway. Entire model written in BCSL syntax is provided in Appendix~\ref{yamada_complete}. It consists of 20 entities interacting in 56 rules. Most of proteins can undergo phosphorylation (state change from $u$ to $p$ on some amino acid residues). We consider initial conditions such that there are all required entities in one or two repetitions (some complexes require multiplicity). In such case, the number of reachable state grows up to $2^{72}$ (which corresponds to the number of grains of sand on
 the earth). The actual number is lower but still too high to be effectively enumerated.
 
 In Figure~\ref{fgf_fragment}, there is the model defined in BCSL syntax. Note this model is just a fragment of the entire model. Please focus on rule~(\ref{focus_rule}). It requires both Threonine residues ($Thr$) on $FGF$ proteins to be phosphorylated ($p$). In other words, it is not possible to create a complex from $FRS$ and unphosphorylated ($u$) $FGF$ proteins.
