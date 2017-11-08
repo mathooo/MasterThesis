@@ -1398,39 +1398,39 @@ This is final syntactic extension. Compared to original model (Running example~\
 
 \chapter{Analysis}
 
-In the previous chapters, we defined BCS language itself. From the provided examples and case study (Section~\ref{case_study}) it should be clear that it provides concise and readable notation when it comes to describing biological systems. Moreover, accompanied with relevant annotation information, it is suitable for building huge models.
+In the previous chapters, we defined BCS language. From the provided examples and case study (Section~\ref{case_study}) it should be clear that it provides concise and readable notation when it comes to describing biological systems. Moreover, accompanied with relevant annotation information, it is suitable for building huge models.
 
 However, descriptive properties are not enough for using computational methods in order to analyse particular processes. In this chapter we describe basic approaches we employ for our language and propose several methods which could be potentially used in context of static analysis.
 
-We distinguish two general approached in model analysis -- dynamic and static. Dynamic analysis is enabled by some form of executing the model. It requires either enumerating all possible scenarios of behavior of a model (so called \emph{state space}) or applying assumptions in order to calculate average behavior (simulation). On the other hand, static analysis provides information without execution of the model, just by investigating its structure. Both approaches require to build particular mechanisms which enable application of the analysis.
+We distinguish two general approached in model analysis -- dynamic and static. Dynamic analysis is enabled by some form of executing the model. It requires either enumerating all possible scenarios of behavior of a model (called \emph{state space}) or applying assumptions in order to calculate average behavior (simulation). Static analysis provides information without execution of the model, just by investigating its structure. Both approaches require to build particular mechanisms which enable application of the analysis.
 
 \section{Dynamic analysis}
 
-Dynamic analysis is a very common way how to analyse models written in formal representations. There are several types of analyses and they are usually trying to predict behavior of the modelled system using formal description of the system -- the model. In this case, we have a BCSL model $\mathds{M}$.
+Dynamic analysis is a very common way how to analyse models written in formal representations. There are several types of analyses and they are usually trying to predict behavior of the modelled system using formal description of the system -- the model.
 
 \subsection{Model checking}
 
 Model checking is an approach of checking whether given model meets a given specification~\cite{clarke1999model}. Typically this is done by specifying given requirements in a temporal logic formula and then check whether a given structure satisfies the formula. There are two version of model checking -- explicit-state and symbolic.
 
-We will not discuss this approach anymore since we have given semantics to the BCSL models, which are able to generate LTS. It is suitable for model checking analysis and can be applied in external tools including temporal properties specification.
+We will not discuss this approach any further since we have given semantics to the BCSL models, which are able to generate LTS (Definition~\ref{lts}). It is suitable for model checking analysis and can be applied in external tools including temporal properties specification.
 
 Reachability analysis is a particular task of model checking for determining whether a chosen state is reachable in the LTS of a model.
 
 \begin{definition}{Reachability relation}
 \label{reachability_relation}
-For an LTS $\mathcal{L} = (S, A, T, s_0)$ the reachability relation of $\mathcal{L}$ is the transitive closure of $T$, which is to say the set of all ordered pairs $(s,t)$ of states in $S$ for which there exists a sequence of states $s = s_0, s_1, s_2, \ldots, s_k = t$ such that the transition $(s_{i-1}, a, s_i)$ is in $T$ for all $1 \leq i \leq k$ and for some $a$ in $A$.
+For an LTS $\mathcal{L} = (S, A, T, s_0)$ the reachability relation of $\mathcal{L}$ is the transitive closure of $T$, which is a of all ordered pairs $(s,t)$ of states in $S$ for which there exists a sequence of states $s = s_0, s_1, s_2, \ldots, s_k = t$ such that the transition $(s_{i-1}, a, s_i)$ is in $T$ for all $1 \leq i \leq k$ and for some $a$ in $A$.
 \end{definition}
 
 In our case, reachability analysis can be generalised to checking whether for some multiset of complex agents $\mathtt{s}'$ there exists a reachable state $s \in S$ of an LTS $\mathcal{L}$ such that $\mathtt{s}' \subseteq s$. In other words, we are interested only in particular agents regardless other context in the reachable state. This might generally lead to multiple reachable states and then we can for example consider a shortest path etc.
 
-In the case when we consider reachability \emph{only} from the initial state $s_0$, the task becomes simpler. The reason is all other states are actually reachable, because the entire state space was generated from this state. Then we are only searching for a state $s \in S$ such that $\mathtt{s}' \subseteq s$ if we are not interested in how exactly was the state reached.
+In the case when we consider reachability \emph{only} from the initial state $s_0$, the task becomes simpler. The reason is all other states are actually reachable, because the entire state space was generated from this state. Then we are only searching for a state $s \in S$ such that $\mathtt{s}' \subseteq s$ if we are not interested in \emph{how} was the state reached (the particular path).
 
 \subsection{Simulation}
 \label{simulation}
 
-Computer simulations reproduce the behavior of a system using a mathematical model.  The numerical solution will try to mimic the behavior of the real system over time -- this is a simulation. Once we want to simulate BCSL model, regardless the approach we choose it is necessary to enrich the rules by kinetic rates. The rates basically express the speed of the rule.
+Computer simulations reproduce the behavior of a system using a mathematical model. The simulation is a numerical solution which tries to mimic the behavior of the real system over time. Once we want to simulate BCSL model, regardless the approach we choose it is necessary to enrich the rules by kinetic rates~\cite{mcnaught1997compendium}. The rates basically express the speed of the rule.
 
-However, assigning a rate to the rule is not as simple as it might seem. The simplest solution is to reference only fully defined objects in the kinetic rates. However, we would like to express the context of the rule also in the rate. That typically means changing context in rate and the rule accordingly. This approach is non-trivial and we keep it as a future work.
+However, assigning a rate to the rule is not a simple task. The simplest solution is to reference only fully defined objects in the kinetic rates. However, we would like to express the context of the rule also in the rate. That typically means changing context in rate and the rule accordingly. This approach is non-trivial and we keep it as a future work.
 
 Assigning rates to the rules enables deterministic simulation~\cite{Poole2000} by translating rules to reactions and consequently construct Ordinary Differential Equations (ODEs) from them~\cite{higham2008modeling}. It is possible to enable also stochastic simulation, either by network-free simulators such as NFsim~\cite{sneddon2011efficient} or using indirect approach on generated reactions (e.g. Gillespie algorithm~\cite{GILLESPIE1976403}).
 
@@ -1449,7 +1449,7 @@ Note that compatibility of two atomic agents is very close to their equivalence,
 Let $\mathtt{T}_1$, $\mathtt{T}_2$ be structure agents. We say $\mathtt{T}_1$ is \emph{compatible with} $\mathtt{T}_2$, written $\mathtt{T}_1 \lhd \mathtt{T}_2$, \emph{iff} either $\mathtt{T}_1 \equiv \mathtt{T}_2$ or $\eta(\mathtt{T}_1) \equiv \eta(\mathtt{T}_2) \wedge \forall \mathtt{A}_1$ : $\mathtt{A}_1 \in \gamma(\mathtt{T}_1) ~\exists \mathtt{A}_2 : \mathtt{A}_2 \in \gamma(\mathtt{T}_2)$ : $\mathtt{A}_1 \lhd \mathtt{A}_2$.
 \end{definition}
 
-In other words, structure agents are compatible, if we can create pairs from atomic agents of left-hand-side agent's composition with the right-hand-ones such that these atomic agents are all unique. For such pairs, the agents in each pair must be compatible.
+Structure agents are compatible, if we can create pairs from atomic agents of left-hand-side agent's composition with the right-hand-ones such that these atomic agents are all unique. For such pairs, the agents in each pair must be compatible.
 
 \begin{definition}{Compatibility of complex agents}
 Let $\mathtt{X}_1$, $\mathtt{X}_2$ be complex agents. We say $\mathtt{X}_1$ is \emph{compatible with} $\mathtt{X}_2$, written $\mathtt{X}_1 \lhd \mathtt{X}_2$, \emph{iff} either $\mathtt{X}_1 \equiv \mathtt{X}_2$ or $\mathtt{com}(\mathtt{X}_1) \equiv \mathtt{com}(\mathtt{X}_2) \wedge \exists \mu' \in \sigma(\mu(\mathtt{X}_2))$ such that $ \forall i \in [1, n] : \pi_i(\mu(\mathtt{X}_1)) \lhd \pi_i(\mu') $, where $n$ is length of sequence which is same for both sequences.
@@ -1457,7 +1457,7 @@ Let $\mathtt{X}_1$, $\mathtt{X}_2$ be complex agents. We say $\mathtt{X}_1$ is \
 
 Compatibility for complexes means that every pair of agents through the sequences of complexes must be compatible.
 
-From first chapters it should be clear that an agent might have its ancestors and successors. The compatibility operator formulates this relationship formally. Each successor is compatible with its ancestor, but the reverse relation does not hold. The successor had always more details specified.
+The insight from the previous chapters is that an agent might have its ancestors and successors. The compatibility operator formulates this relationship formally. Each successor is compatible with its ancestor, but the reverse relation does not hold. The successor has always more details specified.
 
 \begin{notation}
 Let $\beta_1, \beta_2$ be two agents. We denote $\beta_1 \Delta \beta_2$ the fact the agents are compatible \emph{iff} either $\beta_1 \lhd \beta_2$ or $\beta_2 \lhd \beta_1$ holds.
@@ -1472,7 +1472,7 @@ Let $x_1, x_2 \in P$ be agents and $P$ a universe of agents. Agents $x_1$ and $x
 We consider partial order on complex agents $\mathtt{X}$ (Definition~\ref{partial_order}). We denote this order on set $\mathds{X}$ as a partially ordered set $\mathds{X}_\sqsubseteq$.
 \end{notation}
 
-The compatibility operator generates partial order of $\mathds{A}, \mathds{T}$, and $\mathds{X}$ sets. For our purposes, partially ordered set $\mathds{X}_\sqsubseteq$ is interesting. The reason is that complex agents actually encapsulate all other agent types including compartments. However, partial order of entire universe of complex agents is not very useful, since most of agents cannot be compared. We are interested in particular subsets which are formed from all complexes of the same type, i.e. those sets where each pair of complexes holds the compatibility conditions (in arbitrary some direction).
+The compatibility operator generates partial order of $\mathds{A}, \mathds{T}$, and $\mathds{X}$ sets. For our purposes, partially ordered set $\mathds{X}_\sqsubseteq$ is relevant. The reason is that complex agents actually encapsulate all other agent types including compartments. However, partial order of entire universe of complex agents is not very useful, since most of agents cannot be compared. We are interested in particular subsets which are formed from all complexes of the same type, i.e. those sets where each pair of complexes holds the compatibility conditions (in arbitrary some direction).
 
 \begin{definition}{Compatible set}
 \label{compatible_set}
@@ -1501,7 +1501,7 @@ The theorem follows from Definition~\ref{compatible_set} condition~(\ref{compati
 \begin{center}
 \includegraphics[scale=0.13]{pics/partial_order}
 \end{center}
-\caption{An example of compatible set $\mathscr{X}$. The partial order is depicted by a tree. For better readability, the agents are written in BCSL syntax. In this case, it is formed by a complex in $cyt$ compartment, which has only one structure agent $K$ in its sequence. The structure agent $K$ has allowed atomic agents $T$ and $S$ in its partial composition. These two atomic agents might occur in two states -- $u$ and $p$. The set is complete -- there are all relevant agents bounded by compatibility operator.}
+\caption{An example of compatible set $\mathscr{X}$. The partial order is depicted by a tree. For better readability, the agents are written in BCSL syntax. It is formed by a complex in $cyt$ compartment, which has only one structure agent $K$ in its sequence. The structure agent $K$ has allowed atomic agents $T$ and $S$ in its partial composition. These two atomic agents might occur in two states -- $u$ and $p$. The set is complete -- there are all relevant agents bounded by compatibility operator.}
 \end{figure}
 
 \begin{lemma}
@@ -1510,8 +1510,6 @@ Each agent $\mathtt{X}$ belongs to exactly one set $\mathscr{X}$.
 
 \begin{proof}
 
-[Proof by contradiction.]
-
 Lets assume a complex agent $\mathtt{X}$ belongs to two compatible sets, namely $\mathtt{X} \in \mathscr{X}_1, \mathscr{X}_2$. From the Definition~\ref{compatible_set} condition~(\ref{compatible_cond}) follows that there exists a $\mathtt{X}_1 \in \mathscr{X}_1$ such that $\mathtt{X} \lhd \mathtt{X}_1$. 
 
 Then, the condition~(\ref{non_compatible_cond}) claims that no complex agent from $\mathscr{X}_1$ and no complex agent from $\mathscr{X}_2$ can be compatible. Namely, $\mathtt{X}_1 \in \mathscr{X}_1$ cannot be compatible with $\mathtt{X} \in \mathscr{X}_2$. However, $\mathtt{X}$ and $\mathtt{X}_1$ are compatible ($\mathtt{X} \lhd \mathtt{X}_1$). It follows $\mathtt{X} \not\in \mathscr{X}_2$, what is a contradiction. $\QEDA$
@@ -1519,7 +1517,7 @@ Then, the condition~(\ref{non_compatible_cond}) claims that no complex agent fro
 % via identity?
 \end{proof}
 
-Practically, relation following from compatibility operator can be used in several ways. It is suitable for deeper static analysis on level of complexes~\ref{context_reduction} and for finding nontrivial relationships between the rules~\ref{rule_redundancy}.
+Practically, relation following from compatibility operator can be used in several ways. It is suitable for deeper static analysis on level of complexes~\ref{context_reduction} and for finding non-trivial relationships between the rules~\ref{rule_redundancy}.
 
 \begin{definition}{Compatible subset}
 \label{compatible_subset}
@@ -1531,7 +1529,7 @@ $$ \mathscr{X}_\subseteq \subseteq \mathscr{X}: \forall \mathtt{X}' \in \mathscr
 
 \begin{remark}
 \label{generating_vs_compatibility}
-Note that in the process generating reactions from the rules (Section~\ref{Generating reactions}), we are using ground form function (Section~\ref{ground_forms}). What the function basically does is it adds context to individual complex agents (and its substructures). In the definition of the function we provided exact procedure how to generate such agents.
+Note that in the process of generating reactions from the rules (Section~\ref{Generating reactions}), we are using ground form function (Section~\ref{ground_forms}). What the function basically does is it adds context to individual complex agents (and its substructures). In the definition of the function we provided exact procedure how to generate such agents.
 
 However, when we look at the process more theoretically, a set of appropriate complex agents is generated for every complex agent $\mathtt{X}$ in the rule $\mathtt{R}$ and then they are connected to multiple unique reactions. This set is actually a compatible subset $\mathscr{X}_\subseteq$ of compatible set $\mathscr{X}$ such that $\mathtt{X} \in \mathscr{X}$. In other words, the agents in $\mathscr{X}_\subseteq$ are all minimal items from compatible set $\mathscr{X}$ which are compatible with agent $\mathtt{X}$.
 
@@ -1540,7 +1538,7 @@ However, when we look at the process more theoretically, a set of appropriate co
 \subsection{Rule redundancy elimination}
 \label{rule_redundancy}
 
-There might be cases when there are redundant rules defined in a model. This might be done for example by inattention of modeller in combination with high level of abstraction language uses. These rules do not cause any semantical difference, but might slow down dynamic and/or static analysis, eventually affect the results of analysis.
+There might be cases when there are redundant rules defined in a model. This might be done for example by inattention of modeller in combination with high level of abstraction language uses. These rules do not cause any semantical difference, but can possibly slow down dynamic and/or static analysis, eventually affect the results of analysis.
 
 \begin{theorem}
 
@@ -1555,7 +1553,7 @@ We declare rule $\mathtt{R}$ as a \emph{redundant} rule \emph{iff}
 $$ \forall i \in [ 1, m ]: \mathtt{F}(\Gamma_i) \lhd \mathtt{F}(\Gamma'_i). $$
 \end{theorem}
 
-In other words, the rule $\mathtt{R}$ does not add any semantic details or the rule itself has no effect.
+The redundant rule $\mathtt{R}$ does not add any semantic details or the rule itself has no effect.
 
 \begin{example}{Redundant rules}
 Lets have two rules:
@@ -1633,27 +1631,25 @@ Reduced model $\widetilde{\mathds{M}}$ is a pair $(\widetilde{\mathcal{R}}, \mat
 
 where length $k = |\chi'| = |\chi|$ (i.e., number of complex agent expression is the same including both sides of the rules).
 
-Moreover, all rules which are not well-formed are removed afterwards.
+Moreover, all rules which are not well-formed are removed from the reduced model.
 \end{definition}
 
 A reduced model $\widetilde{\mathds{M}}$ is actually an over-approximation of an BCSL model $\mathds{M}$. It can be used for some types of analyses which avoids combinatorial explosion of the original model.
 
 \begin{theorem}
 \label{non-reachability_in_reduced}
-We want to check whether an complex agent $\mathtt{X}$ is non-reachable in the LTS of a given BCSL model $\mathds{M}$. Let $\mathscr{X}$ be a compatible set for $\mathtt{X}$.
+Let $\mathtt{X}$ be a complex agent, $\mathscr{X}$ be a compatible set for $\mathtt{X}$, and $\mathds{M}$ be a given BCSL model.
 
 If supremum $\mathtt{sup}(\mathscr{X})$ is non-reachable in LTS of reduced model $\widetilde{\mathds{M}}$ constructed with respect to given model $\mathds{M}$, then agent $\mathtt{X}$ is also non-reachable in the LTS of the original model $\mathds{M}$.
 \end{theorem}
 
-If we are checking whether an agent is reachable for given model $\mathds{M}$, we might first check whether its super-ancestor is reachable in created reduced model $\widetilde{\mathds{M}}$. If so, then we are still not certain about reachability of agent itself and it has to be checked in the original model. However, when it comes to non-reachability (Theorem~\ref{non-reachability_in_reduced}), agent which is non-reachable in $\widetilde{\mathds{M}}$ is not reachable in the original model $\mathds{M}$ too.
+If we are checking whether an agent is reachable for given model $\mathds{M}$, we might first check whether its super-ancestor is reachable in created reduced model $\widetilde{\mathds{M}}$. If yes, then we are still not certain about reachability of agent itself and it has to be checked in the original model. However, agent which is not reachable in $\widetilde{\mathds{M}}$ is not reachable in the original model $\mathds{M}$ too (Theorem~\ref{non-reachability_in_reduced}).
 
 \begin{proof}
 
-[Proof by contradiction.]
-
 Lets assume a complex agent $\mathtt{sup}(\mathscr{X})$ is non-reachable in LTS of reduced model $\widetilde{\mathds{M}}$, but $\mathtt{X} \in \mathscr{X}$ is reachable in LTS of the given model $\mathds{M}$.
 
-Generally, there is a path formed from rules in the original LTS such that we transform complex agents from initial agents to desired complex agent $\mathtt{X}$. When we move to context of reduced model $\widetilde{\mathds{M}}$, there is no such path for $\mathtt{sup}(\mathscr{X})$. However, according to Definition~\ref{reduced_model}, for every such rule there exist a reduced rule, such that all interacting complexes are reduced to their supremas. Therefore, if we could apply a original rule on a complex agent, we can do the same with reduced rule and its supremum. It follows there must exist such path also in reduced LTS and the complex agent $\mathtt{sup}(\mathscr{X})$ is reachable, what is a contradiction. $\QEDA$
+Generally, there is a path formed from rules in the original LTS such that we transform complex agents from initial agents to desired complex agent $\mathtt{X}$. When we move to context of reduced model $\widetilde{\mathds{M}}$, there is no such path for $\mathtt{sup}(\mathscr{X})$. However, according to Definition~\ref{reduced_model}, for every such rule there exist a reduced rule, such that all interacting complexes are reduced to their supremas. Therefore, if we could apply an original rule on a complex agent, we can do the same with reduced rule and its supremum. It follows there must exist such path also in reduced LTS and the complex agent $\mathtt{sup}(\mathscr{X})$ is reachable, what is a contradiction. $\QEDA$
 \end{proof}
 
 This approach can be generalised for non-reachability of a (multi)set of complex agents, but we consider it as a future work.
@@ -1661,7 +1657,7 @@ This approach can be generalised for non-reachability of a (multi)set of complex
 \subsection{Static reachability analysis}
 \label{static_reachability_analysis}
 
-Since we have defined compatibility operator for agents, we can apply static reachability analysis before enumerating whole state space of the model $\mathds{M}$. This analysis has its limitations, but can serve for checking whether a complex agent $\mathtt{X}$ is non-reachable (similarly as in the previous section). For that, all we need is set of rules $\mathcal{R}_f$ created from set of rule expressions $\mathcal{R}$ of model $\mathds{M}$ with semantic function $\mathtt{F}$.
+Since we have defined compatibility operator for agents, we can apply static reachability analysis before enumerating whole state space of the model $\mathds{M}$. This analysis has its limitations, but can serve for checking whether a complex agent $\mathtt{X}$ is non-reachable (similar to Section~\ref{context_reduction}). We create a set of rules $\mathcal{R}_f$ from set of rule expressions $\mathcal{R}$ of model $\mathds{M}$ using semantic function $\mathtt{F}$.
 
 \begin{theorem}
 \label{static_reach}
@@ -1709,14 +1705,14 @@ The BCSL model definition as given in Section~\ref{BCSl_model} can be reduced by
 
 	  \textbf{else} $(\eta(\mathtt{T}), \{ \eta(\mathtt{A}) ~|~ \mathtt{A} \in \gamma(\mathtt{T}) \}) \mapsto \Sigma_\mathtt{T}$ 
 
-	  \hspace*{0.75cm} (also do step~\ref{atomic_iter} with every atomic agent $\mathtt{A}$).
+	  \hspace*{0.75cm} do step~\ref{atomic_iter} with every atomic agent $\mathtt{A}$.
 	\end{enumerate}
 \end{enumerate}
 \end{enumerate}
 
 The described process basically iterates through all rules and collects all atomic names and states associated with them. Similarly, it collects all structure names and appropriate names of atomic names used in their partial compositions. In this case, atomic information has to be collected recursively because some atomic agents might be used only in partial composition, not independently in a complex agent.
 
-We could discuss the fact that desired signature might be in some manner \emph{bigger} than the collected ones. However, if for example we want to have more states defined for an atomic agent, they should be definitely used somewhere in the model. In other case, it does not play any role in the model behavior and therefore its definition is senseless. In other words, the described procedure guarantees collecting all signature details which play any role in the model.
+We can discuss the fact that desired signature might be in some manner \emph{larger} than the collected ones. However, if for example we want to have more states defined for an atomic agent, they should be definitely used somewhere in the model. In other case, it does not play any role in the model behavior and therefore its definition is senseless. In other words, the described procedure guarantees collecting all signature details which play any role in the model.
 
 % \begin{proof}
 % Let $\mathcal{M}$ be a BCSL model and $\Sigma$ its minimal signatures (i.e., all states and partial compositions defined in the signatures are actually used in the rules). Then, signatures $\Sigma'$ obtained by procedure (ref blah) has to be equal to the original signature $\Sigma$. In case its not, it means either there is some extra data in the $\Sigma'$ or some data is missing. Since we create $\Sigma'$ by iterating through all the rules, we construct complete signature with complete states used in the model. Therefore, if some data are missing in $\Sigma'$, then it follows given signature $\Sigma$ is not minimal. On the other hand, if there are some extra data in $\Sigma'$, then given signature $\Sigma$ is incorrect -- its missing some structure details which are being used in the model. $\QEDA$
@@ -1727,25 +1723,25 @@ We could discuss the fact that desired signature might be in some manner \emph{b
 
 Transition systems produced by semantics of BCSL models are infinite in general. Despite the fact the underlaying reaction networks are always finite (Section~\ref{optimal_bound}), there are types of reactions which can increase number of occurrences in a state with no limitations. Typically, such reactions form interface between the modelled system and the environment.
 
-However, the process of applying vector reactions on states can be extended by a control system. This system does not allow to grow individual values inside the state vector above given \emph{bound} $\mathtt{B}$. Simply, if produced vector should obtain an integer higher than the bound, the action is not taken. This procedure is very similar to checking whether all values in the vector are positive. Instead of just lower bound we have actually two bounds $<0, \mathtt{B}>$.
+However, the process of applying vector reactions on states can be extended by a control system. This system does not allow to grow individual values inside the state vector above given \emph{bound} $\mathtt{B}$. Basically, if produced vector should obtain an integer higher than the bound, the action is not taken. This procedure is very similar to checking whether all values in the vector are positive. Instead of just lower bound we have actually two bounds $<0, \mathtt{B}>$.
 
-The only remaining issue is what is an optimal value for the bound. The universal solution is to let the modeller decide. It follows extension of model definition by the bound. However, this process requires the user to know additional information about the model and additional effort. It does not fit to purposes of the language.
+The remaining issue is what is an optimal value for the bound. The universal solution is to let the modeller decide. It follows extension of model definition by the bound. However, this process requires the user to know additional information about the model and additional effort. It does not fit to purposes of the language.
 
 Therefore we decided to apply a static analysis on the model. We will not provide a formal definition of this analysis, rather give intuition and reason about this particular solution.
 
 We decided to find a minimal bound, which is in this context optimal for generating all required objects. It means that all the complexes which are potentially encoded in rules  will be produced in at least one repetition. In other words, with this bound a minimal network should be created. In such network, every agent reachable in boundless network is reachable also in minimal network (which does not hold when we take stoichiometry into the account).
 
-To actually calculate the minimal bound, we take maximum value from the following measurements:
+To actually calculate the minimal bound we take maximum value from the following measurements:
 
 \begin{enumerate}
   \item \label{count_init} count the highest number of occurrences from all agents in initial state,
   \item \label{count_unique} count the highest number of unique agents in all complexes of all rules,
-  \item \label{count_stoi} count the highest stoichiometry in all left- and hand-sides of the rules.
+  \item \label{count_stoi} count the highest stoichiometry in all left and right-hand-sides of the rules.
 \end{enumerate}
 
-The step~(\ref{count_init}) ensures the bound $\mathtt{B}$ will not be lower than highest number of equivalent agents in the initial state. In the step~(\ref{count_unique}) we count repetitions of equivalent atomic and structure agents inside all complexes, which ensures will be able to have enough agents for creation of every complex agent. The last step~(\ref{count_stoi}) takes into the account stoichiometry used in context of complexes themselves.
+The step~(\ref{count_init}) ensures the bound $\mathtt{B}$ will not be lower than highest number of equivalent agents in the initial state. In the step~(\ref{count_unique}) we count repetitions of equivalent atomic and structure agents inside all complexes, which ensures that there will be enough agents for creation of every complex agent. The last step~(\ref{count_stoi}) takes into the account stoichiometry used in context of complexes themselves.
 
-This should guarantee that it is possible to achieve high enough number of occurrence to produce any complex or combination of complexes.
+This should guarantee that it is possible to achieve high enough number of occurrences to produce any complex or combination of complexes.
 
 \subsection{Translation to Petri Net}
 
@@ -1762,7 +1758,7 @@ Petri Net is a quadruple $\mathcal{N} = (P, T, F, m_0)$ where:
 \end{itemize}
 \end{definition}
 
-The translation is quite straight-forward: 
+The translation can be summarised in the following steps: 
 
 \begin{enumerate}
 \item since BCSL rules produce a finite number of reactions, we have also a finite number of unique agents -- these are the places \emph{P},
@@ -1772,7 +1768,7 @@ The translation is quite straight-forward:
   \item place input arc from each place which has label in left-hand-side of the reaction (with appropriate multiplicity),
   \item do the same for output arcs for right-hand-side of the reaction,
 \end{itemize}
-\item finally, we create initial marking \emph{m} from given initial state of the model by similar procedure described above.
+\item create initial marking \emph{m} from given initial state of the model by similar procedure described above.
 \end{enumerate}
 
 Once the model is translated, we are allowed apply all available types of analyses which are provided by Petri Nets. For example, P and T invariants, deadlock detection, coverability etc. (see~\cite{petri}).
@@ -1814,7 +1810,7 @@ Since there are some graphs and charts generated in BCSgen, we decided to integr
 \end{center}
 \end{figure}
 
-As a future work for the tool we are planning to reimplement it to a web-based version. It should be integrated in CMP (Section~\ref{cmp}) to allow direct analysis of the models and appropriate parts of Biochemical Space. 
+\vspace*{-0.5cm}As a future work for the tool we are planning to reimplement it to a web-based version. It should be integrated in CMP (Section~\ref{cmp}) to allow direct analysis of the models and appropriate parts of Biochemical Space. 
 
 \chapter{Case study}
 \label{case_study}
@@ -1824,9 +1820,9 @@ E-cyanobacterium.org~\cite{Trojak2016} is an online platform providing tools for
 
 The following processes of cyanobacteria are covered in BCS: environmental processes, respiration and photosynthesis, carbon concentrating mechanism, circadian clock, and metabolism. Currently, the repository of models contains two models describing circadian clock (Miyoshi et al. 2007~\cite{Miyoshi01022007}, Hertel et al. 2013~\cite{Hertel2013}) and a kinetic model of metabolism (Jablonsky et al. 2014~\cite{Jablonsky2014}). Two other models present unpublished results -- dynamics of carbon fluxes (M\"{u}ller et al.) and photosynthesis (Plyusnina et al.). Additionally, two models in development describing carbon concentrating mechanism are Clark et al. 2014~\cite{clark2014insights} and Fridlyand et al. 1995~\cite{fridlyand1996quantitative}. Each of them was properly mapped on the BCS and helped to form suitable space covering all the mentioned processes.
 
-Entire biochemical space of cyanobacteria is formed from over 1000 entities and 600 rules. Therefore, we will not explain all of them here, we just provide a several cases which demonstrate how different BCSL features can be used for describing particular biological problems.
+Entire biochemical space of cyanobacteria is formed from over 1000 entities and 600 rules. Therefore, we will not explain all of them here, we provide a several cases which demonstrate how different BCSL features can be used for describing particular biological problems.
 
-The circadian clock of cyanobacteria~\cite{CCR} is formed by three proteins $KaiA$, $KaiB$, and $KaiC$ (with additional presence of $ATP$). The key role plays $KaiC$. Compared to the other two proteins, it is physically the largest one. Its primary structure is a sequence of amino acids, where two particular are important for the modelling -- threonine 432 and serine 431. These two amino acids can be enriched by phosphoryl group in process commonly known as phosphorylation~\cite{cohen2002origins}. However, the sites are accessible only when the protein forms a homohexamer -- a structure of six $KaiC$ proteins. For the phosphorylation itself are responsible $KaiA$ proteins while $KaiB$ proteins inactivate $KaiA$s, which leads to autodephosphorylation of $KaiC$ protein. There are several complexes which can be formed from mentioned proteins according to situation which is currently happening with the $KaiC$ hexamer (Figure~\ref{phospho_rule}).
+The circadian clock of cyanobacteria~\cite{CCR} is formed by three proteins $KaiA$, $KaiB$, and $KaiC$ (with additional presence of $ATP$). The key role plays $KaiC$. Compared to the other two proteins, it is physically the largest one. Its primary structure is a sequence of amino acids, where two particular are important for the modelling -- threonine 432 and serine 431. These two amino acids can be enriched by phosphoryl group in process commonly known as phosphorylation~\cite{cohen2002origins}. However, the sites are accessible only when the protein forms a homohexamer -- a structure of six $KaiC$ proteins. For the phosphorylation $KaiA$ proteins are responsible while $KaiB$ proteins inactivate $KaiA$s, which leads to autodephosphorylation of $KaiC$ protein. There are several complexes which can be formed from mentioned proteins according to current situation with the $KaiC$ hexamer (Figure~\ref{phospho_rule}).
 
 It is important to note the $KaiA$ and $KaiB$ proteins only \emph{enhance} the phosphorylation process, but do not enable/disable it completely. When it comes to quantitative description of the system, it is necessary to depict all possible actions. Particularly, we need to express the fact the phosphorylation process happens regardless the particular complex $KaiC$ protein is currently in. 
 
@@ -1841,7 +1837,7 @@ $ ?X = \{~KaiC6, KaiA2C6, KaiA4C6, KaiB6C6, KaiA4B6C6, KaiA6B6C6~\} $
 \caption{Phosphorylation rule of serine residue for all possible of complexes with $KaiC$ included. A variable $?X$ is used in place of all possible complexes. Notice there is also a $KaiC6$ complex, which corresponds to auto-(de)phosphorylation.}\label{phospho_rule}
 \end{figure}
 
-Another interesting aspect of the cyanobacterial circadian clock mechanism is formation of $KaiC$ hexamers. The condition that a $KaiC$ protein can be (de)phosphorylated \emph{only} inside a hexamer leads to one important fact -- it does not mean the hexamer must be assembled from/dissociated to unphosphorylated $KaiC$ proteins. The hexamer can be dissociated at any point in time, for example when three $KaiC$s are phosphorylated on the serine residue, other two are phosphorylated on both residues, and the last one is not phosphorylated. It should be obvious the number of possible combinations is quite huge. But we need to describe this fact in the system we are modelling.
+Another interesting aspect of the cyanobacterial circadian clock mechanism is formation of $KaiC$ hexamers. The condition that the $KaiC$ protein can be (de)phosphorylated \emph{only} inside a hexamer leads to one important fact -- it does not mean the hexamer must be assembled from (resp. dissociated to) unphosphorylated $KaiC$ proteins. The hexamer can be dissociated at any point in time, for example when three $KaiC$s are phosphorylated on the serine residue, other two are phosphorylated on both residues, and the last one is not phosphorylated. The number of possible combinations is quite huge.
 
 Rule-based languages including BCSL are very suitable for such cases. What we actually need to express is situation, when a complex is formed (or dissolveed) regardless the context (particular states) of the interacting entities (Figure~\ref{hexamer_rule}).
 
@@ -1854,7 +1850,7 @@ $ 6 ~KaiC::cyt \Leftrightarrow KaiC6::cyt $
 \caption{Formation of KaiC hexamer from six KaiC proteins and its dissociation. The rule requires to have a defined complex name $KaiC6$ in the corresponding BCS.}\label{hexamer_rule}
 \end{figure}
 
-Another interesting process inside cyanobacteria is photosynthesis. It is performed on internal membranes called thylakoids. In general, photosynthesis in cyanobacteria uses water as an electron donor and produces oxygen as a product. Electron transport is performed though multiple protein complexes, which together form the thylakoid membrane itself. Such complexes are for example photosystem I. and II (Figure~\ref{ps2_rule}). However, model the complexes directly is not very efficient. The typical rules in photosynthesis are just electron transfers between the complexes or reduction/oxidation of individual parts. Therefore, such action usually happen regardless the context of the rest of the complexes in a photosystem. The best approach with respect to BCSL language is to use structure agent for defining the protein complexes and its individual parts model as partial composition.
+Another important process inside cyanobacteria is photosynthesis. It is performed on internal membranes called thylakoids. In general, photosynthesis in cyanobacteria uses water as an electron donor and produces oxygen as a product. Electron transport is performed though multiple protein complexes, which together form the thylakoid membrane itself. Such complexes are for example photosystem I and II (Figure~\ref{ps2_rule}). However, direct modelling of the complexes is not very efficient. The typical rules in photosynthesis are just electron transfers between the complexes or reduction/oxidation of individual parts. Therefore, such action usually happen regardless the context of the rest of the complexes in a photosystem. The best approach with respect to BCSL language is to use structure agent for defining the protein complexes and its individual parts model as partial composition.
 
 \begin{figure}[!h]
 {\small
@@ -1865,12 +1861,11 @@ $ ps2(oec\{2+\}, yz\{+\})::tlm \Leftrightarrow ps2(oec\{3+\}, yz\{n\})::tlm $
 \caption{Oxidation of S2-state of the oxygen-evolving complex $oec{2+}$ by $Yz{+}$ in photosystem II. There are many more subparts of photosystem II. (e.g. chlorophyl, pheophytin), but their states are not important in this case.}\label{ps2_rule}
 \end{figure}
 
-Next, we need to demonstrate practical purposes of a few types of static analyses defined in Section~\ref{static_analyses}. Yamada et al. 2004~\cite{yamada2004model} is a model of FGF signaling pathway. The model represents a signaling pathway, which is typically a cascade of signal transduction. It means if something goes wrong on a particular point in the cascade, it will influence the rest of the pathway. Entire model written in BCSL syntax is provided in Appendix~\ref{yamada_complete}. It consists of 20 entities interacting in 56 rules. Most of proteins can undergo phosphorylation (state change from $u$ to $p$ on some amino acid residues). We consider initial conditions such that there are all required entities in one or two repetitions (some complexes require multiplicity). In such case, the number of reachable state grows up to $2^{72}$ (which corresponds to the number of grains of sand on
-the earth). The actual number is lower but still too high to be effectively enumerated.
+We want to demonstrate practical purposes of a few types of static analyses defined in Section~\ref{static_analyses}. Yamada et al. 2004~\cite{yamada2004model} is a model of \emph{fibroblast growth factor} (FGF) signaling pathway. The model represents a signaling pathway, which is typically a cascade of signal transduction. It means if something goes wrong on a particular point in the cascade, it will influence the rest of the pathway. Entire model written in BCSL syntax is provided in Appendix~\ref{yamada_complete}. It consists of 20 entities interacting in 56 rules. Most of proteins can undergo phosphorylation (state change from $u$ to $p$ on some amino acid residues). We consider initial conditions such that there are all required entities in one or two repetitions (some complexes require multiplicity). In such case, the number of reachable state grows up to $2^{72}$, which too high to be effectively enumerated.
 
-In Figure~\ref{fgf_fragment}, there is the model defined in BCSL syntax. Note this model is just a fragment of the entire model. Please focus on rule~(\ref{focus_rule}). It requires both Threonine residues ($Thr$) on $FGF$ proteins to be phosphorylated ($p$). In other words, it is not possible to create a complex from $FRS$ and unphosphorylated ($u$) $FGF$ proteins.
+In Figure~\ref{fgf_fragment}, there is the model defined in BCSL syntax. Note this model is a fragment of the entire model. Focus on rule~(\ref{focus_rule}). It requires both Threonine residues ($Thr$) on $FGF$ proteins to be phosphorylated ($p$). Basically, it is not possible to create a complex from $FRS$ and unphosphorylated ($u$) $FGF$ proteins.
 
-For example, we want to check whether a given complex agent \\{\small $FRS(Thr\{u\}, Tyr\{u\}).FGF(Thr\{u\}).R.FGF(Thr\{u\}).R::cyt$} is reachable. The agent is formed from $FGF$ proteins which are unphosphorylated ($u$) on hreonine residues ($Thr$). Normally we have to enumerate entire state space of the model (which is quite an issue) and then use dynamic model checking method to check it. In our case, we could first check if it is non-reachable using static reachability analysis (Section~\ref{static_reachability_analysis}). Particularly, we can use Theorem~\ref{static_reach}. It results to conclusion that there is no compatible agent on any right-hand-side of the rules. It follows the complex agent is non-reachable.
+For example, we want to check whether a given complex agent {\small $FRS(Thr\{u\}, Tyr\{u\}).FGF(Thr\{u\}).R.FGF(Thr\{u\}).R::cyt$} is reachable. The agent is formed from $FGF$ proteins which are unphosphorylated ($u$) on hreonine residues ($Thr$). INntraditional approach, we have to enumerate entire state space of the model and then use dynamic model checking method to check it. In our case, we can use Theorem~\ref{static_reach} and check if it is non-reachable using static reachability analysis. It results to conclusion that there is no compatible agent on any right-hand-side of the rules. It follows the complex agent is non-reachable.
 
 \begin{figure}[!h]
 {\footnotesize
@@ -1905,9 +1900,9 @@ $\vdots$
 \caption{A fragment of the model Yamada et al. 2004~\cite{yamada2004model} of FGF signaling pathway written in BCSL. The complete model can find in Appendix~\ref{yamada_complete}.}\label{fgf_fragment}
 \end{figure}
 
-Demonstration of context-based reduction (Section~\ref{context_reduction}) is provided on the same model as in the previous case. Now we can compute with entire model since we will reduce its context to minimum. In Figure~\ref{reduced_yamada} there are 16 bidirectional rules which we created by applying Definition~\ref{reduced_model}. The size of state space has significantly decreased -- it has 606 states and 2015 edges (Figure~\ref{visual_yamada}).
+Demonstration of context-based reduction (Section~\ref{context_reduction}) is provided on the same model as in the previous case. Now we can compute with entire model since we will reduce its context to minimum. In Figure~\ref{reduced_yamada} there are 16 bidirectional rules which we have created by applying Definition~\ref{reduced_model}. The size of state space has significantly decreased -- it has 606 states and 2015 edges.
 
-For the analysis itself, we could for example ask about reachability of a complex agent {\small $Raf(Thr\{p\}).ERK(Tyr\{p\},Thr\{p\})::cyt$} in the original model. We can first check whether its supremum (from the corresponding compatible set $\mathscr{X}$) {\small $Raf.ERK::cyt$} is non-reachable in the reduced model. Since the state space of the model is relatively small, it is not a problem using dynamical model checking. Using the Theorem~\ref{non-reachability_in_reduced}, the answer is non-reachable.
+For the analysis itself, we could for example ask about reachability of a complex agent {\small $Raf(Thr\{p\}).ERK(Tyr\{p\},Thr\{p\})::cyt$} in the original model (Appendix~\ref{yamada_complete}). We can first check whether its supremum (from the corresponding compatible set $\mathscr{X}$) {\small $Raf.ERK::cyt$} is non-reachable in the reduced model. Since the state space of the model is relatively small, it is not a problem using dynamical model checking. Using the Theorem~\ref{non-reachability_in_reduced}, the answer is non-reachable.
 
 \begin{figure}[!h]
 \begin{center}
@@ -1933,13 +1928,6 @@ $ERK::cyt + FRS::cyt $ & $ \Leftrightarrow $ & $ ERK.FRS::cyt$\\
 }
 \end{center}
 \caption{Model Yamada et al. 2004~\cite{yamada2004model} with reduced context according to Definition~\ref{reduced_model}.}\label{reduced_yamada}
-\end{figure}
-
-\begin{figure}
-\begin{center}
-  \includegraphics[scale=0.4]{pics/yamada_reduced_lts.png}
-\end{center}
-\caption{Visualisation of state space for reduced Yamada model in tool BCSgen.}\label{visual_yamada}
 \end{figure}
 
 \chapter{Discussion}
