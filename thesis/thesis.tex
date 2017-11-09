@@ -1094,20 +1094,20 @@ $\mathds{R}$ & $\mathcal{G}(\mathtt{R})$ & $ \displaystyle \prod_{k = 1}^{|\math
 Given a rule $\mathtt{R}$, we can produce appropriate reactions using ground forms and subsequent application of reassembly operation $\Xi$.
 
 \begin{definition}{Construction of reactions}\label{generate_reactions}
-\hspace*{-0.8cm}\begin{tabular}{ r l }
+\begin{center}
+\begin{tabular}{ r@{\hskip 0.05cm}l }
 $\mathtt{Reactions}(\mathtt{R}) =$ & $\{~ \mathtt{r}(\mathtt{seq}, \iota) ~|~ y \in \Xi(\mathcal{G}(\mathtt{R})) ~\}$,\\
 
-where $\mathtt{seq} =$ & $ \big(\mathtt{X}(y(0, \ldots, \pi_0(\varphi) - 1), \mathtt{com}(\pi_0(\chi))),$ \\
+where $\mathtt{seq} =$ & $(\mathtt{X}_1, \mathtt{X}_2, \ldots, \mathtt{X}_n)$ such that\\
 
-& ~~$\mathtt{X}(y(\pi_0(\varphi), \ldots, \pi_1(\varphi) - 1), \mathtt{com}(\pi_1(\chi))), $\\
+$\forall i \in [1, \ldots, n]: $ & $\mathtt{X}_i = \big( (\pi_{\varphi_{i-1}+1}(y), \ldots, \pi_{\varphi_i}(y)), \mathtt{com}(\pi_i(\chi)) \big)$\\
 
-& ~~\ldots,\\
-
-& ~~$\mathtt{X}(y(\pi_{|\varphi| - 1}(\varphi), \ldots, \pi_{|\varphi|}(\varphi) - 1), \mathtt{com}(\pi_{|\varphi|}(\chi)))\big) $\\
-
- & ~~and $ \iota \in \mathtt{R}$, $\chi \in \mathtt{R}$, $\varphi \in \mathtt{R}.$\\
+ & and $n = |\chi|$, $\varphi_0 = 0$, $ \iota \in \mathtt{R}$, $\chi \in \mathtt{R}$, $\varphi \in \mathtt{R}.$\\
 \end{tabular}
+\end{center}
 \end{definition}
+
+For a rule $\mathtt{R}$ we create the reassembled ground forms. Then, we create a set of reactions from created tuples of agents such that we preserve structure of original complex agents of rule $\mathtt{R}$. They are constructed using sequence of indices $\varphi$, which indicates the last positions in complex structures. In the case when for a particular complex agent $\mathtt{X}_i$ holds that $\pi_{\varphi_{i-1}+1}(y) = \pi_{\varphi_i}(y)$, the produced sequence $\mu$ is a singleton.
 
 \section{Chemical reaction networks}
 
