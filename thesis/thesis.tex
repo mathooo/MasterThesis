@@ -775,10 +775,14 @@ A typical example of a structure agent is a protein where the atomic agents are 
 Complex agent $\mathtt{X}$ is a pair $(\mu, \mathtt{com})$ where $\mu \in (\mathds{A} \cup \mathds{T})^n$ is a sequence of agents, $\mathtt{com} \in \mathcal{N}_{c}$ is a compartment, and $n \in \mathbb{N}$.
 \end{definition}
 
-A complex agent represents a non-trivial composite biochemical object that is inductively constructed from already known biological objects. In common rule-based languages this is typically defined by introducing bonds between individual biochemical objects. In BCSL we abstract from detailed specification of bonds and we rather assume a complex as a coexistence of certain objects in a particular group. Moreover, a complex agent resides in a compartment which gives it a space position. 
+A complex agent represents a non-trivial composite biochemical object that is inductively constructed from already known biological objects. In common rule-based languages this is typically defined by introducing bonds between individual biochemical objects. In BCSL we abstract from detailed specification of bonds and we rather assume a complex as a coexistence of certain objects in a particular group. Moreover, a complex agent resides in a compartment which gives it a space position.
+
+\begin{notation}
+Let $\mathtt{X}$ be a complex agent. We denote by $\mu(\mathtt{X})$ its sequence of agents and by $\mathtt{com}(\mathtt{X})$ its compartment.
+\end{notation}
 
 \begin{definition}{Equivalence of complex agents}\label{rule_equiv}
-Let $\mathtt{X}, \mathtt{X}'$ be complexes. $\mathtt{X}$ is \emph{equivalent} to $\mathtt{X}'$, written $\mathtt{X} \equiv \mathtt{X}'$, \emph{iff} $|\mu(\mathtt{X})| \equiv |\mu(\mathtt{X'})| \wedge \exists \mu' \in \sigma(\mu(\mathtt{X}'))$ such that $\forall i~\in~[1,~n]: \pi_i(\mu(\mathtt{X})) \equiv \pi_i(\mu')$.
+Let $\mathtt{X}, \mathtt{X}'$ be complexes. $\mathtt{X}$ is \emph{equivalent} to $\mathtt{X}'$, written $\mathtt{X} \equiv \mathtt{X}'$, \emph{iff} $|\mu(\mathtt{X})| \equiv |\mu(\mathtt{X'})| \wedge \exists \mu' \in \sigma(\mu(\mathtt{X}'))$ such that $\forall i~\in~[1,~n]: \pi_i(\mu(\mathtt{X})) \equiv \pi_i(\mu') \wedge \mathtt{com}(\mathtt{X}) \equiv \mathtt{com}(\mathtt{X'})$.
 \end{definition}
 
 The key element of a complex agent is \emph{sequence} describing inductively constructed coexistence expressions from existing agents. In contrast to partial composition in structure agent, we allow replication at the level of sequence (an agent of a certain name can appear more than once in a sequence).
@@ -1096,13 +1100,13 @@ Given a rule $\mathtt{R}$, we can produce appropriate reactions using ground for
 \begin{definition}{Construction of reactions}\label{generate_reactions}
 \begin{center}
 \begin{tabular}{ r@{\hskip 0.05cm}l }
-$\mathtt{Reactions}(\mathtt{R}) =$ & $\{~ \mathtt{r}(\mathtt{seq}, \iota) ~|~ y \in \Xi(\mathcal{G}(\mathtt{R})) ~\}$,\\
+$\mathtt{Reactions}(\mathtt{R}) =$ & $\{~ \mathtt{r}(\mathtt{seq}, \iota) ~|~ y \in \Xi(\mathcal{G}(\mathtt{R})) ~\}$\\
 
 where $\mathtt{seq} =$ & $(\mathtt{X}_1, \mathtt{X}_2, \ldots, \mathtt{X}_n)$ such that\\
 
 $\forall i \in [1, \ldots, n]: $ & $\mathtt{X}_i = \big( (\pi_{\varphi_{i-1}+1}(y), \ldots, \pi_{\varphi_i}(y)), \mathtt{com}(\pi_i(\chi)) \big)$\\
 
- & and $n = |\chi|$, $\varphi_0 = 0$, $ \iota \in \mathtt{R}$, $\chi \in \mathtt{R}$, $\varphi \in \mathtt{R}.$\\
+ & for $n = |\chi|$, $\varphi_0 = 0$, $ \iota \in \mathtt{R}$, $\chi \in \mathtt{R}$, $\varphi \in \mathtt{R}.$\\
 \end{tabular}
 \end{center}
 \end{definition}
@@ -1111,9 +1115,9 @@ For a rule $\mathtt{R}$ we create the reassembled ground forms. Then, we create 
 
 \section{Chemical reaction networks}
 
-\begin{definition}{Chemical reaction model (CRN)}
+\begin{definition}{Chemical reaction model}
 \label{crn}
-Chemical reaction model $\mathcal{M}$ is a triple $(\mathfrak{R}, \vv{\nu}, \theta)$ such that $\mathfrak{R} \subseteq \mathbb{Z}^n$ is set of chemical reactions, $\vv{\nu} \in \mathbb{N}_0^n$ is initial vector, and $\theta \in \mathds{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
+Chemical reaction model (CRM) $\mathcal{M}$ is a triple $(\mathfrak{R}, \vv{\nu}, \theta)$ such that $\mathfrak{R} \subseteq \mathbb{Z}^n$ is set of chemical reactions, $\vv{\nu} \in \mathbb{N}_0^n$ is initial vector, and $\theta \in \mathds{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
 \end{definition}
 
 Chemical reaction model is a simple model, where chemical reactions and initial state are vectors over integers. Moreover, there is a reference vector of complex agents, which servers for identifying underlaying agents behind the integers (according to particular position in vectors).
@@ -1134,11 +1138,11 @@ $(\vv{\upsilon}, \vv{\mathtt{r}}, \vv{\mathtt{u}}) \in \varrho \myeq \vv{\mathtt
 
 Note some values in chemical reactions might be negative. When applying reaction on state, the resulting state cannot contain any negative values (negative number of entities does not give biological sense). Therefore, application is allowed only if the resulting vector contains non-negative values.
 
-\begin{definition}{CRN semantics}
-Let $\mathcal{M}$ be a Chemical reaction model. The quantitative semantics are given in terms of a \emph{discrete-states} produced by iterative reaction application on initial vector $\vv{\nu}$ and all consequently created state vectors. This way we obtain an LTS (Definition~\ref{lts}).
+\begin{definition}{Semantics of chemical reaction model}
+Let $\mathcal{M}$ be a chemical reaction model. The quantitative semantics are given in terms of a \emph{discrete-states} produced by iterative reaction application on initial vector $\vv{\nu}$ and all consequently created state vectors. This way we obtain an LTS (Definition~\ref{lts}).
 \end{definition}
 
-CRN semantics might lead to possibly infinite LTS. This process can be limited by a global bound, which makes sure the produced LTS is finite (Section~\ref{optimal_bound}).
+CRM semantics might lead to possibly infinite LTS. This process can be limited by a global bound, which makes sure the produced LTS is finite (Section~\ref{optimal_bound}).
 
 \section{Construction of model}
 
