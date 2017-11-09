@@ -128,7 +128,18 @@ key words
 
 \chapter{Introduction}
 
+Modelling in computational systems biology often comprises studying a complex biochemical system involving a large number of interacting species. Conventional modeling approaches explicitly specify entire chemical reaction networks. Particularly, models have form of lists of biochemical species and their reactions. The issue with this approach is that it is not always effective or even possible to enumerate all the interactions. Typically, biological systems contain a huge number of species with numerous interactions.
+
+Rule-based modelling approaches describe biological interactions in terms of rules, avoiding the combinatorial explosion of underlying system. Rules are patterns which define how groups of species with some common properties behave in the given system. The rule-based model can be be translated into a model such as Markov chains or differential equations or analysed in its original form. Rule-based modeling is especially effective in cases when the model contains a limited number of patterns. Typical representatives of such cases are biochemical models of living organisms.
+
+In this work we focus on development of a novel rule-based language called Biochemical Space language. The motivation was to establish a rule-based \emph{human-readable} language which in easy to read, write, and maintain by people even from other disciplines than computer science. It serves as description format for Biochemical Space~\cite{BCS}, a core part of Comprehensive Modeling Platform~\cite{cs2bio2013}. Since the language is used for specification of biochemical species and interactions within the platform, its dedicated purpose is to be directly presentable to the users.
+
+The goal of this thesis is to formally define syntax and semantics of Biochemical Space language and provide techniques to analyse models written in the language. 
+
+In Chapter~\ref{background} we provide an introduction to rule-based modelling, describe differences to the traditional approaches, reveal key features of existing rule-based formalisms, and explain purpose of Comprehensive Modeling Platform and its parts. In Chapter~\ref{problem_formulation} we specify particular tasks of this thesis in context of preliminary work. In Chapter~\ref{formal_definition} we define syntax and semantics of Biochemical Space language and specify several syntactic extensions which improve readability of the language. Chapter~\ref{analysis} provides brief description of dynamic analysis techniques and propose a few types of static analyses. In Chapter~\ref{implementation} we explain history of development of BCSgen, a software tool to support the usage of language. In final Chapter~\ref{case_study} we show usability of the language on several case studies and then demonstrate usability of proposed static analyses in practice.
+
 \chapter{Background}
+\label{background}
 
 In this chapter, we introduce all relevant terms which will be used in the thesis. Namely, we give an introduction to rule-based modelling and compare it to usual reaction-based approach. Then we describe typical representatives of the rule-based languages and highlight their key features. We also introduce Comprehensive Modeling Platform with its core parts and provide motivation for Biochemical Space as a key feature of the platform.
 
@@ -563,7 +574,7 @@ The Experiments repository is a module for storage and presentation of time-seri
 
 Biochemical Space as described in Section~\ref{bcs_general} can grow to quite a huge size. It means keep it consistent on an informal level is almost impossible. It is necessary to be able to detect inconsistency with automatic tools and enable further analysis of the space.
 
-In our last paper~\cite{Ded201627}, we defined Biochemical Space Language (BCSL) such that syntax was defined independently, but semantics were defined via translating to Kappa language~\cite{kappa_formal}. First of all, we wanted to keep the language as concise as possible. The rule-based approach was the best hit, because it is capable to capture required details for biological systems while keeping the description concise. It was supposed to be human-readable, which in this context means easy to read, write and maintain by humans even from other disciplines than computer science. However, there are many rule-based languages and each of them is slightly different in syntactic and semantic level and also on level of abstraction. After a research (Section~\ref{rule_based_languages}), we have evaluated all existing languages as not suitable for our purposes. The closest representation to the desired one was Kappa language (Section~\ref{kappa}). That is the reason why in first iteration we have chosen translation to Kappa for definition of semantics.
+In our last paper~\cite{Ded201627}, we defined Biochemical Space Language (BCSL) such that syntax was defined independently, but semantics were defined via translating to Kappa language~\cite{kappa_formal}. First of all, we wanted to keep the language as concise as possible. The rule-based approach was the best hit, because it is capable to capture required details for biological systems while keeping the description concise. It was supposed to be human-readable, which in this context means easy to read, write, and maintain by humans even from other disciplines than computer science. However, there are many rule-based languages and each of them is slightly different in syntactic and semantic level and also on level of abstraction. After a research (Section~\ref{rule_based_languages}), we have evaluated all existing languages as not suitable for our purposes. The closest representation to the desired one was Kappa language (Section~\ref{kappa}). That is the reason why in first iteration we have chosen translation to Kappa for definition of semantics.
 
 However, we realised this approach is not very beneficial since we are not fully using the expressive power of our language this way. The problem is Kappa operates purely on expressions. We want to promote our language to a higher level when it operates on objects in multisets. By translating to Kappa we loose such abstraction. 
 
@@ -933,14 +944,14 @@ At this point it is useful to sum up what is Biochemical Space as described in S
 
 Before we proceed, there are a few necessary definitions. These definitions are required in next section in order to generate reactions from rules.
 
-Reassembly operation is quite a simple action on tuples. Basically, we need to reorganise tuple which has form $((a_1, b_1), (a_2, b_2),\\ \ldots, (a_n, b_n))$ to a tuple of form $(a_1, a_2, \ldots, a_n, b_1, b_2, \ldots,  b_n)$. We define reassembly generally on a set of tuples. 
+Reassembly operation $\Xi$ is quite a simple action on tuples. Basically, we need to reorganise tuple which has form $((a_1, b_1), (a_2, b_2),\\ \ldots, (a_n, b_n))$ to a tuple of form $(a_1, a_2, \ldots, a_n, b_1, b_2, \ldots,  b_n)$. We define reassembly operation $\Xi$ generally on a set of tuples. 
 
-\begin{definition}{Reassembly}
+\begin{definition}{Reassembly operation}
 
-Let $Y$ be a set of tuples of particular form, where each $y \in Y$ has particular form $((a_1, b_1), (a_2, b_2), \ldots, (a_n, b_n))$. Then:
+Let $Y$ be a set of tuples of particular form, where each $y \in Y$ has particular form $((a_1, b_1), (a_2, b_2), \ldots, (a_n, b_n))$. Then \emph{reassembly operation} $\Xi$ is defined as following:
 
 \begin{center}
-$\mathtt{reassembly}(Y) = \{~  x ~|~ y \in Y \wedge x = (\mdoubleplus_{i=1}^{|y|} \pi_1(y_i)) \mdoubleplus (\mdoubleplus_{i=1}^{|y|} \pi_2(y_i)) ~\}$
+$\Xi(Y) = \{~  x ~|~ y \in Y \wedge x = (\mdoubleplus_{i=1}^{|y|} \pi_1(y_i)) \mdoubleplus (\mdoubleplus_{i=1}^{|y|} \pi_2(y_i)) ~\}$
 \end{center}
 \end{definition}
 
@@ -1080,11 +1091,11 @@ $\mathds{R}$ & $\mathcal{G}(\mathtt{R})$ & $ \displaystyle \prod_{k = 1}^{|\math
 \section{Construction of reactions}
 \label{Generating reactions}
 
-Given a rule $\mathtt{R}$, we can produce appropriate reactions using ground forms and subsequent application of reassembly operation.
+Given a rule $\mathtt{R}$, we can produce appropriate reactions using ground forms and subsequent application of reassembly operation $\Xi$.
 
 \begin{definition}{Construction of reactions}\label{generate_reactions}
 \hspace*{-0.8cm}\begin{tabular}{ r l }
-$\mathtt{Reactions}(\mathtt{R}) =$ & $\{~ \mathtt{r}(\mathtt{seq}, \iota) ~|~ y \in \mathtt{reassembly}(\mathcal{G}(\mathtt{R})) ~\}$,\\
+$\mathtt{Reactions}(\mathtt{R}) =$ & $\{~ \mathtt{r}(\mathtt{seq}, \iota) ~|~ y \in \Xi(\mathcal{G}(\mathtt{R})) ~\}$,\\
 
 where $\mathtt{seq} =$ & $ \big(\mathtt{X}(y(0, \ldots, \pi_0(\varphi) - 1), \mathtt{com}(\pi_0(\chi))),$ \\
 
@@ -1397,6 +1408,7 @@ Each rule associated with variable can be easily rewritten as several rules wher
 This is final syntactic extension. Compared to original model (Running example~\ref{run1}), the resulting model is more concise and readable. More examples are in Section~\ref{case_study}.
 
 \chapter{Analysis}
+\label{analysis}
 
 In the previous chapters, we defined BCS language. From the provided examples and case study (Section~\ref{case_study}) it should be clear that it provides concise and readable notation when it comes to describing biological systems. Moreover, accompanied with relevant annotation information, it is suitable for building huge models.
 
@@ -1774,6 +1786,7 @@ The translation can be summarised in the following steps:
 Once the model is translated, we are allowed apply all available types of analyses which are provided by Petri Nets. For example, P and T invariants, deadlock detection, coverability etc. (see~\cite{petri}).
 
 \chapter{Implementation}
+\label{implementation}
 
 In order to support usability of the BCSL language, we developed a prototype software tool BCSgen. The general goal of the tool is to provide environment suitable for editing and maintenance of the BCSL models and provide functionality to analyse the models. The software was developed in several iterations. At first as a project MUNI33/092015 in \emph{Dean's Program of the Faculty of Informatics MU for support of student research and development projects}, later as part of the project MUNI33/062017 in the same program. It was finalized to current stage in this thesis.
 
@@ -1968,7 +1981,7 @@ $ERK::cyt + FRS::cyt $ & $ \Leftrightarrow $ & $ ERK.FRS::cyt$\\
 $\sigma(\vv{v})$ & & set of permutations of vector $\vv{v}$ of length $|\vv{v}|$\\
 $X \mdoubleplus Y$ & & tuples concatenation\\
 $\mdoubleplus_{i=1}^n T_i$ & & generalised concatenation\\
-$\mathtt{reassembly}(Y)$ & & reassembly of tuples\\
+$\Xi(Y)$ & & reassembly of tuples\\
 $\pi_i$ & & projection on dimension i\\
 \hline 
 $\Sigma_{\mathtt{A}}$ & & atomic signature \\
@@ -2072,7 +2085,7 @@ $\lambda(\mathtt{S}, \theta)$ & & multiset to vector translation\\
 
 % Arbitrary kinetics might be used, but both rule and kinetics must be defined very carefully. The method for mapping rate agent to rule agent is very simple -- whenever an agent is referenced in kinetics, first suitable rule-agent from the left is chosen. This solution is very simple to use, but rules are not that easy to write.
 
-\chapter{Model Yamada 2004}
+\chapter{Model Yamada et al. 2004}
 \label{yamada_complete}
 
 \begin{figure}[!h]
