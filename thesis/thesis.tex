@@ -37,7 +37,7 @@
 \newenvironment{definition}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Definition \thecounter } \textit{#1} \par\nopagebreak}{\bigskip}
 \newenvironment{example}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Example \thecounter} \textit{#1} \par\nopagebreak}{\bigskip}
 \newenvironment{notation}{\bigskip\refstepcounter{counter}\noindent\textbf{Notation \thecounter}\par\nopagebreak}{\bigskip}
-\newenvironment{proof}{\bigskip\refstepcounter{counter}\noindent\textbf{Proof \thecounter}\par\nopagebreak}{\bigskip}
+\newenvironment{proof}{\noindent\textit{Proof:~ }\nopagebreak}{\bigskip}
 \newenvironment{runningExample}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Running example \thecounter} \textit{#1} \par\nopagebreak}{\bigskip}
 \newenvironment{theorem}{\bigskip\refstepcounter{counter}\noindent\textbf{Theorem \thecounter }\par\nopagebreak}{\bigskip}
 \newenvironment{lemma}{\bigskip\refstepcounter{counter}\noindent\textbf{Lemma \thecounter }\par\nopagebreak}{\bigskip}
@@ -138,7 +138,7 @@ In this work we focus on development of a novel rule-based language called Bioch
 
 The goal of this thesis is to formally define syntax and semantics of Biochemical Space language and provide techniques to analyse models written in the language. 
 
-In Chapter~\ref{background} we provide an introduction to rule-based modelling, describe differences between the rule-based and the traditional approaches, reveal key features of existing rule-based formalisms, and explain purpose of Comprehensive Modeling Platform and its parts. In Chapter~\ref{problem_formulation} we specify particular tasks of this thesis in context of preliminary work. In Chapter~\ref{formal_definition} we define syntax and semantics of Biochemical Space language and specify several syntactic extensions which improve readability of the language. Chapter~\ref{analysis} provides brief description of dynamic analysis techniques and propose a few types of static analyses. In Chapter~\ref{implementation} we explain history of development of BCSgen, a software tool to support the usage of language. In final Chapter~\ref{case_study} we show usability of the language on several case studies and then demonstrate usability of proposed static analyses in practice.
+In Chapter~\ref{background} we provide an introduction to rule-based modelling, describe differences between the rule-based and the traditional approaches, reveal key features of existing rule-based formalisms, and explain purpose of Comprehensive Modeling Platform and its parts. In Chapter~\ref{problem_formulation} we specify particular tasks of this thesis in context of preliminary work. In Chapter~\ref{formal_definition} we define syntax and semantics of Biochemical Space language and specify several syntactic extensions which improve readability of the language. Chapter~\ref{analysis} provides brief description of dynamic analysis techniques and propose a few types of static analyses. In Chapter~\ref{case_study} we show usability of the language on several case studies and then demonstrate usability of proposed static analyses in practice (only on the theoretical level). In final Chapter~\ref{implementation} we explain history of development of BCSgen, a software tool to support the usage of language. 
 
 \chapter{Background}
 \label{background}
@@ -1141,6 +1141,7 @@ $(\vv{\upsilon}, \vv{\mathtt{r}}, \vv{\mathtt{u}}) \in \varrho \myeq \vv{\mathtt
 Note some values in chemical reactions might be negative. When applying reaction on state, the resulting state cannot contain any negative values (negative number of entities does not give biological sense). Therefore, application is allowed only if the resulting vector contains non-negative values.
 
 \begin{definition}{Semantics of chemical reaction model}
+\label{states_creation}
 Let $\mathcal{M}$ be a chemical reaction model. The quantitative semantics are given in terms of a \emph{discrete-states} produced by iterative reaction application on initial vector $\vv{\nu}$ and all consequently created state vectors. This way we obtain an LTS (Definition~\ref{lts}).
 \end{definition}
 
@@ -1188,19 +1189,7 @@ $\vv{r} = \lambda(RHS(\mathtt{r}), \theta) - \lambda(LHS(\mathtt{r}), \theta)$
 
 \end{enumerate}
 
-\begin{definition}{State transition system of model}
-\emph{State transition system} of model $\mathcal{M}$, $LTS(\mathcal{M})$, is defined as quadruple $(S, A, T , s_0 )$ such that:
-
-\begin{itemize}
-  \item $S$ is a (potentially infinite) set of states (solutions),
-  \item $A$ is a set of labels (reactions),
-  \item $T \subseteq S \times A \times S$ is a transition relation (the map-apply action),
-  \item $s_0 \in S$ is the initial state (initial solution).
-\end{itemize}
-
-\end{definition}
-
-In order to accomplish the process of giving semantics to an BCSL model, it is necessary to note how we revive information which is missing in produced LTS (Definition~\ref{lts}). This procedure is quite straightforward since we have defined reference vector $\theta$. Similarly as we translate multisets of BCSL agents to vectors (Definition~\ref{state_to_vector}), we can apply a reverse procedure, when we build a multiset of agents from a vector according to the reference vector $\theta$.
+In order to accomplish the process of giving semantics to an BCSL model, it is necessary to note how we revive information which is missing in produced LTS (Definition~\ref{lts}) by application of Definition~\ref{states_creation}. This procedure is quite straightforward since we have defined reference vector $\theta$. Similarly as we translate multisets of BCSL agents to vectors (Definition~\ref{state_to_vector}), we can apply a reverse procedure, when we build a multiset of agents from a vector according to the reference vector $\theta$.
 
 \section{Syntactic extensions}
 \label{syntactic_extensions}
@@ -1500,19 +1489,19 @@ Let $x_1, x_2 \in P$ be agents and $P$ a universe of agents. Agents $x_1$ and $x
 \end{definition}
 
 \begin{notation}
-We consider partial order on complex agents $\mathtt{X}$ (Definition~\ref{partial_order}). We denote this order on set $\mathds{X}$ as a partially ordered set $\mathds{X}_\sqsubseteq$.
+The universe of complex agents $\mathds{X}$ ordered by partial order reduction $\leq$ is denoted as $\mathds{X}_\leq$.
 \end{notation}
 
 The compatibility operator generates partial order of $\mathds{A}, \mathds{T}$, and $\mathds{X}$ sets. For our purposes, partially ordered set $\mathds{X}_\sqsubseteq$ is relevant. The reason is that complex agents actually encapsulate all other agent types including compartments. However, partial order of entire universe of complex agents is not very useful, since most of agents cannot be compared. We are interested in particular subsets which are formed from all complexes of the same type, i.e. those sets where each pair of complexes holds the compatibility conditions (in arbitrary some direction).
 
 \begin{definition}{Compatible set}
 \label{compatible_set}
-A finite set $\mathscr{X} \subseteq \mathds{X}_\sqsubseteq$ is a \emph{compatible set} \emph{iff}:
+A finite set $\mathscr{X} \subseteq \mathds{X}$ is a \emph{compatible set} \emph{iff}:
 \begin{center}
 \begin{enumerate}
 	\item \label{compatible_cond} $ \forall \mathtt{X}_1, \mathtt{X}_2 \in \mathscr{X} ~\exists~ \mathtt{X}' \in \mathscr{X}: \mathtt{X}_1 \lhd \mathtt{X}' \wedge \mathtt{X}_2 \lhd \mathtt{X}'$ such that $\mathtt{X}_1 \neq \mathtt{X}_2$,
-
- and for each finite set $\mathscr{X}' \subseteq \mathds{X}_\sqsubseteq$ such that $\mathscr{X} \neq \mathscr{X}'$ holds:
+{}
+ and for each finite set $\mathscr{X}' \subseteq \mathds{X}$ such that $\mathscr{X} \neq \mathscr{X}'$ holds:
 
 	\item \label{non_compatible_cond} $\forall \mathtt{X} \in \mathscr{X} \forall \mathtt{X}' \in \mathscr{X}': \neg (\mathtt{X} ~\Delta~ \mathtt{X}') $.
 \end{enumerate}
@@ -1520,8 +1509,13 @@ A finite set $\mathscr{X} \subseteq \mathds{X}_\sqsubseteq$ is a \emph{compatibl
 
 \end{definition}
 
+\begin{remark}
+\label{order_in_compat_set}
+The compatible set $\mathscr{X}$ inherits partial order relation defined on $\mathds{X}_\leq$, which follows from conditions (\ref{compatible_cond}) and (\ref{non_compatible_cond}) of Definition~\ref{compatible_set}.
+\end{remark}
+
 \begin{lemma}
-In every compatible set $\mathscr{X}$, there always exists a supremum, what is an ancestor of all the remaining agents in the set.
+In every compatible set $\mathscr{X}$ (Remark~\ref{order_in_compat_set}), there always exists a global supremum $\mathtt{sup}(\mathscr{X})$, what is an ancestor of all the remaining agents in the set.
 \end{lemma}
 
 \begin{proof}
@@ -1536,11 +1530,11 @@ The theorem follows from Definition~\ref{compatible_set} condition~(\ref{compati
 \end{figure}
 
 \begin{lemma}
-Each agent $\mathtt{X}$ belongs to exactly one set $\mathscr{X}$.
+\label{exists_one_comp_set}
+For every complex agent $\mathtt{X}$ there exists exactly one compatible set $\mathscr{X} \subseteq \mathds{X}$ such that $ \mathtt{X} \in \mathscr{X}$.
 \end{lemma}
 
 \begin{proof}
-
 Lets assume a complex agent $\mathtt{X}$ belongs to two compatible sets, namely $\mathtt{X} \in \mathscr{X}_1, \mathscr{X}_2$. From the Definition~\ref{compatible_set} condition~(\ref{compatible_cond}) follows that there exists a $\mathtt{X}_1 \in \mathscr{X}_1$ such that $\mathtt{X} \lhd \mathtt{X}_1$. 
 
 Then, the condition~(\ref{non_compatible_cond}) claims that no complex agent from $\mathscr{X}_1$ and no complex agent from $\mathscr{X}_2$ can be compatible. Namely, $\mathtt{X}_1 \in \mathscr{X}_1$ cannot be compatible with $\mathtt{X} \in \mathscr{X}_2$. However, $\mathtt{X}$ and $\mathtt{X}_1$ are compatible ($\mathtt{X} \lhd \mathtt{X}_1$). It follows $\mathtt{X} \not\in \mathscr{X}_2$, what is a contradiction. $\QEDA$
@@ -1550,41 +1544,71 @@ Then, the condition~(\ref{non_compatible_cond}) claims that no complex agent fro
 
 Practically, relation following from compatibility operator can be used in several ways. It is suitable for deeper static analysis on level of complexes~\ref{context_reduction} and for finding non-trivial relationships between the rules~\ref{rule_redundancy}.
 
+\vspace*{0.5cm}\noindent\textbf{Note:} There always exists a compatible set $\mathscr{X}$ for a complex agent $\mathtt{X}$ which follows from Lemma~\ref{exists_one_comp_set}.
+
 \begin{definition}{Compatible subset}
 \label{compatible_subset}
-Let $\mathscr{X}$ be a compatible set and $\mathtt{X}$ a complex agent such that $\mathtt{X} \in \mathscr{X}$. A set $\overline{\mathscr{X}}$ is a \emph{compatible subset} w.r.t. $\mathtt{X}$ \emph{iff}:
+Let $\mathscr{X} \subseteq \mathds{X}$ be a compatible set and $\mathtt{X} \in \mathscr{X}$ a complex agent. A set $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}} \in \mathscr{X}$ is called \emph{compatible subset} of $\mathscr{X}$ w.r.t. $\mathtt{X}$ if the following holds:
 
-$$ \mathscr{X}_\subseteq \subseteq \mathscr{X}: \forall \mathtt{X}' \in \mathscr{X}_\subseteq: (\mathtt{X}' \lhd \mathtt{X} \wedge \forall \mathtt{X}'' \in \mathscr{X}_\subseteq: \neg (\mathtt{X}'' \lhd \mathtt{X}') )$$
+$$ \mkern2mu\overline{\mkern-4.5mu \mathscr{X}} \subseteq \mathscr{X}: \forall \mathtt{X}' \in \mkern2mu\overline{\mkern-4.5mu \mathscr{X}}: (\mathtt{X}' \lhd \mathtt{X} \wedge \forall \mathtt{X}'' \in \mkern2mu\overline{\mkern-4.5mu \mathscr{X}}: \neg (\mathtt{X}'' \lhd \mathtt{X}') )$$
 
 \end{definition}
+
+
+\vspace*{0.5cm}\noindent\textbf{Note:} 
+
+Items of $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}}$ are the minimal elements of ... 
 
 \begin{remark}
 \label{generating_vs_compatibility}
 Note that in the process of generating reactions from the rules (Section~\ref{Generating reactions}), we are using ground form function (Section~\ref{ground_forms}). What the function basically does is it adds context to individual complex agents (and its substructures). In the definition of the function we provided exact procedure how to generate such agents.
 
-However, when we look at the process more theoretically, a set of appropriate complex agents is generated for every complex agent $\mathtt{X}$ in the rule $\mathtt{R}$ and then they are connected to multiple unique reactions. This set is actually a compatible subset $\mathscr{X}_\subseteq$ of compatible set $\mathscr{X}$ such that $\mathtt{X} \in \mathscr{X}$. In other words, the agents in $\mathscr{X}_\subseteq$ are all minimal items from compatible set $\mathscr{X}$ which are compatible with agent $\mathtt{X}$.
+However, when we look at the process more theoretically, a set of appropriate complex agents is generated for every complex agent $\mathtt{X}$ in the rule $\mathtt{R}$ and then they are connected to multiple unique reactions. This set is actually a compatible subset $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}}$ of compatible set $\mathscr{X}$ such that $\mathtt{X} \in \mathscr{X}$. In other words, the agents in $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}}$ are all minimal items from compatible set $\mathscr{X}$ which are compatible with agent $\mathtt{X}$.
 
 \end{remark}
 
 \subsection{Rule redundancy elimination}
 \label{rule_redundancy}
 
-There might be cases when there are redundant rules defined in a model. This might be done for example by inattention of modeller in combination with high level of abstraction language uses. These rules do not cause any semantical difference, but can possibly slow down dynamic and/or static analysis, eventually affect the results of analysis.
+There might be cases when there are redundant rules defined in a model (Definition~\ref{redundant_rule}). This might be done for example by inattention of modeller in combination with high level of abstraction language uses. These rules do not cause any semantical difference, but can possibly slow down dynamic and/or static analysis, eventually affect the results of analysis.
+
+The redundant rule $\mathtt{R}$ does not add any semantic details or the rule itself has no effect.
+
+\begin{definition}{Redundant rule}
+\label{redundant_rule}
+
+We define a rule $\mathtt{R}$ as \emph{redundant rule} if [something about LTSs comparison goes here]
+
+\end{definition}
 
 \begin{theorem}
 
-Lets have two rules $\mathtt{R}, \mathtt{R}'$ of form:
+Let $\mathtt{R}, \mathtt{R}'$ be two well-formed rules of form:
 
 $$ \Gamma_1 + \Gamma_2 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \Gamma_{n+2} + \ldots + \Gamma_{m} $$
 
-for some $m,n \in \mathbb{N}$ such that both $\mathtt{R}, \mathtt{R}'$ are well-formed rules.
+for some $m,n \in \mathbb{N}$.
 
-We declare rule $\mathtt{R}$ as a \emph{redundant} rule \emph{iff}
+The rule $\mathtt{R}$ is \emph{redundant} if
 
-$$ \forall i \in [ 1, m ]: \mathtt{F}(\Gamma_i) \lhd \mathtt{F}(\Gamma'_i). $$
+\begin{center}
+$ \forall i \in [ 1, m ]: \mathtt{F}(\Gamma_i) \lhd \mathtt{F}(\Gamma'_i). $
+\end{center}
 \end{theorem}
 
-The redundant rule $\mathtt{R}$ does not add any semantic details or the rule itself has no effect.
+\begin{proof}
+The problem whether the elimination of redundant rules preserves semantics can be reduced to a simple question -- if it holds for single pair of complex agents for a position $k$ in the rules, then it generally holds for entire rule, because the condition of redundancy holds for each pair of complexes independently.
+
+The complex agents $\mathtt{X}_k = \mathtt{F}(\Gamma_k)$ and $\mathtt{X}'_k = \mathtt{F}(\Gamma'_k)$ both belong to the same compatible set $\mathscr{X}$ since $\mathtt{X}_k \lhd \mathtt{X}'_k$, which follows from the condition of the theorem. 
+
+Then, we can create subsets $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}}, \mathscr{X}'_\subseteq \subseteq \mathscr{X}$ for both complex agents respectively (Definition~\ref{compatible_subset}). Because the complex agents are compatible ($\mathtt{X}_k \lhd \mathtt{X}'_k$ ), the subset $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}}$ of agent $\mathtt{X}_k$ is either subset or equal to set $\mathscr{X}'_\subseteq$ of agent $\mathtt{X}'_k$:
+
+$$\mkern2mu\overline{\mkern-4.5mu \mathscr{X}} \subseteq \mathscr{X}'_\subseteq.$$
+
+Therefore, the produced set of reactions from the redundant rule is actually a subset of reactions produced from the non-redundant rule. $\QEDA$
+\end{proof}
+
+For the proof we can use compatible sets of complex agents $\mathscr{X}$ and the fact that when we are generating reactions from rules, we are actually enumerating all agents from the set $\mathscr{X}$ which are \emph{compatible with} original agent in the rule (Remark~\ref{generating_vs_compatibility}).
 
 \begin{example}{Redundant rules}
 Lets have two rules:
@@ -1623,20 +1647,6 @@ K(S\{u\}, T\{i\}).K(S\{p\}, T\{i\})::cell \Rightarrow K(S\{p\}, T\{i\}).K(S\{p\}
 }
 
 \end{example}
-
-For the proof we can use compatible sets of complex agents $\mathscr{X}$ and the fact that when we are generating reactions from rules, we are actually enumerating all agents from the set $\mathscr{X}$ which are \emph{compatible with} original agent in the rule (Remark~\ref{generating_vs_compatibility}).
-
-\begin{proof}
-The problem whether the elimination of redundant rules preserves semantics can be reduced to a simple question -- if it holds for single pair of complex agents for a position $k$ in the rules, then it generally holds for entire rule, because the condition of redundancy holds for each pair of complexes independently.
-
-The complex agents $\mathtt{X}_k = \mathtt{F}(\Gamma_k)$ and $\mathtt{X}'_k = \mathtt{F}(\Gamma'_k)$ both belong to the same compatible set $\mathscr{X}$ since $\mathtt{X}_k \lhd \mathtt{X}'_k$, which follows from the condition of the theorem. 
-
-Then, we can create subsets $\mathscr{X}_\subseteq, \mathscr{X}'_\subseteq \subseteq \mathscr{X}$ for both complex agents respectively (Definition~\ref{compatible_subset}). Because the complex agents are compatible ($\mathtt{X}_k \lhd \mathtt{X}'_k$ ), the subset $\mathscr{X}_\subseteq$ of agent $\mathtt{X}_k$ is either subset or equal to set $\mathscr{X}'_\subseteq$ of agent $\mathtt{X}'_k$:
-
-$$\mathscr{X}_\subseteq \subseteq \mathscr{X}'_\subseteq.$$
-
-Therefore, the produced set of reactions from the redundant rule is actually a subset of reactions produced from the non-redundant rule. $\QEDA$
-\end{proof}
 
 \subsection{Context-based reduction}
 \label{context_reduction}
@@ -1804,46 +1814,6 @@ The translation can be summarised in the following steps:
 
 Once the model is translated, we are allowed apply all available types of analyses which are provided by Petri Nets. For example, P and T invariants, deadlock detection, coverability etc. (see~\cite{petri}).
 
-\chapter{Implementation}
-\label{implementation}
-
-In order to support usability of the BCSL language, we developed a prototype software tool BCSgen. The general goal of the tool is to provide environment suitable for editing and maintenance of the BCSL models and provide functionality to analyse the models. The software was developed in several iterations. At first as a project MUNI33/092015 in \emph{Dean's Program of the Faculty of Informatics MU for support of student research and development projects}, later as part of the project MUNI33/062017 in the same program. It was finalized to current stage in this thesis.
-
-The tool is developed in Python language (version 2.7) as open-source desktop software build under GPL-3.0 license. The source code, a short tutorial for usage and installation, and current stable version as binary files are available on GitHub\footnotemark[1]\footnotetext[1]{\url{https://github.com/sybila/BCSgen}}.
-
-In the first version, there was no support for editing the models. The only functionality provided by the tool was import of the model from a text file (in a predefined format) and enumerating entire state space of the model. The implementation was done by translating to Kappa and it was rather slow and non-efficient. The single transaction (application of one rule) was delayed by translation to Kappa and then by exact matching and replacement, which might get quite complicated. However, it was a good start for the language and it was possible to analyse exported networks in external tools. There was simple GUI made in Tkinter~\cite{Tkinter}, which had several issues. The most important one was the fact that Tkinter was not designed for multithreading programming. For example, while computing a state space for the model, the whole GUI was not responsible.
-
-In the second version, we focused on speed improvement and development of a user-friendly GUI. For the speed improvement, we implemented semantics as defined in this thesis (Section~\ref{semantic_function}). Compared to previous version, in this case there was no exactly rule-based execution of the rule -- we rather translated the rules to the reactions and subsequently encoded as vector operations over integers. Therefore, one transaction was just addition of one vector (left-hand-side) and subtraction of another one (right-hand-side). The GUI was reimplemented in PyQt4~\cite{summerfield2007rapid}, which naturally works with multithreading. It was significant improvement from performance point of the view. Moreover, we improved input/output formats. For input we defined BCSL model format, which serves for import. As output format we have chosen JSON~\cite{json}, which is very suitable for its simplicity and support by many external tools.
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[scale=0.35]{pics/BCSgen_gui}
-\caption{A screenshot of Graphical User Interface of BCSgen tool. There are a field for editing rules with integrated rule parser, field for initial state, and a table for defining custom names for complexes. On the right, there are options to analyse the model and display visualisations.}\label{gui_example}
-\end{center}
-\end{figure}
-
-In the last version, which is part of this thesis, we focused on improvement of models maintenance, additional analysis services, and visualisation. We have integrated editor which is able to highlight syntax errors while building the model (Figure~\ref{gui_example}) To achieve this, we needed an efficient rule-parser which would be able to parse the rules very fast. The parser is able to parse even syntactic extensions defined in Section~\ref{syntactic_extensions}. The rules engine then translates the rule to ground form and creates reactions (in case there are no errors in the model). Since this engine runs in the background, user does not notice any increased performance. When reactions are computed, it is indicated by possibility to export them and generate state space of the model.
-
-We implemented some dynamic analysis -- model simulation and reachability analysis. For the simulation, we allow stochastic or deterministic form (Figure~\ref{gui_simulation}). In the first form, random rules are fired according to Poisson distribution while in latter average trace is computed by solving ODEs build from the reactions. For the stochastic case, there are options to choose number of runs and apply interpolation on resulting time series chart in order to achieve smoother results. It is important to note that only models with defined rates can be simulated. For simplicity, approach where only fully specified agents are used.
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[scale=0.23]{pics/BCSgen_simulation}
-\caption{Example of a deterministic simulation for simple repressilator model. For the simulation to be enabled, the rates for individual rules has to be defined. In the right panel, deterministic approach and the maximum simulation time is chosen.}\label{gui_simulation}
-\end{center}
-\end{figure}
-
-Since there are some graphs and charts generated in BCSgen, we decided to integrate visualisation tools into it. We used two libraries -- vis.js~\cite{almende2016vis} for interactive networks visualisation and MatPlotLib~\cite{hunter2007matplotlib}, a Python library suitable for visualisation of time series. Vis.js is used for exploration of state space with highlighting chosen node and announcing content of the node. It is possible to display paths from the initial state to other states, which satisfy reachability condition given in reachability analysis part (Figure~\ref{gui_reach}). This is very demonstrative and suitable for educational purposes. However, such visualisation has its limitations. For example, huge graphs are very difficult to display -- on the other hand, for a high number of nodes it is not even useful. The MatPlotLib provides visualisation of simulation results. It possible to zoom the chart, hide/show individual curves, and export the current view as a picture.
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[scale=0.35]{pics/BCSgen_reach}
-\caption{A graph showing LTS of given model. There are a few types of vertices in the graph: \textbf{orange} -- the initial state; \textbf{dark green} -- states satisfying condition given in right panel of the GUI; \textbf{bright green} -- path from initial to chosen reachable state.}\label{gui_reach}
-\end{center}
-\end{figure}
-
-\vspace*{-0.5cm}As a future work for the tool we are planning to reimplement it to a web-based version. It should be integrated in CMP (Section~\ref{cmp}) to allow direct analysis of the models and appropriate parts of Biochemical Space. 
-
 \chapter{Case study}
 \label{case_study}
 
@@ -1961,6 +1931,47 @@ $ERK::cyt + FRS::cyt $ & $ \Leftrightarrow $ & $ ERK.FRS::cyt$\\
 \end{center}
 \caption{Model Yamada et al. 2004~\cite{yamada2004model} with reduced context according to Definition~\ref{reduced_model}.}\label{reduced_yamada}
 \end{figure}
+
+\chapter{Implementation}
+\label{implementation}
+
+In order to support usability of the BCSL language, we developed a prototype software tool BCSgen. The general goal of the tool is to provide environment suitable for editing and maintenance of the BCSL models and provide functionality to analyse the models. The software was developed in several iterations. At first as a project MUNI33/092015 in \emph{Dean's Program of the Faculty of Informatics MU for support of student research and development projects}, later as part of the project MUNI33/062017 in the same program. It was finalized to current stage in this thesis.
+
+The tool is developed in Python language (version 2.7) as open-source desktop software build under GPL-3.0 license. The source code, a short tutorial for usage and installation, and current stable version as binary files are available on GitHub\footnotemark[1]\footnotetext[1]{\url{https://github.com/sybila/BCSgen}}.
+
+In the first version, there was no support for editing the models. The only functionality provided by the tool was import of the model from a text file (in a predefined format) and enumerating entire state space of the model. The implementation was done by translating to Kappa and it was rather slow and non-efficient. The single transaction (application of one rule) was delayed by translation to Kappa and then by exact matching and replacement, which might get quite complicated. However, it was a good start for the language and it was possible to analyse exported networks in external tools. There was simple GUI made in Tkinter~\cite{Tkinter}, which had several issues. The most important one was the fact that Tkinter was not designed for multithreading programming. For example, while computing a state space for the model, the whole GUI was not responsible.
+
+In the second version, we focused on speed improvement and development of a user-friendly GUI. For the speed improvement, we implemented semantics as defined in this thesis (Section~\ref{semantic_function}). Compared to previous version, in this case there was no exactly rule-based execution of the rule -- we rather translated the rules to the reactions and subsequently encoded as vector operations over integers. Therefore, one transaction was just addition of one vector (left-hand-side) and subtraction of another one (right-hand-side). The GUI was reimplemented in PyQt4~\cite{summerfield2007rapid}, which naturally works with multithreading. It was significant improvement from performance point of the view. Moreover, we improved input/output formats. For input we defined BCSL model format, which serves for import. As output format we have chosen JSON~\cite{json}, which is very suitable for its simplicity and support by many external tools.
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[scale=0.35]{pics/BCSgen_gui}
+\caption{A screenshot of Graphical User Interface of BCSgen tool. There are a field for editing rules with integrated rule parser, field for initial state, and a table for defining custom names for complexes. On the right, there are options to analyse the model and display visualisations.}\label{gui_example}
+\end{center}
+\end{figure}
+
+In the last version, which is part of this thesis, we focused on improvement of models maintenance, additional analysis services, and visualisation. We have integrated editor which is able to highlight syntax errors while building the model (Figure~\ref{gui_example}) To achieve this, we needed an efficient rule-parser which would be able to parse the rules very fast. The parser is able to parse even syntactic extensions defined in Section~\ref{syntactic_extensions}. The rules engine then translates the rule to ground form and creates reactions (in case there are no errors in the model). Since this engine runs in the background, user does not notice any increased performance. When reactions are computed, it is indicated by possibility to export them and generate state space of the model.
+
+We implemented some dynamic analysis -- model simulation and reachability analysis. For the simulation, we allow stochastic or deterministic form (Figure~\ref{gui_simulation}). In the first form, random rules are fired according to Poisson distribution while in latter average trace is computed by solving ODEs build from the reactions. For the stochastic case, there are options to choose number of runs and apply interpolation on resulting time series chart in order to achieve smoother results. It is important to note that only models with defined rates can be simulated. For simplicity, approach where only fully specified agents are used.
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[scale=0.23]{pics/BCSgen_simulation}
+\caption{Example of a deterministic simulation for simple repressilator model. For the simulation to be enabled, the rates for individual rules has to be defined. In the right panel, deterministic approach and the maximum simulation time is chosen.}\label{gui_simulation}
+\end{center}
+\end{figure}
+
+Since there are some graphs and charts generated in BCSgen, we decided to integrate visualisation tools into it. We used two libraries -- vis.js~\cite{almende2016vis} for interactive networks visualisation and MatPlotLib~\cite{hunter2007matplotlib}, a Python library suitable for visualisation of time series. Vis.js is used for exploration of state space with highlighting chosen node and announcing content of the node. It is possible to display paths from the initial state to other states, which satisfy reachability condition given in reachability analysis part (Figure~\ref{gui_reach}). This is very demonstrative and suitable for educational purposes. However, such visualisation has its limitations. For example, huge graphs are very difficult to display -- on the other hand, for a high number of nodes it is not even useful. The MatPlotLib provides visualisation of simulation results. It possible to zoom the chart, hide/show individual curves, and export the current view as a picture.
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[scale=0.35]{pics/BCSgen_reach}
+\caption{A graph showing LTS of given model. There are a few types of vertices in the graph: \textbf{orange} -- the initial state; \textbf{dark green} -- states satisfying condition given in right panel of the GUI; \textbf{bright green} -- path from initial to chosen reachable state.}\label{gui_reach}
+\end{center}
+\end{figure}
+
+\vspace*{-0.5cm}As a future work for the tool we are planning to reimplement it to a web-based version. It should be integrated in CMP (Section~\ref{cmp}) to allow direct analysis of the models and appropriate parts of Biochemical Space. 
+
 
 \chapter{Discussion}
 
