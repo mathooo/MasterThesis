@@ -669,6 +669,17 @@ Let $\vv{v} = (x_1, \ldots, x_n)$ be a vector. By $\sigma(\vv{v})$ we denote set
 \end{itemize}
 \end{definition}
 
+\begin{definition}{Petri Net}
+Petri Net is a quadruple $\mathcal{N} = (P, T, F, m_0)$ where:
+
+\begin{itemize}
+	\item $P$ is a finite non-empty set of \emph{places},
+	\item $T$ is a finite non-empty set of \emph{transitions},
+	\item $F \subset ((P \times T) \cup (T \times P)) $ is a set of \emph{arcs},
+	\item $m_0 : P \rightarrow \mathbb{N}$ is an initial \emph{marking}.
+\end{itemize}
+\end{definition}
+
 \section{Objects definition}
 
 Let $\mathcal{N}_{A},~\mathcal{N}_{T},~\mathcal{N}_{\delta},~\mathcal{N}_{c}$ be mutually exclusive finite sets of atomic names, structure names, states, and compartments, respectively. Moreover, $\varepsilon$ is reserved symbol and does not belong to any of these sets.
@@ -1496,7 +1507,7 @@ The compatibility operator generates partial order of $\mathds{A}, \mathds{T}$, 
 
 \begin{definition}{Compatible set}
 \label{compatible_set}
-A finite set $\mathscr{X} \subseteq \mathds{X}$ is a \emph{compatible set} \emph{iff}:
+A finite set $\mathscr{X} \subseteq \mathds{X}$ is a \emph{compatible set} if:
 \begin{center}
 \begin{enumerate}
 	\item \label{compatible_cond} $ \forall \mathtt{X}_1, \mathtt{X}_2 \in \mathscr{X} ~\exists~ \mathtt{X}' \in \mathscr{X}: \mathtt{X}_1 \lhd \mathtt{X}' \wedge \mathtt{X}_2 \lhd \mathtt{X}'$ such that $\mathtt{X}_1 \neq \mathtt{X}_2$,
@@ -1519,7 +1530,7 @@ In every compatible set $\mathscr{X}$ (Remark~\ref{order_in_compat_set}), there 
 \end{lemma}
 
 \begin{proof}
-The theorem follows from Definition~\ref{compatible_set} condition~(\ref{compatible_cond}) which basically claims that there is a supremum (in manner of compatibility) for each two complex agents in the compatible set $\mathscr{X}$. Since there exists a supremum for every two items of the set and the set $\mathscr{X}$ is finite, there must exists a global supremum for the entire set. $\QEDA$
+The lemma follows from Definition~\ref{compatible_set} condition~(\ref{compatible_cond}) which basically claims that there is a supremum (in manner of compatibility) for each two complex agents in the compatible set $\mathscr{X}$. Since there exists a supremum for every two items of the set and the set $\mathscr{X}$ is finite, there must exists a global supremum for the entire set. $\QEDA$
 \end{proof}
 
 \begin{figure}[!h]
@@ -1550,14 +1561,15 @@ Practically, relation following from compatibility operator can be used in sever
 \label{compatible_subset}
 Let $\mathscr{X} \subseteq \mathds{X}$ be a compatible set and $\mathtt{X} \in \mathscr{X}$ a complex agent. A set $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}} \in \mathscr{X}$ is called \emph{compatible subset} of $\mathscr{X}$ w.r.t. $\mathtt{X}$ if the following holds:
 
-$$ \mkern2mu\overline{\mkern-4.5mu \mathscr{X}} \subseteq \mathscr{X}: \forall \mathtt{X}' \in \mkern2mu\overline{\mkern-4.5mu \mathscr{X}}: (\mathtt{X}' \lhd \mathtt{X} \wedge \forall \mathtt{X}'' \in \mkern2mu\overline{\mkern-4.5mu \mathscr{X}}: \neg (\mathtt{X}'' \lhd \mathtt{X}') )$$
-
+\begin{center}
+$ \mkern2mu\overline{\mkern-4.5mu \mathscr{X}} \subseteq \mathscr{X}: \forall \mathtt{X}' \in \mkern2mu\overline{\mkern-4.5mu \mathscr{X}}: (\mathtt{X}' \lhd \mathtt{X} \wedge \forall \mathtt{X}'' \in \mkern2mu\overline{\mkern-4.5mu \mathscr{X}}: \neg (\mathtt{X}'' \lhd \mathtt{X}') )$
+\end{center}
 \end{definition}
 
 
-\vspace*{0.5cm}\noindent\textbf{Note:} 
+\vspace*{0.5cm}\noindent\textbf{Note:} For any complex agent $\mathtt{X}$ there exists just one compatible subset. The reason follows from Lemma~\ref{exists_one_comp_set} and the definition of the subset.
 
-Items of $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}}$ are the minimal elements of ... 
+Items of $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}}$ are the minimal elements of set $\mathscr{X}$ w.r.t. complex agent $\mathtt{X}$.
 
 \begin{remark}
 \label{generating_vs_compatibility}
@@ -1655,27 +1667,23 @@ Reduced model $\widetilde{\mathds{M}}$ is created form given BCSL model by reduc
 
 \begin{definition}{Reduced model}
 \label{reduced_model}
-Reduced model $\widetilde{\mathds{M}}$ is a pair $(\widetilde{\mathcal{R}}, \mathtt{I})$ where $\widetilde{\mathcal{R}}$ is set of rule expression and $\mathtt{I}$ is initial multiset of complex agent expressions constructed from given BCSL model $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ such that the following condition holds:
+Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. We define \emph{reduced model} $\widetilde{\mathds{M}}$ as a pair $(\widetilde{\mathcal{R}}, \mathtt{I})$ where $\widetilde{\mathcal{R}}$ is set of rule expression and $\mathtt{I}$ is initial multiset of complex agent expressions where the following conditions hold:
 
 \begin{enumerate}
-	\item for every rule $\mathtt{F}(\rho') = (\chi', \omega', \iota', \varphi', \psi') \in \mathds{R}$ such that $\rho' \in \widetilde{\mathcal{R}}$ and appropriate original rule $\mathtt{F}(\rho) = (\chi, \omega, \iota, \varphi, \psi) \in \mathds{R}$ such that $\rho \in \mathcal{R}$ holds:
+	\item for every well-formed rule $\mathtt{F}(\rho') = (\chi', \omega', \iota', \varphi', \psi') \in \mathds{R}$ such that $\rho' \in \widetilde{\mathcal{R}}$ and appropriate original rule $\mathtt{F}(\rho) = (\chi, \omega, \iota, \varphi, \psi) \in \mathds{R}$ such that $\rho \in \mathcal{R}$ holds:
 
-	$$\forall i \in [1, k]: \pi_i(\chi') \equiv \mathtt{sup}(\mathscr{X})$$ where $\mathscr{X}$ is a compatible set such that $\pi_i(\chi) \in \mathscr{X}$,
+	$$\forall i \in [1, k]: \pi_i(\chi') \equiv \mathtt{sup}(\mathscr{X})$$ where $\mathscr{X}$ is a compatible set such that $\pi_i(\chi) \in \mathscr{X}$ and length $k = |\chi'| = |\chi|$ (i.e., number of complex agent expressions is the same in both sides of the rules respectively),
 
 	\item for every complex agent $\mathtt{X}' = \mathtt{F}(\Gamma') \in \mathtt{I}$ and appropriate original complex agent $\mathtt{X} = \mathtt{F}(\Gamma) \in \mathtt{init}$ the following condition holds:
 
 	\begin{center}
-	$ \mathtt{X}' \equiv \mathtt{sup}(\mathscr{X}) $ such that $\mathtt{X} \in \mathscr{X}$
+	$ \mathtt{X}' \equiv \mathtt{sup}(\mathscr{X}) $ such that $\mathtt{X} \in \mathscr{X}$.
 	\end{center}
 
 \end{enumerate}
-
-where length $k = |\chi'| = |\chi|$ (i.e., number of complex agent expression is the same including both sides of the rules).
-
-Moreover, all rules which are not well-formed are removed from the reduced model.
 \end{definition}
 
-A reduced model $\widetilde{\mathds{M}}$ is actually an over-approximation of an BCSL model $\mathds{M}$. It can be used for some types of analyses which avoids combinatorial explosion of the original model.
+A reduced model $\widetilde{\mathds{M}}$ is actually an over-approximation of an BCSL model $\mathds{M}$. It can be used for some types of analyses which avoid combinatorial explosion of the original model.
 
 \begin{theorem}
 \label{non-reachability_in_reduced}
@@ -1702,10 +1710,8 @@ Since we have defined compatibility operator for agents, we can apply static rea
 
 \begin{theorem}
 \label{static_reach}
-A complex agent $\mathtt{X}$ is non-reachable w.r.t. set of rules $\mathcal{R}_f$ \emph{iff} there does not exist a rule $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi) \in \mathcal{R}_f$ such that $\exists \mathtt{X}' \in \chi: \mathtt{X}' \lhd \mathtt{X}$.
+A complex agent $\mathtt{X}$ is non-reachable w.r.t. set of rules $\mathcal{R}_f$ \emph{if} for every rule $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi) \in \mathcal{R}_f$ holds that $\forall \mathtt{X}' \in \chi: \neg (\mathtt{X}' \lhd \mathtt{X})$.
 \end{theorem}
-
-The Theorem~\ref{static_reach} states a very powerful fact in context of non-reachability analysis. Compared to dynamic non-reachability analysis, it completely avoids any combinatorial explosion and gives answer only by testing structural properties of rules linearly.
 
 \begin{proof}
 Lets assume we have a path of states constructed by applying corresponding reactions created from rules $\mathcal{R}_f$. It does not matter how many rules we have to apply in order to create desired agent from the initial state. At some point on the path we inevitably have to create a complex agent $\mathtt{X}_2 \lhd \mathtt{X}$ from a complex agent $\mathtt{X}_1$ applying a rule $\mathtt{R}$. 
@@ -1716,6 +1722,8 @@ Lets assume we have a path of states constructed by applying corresponding react
 
 In order to apply such action, there has to be at least one rule which has on its right-hand-side a complex agent compatible with the given complex agent. $\QEDA$
 \end{proof}
+
+The Theorem~\ref{static_reach} states a very powerful fact in context of non-reachability analysis. Compared to dynamic non-reachability analysis, it completely avoids any combinatorial explosion and gives answer only by testing structural properties of rules linearly.
 
 This procedure can be extended for checking reachability of multiple complex agents, however, it does not consider stoichiometry.
 
@@ -1788,22 +1796,11 @@ This should guarantee that it is possible to achieve high enough number of occur
 
 By generating reaction-based model from rule-based, which is always possible (Section~\ref{Generating reactions}), we can furthermore translate such model to a Petri Net~\cite{petri}.
 
-\begin{definition}{Petri Net}
-Petri Net is a quadruple $\mathcal{N} = (P, T, F, m_0)$ where:
-
-\begin{itemize}
-	\item $P$ is a finite non-empty set of \emph{places},
-	\item $T$ is a finite non-empty set of \emph{transitions},
-	\item $F \subset ((P \times T) \cup (T \times P)) $ is a set of \emph{arcs},
-	\item $m_0 : P \rightarrow \mathbb{N}$ is an initial \emph{marking}.
-\end{itemize}
-\end{definition}
-
 The translation can be summarised in the following steps: 
 
 \begin{enumerate}
 \item since BCSL rules produce a finite number of reactions, we have also a finite number of unique agents -- these are the places \emph{P},
-\item for each reaction, create a transition -- these are the transitions \emph{T},
+\item the transitions \emph{T} are the reactions,
 \item set of arcs $F$ is created from all reactions as following:
 \begin{itemize}
   \item place input arc from each place which has label in left-hand-side of the reaction (with appropriate multiplicity),
