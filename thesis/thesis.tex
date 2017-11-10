@@ -1188,6 +1188,18 @@ $\vv{r} = \lambda(RHS(\mathtt{r}), \theta) - \lambda(LHS(\mathtt{r}), \theta)$
 
 \end{enumerate}
 
+\begin{definition}{State transition system of model}
+\emph{State transition system} of model $\mathcal{M}$, $LTS(\mathcal{M})$, is defined as quadruple $(S, A, T , s_0 )$ such that:
+
+\begin{itemize}
+  \item $S$ is a (potentially infinite) set of states (solutions),
+  \item $A$ is a set of labels (reactions),
+  \item $T \subseteq S \times A \times S$ is a transition relation (the map-apply action),
+  \item $s_0 \in S$ is the initial state (initial solution).
+\end{itemize}
+
+\end{definition}
+
 In order to accomplish the process of giving semantics to an BCSL model, it is necessary to note how we revive information which is missing in produced LTS (Definition~\ref{lts}). This procedure is quite straightforward since we have defined reference vector $\theta$. Similarly as we translate multisets of BCSL agents to vectors (Definition~\ref{state_to_vector}), we can apply a reverse procedure, when we build a multiset of agents from a vector according to the reference vector $\theta$.
 
 \section{Syntactic extensions}
@@ -1540,7 +1552,7 @@ Practically, relation following from compatibility operator can be used in sever
 
 \begin{definition}{Compatible subset}
 \label{compatible_subset}
-Let $\mathscr{X}$ be a compatible set and $\mathtt{X}$ a complex agent such that $\mathtt{X} \in \mathscr{X}$. A set $\mathscr{X}_\subseteq$ is a \emph{compatible subset} w.r.t. $\mathtt{X}$ \emph{iff}:
+Let $\mathscr{X}$ be a compatible set and $\mathtt{X}$ a complex agent such that $\mathtt{X} \in \mathscr{X}$. A set $\overline{\mathscr{X}}$ is a \emph{compatible subset} w.r.t. $\mathtt{X}$ \emph{iff}:
 
 $$ \mathscr{X}_\subseteq \subseteq \mathscr{X}: \forall \mathtt{X}' \in \mathscr{X}_\subseteq: (\mathtt{X}' \lhd \mathtt{X} \wedge \forall \mathtt{X}'' \in \mathscr{X}_\subseteq: \neg (\mathtt{X}'' \lhd \mathtt{X}') )$$
 
@@ -1885,7 +1897,7 @@ We want to demonstrate practical purposes of a few types of static analyses defi
 
 In Figure~\ref{fgf_fragment}, there is the model defined in BCSL syntax. Note this model is a fragment of the entire model. Focus on rule~(\ref{focus_rule}). It requires both Threonine residues ($Thr$) on $FGF$ proteins to be phosphorylated ($p$). Basically, it is not possible to create a complex from $FRS$ and unphosphorylated ($u$) $FGF$ proteins.
 
-For example, we want to check whether a given complex agent {\small $FRS(Thr\{u\}, Tyr\{u\}).FGF(Thr\{u\}).R.FGF(Thr\{u\}).R::cyt$} is reachable. The agent is formed from $FGF$ proteins which are unphosphorylated ($u$) on hreonine residues ($Thr$). INntraditional approach, we have to enumerate entire state space of the model and then use dynamic model checking method to check it. In our case, we can use Theorem~\ref{static_reach} and check if it is non-reachable using static reachability analysis. It results to conclusion that there is no compatible agent on any right-hand-side of the rules. It follows the complex agent is non-reachable.
+For example, we want to check whether a given complex agent {\small $FRS(Thr\{u\}, Tyr\{u\}).FGF(Thr\{u\}).R.FGF(Thr\{u\}).R::cyt$} is reachable. The agent is formed from $FGF$ proteins which are unphosphorylated ($u$) on hreonine residues ($Thr$). In traditional approach, we have to enumerate entire state space of the model and then use dynamic model checking method to check it. In our case, we can use Theorem~\ref{static_reach} and check if it is non-reachable using static reachability analysis. It results to conclusion that there is no compatible agent on any right-hand-side of the rules. It follows the complex agent is non-reachable.
 
 \begin{figure}[!h]
 {\footnotesize
