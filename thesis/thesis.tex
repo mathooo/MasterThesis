@@ -614,6 +614,14 @@ Before we proceed, we recall some basic notations and provide all necessary defi
 
 %We define projection $\pi_i$ to enable iterating through multidimensional structures.
 
+\begin{definition}{Multiset}
+We define a multiset $O$ as a pair $(A, m)$ where $A$ is some set and $ m : A \rightarrow \mathbb{N} $ is a function from $A$ to the set of positive integers. The set $A$ is called the \emph{underlying set of elements}. For each $a$ in $A$ the \emph{multiplicity} (that is, number of occurrences) of a is the number $m(a)$.
+\end{definition}
+
+\begin{notation}
+Let $O$ be a multiset. By $x \in O$ we usually denote the fact that there exists a pair $(x, i) \in O$ such that $i \geq 1$.
+\end{notation}
+
 \begin{definition}{Projection}
 Projection $\pi_i : X^n \rightarrow X $ is defined as follows:
 
@@ -1153,8 +1161,24 @@ Note some values in chemical reactions might be negative. When applying reaction
 
 \begin{definition}{Semantics of chemical reaction model}
 \label{states_creation}
-Let $\mathcal{M}$ be a chemical reaction model. The quantitative semantics are given in terms of a \emph{discrete-states} produced by iterative reaction application on initial vector $\vv{\nu}$ and all consequently created state vectors. This way we obtain an LTS (Definition~\ref{lts}).
+
+Let $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \theta)$ be a chemical reaction model. The labeled transition system of model $\mathcal{M}$, $LTS(\mathcal{M})$ (Definition~\ref{lts}), is defined as a tuple $(S, A, T, s_0)$ such that:
+
+\begin{enumerate}
+	\item $ S $ is defined inductively:
+
+	\begin{tabular}{l l}
+	\textit{Basis}: & $\vv{\nu} \in S$\\
+	\textit{Induction}: & $ \vv{\mathtt{s}} \in S \Rightarrow \forall \vv{r} \in \mathfrak{R}: \vv{\mathtt{p}} \in S $ such that $(\vv{\mathtt{s}}, \vv{\mathtt{r}}, \vv{\mathtt{p}}) \in \varrho $\\
+	\end{tabular}
+ 
+	\item $ A = \mathfrak{R} $,
+	\item $ T = \{~ (\vv{\mathtt{s}}, \vv{\mathtt{r}}, \vv{\mathtt{p}}) ~|~ \vv{\mathtt{s}}, \vv{\mathtt{p}} \in S \wedge \vv{\mathtt{r}} \in \mathfrak{R}  \wedge (\vv{\mathtt{s}}, \vv{\mathtt{r}}, \vv{\mathtt{p}}) \in \varrho ~\} $,
+	\item $ s_0 = \vv{\nu} $.
+\end{enumerate}
 \end{definition}
+
+The quantitative semantics of model $\mathcal{M}$ are given in terms of a \emph{discrete-states} produced by inductive reaction application on initial vector $\vv{\nu}$ and all consequently created state vectors. This way we obtain an $LTS(\mathcal{M})$.
 
 CRM semantics might lead to possibly infinite LTS. This process can be limited by a global bound, which makes sure the produced LTS is finite (Section~\ref{optimal_bound}).
 
@@ -1173,7 +1197,7 @@ $$\Theta = \{~ \mathtt{X} ~|~ \mathtt{X} \in \mathtt{seq}(\mathtt{r}) \wedge \ma
 \end{definition}
 
 \begin{definition}{Multiset to vector translation}\label{state_to_vector}
-Translation of multiset $\mathtt{S} \subseteq \mathds{X}$ to vector is defined as following:
+Translation of a multiset $\mathtt{S} \subseteq \mathds{X}$ to a vector $(a_1, a_2, \ldots, a_n) \in \mathbb{N}^n$ is defined as follows:
 \begin{center}
 $\lambda(\mathtt{S}, \theta) = (a_1, a_2, \ldots, a_n)$ such that 
 $a_i$ =
@@ -1200,7 +1224,19 @@ $\vv{r} = \lambda(RHS(\mathtt{r}), \theta) - \lambda(LHS(\mathtt{r}), \theta)$
 
 \end{enumerate}
 
-In order to accomplish the process of giving semantics to an BCSL model, it is necessary to note how we revive information which is missing in produced LTS (Definition~\ref{lts}) by application of Definition~\ref{states_creation}. This procedure is quite straightforward since we have defined reference vector $\theta$. Similarly as we translate multisets of BCSL agents to vectors (Definition~\ref{state_to_vector}), we can apply a reverse procedure, when we build a multiset of agents from a vector according to the reference vector $\theta$.
+In Definition~\ref{states_creation} we show how to create an LTS from a chemical reaction model. In order to accomplish the process of giving semantics to an BCSL model, it is necessary to note how we revive information which is missing in produced LTS. This procedure is quite straightforward since we have defined reference vector $\theta$. Similarly as we translated multisets of BCSL agents to vectors (Definition~\ref{state_to_vector}), we can apply a reverse procedure, when we build a multiset of agents from a vector according to the reference vector $\theta$ (Definition~\ref{vector_to_state}).
+
+\begin{definition}{Vector to multiset translation}
+\label{vector_to_state}
+
+Translation of a vector $(a_1, a_2, \ldots, a_n) \in \mathbb{N}^n$ to a multiset $\mathtt{S} \subseteq \mathds{X}$ is defined as follows:
+
+\begin{center}
+$\lambda^T((a_1, a_2, \ldots, a_n), \theta) = \{~ (\theta_i, a_i) ~|~ i \in [1, \ldots, n] ~\} $ where $n = |\theta|$.
+\end{center}
+\end{definition}
+
+Note that procedure provided in Definition~\ref{vector_to_state} can be extended to the labels of the LTS. The labels, which represent reactions applied, might contain negative numbers. These are treated independently and represent left-hand-side of the reaction (the reactants) while non-negative numbers represent right-hand-side of the reaction (the products).
 
 \section{Syntactic extensions}
 \label{syntactic_extensions}
@@ -1555,7 +1591,9 @@ Then, the condition~(\ref{non_compatible_cond}) claims that no complex agent fro
 
 Practically, relation following from compatibility operator can be used in several ways. It is suitable for deeper static analysis on level of complexes~\ref{context_reduction} and for finding non-trivial relationships between the rules~\ref{rule_redundancy}.
 
-\vspace*{0.5cm}\noindent\textbf{Note:} There always exists a compatible set $\mathscr{X}$ for a complex agent $\mathtt{X}$ which follows from Lemma~\ref{exists_one_comp_set}.
+%\vspace*{0.5cm}\noindent\textbf{Note:} There always exists a compatible set $\mathscr{X}$ for a complex agent $\mathtt{X}$ which follows from Lemma~\ref{exists_one_comp_set}.
+
+Note that there always exists a compatible set $\mathscr{X}$ for a complex agent $\mathtt{X}$ which follows from Lemma~\ref{exists_one_comp_set}.
 
 \begin{definition}{Compatible subset}
 \label{compatible_subset}
@@ -1567,7 +1605,9 @@ $ \mkern2mu\overline{\mkern-4.5mu \mathscr{X}} \subseteq \mathscr{X}: \forall \m
 \end{definition}
 
 
-\vspace*{0.5cm}\noindent\textbf{Note:} For any complex agent $\mathtt{X}$ there exists just one compatible subset. The reason follows from Lemma~\ref{exists_one_comp_set} and the definition of the subset.
+%\vspace*{0.5cm}\noindent\textbf{Note:} For any complex agent $\mathtt{X}$ there exists just one compatible subset. The reason follows from Lemma~\ref{exists_one_comp_set} and the definition of the subset.
+
+Note that for any complex agent $\mathtt{X}$ there exists just one compatible subset. The reason follows from Lemma~\ref{exists_one_comp_set} and the definition of the subset.
 
 Items of $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}}$ are the minimal elements of set $\mathscr{X}$ w.r.t. complex agent $\mathtt{X}$.
 
