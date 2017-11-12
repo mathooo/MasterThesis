@@ -1643,7 +1643,7 @@ When we look at the process more theoretically, a set of appropriate complex age
 \subsection{Rule redundancy elimination}
 \label{rule_redundancy}
 
-There might be cases when there are redundant rules defined in a model (Definition~\ref{redundant_rule}). This might be done for example by inattention of modeller in combination with high level of abstraction language uses. These rules do not cause any semantical difference, but can possibly slow down dynamic and/or static analysis, eventually affect the results of analysis.
+There might be cases when there are redundant rules defined in a model (Definition~\ref{redundant_rule}). This might be done for example by inattention of modeller in combination with high level of abstraction language uses. These rules do not cause any semantical difference, but can possibly slow down dynamic and/or static analysis, eventually undesirably affect the results of analysis.
 
 \begin{definition}{Redundant rule}
 \label{redundant_rule}
@@ -1658,7 +1658,7 @@ $LTS(\mathds{M}_1) \equiv LTS(\mathds{M}_2)$
 \end{center}
 \end{definition}
 
-The redundant rule $\mathtt{R}$ does not add any semantic details or the rule itself has no effect. It generally means the LTSs produced from the models with and without the rule are equal.
+The redundant rule $\mathtt{R}$ does not add any semantic details to the model. It generally means the LTSs produced from the models with and without the rule are equal.
 
 \begin{theorem}
 \label{redundant_if}
@@ -1678,14 +1678,14 @@ The problem whether the elimination of redundant rules preserves semantics can b
 
 The complex agents $\mathtt{X}_k = \mathtt{F}(\Gamma_k)$ and $\mathtt{X}'_k = \mathtt{F}(\Gamma'_k)$ both belong to the same compatible set $\mathscr{X}$ since $\mathtt{X}_k \lhd \mathtt{X}'_k$, which follows from the condition of the theorem. 
 
-Then, we can create subsets $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}}, \mathscr{X}'_\subseteq \subseteq \mathscr{X}$ for both complex agents respectively (Definition~\ref{compatible_subset}). Because the complex agents are compatible ($\mathtt{X}_k \lhd \mathtt{X}'_k$ ), the subset $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}}$ of agent $\mathtt{X}_k$ is either subset or equal to set $\mathscr{X}'_\subseteq$ of agent $\mathtt{X}'_k$:
+Then, we can create subsets $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}},~ \mkern2mu\overline{\mkern-4.5mu \mathscr{X}'} \subseteq \mathscr{X}$ for both complex agents respectively (Definition~\ref{compatible_subset}). Because the complex agents are compatible ($\mathtt{X}_k \lhd \mathtt{X}'_k$ ), the subset $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}}$ of agent $\mathtt{X}_k$ is either subset or equal to set $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}'}$ of agent $\mathtt{X}'_k$:
 
-$$\mkern2mu\overline{\mkern-4.5mu \mathscr{X}} \subseteq \mathscr{X}'_\subseteq.$$
+$$\mkern2mu\overline{\mkern-4.5mu \mathscr{X}} \subseteq ~\mkern2mu\overline{\mkern-4.5mu \mathscr{X}'}.$$
 
-Therefore, the produced set of reactions from the redundant rule is actually a subset of reactions produced from the non-redundant rule. $\QEDA$
+Applied generally on entire rule, the produced set of reactions from the redundant rule is actually a subset of reactions produced from the non-redundant rule. $\QEDA$
 \end{proof}
 
-For the proof we can use compatible sets of complex agents $\mathscr{X}$ and the fact that when we are generating reactions from rules, we are actually enumerating all agents from the set $\mathscr{X}$ which are \emph{compatible with} original agent in the rule (Remark~\ref{generating_vs_compatibility}).
+For the proof we used compatible sets of complex agents and the fact that when we are generating reactions from rules, we are actually enumerating all agents from the compatible set which are \emph{compatible with} original agent in the rule (Remark~\ref{generating_vs_compatibility}).
 
 \begin{example}{Redundant rules}
 Lets have two rules:
@@ -1728,7 +1728,7 @@ K(S\{u\}, T\{i\}).K(S\{p\}, T\{i\})::cell \Rightarrow K(S\{p\}, T\{i\}).K(S\{p\}
 \subsection{Context-based reduction}
 \label{context_reduction}
 
-Reduced model $\widetilde{\mathds{M}}$ is created form given BCSL model by reducing context of complexes in rules to maximum level. This is achieved by taking supremum from compatible set $\mathscr{X}$. This procedure might produce rules with no action, i.e. not well-formed rules -- such rules might be omitted. Then, only rules creating/destroying agents and complex formation/dissociation should remain, providing reduced network. Since we are reducing context, the resulting network can be equal or smaller than the original one.
+There might be cases when eliminating context of the given BCSL model preserves some properties while making the analysis of the model simpler. To make it possible, we have to define such a reduced model and show what kind of information does it preserve.
 
 \begin{definition}{Reduced model}
 \label{reduced_model}
@@ -1741,7 +1741,7 @@ Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{in
 	$\forall i \in [1, k]: \pi_i(\chi') \equiv \mathtt{sup}(\mathscr{X})$
 	\end{center}
 
-	where $\mathscr{X}$ is a compatible set such that $\pi_i(\chi) \in \mathscr{X}$ and length $k = |\chi'| = |\chi|$ (i.e., number of complex agent expressions is the same in both sides of the rules respectively),
+	where $\mathscr{X}$ is a compatible set such that $\pi_i(\chi) \in \mathscr{X}$, length $k = |\chi'| = |\chi|$ (i.e., the number of complex agents in both rules is the same), and $\iota = \iota'$;
 
 	\item for every complex agent $\mathtt{X}' = \mathtt{F}(\Gamma') \in \mathtt{I}$ and appropriate original complex agent $\mathtt{X} = \mathtt{F}(\Gamma) \in \mathtt{init}$ the following condition holds:
 
@@ -1750,6 +1750,8 @@ Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{in
 	\end{center}
 \end{enumerate}
 \end{definition}
+
+Reduced model $\widetilde{\mathds{M}}$ is created form given BCSL model by reducing context of complexes in rules to maximum level. This is achieved by taking supremum from compatible set $\mathscr{X}$. This procedure might produce rules with no action, i.e. not well-formed rules -- such rules are omitted. Then, only rules creating/destroying agents and complex formation/dissociation should remain, providing reduced network. Since we are reducing context, the resulting network can be equal or smaller than the original one.
 
 \begin{definition}{Over-approximation of LTS}
 \label{over_approximation}
@@ -1766,42 +1768,48 @@ A reduced model $\widetilde{\mathds{M}}$ is actually an over-approximation of a 
 
 \begin{theorem}
 \label{non-reachability_in_reduced}
-Let $\mathtt{X}$ be a complex agent, $\mathscr{X}$ be a compatible set for $\mathtt{X}$, and $\mathds{M}$ be a given BCSL model. If supremum $\mathtt{sup}(\mathscr{X})$ is non-reachable in LTS of reduced model $\widetilde{\mathds{M}}$ constructed with respect to given model $\mathds{M}$, then agent $\mathtt{X}$ is also non-reachable in the LTS of the original model $\mathds{M}$.
+Let $\mathtt{X}$ be a complex agent, $\mathscr{X}$ be a compatible set for $\mathtt{X}$, $\mathds{M}$ be a given BCSL model, and $\widetilde{\mathds{M}}$ be a appropriate reduced model of model $\mathds{M}$. If supremum $\mathtt{sup}(\mathscr{X})$ is non-reachable in $LTS(\widetilde{\mathds{M}})$, then agent $\mathtt{X}$ is also non-reachable in the $LTS(\mathds{M})$.
 \end{theorem}
 
 \begin{proof}
-Lets assume a complex agent $\mathtt{sup}(\mathscr{X})$ is non-reachable in LTS of reduced model $\widetilde{\mathds{M}}$, but $\mathtt{X} \in \mathscr{X}$ is reachable in LTS of the given model $\mathds{M}$.
+Lets assume a complex agent $\mathtt{sup}(\mathscr{X})$ is non-reachable in $LTS(\widetilde{\mathds{M}})$, but $\mathtt{X} \in \mathscr{X}$ is reachable in $LTS(\mathds{M})$.
 
-Generally, there is a path formed from rules in the original LTS such that we transform complex agents from initial agents to desired complex agent $\mathtt{X}$. When we move to context of reduced model $\widetilde{\mathds{M}}$, there is no such path for $\mathtt{sup}(\mathscr{X})$. However, according to Definition~\ref{reduced_model}, for every such rule there exist a reduced rule, such that all interacting complexes are reduced to their supremas. Therefore, if we could apply an original rule on a complex agent, we can do the same with reduced rule and its supremum. It follows there must exist such path also in reduced LTS and the complex agent $\mathtt{sup}(\mathscr{X})$ is reachable, what is a contradiction. $\QEDA$
+Generally, there is a path formed from rules in the $LTS(\mathds{M})$ such that we transform complex agents from initial agents to desired complex agent $\mathtt{X}$. When we move to context of $LTS(\widetilde{\mathds{M}})$, there is no such path for $\mathtt{sup}(\mathscr{X})$. However, according to Definition~\ref{reduced_model}, for every such rule there exist a reduced rule, such that all interacting complexes are reduced to their supremas. Therefore, if we could apply an original rule on a complex agent, we can do the same with reduced rule and its supremum. It follows there must exist such path also in $LTS(\widetilde{\mathds{M}})$ and the complex agent $\mathtt{sup}(\mathscr{X})$ is reachable, what is a contradiction. $\QEDA$
 \end{proof}
 
-If we are checking whether an agent is reachable for given model $\mathds{M}$, we might first check whether its super-ancestor is reachable in created reduced model $\widetilde{\mathds{M}}$. If yes, then we are still not certain about reachability of agent itself and it has to be checked int he original model. However, agent which is not reachable in $\widetilde{\mathds{M}}$ is not reachable in the original model $\mathds{M}$ too (Theorem~\ref{non-reachability_in_reduced}).
+If we are checking whether an agent is reachable in $LTS(\mathds{M})$ for given model $\mathds{M}$, we might first check whether its super-ancestor is reachable in $LTS(\widetilde{\mathds{M}})$ of appropriate reduced model $\widetilde{\mathds{M}}$. If yes, then we are still not certain about reachability of agent itself and it has to be checked in the $LTS(\mathds{M})$. However, agent which is not reachable in $LTS(\widetilde{\mathds{M}})$ is also not reachable in $LTS(\mathds{M})$ (Theorem~\ref{non-reachability_in_reduced}).
 
 This approach can be generalised for the non-reachability of a (multi)set of complex agents, but we consider it as a future work.
 
 \subsection{Static reachability analysis}
 \label{static_reachability_analysis}
 
-Since we have defined compatibility operator for agents, we can apply static reachability analysis before enumerating whole state space of the model $\mathds{M}$. This analysis has its limitations, but can serve for checking whether a complex agent $\mathtt{X}$ is non-reachable (similar to Section~\ref{context_reduction}). We create a set of rules $\mathcal{R}_f$ from set of rule expressions $\mathcal{R}$ of model $\mathds{M}$ using semantic function $\mathtt{F}$.
+Since we have defined compatibility operator for agents, we can apply static reachability analysis before enumerating whole state space of the model $\mathds{M}$. This analysis has its limitations, but can serve for checking whether a complex agent $\mathtt{X}$ is \emph{non-reachable} (similar to Section~\ref{context_reduction}).
 
 \begin{theorem}
 \label{static_reach}
-A complex agent $\mathtt{X}$ is non-reachable w.r.t. set of rules $\mathcal{R}_f$ \emph{if} for every rule $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi) \in \mathcal{R}_f$ holds that $\forall \mathtt{X}' \in \chi: \neg (\mathtt{X}' \lhd \mathtt{X})$.
+Let $\mathcal{R}_f$ be a set of rules created from set of rule expressions $\mathcal{R}$ of given model $\mathds{M}$ using semantic function $\mathtt{F}$ and $\mathtt{X}$ be a complex agent. The complex agent $\mathtt{X}$ is non-reachable w.r.t. set of rules $\mathcal{R}_f$ \emph{if}:
+
+\begin{center}
+$\forall \mathtt{R} \in \mathcal{R}_f$ where $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi)$ holds:
+
+$\forall \mathtt{X}' \in \chi: \neg (\mathtt{X}' \lhd \mathtt{X})$.
+\end{center}
 \end{theorem}
 
 \begin{proof}
-Lets assume we have a path of states constructed by applying corresponding reactions created from rules $\mathcal{R}_f$. It does not matter how many rules we have to apply in order to create desired agent from the initial state. At some point on the path we inevitably have to create a complex agent $\mathtt{X}_2 \lhd \mathtt{X}$ from a complex agent $\mathtt{X}_1$ applying a rule $\mathtt{R}$. 
+Lets assume we have a path of states constructed by applying corresponding reactions created from rules $\mathcal{R}_f$. It does not matter how many rules we have to apply in order to create desired complex agent $\mathtt{X}$ from the initial state. At some point on the path, we inevitably have to create a complex agent $\mathtt{X}_2 \lhd \mathtt{X}$ from a complex agent $\mathtt{X}_1$ applying a rule $\mathtt{R}$. 
 
 \begin{center}
 \includegraphics[scale=0.15]{pics/static_reach}
 \end{center}
 
-In order to apply such action, there has to be at least one rule which has on its right-hand-side a complex agent compatible with the given complex agent. $\QEDA$
+In order to apply such action, there has to be at least one rule which has on its right-hand-side a complex agent compatible with the given complex agent. If there is not such agent, the agent $\mathtt{X}$ is non-reachable. $\QEDA$
 \end{proof}
 
-The Theorem~\ref{static_reach} states a very powerful fact in context of non-reachability analysis. Compared to dynamic non-reachability analysis, it completely avoids any combinatorial explosion and gives answer only by testing structural properties of rules linearly.
+The Theorem~\ref{static_reach} states a very powerful fact in context of non-reachability analysis. Compared to dynamic non-reachability analysis, it completely avoids any combinatorial explosion and gives answer only by testing structural properties of rules.
 
-This procedure can be extended for checking reachability of multiple complex agents, however, it does not consider stoichiometry.
+This procedure can be extended for checking reachability of multiple complex agents. However, it does not consider stoichiometry.
 
 \subsection{Automatic synthesis of signatures}
 
@@ -1835,9 +1843,9 @@ The BCSL model definition as given in Section~\ref{BCSl_model} can be reduced by
 \end{enumerate}
 \end{enumerate}
 
-The described process basically iterates through all rules and collects all atomic names and states associated with them. Similarly, it collects all structure names and appropriate names of atomic names used in their partial compositions. In this case, atomic information has to be collected recursively because some atomic agents might be used only in partial composition, not independently in a complex agent.
+The described process basically iterates through all rules and collects all atomic names and states associated with them. Similarly, it collects all structure names and appropriate names of atomic agents used in their partial compositions. In this case, atomic information has to be collected recursively because some atomic agents might be used only in partial composition, not independently in a complex.
 
-We can discuss the fact that desired signature might be in some manner \emph{larger} than the collected ones. However, if for example we want to have more states defined for an atomic agent, they should be definitely used somewhere in the model. In other case, it does not play any role in the model behavior and therefore its definition is senseless. In other words, the described procedure guarantees collecting all signature details which play any role in the model.
+We can discuss the fact that desired signature might be in some manner \emph{larger} than the collected one. However, if for example we want to have more states defined for an atomic agent, they should be definitely used somewhere in the model. In other case, it does not play any role in the model behavior and therefore its definition is senseless. In other words, the described procedure guarantees collecting all signature details which play any role in the model.
 
 % \begin{proof}
 % Let $\mathcal{M}$ be a BCSL model and $\Sigma$ its minimal signatures (i.e., all states and partial compositions defined in the signatures are actually used in the rules). Then, signatures $\Sigma'$ obtained by procedure (ref blah) has to be equal to the original signature $\Sigma$. In case its not, it means either there is some extra data in the $\Sigma'$ or some data is missing. Since we create $\Sigma'$ by iterating through all the rules, we construct complete signature with complete states used in the model. Therefore, if some data are missing in $\Sigma'$, then it follows given signature $\Sigma$ is not minimal. On the other hand, if there are some extra data in $\Sigma'$, then given signature $\Sigma$ is incorrect -- its missing some structure details which are being used in the model. $\QEDA$
@@ -1846,9 +1854,9 @@ We can discuss the fact that desired signature might be in some manner \emph{lar
 \subsection{Minimal optimal bound of the system}
 \label{optimal_bound}
 
-Transition systems produced by semantics of BCSL models are infinite in general. Despite the fact the underlaying reaction networks are always finite (Section~\ref{optimal_bound}), there are types of reactions which can increase number of occurrences in a state with no limitations. Typically, such reactions form interface between the modelled system and the environment.
+Transition systems produced by semantics of BCSL models are infinite in general. Despite the fact the underlaying reaction networks are always finite (Section~\ref{optimal_bound}), there are types of reactions which can increase number of occurrences in a state with no limitations. Typically, such reactions form an interface between the modelled system and the environment.
 
-However, the process of applying vector reactions on states can be extended by a control system. This system does not allow to grow individual values inside the state vector above given \emph{bound} $\mathtt{B}$. Basically, if produced vector should obtain an integer higher than the bound, the action is not taken. This procedure is very similar to checking whether all values in the vector are positive. Instead of just lower bound we have actually two bounds $<0, \mathtt{B}>$.
+However, the process of applying vector reactions on states can be extended by a control system. This system does not allow to grow individual values inside the state vector above given \emph{bound} $\mathtt{B}$. Basically, if produced vector should obtain an integer higher than the bound, the action is not taken. This procedure is very similar to checking whether all values in the vector are positive. Instead of only lower bound, we have two bounds $<0, \mathtt{B}>$.
 
 The remaining issue is what is an optimal value for the bound. The universal solution is to let the modeller decide. It follows extension of model definition by the bound. However, this process requires the user to know additional information about the model and additional effort. It does not fit to purposes of the language.
 
@@ -1864,7 +1872,7 @@ To actually calculate the minimal bound we take maximum value from the following
   \item \label{count_stoi} count the highest stoichiometry in all left and right-hand-sides of the rules.
 \end{enumerate}
 
-The step~(\ref{count_init}) ensures the bound $\mathtt{B}$ will not be lower than highest number of equivalent agents in the initial state. In the step~(\ref{count_unique}) we count repetitions of equivalent atomic and structure agents inside all complexes, which ensures that there will be enough agents for creation of every complex agent. The last step~(\ref{count_stoi}) takes into the account stoichiometry used in context of complexes themselves.
+The step~(\ref{count_init}) ensures the bound $\mathtt{B}$ will not be lower than highest number of equivalent agents in the initial state. In the step~(\ref{count_unique}) we count repetitions of equivalent atomic and structure agents inside all complexes, which ensures that there will be enough agents for creation of every complex agent. The last step~(\ref{count_stoi}) takes into the account stoichiometry used in context of complex agents themselves.
 
 This should guarantee that it is possible to achieve high enough number of occurrences to produce any complex or combination of complexes.
 
@@ -1885,7 +1893,7 @@ The translation can be summarised in the following steps:
 \item create initial marking \emph{m} from given initial state of the model by similar procedure described above.
 \end{enumerate}
 
-Once the model is translated, we are allowed apply all available types of analyses which are provided by Petri Nets. For example, P and T invariants, deadlock detection, coverability etc. (see~\cite{petri}).
+Once the model is translated, we are allowed to apply all available types of analyses which are provided by Petri Nets. For example, P and T invariants, deadlock detection, coverability etc. (see~\cite{petri}).
 
 \chapter{Case study}
 \label{case_study}
