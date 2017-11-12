@@ -1624,14 +1624,20 @@ However, when we look at the process more theoretically, a set of appropriate co
 
 There might be cases when there are redundant rules defined in a model (Definition~\ref{redundant_rule}). This might be done for example by inattention of modeller in combination with high level of abstraction language uses. These rules do not cause any semantical difference, but can possibly slow down dynamic and/or static analysis, eventually affect the results of analysis.
 
-The redundant rule $\mathtt{R}$ does not add any semantic details or the rule itself has no effect.
-
 \begin{definition}{Redundant rule}
 \label{redundant_rule}
 
-We define a rule $\mathtt{R}$ as \emph{redundant rule} if [something about LTSs comparison goes here]
+Let $\mathds{M}_1 = (\mathcal{R} \cup \{ \mathtt{R} \}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ and
+$\mathds{M}_2 = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be BCSL models where $\mathtt{R}$ is a rule such that $\mathtt{R} \not\in \mathcal{R}$.
 
+We define the rule $\mathtt{R}$ as \emph{redundant} if 
+
+\begin{center}
+$LTS(\mathds{M}_1) \equiv LTS(\mathds{M}_2)$
+\end{center}
 \end{definition}
+
+The redundant rule $\mathtt{R}$ does not add any semantic details or the rule itself has no effect. It generally means the LTSs produced from the models with and without the rule are equal.
 
 \begin{theorem}
 
@@ -1639,9 +1645,7 @@ Let $\mathtt{R}, \mathtt{R}'$ be two well-formed rules of form:
 
 $$ \Gamma_1 + \Gamma_2 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \Gamma_{n+2} + \ldots + \Gamma_{m} $$
 
-for some $m,n \in \mathbb{N}$.
-
-The rule $\mathtt{R}$ is \emph{redundant} if
+for some $m,n \in \mathbb{N}$. The rule $\mathtt{R}$ is \emph{redundant} if
 
 \begin{center}
 $ \forall i \in [ 1, m ]: \mathtt{F}(\Gamma_i) \lhd \mathtt{F}(\Gamma'_i). $
@@ -1723,7 +1727,18 @@ Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{in
 \end{enumerate}
 \end{definition}
 
-A reduced model $\widetilde{\mathds{M}}$ is actually an over-approximation of an BCSL model $\mathds{M}$. It can be used for some types of analyses which avoid combinatorial explosion of the original model.
+A reduced model $\widetilde{\mathds{M}}$ is actually an over-approximation of a BCSL model $\mathds{M}$ in context of their LTSs (Definition~\ref{over_approximation}). It can be used for some types of analyses which avoid combinatorial explosion of the original model.
+
+\begin{definition}{Over-approximation of LTS}
+\label{over_approximation}
+
+Let $LTS, LTS'$ be labeled transition systems of some BCSL models. The $LTS'$ is \emph{over-approximation} of $LTS$ if for every sequence of states $S'$ such that there exists transition between them in $LTS'$ there exists a sequence of states $S$ such that there exists transition between them in $LTS$ such that:
+
+\begin{center}
+$\forall \mathtt{s'} \in S' \exists \mathtt{s} \in S : \forall \mathtt{x'} \in \mathtt{s'} \exists \mathtt{x} \in \mathtt{s} : \mathtt{x'} = \mathtt{sup}(\mathtt{x}) $.
+\end{center}
+
+\end{definition}
 
 \begin{theorem}
 \label{non-reachability_in_reduced}
@@ -1732,7 +1747,7 @@ Let $\mathtt{X}$ be a complex agent, $\mathscr{X}$ be a compatible set for $\mat
 If supremum $\mathtt{sup}(\mathscr{X})$ is non-reachable in LTS of reduced model $\widetilde{\mathds{M}}$ constructed with respect to given model $\mathds{M}$, then agent $\mathtt{X}$ is also non-reachable in the LTS of the original model $\mathds{M}$.
 \end{theorem}
 
-If we are checking whether an agent is reachable for given model $\mathds{M}$, we might first check whether its super-ancestor is reachable in created reduced model $\widetilde{\mathds{M}}$. If yes, then we are still not certain about reachability of agent itself and it has to be checked in the original model. However, agent which is not reachable in $\widetilde{\mathds{M}}$ is not reachable in the original model $\mathds{M}$ too (Theorem~\ref{non-reachability_in_reduced}).
+If we are checking whether an agent is reachable for given model $\mathds{M}$, we might first check whether its super-ancestor is reachable in created reduced model $\widetilde{\mathds{M}}$. If yes, then we are still not certain about reachability of agent itself and it has to be checked int he original model. However, agent which is not reachable in $\widetilde{\mathds{M}}$ is not reachable in the original model $\mathds{M}$ too (Theorem~\ref{non-reachability_in_reduced}).
 
 \begin{proof}
 
