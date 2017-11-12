@@ -36,12 +36,12 @@
 \renewcommand{\thecounter}{\thesection.\arabic{counter}}
 \newenvironment{definition}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Definition \thecounter } \textit{#1} \par\nopagebreak}{\bigskip}
 \newenvironment{example}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Example \thecounter} \textit{#1} \par\nopagebreak}{\bigskip}
-\newenvironment{notation}{\bigskip\refstepcounter{counter}\noindent\textbf{Notation \thecounter}\par\nopagebreak}{\bigskip}
+\newenvironment{notation}{\bigskip\refstepcounter{counter}\noindent\textbf{Notation \thecounter~}\nopagebreak}{\bigskip}
 \newenvironment{proof}{\noindent\textit{Proof:~ }\nopagebreak}{\bigskip}
 \newenvironment{runningExample}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Running example \thecounter} \textit{#1} \par\nopagebreak}{\bigskip}
-\newenvironment{theorem}{\bigskip\refstepcounter{counter}\noindent\textbf{Theorem \thecounter }\par\nopagebreak}{\bigskip}
-\newenvironment{lemma}{\bigskip\refstepcounter{counter}\noindent\textbf{Lemma \thecounter }\par\nopagebreak}{\bigskip}
-\newenvironment{remark}{\bigskip\refstepcounter{counter}\noindent\textbf{Remark \thecounter }\par\nopagebreak}{\bigskip}
+\newenvironment{theorem}{\bigskip\refstepcounter{counter}\noindent\textbf{Theorem \thecounter }\nopagebreak}{\bigskip}
+\newenvironment{lemma}{\bigskip\refstepcounter{counter}\noindent\textbf{Lemma \thecounter }\nopagebreak}{\bigskip}
+\newenvironment{remark}{\bigskip\refstepcounter{counter}\noindent\textbf{Remark \thecounter }\nopagebreak}{\bigskip}
 
 \newcommand\mdoubleplus{\mathbin{+\mkern-7mu+}}
 \newcommand*\arc{{\fontfamily{pbk}\fontseries{db}\selectfont+}}
@@ -1562,6 +1562,7 @@ The compatible set $\mathscr{X}$ inherits partial order relation defined on $\ma
 \end{remark}
 
 \begin{lemma}
+\label{global_supremum}
 In every compatible set $\mathscr{X}$ (Remark~\ref{order_in_compat_set}), there always exists a global supremum $\mathtt{sup}(\mathscr{X})$, what is an ancestor of all the remaining agents in the set.
 \end{lemma}
 
@@ -1640,7 +1641,7 @@ $LTS(\mathds{M}_1) \equiv LTS(\mathds{M}_2)$
 The redundant rule $\mathtt{R}$ does not add any semantic details or the rule itself has no effect. It generally means the LTSs produced from the models with and without the rule are equal.
 
 \begin{theorem}
-
+\label{redundant_if}
 Let $\mathtt{R}, \mathtt{R}'$ be two well-formed rules of form:
 
 $$ \Gamma_1 + \Gamma_2 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \Gamma_{n+2} + \ldots + \Gamma_{m} $$
@@ -1727,8 +1728,6 @@ Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{in
 \end{enumerate}
 \end{definition}
 
-A reduced model $\widetilde{\mathds{M}}$ is actually an over-approximation of a BCSL model $\mathds{M}$ in context of their LTSs (Definition~\ref{over_approximation}). It can be used for some types of analyses which avoid combinatorial explosion of the original model.
-
 \begin{definition}{Over-approximation of LTS}
 \label{over_approximation}
 
@@ -1740,6 +1739,8 @@ $\forall \mathtt{s'} \in S' \exists \mathtt{s} \in S : \forall \mathtt{x'} \in \
 
 \end{definition}
 
+A reduced model $\widetilde{\mathds{M}}$ is actually an over-approximation of a BCSL model $\mathds{M}$ in context of their LTSs (Definition~\ref{over_approximation}). It can be used for some types of analyses which avoid combinatorial explosion of the original model $\mathds{M}$.
+
 \begin{theorem}
 \label{non-reachability_in_reduced}
 Let $\mathtt{X}$ be a complex agent, $\mathscr{X}$ be a compatible set for $\mathtt{X}$, and $\mathds{M}$ be a given BCSL model.
@@ -1750,7 +1751,6 @@ If supremum $\mathtt{sup}(\mathscr{X})$ is non-reachable in LTS of reduced model
 If we are checking whether an agent is reachable for given model $\mathds{M}$, we might first check whether its super-ancestor is reachable in created reduced model $\widetilde{\mathds{M}}$. If yes, then we are still not certain about reachability of agent itself and it has to be checked int he original model. However, agent which is not reachable in $\widetilde{\mathds{M}}$ is not reachable in the original model $\mathds{M}$ too (Theorem~\ref{non-reachability_in_reduced}).
 
 \begin{proof}
-
 Lets assume a complex agent $\mathtt{sup}(\mathscr{X})$ is non-reachable in LTS of reduced model $\widetilde{\mathds{M}}$, but $\mathtt{X} \in \mathscr{X}$ is reachable in LTS of the given model $\mathds{M}$.
 
 Generally, there is a path formed from rules in the original LTS such that we transform complex agents from initial agents to desired complex agent $\mathtt{X}$. When we move to context of reduced model $\widetilde{\mathds{M}}$, there is no such path for $\mathtt{sup}(\mathscr{X})$. However, according to Definition~\ref{reduced_model}, for every such rule there exist a reduced rule, such that all interacting complexes are reduced to their supremas. Therefore, if we could apply an original rule on a complex agent, we can do the same with reduced rule and its supremum. It follows there must exist such path also in reduced LTS and the complex agent $\mathtt{sup}(\mathscr{X})$ is reachable, what is a contradiction. $\QEDA$
