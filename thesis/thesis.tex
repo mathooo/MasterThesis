@@ -574,11 +574,14 @@ The Experiments repository is a module for storage and presentation of time-seri
 \chapter{Problem formulation}
 \label{problem_formulation}
 
-Biochemical Space as described in Section~\ref{bcs_general} can grow to quite a huge size. It means keep it consistent on an informal level is almost impossible. It is necessary to be able to detect inconsistency with automatic tools and enable further analysis of the space.
+Biochemical Space as described in Section~\ref{bcs_general} can grow to enormous size. To be able to detect inconsistency with
+automatic tools and enable further analysis of the space it is necessary to keep it on formal level.
 
-In our last paper~\cite{Ded201627}, we defined Biochemical Space Language (BCSL) such that syntax was defined independently, but semantics were defined via translating to Kappa language~\cite{kappa_formal}. First of all, we wanted to keep the language as concise as possible. The rule-based approach was the best hit, because it is capable to capture required details for biological systems while keeping the description concise. It was supposed to be human-readable, which in this context means easy to read, write, and maintain by humans even from other disciplines than computer science. However, there are many rule-based languages and each of them is slightly different in syntactic and semantic level and also on level of abstraction. After a research (Section~\ref{rule_based_languages}), we have evaluated all existing languages as not suitable for our purposes. The closest representation to the desired one was Kappa language (Section~\ref{kappa}). That is the reason why in first iteration we have chosen translation to Kappa for definition of semantics.
+%It means keep it consistent on an informal level is almost impossible. It is necessary to be able to detect inconsistency with automatic tools and enable further analysis of the space.
 
-However, we realised this approach is not very beneficial since we are not fully using the expressive power of our language this way. The problem is Kappa operates purely on expressions. We want to promote our language to a higher level when it operates on objects in multisets. By translating to Kappa we loose such abstraction. 
+In our last paper~\cite{Ded201627}, we defined Biochemical Space Language (BCSL) such that syntax was defined independently, but semantics were defined via translating to Kappa language~\cite{kappa_formal}. First of all, we wanted to keep the language as concise as possible. The rule-based approach was the best hit, because it is capable to capture required details for biological systems while keeping the description concise. It was supposed to be human-readable, which in this context means easy to read, write, and maintain by humans even from other disciplines than computer science. However, there are many rule-based languages, and each of them is slightly different on syntactic and semantic level and also on level of abstraction. After a research (Section~\ref{rule_based_languages}), we have evaluated all existing languages as not suitable for our purposes. The closest representation to the desired one was Kappa language (Section~\ref{kappa}). That is the reason why in first version we have chosen translation to Kappa for definition of semantics.
+
+However, this approach is not very beneficial since we are not fully using the expressive power of our language this way. The problem is Kappa operates purely on level of expressions. We want to promote our language to a higher level when it operates on objects in multisets. By translating to Kappa we loose such abstraction. 
 
 In the previous version of language development, both definition and implementation were made via translation to Kappa. It particularly means there was defined a translation function, which was able to convert BCSL expressions to Kappa expressions. The huge advantage was that the conversion was quite straightforward and this way we could apply all types of analyses Kappa language offers.
 
@@ -588,14 +591,14 @@ The indirect approach had several disadvantages. Kappa has only one type of agen
 \begin{center}
   \includegraphics[scale=0.35]{pics/abstraction}
 \end{center}
-\caption{Comparison of a complex in biology (on the left) to abstraction used in BCS (on the right). In biology, all possible graph isomorphisms must be considered which results from combinatorial options how edges can be placed to create a connected graph~\cite{Chartrand1985}. In BCS we neglect such details and see created structure only in sense of coexistence (a multiset), which significantly reduces number of possible deviations.}\label{abstraction_comparision}
+\caption{Comparison of a complex in biology (on the left) to abstraction used in BCS (on the right). In biology, all possible graph isomorphisms must be considered which results from combinatorial options how edges can be placed to create a connected graph~\cite{Chartrand1985}. In BCS we neglect such details and see created structure only in the sense of coexistence (a multiset), which significantly reduces number of possible deviations.}\label{abstraction_comparision}
 \end{figure}
 
-From the implementation point of view, executing models was delayed by conversion to Kappa and then calling Kappa core to execute its semantics. Moreover, Kappa uses network-free simulator, which is very efficient for small models, because the rules are executed directly. Each rule is being matched on current state and then matched objects are replaced according to the rule. The problem is when the model is more complex. The number of rules does not cause significant change, however the number of different interacting agents does. Once there are many agents, the time of one \emph{match \& replace} step rises dramatically. Compared to indirect methods when first reaction network is enumerated, the initial step can be resources consuming, but then rule application itself is fast regardless number of agents.
+From the implementation point of view, executing models was delayed by conversion to Kappa and then calling Kappa core to execute its semantics. Moreover, Kappa uses network-free simulator, which is very efficient for small models, because the rules are executed directly. Each rule is being matched on current state and then matched objects are replaced according to the rule. The problem is when the model is more complex. The number of rules does not cause significant change, however the number of different interacting agents does. Once there are many agents, the time of one \emph{match \& replace} step rises dramatically. Compared to indirect methods when first reaction network is enumerated, the initial step can be resources consuming, but then rule application itself is fast regardless the number of agents.
 
-For the reasons mentioned above we decided to redefine the BCSL language itself. Particularly, the syntax definition had to be refined in order to make the usability more clear. From semantic point of view, we needed a straightforward definition which would have practical use in implementation. Experiences from previous iterations showed that using direct rule-based semantics were not very efficient mechanisms. For that reason, we have chosen an indirect definition via translation to reactions -- \emph{practical} definition (Section~\ref{formal_definition}). The practical part means that this approach can be efficiently used in implementation.
+For the reasons mentioned above we decided to redefine the BCSL language itself. Particularly, the syntax definition had to be refined in order to make the usability more clear. From semantic point of view, we needed a straightforward definition, which would have practical use in implementation. Experience from previous iterations showed that using direct rule-based semantics were not very efficient mechanisms. For that reason, we have chosen an indirect definition via translation to reactions -- \emph{practical} definition (Section~\ref{formal_definition}). The practical part means that this approach can be efficiently used in implementation.
 
-In section~\ref{bcs_general}, we have motivated the level of abstraction we need to use in BCS. To achieve that, we decided to neglect structural details, i.e. we do not employ binding approach. We consider binding as too low level of details. Instead, we improve definition of interacting agents to higher level, when an agent might expresses some kind of structural description (Figure~\ref{abstraction_comparision}). This way we avoid complicated creation of complexes and reduce complicated syntax.
+In section~\ref{bcs_general}, we have motivated the level of abstraction we need to use in BCS. To achieve that, we decided to neglect structural details, i.e. we do not employ binding approach. We consider binding as too low level of details. Instead, we improved definition of interacting agents to higher level, when an agent might expresses some kind of structural description (Figure~\ref{abstraction_comparision}). This way we avoid complicated creation of complexes and reduce complicated syntax.
 
 Also, we determine two types of complexes. None of them is literally a complex, we rather see it as a coexistence. It allows us to express even other types of interaction. We also determine whether the expresses complex is complete, i.e. the enumerated subparts are all which form the complex. The other type of complex expresses the fact that subparts play an important role in the complex, but there are more parts which we do not model, but this fact is important for semantics of the model.
 
@@ -606,7 +609,7 @@ In this chapter, we define Biochemical Space Language formally. At first, we def
 
 The defined semantics is indirect, i.e. we do not give semantic sense to rules themselves, rather provide a procedure how to generate reactions from the rules and give semantics to them.
 
-For better readability, we provide examples of syntax for most important object during their definition. However, the formal definition of syntax and the relation to the objects will be given later.
+For better readability, we provide examples of syntax for most important object with their definition. The formal definition of syntax and the relation to the objects will be given later.
 
 \section{Formal preliminaries}
 
@@ -629,7 +632,7 @@ Projection $\pi_i : X^n \rightarrow X $ is defined as follows:
 $ \pi_i(x_1, \ldots, x_n) = x_i $
 \end{center}
 
-for some $i, n \in \mathbb{N}$ and $i \leq n$.
+for some $i, n \in \mathbb{N}$ where $i \leq n$.
 \end{definition}
 
 %Next, we need to define tuples concatenation, since we work with them quite often want to make sure this operation is clear.
@@ -663,7 +666,7 @@ A partition $\mathcal{P} = B_1/B_2/\ldots/B_k$ of $S = [1,\ldots,n]$ is non-cros
 %We also need to use permutations product. For this purpose, we use common notion $\sigma$.
 
 \begin{notation}
-Let $\vv{v} = (x_1, \ldots, x_n)$ be a vector. By $\sigma(\vv{v})$ we denote set of all possible permutations with length $n$ of the vector $\vv{v}$.
+Let $\vv{v} = (x_1, \ldots, x_n)$ be a vector. By $\sigma(\vv{v})$ we denote set of all possible permutations of length $n$ of the vector $\vv{v}$.
 \end{notation}
 
 \begin{definition}{Labelled transition system}\label{lts}
@@ -690,7 +693,7 @@ Petri Net is a quadruple $\mathcal{N} = (P, T, F, m_0)$ where:
 
 \section{Objects definition}
 
-Let $\mathcal{N}_{A},~\mathcal{N}_{T},~\mathcal{N}_{\delta},~\mathcal{N}_{c}$ be mutually exclusive finite sets of atomic names, structure names, states, and compartments, respectively. Moreover, $\varepsilon$ is reserved symbol and does not belong to any of these sets.
+Let $\mathcal{N}_{A},~\mathcal{N}_{T},~\mathcal{N}_{\delta},~\mathcal{N}_{c}$ be mutually exclusive finite sets of atomic names, structure names, states, and compartments respectively. Moreover, $\varepsilon$ is reserved symbol and does not belong to any of these sets.
 
 \subsection{Signature}
 
@@ -700,7 +703,7 @@ Atomic signature $\Sigma_{\mathtt{A}} \subseteq \mathcal{N}_{A} \times 2^{\mathc
 Structure signature $\Sigma_{\mathtt{T}} \subseteq \mathcal{N}_{T} \times 2^{\mathcal{N}_{A}}$ associates structure names with set of atomic names. 
 \end{definition}
 
-Signatures define for an atomic name allowed set of states and for a structure name allowed set of atomic names. The deeper meaning will be revealed after next part of definitions.
+Signatures define a set of allowed states for an atomic name and a allowed set of atomic names for a structure name. The deeper meaning will be revealed after next part of definitions.
 
 \begin{example}{Signature}\label{example:signature}
 \begin{itemize}
