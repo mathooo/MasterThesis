@@ -680,6 +680,21 @@ Let $\vv{v} = (x_1, \ldots, x_n)$ be a vector. By $\sigma(\vv{v})$ we denote set
 \end{itemize}
 \end{definition}
 
+\begin{definition}{Path in LTS}
+Let $\mathcal{L} = (S, A, T, s_0)$ be an LTS. We define \emph{path} as an finite sequence of states:
+
+\begin{center}
+$s_1 s_2 \ldots s_n$
+\end{center}
+
+such that
+
+\begin{center}
+$\forall s_i, s_{i+1} : (s_i, a, s_{i+1}) \in T$ for some $a \in A$.
+\end{center}
+
+\end{definition}
+
 \begin{definition}{Petri Net}
 Petri Net is a quadruple $\mathcal{N} = (P, T, F, m_0)$ where:
 
@@ -1507,25 +1522,25 @@ Assigning rates to the rules enables deterministic simulation~\cite{Poole2000} b
 \section{Static analysis}
 \label{static_analyses}
 
-The language itself offers interesting capabilities in order to provide static analysis of given models. In order to provide such properties we define \emph{compatibility} operator $\lhd$ for each type of agents.
+The BCS language offers interesting capabilities in order to provide static analysis of given models. We define \emph{compatibility} operator $\lhd$ for each type of agents, which will help us to formulate properties suitable for static analysis.
 
 \begin{definition}{Compatibility of atomic agents}
-Let $\mathtt{A}_1$, $\mathtt{A}_2$ be atomic agents. Then, we say $\mathtt{A}_1$ is \emph{compatible with} $\mathtt{A}_2$, written $\mathtt{A}_1 \lhd \mathtt{A}_2$, if either $\mathtt{A}_1 \equiv \mathtt{A}_2$ or $\eta(\mathtt{A}_1) \equiv \eta(\mathtt{A}_2) \wedge \delta(\mathtt{A}_1) \equiv \varepsilon $.
+Let $\mathtt{A}_1$, $\mathtt{A}_2$ be atomic agents. The agent $\mathtt{A}_1$ is \emph{compatible with} agent $\mathtt{A}_2$, written $\mathtt{A}_1 \lhd \mathtt{A}_2$, if either $\mathtt{A}_1 \equiv \mathtt{A}_2$ or $\eta(\mathtt{A}_1) \equiv \eta(\mathtt{A}_2) \wedge \delta(\mathtt{A}_1) \equiv \varepsilon $.
 \end{definition}
 
-Note that compatibility of two atomic agents is very close to their equivalence, but the left-hand-side agent is allowed to have its state undefined. 
+Note that compatibility of two atomic agents is very close to their equivalence. Additionally the left-hand-side agent is allowed to have its state undefined while the state of right-hand-side agent differs. 
 
 \begin{definition}{Compatibility of structure agents}
-Let $\mathtt{T}_1$, $\mathtt{T}_2$ be structure agents. We say $\mathtt{T}_1$ is \emph{compatible with} $\mathtt{T}_2$, written $\mathtt{T}_1 \lhd \mathtt{T}_2$, \emph{iff} either $\mathtt{T}_1 \equiv \mathtt{T}_2$ or $\eta(\mathtt{T}_1) \equiv \eta(\mathtt{T}_2) \wedge \forall \mathtt{A}_1$ : $\mathtt{A}_1 \in \gamma(\mathtt{T}_1) ~\exists \mathtt{A}_2 : \mathtt{A}_2 \in \gamma(\mathtt{T}_2)$ : $\mathtt{A}_1 \lhd \mathtt{A}_2$.
+Let $\mathtt{T}_1, \mathtt{T}_2$ be structure agents. The agent $\mathtt{T}_1$ is \emph{compatible with} agent $\mathtt{T}_2$, written $\mathtt{T}_1 \lhd \mathtt{T}_2$, \emph{iff} either $\mathtt{T}_1 \equiv \mathtt{T}_2$ or $\eta(\mathtt{T}_1) \equiv \eta(\mathtt{T}_2) \wedge \forall \mathtt{A}_1 \in \gamma(\mathtt{T}_1) ~\exists \mathtt{A}_2 \in \gamma(\mathtt{T}_2)$ : $\mathtt{A}_1 \lhd \mathtt{A}_2$.
 \end{definition}
 
-Structure agents are compatible if we are able to create pairs from atomic agents of left-hand-side agent's composition with the right-hand-ones such that these atomic agents are all unique. For such pairs, the agents in each pair must be compatible.
+Structure agents are compatible if we are able to create pairs from atomic agents of composition of left-hand-side agent with the right-hand-side ones such that these atomic agents are all unique. For such pairs, the agents in each pair must be compatible.
 
 \begin{definition}{Compatibility of complex agents}
-Let $\mathtt{X}_1$, $\mathtt{X}_2$ be complex agents. We say $\mathtt{X}_1$ is \emph{compatible with} $\mathtt{X}_2$, written $\mathtt{X}_1 \lhd \mathtt{X}_2$, \emph{iff} either $\mathtt{X}_1 \equiv \mathtt{X}_2$ or $\mathtt{com}(\mathtt{X}_1) \equiv \mathtt{com}(\mathtt{X}_2) \wedge \exists \mu' \in \sigma(\mu(\mathtt{X}_2))$ such that $ \forall i \in [1, n] : \pi_i(\mu(\mathtt{X}_1)) \lhd \pi_i(\mu') $, where $n$ is length of sequence which is same for both sequences.
+Let $\mathtt{X}_1$, $\mathtt{X}_2$ be complex agents. The agent $\mathtt{X}_1$ is \emph{compatible with} agent $\mathtt{X}_2$, written $\mathtt{X}_1 \lhd \mathtt{X}_2$, \emph{iff} either $\mathtt{X}_1 \equiv \mathtt{X}_2$ or $\mathtt{com}(\mathtt{X}_1) \equiv \mathtt{com}(\mathtt{X}_2) \wedge \exists \mu' \in \sigma(\mu(\mathtt{X}_2))$ such that $ \forall i \in [1, n] : \pi_i(\mu(\mathtt{X}_1)) \lhd \pi_i(\mu') $, where $n$ is length of sequence which is the same for both sequences.
 \end{definition}
 
-Compatibility of complex agents means that every pair of agents through the sequences of complexes must be compatible.
+Complex agents are compatible of there exists a permutation of sequence of the first agent such that individual agents on the same position in both sequences are compatible.
 
 The insight from the previous chapters is that an agent might have its ancestors and successors. The compatibility operator formulates this relationship formally. Each successor is compatible with its ancestor, but the reverse relation does not hold. The successor has always more details specified.
 
@@ -1542,7 +1557,7 @@ Let $x_1, x_2 \in P$ be agents and $P$ a universe of agents. Agents $x_1$ and $x
 The universe of complex agents $\mathds{X}$ ordered by partial order reduction $\leq$ is denoted as $\mathds{X}_\leq$.
 \end{notation}
 
-The compatibility operator generates partial order of $\mathds{A}, \mathds{T}$, and $\mathds{X}$ sets. For our purposes, partially ordered set $\mathds{X}_\sqsubseteq$ is relevant. The reason is that complex agents actually encapsulate all other agent types including compartments. However, partial order of entire universe of complex agents is not very useful, since most of agents cannot be compared. We are interested in particular subsets which are formed from all complexes of the same type, i.e. those sets where each pair of complexes holds the compatibility conditions (in arbitrary some direction).
+The compatibility operator generates partial order of $\mathds{A}, \mathds{T}$, and $\mathds{X}$ sets. For our purposes, partially ordered set $\mathds{X}_\leq$ is relevant. The reason is that complex agents actually encapsulate all other agent types including compartments. However, partial order of entire universe of complex agents is not very useful, since most of agents cannot be compared. We are interested in particular subsets which are formed from all complexes of the same type, i.e. those sets where each pair of complexes holds the compatibility conditions (in arbitrary direction).
 
 \begin{definition}{Compatible set}
 \label{compatible_set}
@@ -1550,7 +1565,7 @@ A finite set $\mathscr{X} \subseteq \mathds{X}$ is a \emph{compatible set} if:
 \begin{center}
 \begin{enumerate}
 	\item \label{compatible_cond} $ \forall \mathtt{X}_1, \mathtt{X}_2 \in \mathscr{X} ~\exists~ \mathtt{X}' \in \mathscr{X}: \mathtt{X}_1 \lhd \mathtt{X}' \wedge \mathtt{X}_2 \lhd \mathtt{X}'$ such that $\mathtt{X}_1 \neq \mathtt{X}_2$,
-{}
+
  and for each finite set $\mathscr{X}' \subseteq \mathds{X}$ such that $\mathscr{X} \neq \mathscr{X}'$ holds:
 
 	\item \label{non_compatible_cond} $\forall \mathtt{X} \in \mathscr{X} \forall \mathtt{X}' \in \mathscr{X}': \neg (\mathtt{X} ~\Delta~ \mathtt{X}') $.
@@ -1564,20 +1579,22 @@ A finite set $\mathscr{X} \subseteq \mathds{X}$ is a \emph{compatible set} if:
 The compatible set $\mathscr{X}$ inherits partial order relation defined on $\mathds{X}_\leq$, which follows from conditions (\ref{compatible_cond}) and (\ref{non_compatible_cond}) of Definition~\ref{compatible_set}.
 \end{remark}
 
+A compatible set $\mathscr{X}$ is contains partially ordered complex agents. Assuming we ignore states of individual atomic agents (including those inside partial compositions of structure agents), these complex agents are all equal. In other words, they all contain the same sequence of agent names. Example of a compatible set is given in Figure~\ref{compatible_set_example}.
+
 \begin{lemma}
 \label{global_supremum}
-In every compatible set $\mathscr{X}$ (Remark~\ref{order_in_compat_set}), there always exists a global supremum $\mathtt{sup}(\mathscr{X})$, what is an ancestor of all the remaining agents in the set.
+In every compatible set $\mathscr{X}$, there always exists a global supremum $\mathtt{sup}(\mathscr{X})$, what is an ancestor of all the remaining agents in the set (Remark~\ref{order_in_compat_set}).
 \end{lemma}
 
 \begin{proof}
-The lemma follows from Definition~\ref{compatible_set} condition~(\ref{compatible_cond}) which basically claims that there is a supremum (in manner of compatibility) for each two complex agents in the compatible set $\mathscr{X}$. Since there exists a supremum for every two items of the set and the set $\mathscr{X}$ is finite, there must exists a global supremum for the entire set. $\QEDA$
+The lemma follows from Definition~\ref{compatible_set} condition~(\ref{compatible_cond}) which basically claims that there is a supremum (in manner of compatibility) for each two complex agents in the compatible set $\mathscr{X}$. Since there exists a supremum for every two items in the set and the set is finite, there must exists a global supremum for the entire set. $\QEDA$
 \end{proof}
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[scale=0.13]{pics/partial_order}
 \end{center}
-\caption{An example of compatible set $\mathscr{X}$. The partial order is depicted by a tree. For better readability, the agents are written in BCSL syntax. It is formed by a complex in $cyt$ compartment, which has only one structure agent $K$ in its sequence. The structure agent $K$ has allowed atomic agents $T$ and $S$ in its partial composition. These two atomic agents might occur in two states -- $u$ and $p$. The set is complete -- there are all relevant agents bounded by compatibility operator.}
+\caption{An example of compatible set $\mathscr{X}$. For better readability, the agents are written in BCSL syntax. The set is formed by a complex in $cyt$ compartment, which has only one structure agent $K$ in its sequence. The structure agent $K$ has allowed atomic agents $T$ and $S$ in its partial composition. These two atomic agents might occur in two states -- $u$ and $p$. The set is complete -- there are all relevant agents bounded by compatibility operator.}\label{compatible_set_example}
 \end{figure}
 
 \begin{lemma}
@@ -1588,12 +1605,12 @@ For every complex agent $\mathtt{X}$ there exists exactly one compatible set $\m
 \begin{proof}
 Lets assume a complex agent $\mathtt{X}$ belongs to two compatible sets, namely $\mathtt{X} \in \mathscr{X}_1, \mathscr{X}_2$. From the Definition~\ref{compatible_set} condition~(\ref{compatible_cond}) follows that there exists a $\mathtt{X}_1 \in \mathscr{X}_1$ such that $\mathtt{X} \lhd \mathtt{X}_1$. 
 
-Then, the condition~(\ref{non_compatible_cond}) claims that no complex agent from $\mathscr{X}_1$ and no complex agent from $\mathscr{X}_2$ can be compatible. Namely, $\mathtt{X}_1 \in \mathscr{X}_1$ cannot be compatible with $\mathtt{X} \in \mathscr{X}_2$. However, $\mathtt{X}$ and $\mathtt{X}_1$ are compatible ($\mathtt{X} \lhd \mathtt{X}_1$). It follows $\mathtt{X} \not\in \mathscr{X}_2$, what is a contradiction. $\QEDA$
+Then, the condition~(\ref{non_compatible_cond}) claims that no complex agent from $\mathscr{X}_1$ and no complex agent from $\mathscr{X}_2$ can be compatible. Namely, $\mathtt{X}_1 \in \mathscr{X}_1$ cannot be compatible with $\mathtt{X} \in \mathscr{X}_2$. However, $\mathtt{X}$ and $\mathtt{X}_1$ are compatible (namely $\mathtt{X} \lhd \mathtt{X}_1$). It follows $\mathtt{X} \not\in \mathscr{X}_2$, what is a contradiction. $\QEDA$
 
 % via identity?
 \end{proof}
 
-Practically, relation following from compatibility operator can be used in several ways. It is suitable for deeper static analysis on level of complexes~\ref{context_reduction} and for finding non-trivial relationships between the rules~\ref{rule_redundancy}.
+Practically, compatible sets can be used for a deeper static analysis on level of complexes~\ref{context_reduction} and for finding non-trivial relationships between the rules~\ref{rule_redundancy}.
 
 %\vspace*{0.5cm}\noindent\textbf{Note:} There always exists a compatible set $\mathscr{X}$ for a complex agent $\mathtt{X}$ which follows from Lemma~\ref{exists_one_comp_set}.
 
@@ -1601,7 +1618,7 @@ Note that there always exists a compatible set $\mathscr{X}$ for a complex agent
 
 \begin{definition}{Compatible subset}
 \label{compatible_subset}
-Let $\mathscr{X} \subseteq \mathds{X}$ be a compatible set and $\mathtt{X} \in \mathscr{X}$ a complex agent. A set $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}} \in \mathscr{X}$ is called \emph{compatible subset} of $\mathscr{X}$ w.r.t. $\mathtt{X}$ if the following holds:
+Let $\mathscr{X} \subseteq \mathds{X}$ be a compatible set and $\mathtt{X} \in \mathscr{X}$ a complex agent. A set $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}} \subseteq \mathscr{X}$ is called \emph{compatible subset} of $\mathscr{X}$ w.r.t. $\mathtt{X}$ if the following holds:
 
 \begin{center}
 $ \mkern2mu\overline{\mkern-4.5mu \mathscr{X}} \subseteq \mathscr{X}: \forall \mathtt{X}' \in \mkern2mu\overline{\mkern-4.5mu \mathscr{X}}: (\mathtt{X}' \lhd \mathtt{X} \wedge \forall \mathtt{X}'' \in \mkern2mu\overline{\mkern-4.5mu \mathscr{X}}: \neg (\mathtt{X}'' \lhd \mathtt{X}') )$
@@ -1613,13 +1630,13 @@ $ \mkern2mu\overline{\mkern-4.5mu \mathscr{X}} \subseteq \mathscr{X}: \forall \m
 
 Note that for any complex agent $\mathtt{X}$ there exists just one compatible subset. The reason follows from Lemma~\ref{exists_one_comp_set} and the definition of the subset.
 
-Items of $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}}$ are the minimal elements of set $\mathscr{X}$ w.r.t. complex agent $\mathtt{X}$.
+
 
 \begin{remark}
 \label{generating_vs_compatibility}
-Note that in the process of generating reactions from the rules (Section~\ref{Generating reactions}), we are using ground form function (Section~\ref{ground_forms}). What the function basically does is it adds context to individual complex agents (and its substructures). In the definition of the function we provided exact procedure how to generate such agents.
+In the process of generating reactions from the rules (Section~\ref{Generating reactions}), we are using ground form function (Definition~\ref{ground_form}). The function basically adds context to individual complex agents (and its substructures). In the definition of the function we provided exact procedure how to generate such agents.
 
-However, when we look at the process more theoretically, a set of appropriate complex agents is generated for every complex agent $\mathtt{X}$ in the rule $\mathtt{R}$ and then they are connected to multiple unique reactions. This set is actually a compatible subset $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}}$ of compatible set $\mathscr{X}$ such that $\mathtt{X} \in \mathscr{X}$. In other words, the agents in $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}}$ are all minimal items from compatible set $\mathscr{X}$ which are compatible with agent $\mathtt{X}$.
+When we look at the process more theoretically, a set of appropriate complex agents is generated for every complex agent $\mathtt{X}$ in the rule $\mathtt{R}$ and then they are connected to multiple unique reactions. This set is actually a compatible subset $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}}$ of compatible set $\mathscr{X}$ such that $\mathtt{X} \in \mathscr{X}$. In other words, agents of $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}}$ are the minimal elements of set $\mathscr{X}$ w.r.t. compatibility with complex agent $\mathtt{X}$.
 
 \end{remark}
 
@@ -1720,21 +1737,24 @@ Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{in
 \begin{enumerate}
 	\item for every well-formed rule $\mathtt{F}(\rho') = (\chi', \omega', \iota', \varphi', \psi') \in \mathds{R}$ such that $\rho' \in \widetilde{\mathcal{R}}$ and appropriate original rule $\mathtt{F}(\rho) = (\chi, \omega, \iota, \varphi, \psi) \in \mathds{R}$ such that $\rho \in \mathcal{R}$ holds:
 
-	$$\forall i \in [1, k]: \pi_i(\chi') \equiv \mathtt{sup}(\mathscr{X})$$ where $\mathscr{X}$ is a compatible set such that $\pi_i(\chi) \in \mathscr{X}$ and length $k = |\chi'| = |\chi|$ (i.e., number of complex agent expressions is the same in both sides of the rules respectively),
+	\begin{center}
+	$\forall i \in [1, k]: \pi_i(\chi') \equiv \mathtt{sup}(\mathscr{X})$
+	\end{center}
+
+	where $\mathscr{X}$ is a compatible set such that $\pi_i(\chi) \in \mathscr{X}$ and length $k = |\chi'| = |\chi|$ (i.e., number of complex agent expressions is the same in both sides of the rules respectively),
 
 	\item for every complex agent $\mathtt{X}' = \mathtt{F}(\Gamma') \in \mathtt{I}$ and appropriate original complex agent $\mathtt{X} = \mathtt{F}(\Gamma) \in \mathtt{init}$ the following condition holds:
 
 	\begin{center}
 	$ \mathtt{X}' \equiv \mathtt{sup}(\mathscr{X}) $ such that $\mathtt{X} \in \mathscr{X}$.
 	\end{center}
-
 \end{enumerate}
 \end{definition}
 
 \begin{definition}{Over-approximation of LTS}
 \label{over_approximation}
 
-Let $LTS, LTS'$ be labeled transition systems of some BCSL models. The $LTS'$ is \emph{over-approximation} of $LTS$ if for every sequence of states $S'$ such that there exists transition between them in $LTS'$ there exists a sequence of states $S$ such that there exists transition between them in $LTS$ such that:
+Let $LTS, LTS'$ be labeled transition systems of some BCSL models. The $LTS'$ is \emph{over-approximation} of $LTS$ if for every path of states $S'$ in $LTS'$ there exists a path of states $S$ in LTS such that:
 
 \begin{center}
 $\forall \mathtt{s'} \in S' \exists \mathtt{s} \in S : \forall \mathtt{x'} \in \mathtt{s'} \exists \mathtt{x} \in \mathtt{s} : \mathtt{x'} = \mathtt{sup}(\mathtt{x}) $.
@@ -1746,18 +1766,16 @@ A reduced model $\widetilde{\mathds{M}}$ is actually an over-approximation of a 
 
 \begin{theorem}
 \label{non-reachability_in_reduced}
-Let $\mathtt{X}$ be a complex agent, $\mathscr{X}$ be a compatible set for $\mathtt{X}$, and $\mathds{M}$ be a given BCSL model.
-
-If supremum $\mathtt{sup}(\mathscr{X})$ is non-reachable in LTS of reduced model $\widetilde{\mathds{M}}$ constructed with respect to given model $\mathds{M}$, then agent $\mathtt{X}$ is also non-reachable in the LTS of the original model $\mathds{M}$.
+Let $\mathtt{X}$ be a complex agent, $\mathscr{X}$ be a compatible set for $\mathtt{X}$, and $\mathds{M}$ be a given BCSL model. If supremum $\mathtt{sup}(\mathscr{X})$ is non-reachable in LTS of reduced model $\widetilde{\mathds{M}}$ constructed with respect to given model $\mathds{M}$, then agent $\mathtt{X}$ is also non-reachable in the LTS of the original model $\mathds{M}$.
 \end{theorem}
-
-If we are checking whether an agent is reachable for given model $\mathds{M}$, we might first check whether its super-ancestor is reachable in created reduced model $\widetilde{\mathds{M}}$. If yes, then we are still not certain about reachability of agent itself and it has to be checked int he original model. However, agent which is not reachable in $\widetilde{\mathds{M}}$ is not reachable in the original model $\mathds{M}$ too (Theorem~\ref{non-reachability_in_reduced}).
 
 \begin{proof}
 Lets assume a complex agent $\mathtt{sup}(\mathscr{X})$ is non-reachable in LTS of reduced model $\widetilde{\mathds{M}}$, but $\mathtt{X} \in \mathscr{X}$ is reachable in LTS of the given model $\mathds{M}$.
 
 Generally, there is a path formed from rules in the original LTS such that we transform complex agents from initial agents to desired complex agent $\mathtt{X}$. When we move to context of reduced model $\widetilde{\mathds{M}}$, there is no such path for $\mathtt{sup}(\mathscr{X})$. However, according to Definition~\ref{reduced_model}, for every such rule there exist a reduced rule, such that all interacting complexes are reduced to their supremas. Therefore, if we could apply an original rule on a complex agent, we can do the same with reduced rule and its supremum. It follows there must exist such path also in reduced LTS and the complex agent $\mathtt{sup}(\mathscr{X})$ is reachable, what is a contradiction. $\QEDA$
 \end{proof}
+
+If we are checking whether an agent is reachable for given model $\mathds{M}$, we might first check whether its super-ancestor is reachable in created reduced model $\widetilde{\mathds{M}}$. If yes, then we are still not certain about reachability of agent itself and it has to be checked int he original model. However, agent which is not reachable in $\widetilde{\mathds{M}}$ is not reachable in the original model $\mathds{M}$ too (Theorem~\ref{non-reachability_in_reduced}).
 
 This approach can be generalised for the non-reachability of a (multi)set of complex agents, but we consider it as a future work.
 
