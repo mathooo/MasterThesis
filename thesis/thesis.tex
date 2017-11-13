@@ -618,11 +618,11 @@ Before we proceed, we recall some basic notations and provide all necessary defi
 %We define projection $\pi_i$ to enable iterating through multidimensional structures.
 
 \begin{definition}{Multiset}
-We define a multiset $O$ as a pair $(A, m)$ where $A$ is some set and $ m : A \rightarrow \mathbb{N} $ is a function from $A$ to the set of positive integers. The set $A$ is called the \emph{underlying set of elements}. For each $a$ in $A$ the \emph{multiplicity} (that is, number of occurrences) of a is the number $m(a)$.
+We define a multiset $O$ as a pair $(A, \mathtt{m})$ where $A$ is some set and $ \mathtt{m} : A \rightarrow \mathbb{N} $ is a function from $A$ to the set of positive integers. The set $A$ is called the \emph{underlying set of elements}. For each $a$ in $A$ the \emph{multiplicity} (that is, number of occurrences) of a is the number $\mathtt{m}(a)$.
 \end{definition}
 
 \begin{notation}
-Let $O$ be a multiset. By $x \in O$ we usually denote the fact that there exists a pair $(x, i) \in O$ such that $i \geq 1$.
+Let $O = (A, m)$ be a multiset. By $x \in O$ we usually denote the fact that there exists $x \in A$ such that $m(x) \geq 1$.
 \end{notation}
 
 \begin{definition}{Projection}
@@ -684,13 +684,13 @@ Let $\vv{v} = (x_1, \ldots, x_n)$ be a vector. By $\sigma(\vv{v})$ we denote set
 Let $\mathcal{L} = (S, A, T, s_0)$ be an LTS. We define \emph{path} as an finite sequence of states:
 
 \begin{center}
-$s_1 s_2 \ldots s_n$
+$\mathtt{s}_1 \mathtt{s}_2 \ldots \mathtt{s}_n$
 \end{center}
 
 such that
 
 \begin{center}
-$\forall s_i, s_{i+1} : (s_i, a, s_{i+1}) \in T$ for some $a \in A$.
+$\forall \mathtt{s}_i, \mathtt{s}_{i+1} : (\mathtt{s}_i, \mathtt{a}, \mathtt{s}_{i+1}) \in T$ for some $\mathtt{a} \in A$.
 \end{center}
 
 \end{definition}
@@ -1247,28 +1247,61 @@ In Definition~\ref{states_creation} we show how to create an LTS from a chemical
 \begin{definition}{Vector to multiset translation}
 \label{vector_to_state}
 
-Translation of a vector $(a_1, a_2, \ldots, a_n) \in \mathbb{N}^n$ to a multiset $\mathtt{S} \subseteq \mathds{X}$ is defined as follows:
+Translation of a vector $(a_1, a_2, \ldots, a_n) \in \mathbb{N}^n$ to a multiset $\mathtt{S} = (A, \mathtt{m})$ is defined as follows:
 
 \begin{center}
-$\lambda^T((a_1, a_2, \ldots, a_n), \theta) = \{~ (\theta_i, a_i) ~|~ i \in [1, \ldots, n] ~\} $ where $n = |\theta|$.
+\begin{tabular}{r@{\hskip 0.05cm}l}
+$\lambda^{-1}((a_1, a_2, \ldots, a_n), \theta) =$ & $ \mathtt{S}$ such that\\
+$A = $ & $ \{~ \theta_i ~|~ i \in [1, \ldots, n] \wedge a_i > 0 ~\}$\\
+
+$\mathtt{m} = $& $ \{~ (\theta_i, a_i) ~|~ i \in [1, \ldots, n] \wedge a_i > 0 ~\}$\\
+& \\
+where $n = |\theta|$. &\\
+\end{tabular}
 \end{center}
 \end{definition}
 
-Note that procedure provided in Definition~\ref{vector_to_state} can be extended to the labels of the LTS. The labels, which represent reactions applied, might contain negative numbers. These are treated independently and represent left-hand-side of the reaction $\lambda^{T-}$ (the reactants) while non-negative numbers represent right-hand-side of the reaction $\lambda^{T+}$ (the products).
+The procedure provided in Definition~\ref{vector_to_state} can be extended to the labels of the LTS. The labels, which represent reactions applied, might contain negative numbers. Therefore, we need to define translation function for negative numbers.
+
+\begin{definition}{Negative vector to multiset translation}
+\label{neg_vector_to_state}
+
+Translation of the negative part a vector $(a_1, a_2, \ldots, a_n) \in \mathbb{N}^n$ to a multiset $\mathtt{S} = (A, \mathtt{m})$ is defined as follows:
+
+\begin{center}
+\begin{tabular}{r@{\hskip 0.05cm}l}
+$\mkern2mu\overline{\mkern-4.5mu \lambda^{-1}}((a_1, a_2, \ldots, a_n), \theta) =$ & $ \mathtt{S}$ such that\\
+$A = $ & $ \{~ \theta_i ~|~ i \in [1, \ldots, n] \wedge a_i < 0 ~\}$\\
+
+$\mathtt{m} = $& $ \{~ (\theta_i, |a_i|) ~|~ i \in [1, \ldots, n] \wedge a_i < 0 ~\}$\\
+& \\
+where $n = |\theta|$. &\\
+\end{tabular}
+\end{center}
+\end{definition}
+
+The positive and negative parts of labels are treated independently. The negative numbers represent left-hand-side of the reaction~ $\mkern2mu\overline{\mkern-4.5mu \lambda^{-1}}$ (the reactants) while positive numbers represent right-hand-side of the reaction $\lambda^{-1}$ (the products).
 
 \begin{definition}{LTS of BCSL model}
 Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model and $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \theta)$ be a chemical reaction model constructed from model $\mathds{M}$.
 
-We define the labeled transition system of BCSL model $\mathds{M}$, $LTS(\mathds{M}) = (S, A, T, s_0)$, from the $LTS(\mathcal{M}) = (S', A', T', s'_0)$ as follows:
+We define the labeled transition system of BCSL model $\mathds{M}$, $LTS(\mathds{M}) = (S, A, T, s_0)$, from the $LTS(\mathcal{M}) = (S', A', T', s'_0)$ such that:
 
 \begin{enumerate}
-	\item $S = \{~ s ~|~ s = \lambda^T(s', \theta) \wedge s' \in S' ~\}$,
-	\item $A = \{~ (l, r) ~|~ l = \lambda^{T-}(a', \theta) \wedge r = \lambda^{T+}(a', \theta) \wedge a' \in A' ~\} $,
-	\item $T = \{~ (s, (l, r), t) ~|~ s = \lambda^T(\vv{\mathtt{s}}, \theta) \wedge t = \lambda^T(\vv{\mathtt{p}}, \theta) \wedge l = \lambda^{T-}(\vv{\mathtt{r}}, \theta) \wedge r = \lambda^{T+}(\vv{\mathtt{r}}, \theta) \wedge (\vv{\mathtt{s}}, \vv{\mathtt{r}}, \vv{\mathtt{p}}) \in T' ~\} $,
-	\item $s_0 = \lambda^T(s'_0, \theta)$.
+	\item $S = \{~ \mathtt{s} ~|~ \mathtt{s} = \lambda^{-1}(\mathtt{s}', \theta) \wedge \mathtt{s}' \in S' ~\}$,
+	\item $A = \{~ (\mathtt{l}, \mathtt{r}) ~|~ \mathtt{l} = \mkern2mu\overline{\mkern-4.5mu \lambda^{-1}}(\mathtt{a}, \theta) \wedge \mathtt{r} = \lambda^{-1}(\mathtt{a}, \theta) \wedge \mathtt{a} \in A' ~\} $,
+
+	\item $T = \Set{  (\mathtt{s}, (\mathtt{l}, \mathtt{r}), \mathtt{t})\ | \begin{array}{l}
+      \mathtt{s} = \lambda^{-1}(\vv{\mathtt{s}}, \theta) \wedge \mathtt{t} = \lambda^{-1}(\vv{\mathtt{p}}, \theta) \wedge l = \mkern2mu\overline{\mkern-4.5mu \lambda^{-1}}(\vv{\mathtt{r}}, \theta) ~\wedge \\
+      \wedge~ r = \lambda^{-1}(\vv{\mathtt{r}}, \theta) \wedge (\vv{\mathtt{s}}, \vv{\mathtt{r}}, \vv{\mathtt{p}}) \in T'
+  \end{array}}$
+
+	\item $s_0 = \lambda^{-1}(s'_0, \theta)$.
 \end{enumerate}
 
 \end{definition}
+
+The LTS of a BCSL model is formed by states, labels, transitions, and an initial state. The states are multisets of complex agents, labels are individual reactions (the left and right-hand-side multisets of complex agents respectively), and transitions are triples of (state, label, state) which represent edges. The initial state is a special state representing the origin of the system.
 
 \section{Syntactic extensions}
 \label{syntactic_extensions}
@@ -1768,18 +1801,23 @@ Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{in
 Reduced model $\widetilde{\mathds{M}}$ is created form given BCSL model by reducing context of complexes in rules to maximum level. This is achieved by taking supremum from compatible set $\mathscr{X}$. This procedure might produce rules with no action, i.e. not well-formed rules -- such rules are omitted. Then, only rules creating/destroying agents and complex formation/dissociation should remain, providing reduced network. Since we are reducing context, the resulting network can be equal or smaller than the original one.
 
 \begin{definition}{Compatibility of states}
-define compatibility of states of LTS
+Let $\mathds{M}$ be a BCSL model and $\mathtt{s}_1, \mathtt{s}_2 \in S$ of $LTS(\mathds{M})$ two states from its LTS. The state $\mathtt{s}_1$ is \emph{compatible with} state $\mathtt{s}_2$, written $\mathtt{s}_1 \lhd \mathtt{s}_2$, \emph{iff} 
+
+\begin{center}
+$\forall \mathtt{X}_1 \in \mathtt{s}_1 \exists \mathtt{X}_2 \in \mathtt{s}_2: \mathtt{sup}(\mathscr{X}) \equiv \mathtt{X}_2 $
+\end{center}
+
+such that $\mathscr{X} \subseteq \mathds{X}$ is a compatible set and $\mathtt{X}_1 \in \mathscr{X}$.
+
 \end{definition}
 
 \begin{definition}{Over-approximation of LTS}
 \label{over_approximation}
 
-Let $LTS, LTS'$ be labeled transition systems of some BCSL models. The $LTS'$ is \emph{over-approximation} of $LTS$ if for every path of states $s_1' s_2' s_3' \ldots s_n'$ in $LTS'$ there exists a path of states $s_1 s_2 s_3 \ldots s_m$ in LTS such that:
+Let $LTS, LTS'$ be labeled transition systems of some BCSL models. The $LTS'$ is \emph{over-approximation} of $LTS$ if for every path of states $\mathtt{s}_1' \mathtt{s}_2' \mathtt{s}_3' \ldots \mathtt{s}_n'$ in $LTS'$ there exists a path of states $\mathtt{s}_1 \mathtt{s}_2 \mathtt{s}_3 \ldots \mathtt{s}_m$ in LTS such that:
 
 \begin{center}
-$\forall s'_i, s'_{i+1} \exists s_k, s_l : l > k \wedge  $
-
-$\forall \mathtt{s'} \in S' \exists \mathtt{s} \in S : \forall \mathtt{x'} \in \mathtt{s'} \exists \mathtt{x} \in \mathtt{s} : \mathtt{x'} = \mathtt{sup}(\mathtt{x}) $.
+$\forall \mathtt{s}'_i, \mathtt{s}'_{i+1} \exists \mathtt{s}_k, \mathtt{s}_l : l > k \wedge \mathtt{s}_k \lhd \mathtt{s}'_i \wedge \mathtt{s}_l \lhd \mathtt{s}'_{i+1} $.
 \end{center}
 
 \end{definition}
