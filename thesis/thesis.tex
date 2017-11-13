@@ -1,5 +1,5 @@
-%\documentclass[12pt]{fithesis2}
-\documentclass[12pt, draft]{fithesis2}   % a devel version
+\documentclass[12pt]{fithesis2}
+%\documentclass[12pt, draft]{fithesis2}   % a devel version
 %\documentclass[12pt, twoside]{fithesis2} % two-sided print version
 
 % ===== LOADING PACKAGES =====
@@ -1068,20 +1068,10 @@ Please note by applying semantic function $\mathtt{F}$ on expressions from Examp
 
 \emph{Ground form} represents appending context to agents according to signature (we assume signature is always available and therefore we omit it in ground from function arguments). Particularly, this process means adding details to partial compositions and adding states of atomic agents according to defined signatures. Since there are typically multiple states allowed for an atomic agent, this processes leads to multiple options how to add a context. This is natural consequence of fact that a rule is an abstract representation of multiple reactions. 
 
-In the Definition~\ref{ground_form}, objects (middle column) of particular type (left column) are transformed to their ground forms by ground form function $\mathcal{G}$ (right column).
-
-In case of single atomic agent $\mathtt{A}$, there are two options -- either the state is $\varepsilon$ or the state $\delta$ is given. In first case, we construct a set of all possible atomic agents according to the given atomic signature $\Sigma_A(\eta(\mathtt{A}))$. In the second case, we construct a set containing only the original agent itself.
-
-For a pair of atomic agents $\mathtt{A}, \mathtt{A}'$ we create a set of all possible pairs $(a, a')$ such that these pairs has equal names.
-
-Ground form of a structure agent $\mathtt{T}$ is a set of structure agents $\mathtt{T}'$ such that we \emph{insert} all neglected context information into its partial composition. In other words, we need to determine which atomic agents are missing in the partial composition, which can be obtained from the signature $\Sigma_T(\eta(\mathtt{T}))$. Then we create all possible combinations of inserted atomic agents recursively.
-
-For a pair of structure agents $\mathtt{T}, \mathtt{T}'$ we expand both partial compositions recursively such that the expanded parts are equal, i.e. we add the same context to both agents. Similarly as in previous cases, we create set of all possibilities of such pairs.
-
-Finally, ground form of a rule $\mathtt{R}$ is a Cartesian product of sets created for each pair of agents by applying ground from function. The pairs are given by order in index map $\psi$.
-
 \begin{definition}{Ground form}
 \label{ground_form}
+We define ground from function $\mathcal{G}$ for objects (middle column) of particular type (left column) as:
+
 {\small
 \begin{center}
 \begin{tabular}{ c c c }
@@ -1122,6 +1112,18 @@ $\mathds{R}$ & $\mathcal{G}(\mathtt{R})$ & $ \displaystyle \prod_{k = 1}^{|\math
 \noindent where $\mathcal{G}(\psi)_k = \mathcal{G}(\pi_i(\omega), \pi_j(\omega))$ such that $(i,j) = \pi_k(\psi)$ and $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi)$. Moreover, $\mathtt{A} = (\eta, \delta)$, $\mathtt{A}' = (\eta', \delta')$, $\mathtt{T} = (\eta, \gamma)$, and $\mathtt{T}' = (\eta', \gamma')$.
 }
 \end{definition}
+
+In the Definition~\ref{ground_form}, objects (middle column) of particular type (left column) are transformed to their ground forms by ground form function $\mathcal{G}$ (right column).
+
+In case of single atomic agent $\mathtt{A}$, there are two options -- either the state is $\varepsilon$ or the state $\delta$ is given. In first case, we construct a set of all possible atomic agents according to the given atomic signature $\Sigma_A(\eta(\mathtt{A}))$. In the second case, we construct a set containing only the original agent itself.
+
+For a pair of atomic agents $\mathtt{A}, \mathtt{A}'$ we create a set of all possible pairs $(a, a')$ such that these pairs has equal names.
+
+Ground form of a structure agent $\mathtt{T}$ is a set of structure agents $\mathtt{T}'$ such that we \emph{insert} all neglected context information into its partial composition. In other words, we need to determine which atomic agents are missing in the partial composition, which can be obtained from the signature $\Sigma_T(\eta(\mathtt{T}))$. Then we create all possible combinations of inserted atomic agents recursively.
+
+For a pair of structure agents $\mathtt{T}, \mathtt{T}'$ we expand both partial compositions recursively such that the expanded parts are equal, i.e. we add the same context to both agents. Similarly as in previous cases, we create set of all possibilities of such pairs.
+
+Finally, ground form of a rule $\mathtt{R}$ is a Cartesian product of sets created for each pair of agents by applying ground from function. The pairs are given by order in index map $\psi$.
 
 \section{Construction of reactions}
 \label{Generating reactions}
@@ -1194,7 +1196,7 @@ CRM semantics might lead to possibly infinite LTS. This process can be limited b
 
 \section{Construction of model}
 
-In previous sections we defined all required constructs to create a Chemical reaction model (Definition~\ref{crn}) from a BCSL model. This procedure is necessary in order to allow operational semantics to be applied.
+In previous sections we defined all required constructs to create a chemical reaction model (Definition~\ref{crn}) from a BCSL model. In this section, we provide detailed description of this process. Particularly, we define relation between CRM and BCSL models and show how can be LTS of CRM translated to LTS of BCSL model with all necessary operations.
 
 \begin{definition}{Reference vector}\label{reference_vector}
 
@@ -1205,6 +1207,8 @@ $$\Theta = \{~ \mathtt{X} ~|~ \mathtt{X} \in \mathtt{seq}(\mathtt{r}) \wedge \ma
 \noindent Then, the \emph{reference vector} $\theta$ is a tuple $X \in \Theta^n$ such that $\forall i,j \leq n : \Theta_i \not\equiv \Theta_j$ and $n~=~|\Theta|$. Note there are $n!$ possibilities how to choose $\theta$, an arbitrary one can be chosen.
 
 \end{definition}
+
+The reference vector enumerates all possible complex agents created for a model and assigns them a unique index. 
 
 \begin{definition}{Multiset to vector translation}\label{state_to_vector}
 Translation of a multiset $\mathtt{S} \subseteq \mathds{X}$ to a vector $(a_1, a_2, \ldots, a_n) \in \mathbb{N}^n$ is defined as follows:
@@ -1220,7 +1224,7 @@ $a_i$ =
 \hspace{15pt} where $n = |\theta|$ and $|\mathtt{S}(\pi_i)|$ is number of occurrences of agent $\pi_i$ in the multiset $\mathtt{S}$.
 \end{definition}
 
-Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. In order to construct Chemical reaction model $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \theta)$ from the model $\mathds{M}$, we need to apply the following steps:
+Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. In order to construct chemical reaction model $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \theta)$ from the model $\mathds{M}$, we need to apply the following steps:
 
 \begin{enumerate}
 \item generate reactions for all rules $\mathtt{F}(\mathtt{R}) \in \mathcal{R}$ (Definition~\ref{generate_reactions}),
@@ -1301,14 +1305,14 @@ The LTS of a BCSL model is formed by states, labels, transitions, and an initial
 \section{Syntactic extensions}
 \label{syntactic_extensions}
 
-We define several syntactic extensions for better readability of the rules. Note that each rule in an extended form can be always translated to basic form defined above. All rules containing the following extensions must be converted to basic form before semantics can be applied.
+We define several syntactic extensions for better readability of the rule expressions. Note that each rule expression in an extended form can be always translated to basic form defined above. All rule expressions containing the following extensions must be converted to basic form before semantics can be applied.
 
-For better demonstration we provide a running example, which will go through all syntactic extensions. Please note there is no biological sense of the model, it has only demonstrative purpose.
+For better demonstration we provide a running example, which will go through all syntactic extensions. Please note there is no biological sense of the model, it has only purpose to effectively demonstrate all defined syntactic extensions.
 
 \begin{runningExample}{The example model $\mathds{M}$}
 \label{run1}
 
-\noindent Definition of rules $\mathtt{R}$:
+\noindent Definition of rule expressions $\varrho$:
 {\footnotesize
 \begin{enumerate}
 \item $KaiC(S\{u\}, T\{\varepsilon\}).KaiC(S\{\varepsilon\}, T\{\varepsilon\}).KaiC(S\{\varepsilon\}, T\{\varepsilon\})::cyt \Rightarrow $
@@ -1341,14 +1345,14 @@ $\Rightarrow KaiC(S\{\varepsilon\}, T\{\varepsilon\})::cyt + KaiC(S\{\varepsilon
 \noindent We omit $\mathtt{init}$ definition just for simplicity of the example.
 \end{runningExample}
 
-\subsection{Omitting context in partial composition.}
+\subsection{Partial composition context elimination.}
 
-It is possible to omit all atomic agents with unspecified state $\varepsilon$ from partial compositions of structure agents. Such agents do not give any additional information and whole partial composition can be reconstructed from the given signature.
+It is possible to omit all atomic expressions with unspecified state $\varepsilon$ from partial compositions of structure agents. Such agent expressions do not give any additional information and whole partial composition can be reconstructed from the given signature.
 
 \begin{runningExample}{The example model $\mathds{M}$}
 \label{run2}
 
-\noindent Definition of rules:
+\noindent Definition of rule expressions:
 {\footnotesize
 \begin{enumerate}
 \item $KaiC(S\{u\}).KaiC(\varnothing).KaiC(\varnothing)::cyt \Rightarrow KaiC(S\{p\}).KaiC(\varnothing).KaiC(\varnothing)::cyt$
@@ -1363,12 +1367,12 @@ $ \Rightarrow KaiC(\varnothing)::cyt + KaiC(\varnothing)::cyt + KaiC(\varnothing
 }
 \end{runningExample}
 
-Additionally, this extension can be done more precisely by omitting $(\varnothing)$ part completely. Since we have structure signature defined, we can unambiguously determine which names belong to structure agents and this syntactic part can be easily reconstructed.
+Additionally, this extension can be done more precisely by omitting $(\varnothing)$ part completely. Since we have structure signature defined, we can unambiguously determine which names belong to structure expressions and this syntactic part can be easily reconstructed.
 
 \begin{runningExample}{The example model $\mathds{M}$}
 \label{run3}
 
-\noindent Definition of rules:
+\noindent Definition of rule expressions:
 {\small
 \begin{enumerate}
 \item $KaiC(S\{u\}).KaiC.KaiC::cyt \Rightarrow KaiC(S\{p\}).KaiC.KaiC::cyt$
@@ -1379,12 +1383,12 @@ Additionally, this extension can be done more precisely by omitting $(\varnothin
 }
 \end{runningExample}
 
-This syntactic extension bring lot of readability to the syntax preserving all information in context of the model $\mathds{M}$.
+This syntactic extension brings a lot of readability to the syntax preserving all information in context of the model $\mathds{M}$.
 
 \subsection{Complex signature}
 \label{complex_signature}
 
-We extend model definition by complex signature $\Sigma_\mathtt{X}$ on syntactic level. In this signature, there are defined aliases for valid complex agent expressions. Then, simple \emph{replace} method is used to substitute original expression by the alias.
+We extend model definition by complex signature $\Sigma_\mathtt{X}$. In this signature, there are defined aliases for valid complex expressions. Then, simple \emph{replace} method is used to substitute original expression by the alias.
 
 \begin{runningExample}{The example model $\mathds{M}$}
 \label{run4}
@@ -1395,7 +1399,7 @@ We extend model definition by complex signature $\Sigma_\mathtt{X}$ on syntactic
 \item $KaiBC::cyt = KaiC.KaiB::cyt$
 \end{enumerate}
 
-\noindent Definition of rules:
+\noindent Definition of rule expressions:
 {\small
 \begin{enumerate}
 \item $KaiC(S\{u\}).KaiC.KaiC::cyt \Rightarrow KaiC(S\{p\}).KaiC.KaiC::cyt$
@@ -1407,15 +1411,15 @@ We extend model definition by complex signature $\Sigma_\mathtt{X}$ on syntactic
 
 \end{runningExample}
 
-The usage of the complex signature has its limitations. Once a context is specified, the alias cannot be used anymore. We will resolve this problem in following extensions.
+The usage of the complex signature has its limitations. Once a context is specified, the alias cannot be used. We will resolve this problem in following extensions.
 
 \subsection{Directions}
 
-We allow rules to be bi-directional -- it is just a shortcut for two rules and it can be converted to basic rule form. A rule $\mathtt{R} = l ~\Leftrightarrow~ r$ might be written as two rules $\mathtt{R}_1 = l ~\Rightarrow~ r$ and $\mathtt{R}_2 = r ~\Rightarrow~ l$.
+We allow rule expressions to be bi-directional -- it is just a shortcut for two rule expressions and it can be converted to basic rule expression form. A rule expressions $\varrho : l ~\Leftrightarrow~ r$ might be written as two rule expressions $\varrho_1 : l ~\Rightarrow~ r$ and $\varrho_2 : r ~\Rightarrow~ l$.
 
 \begin{runningExample}{The example model $\mathds{M}$}
 \label{run5}
-\noindent Definition of rules:
+\noindent Definition of rule expressions:
 {\small
 \begin{enumerate}
 \item $KaiC(S\{u\}).KaiC.KaiC::cyt \Rightarrow KaiC(S\{p\}).KaiC.KaiC::cyt$
@@ -1429,9 +1433,11 @@ We allow rules to be bi-directional -- it is just a shortcut for two rules and i
 
 \subsection{Stoichiometry}
 
-For a rule of form 
+For a rule expression of form 
 
-$$\beta_1::\mathtt{c} + \beta_2::\mathtt{c} + \ldots + \beta_n::\mathtt{c} \Rightarrow \beta_1.\beta_2.~\ldots~.\beta_n::\mathtt{c}$$
+\begin{center}
+$\beta_1::\mathtt{c} + \beta_2::\mathtt{c} + \ldots + \beta_n::\mathtt{c} \Rightarrow \beta_1.\beta_2.~\ldots~.\beta_n::\mathtt{c}$
+\end{center}
 
 we might reorder both sides such that we get non-crossing partition $\mathcal{P} = B_1/B_2/\ldots/B_k$ from its indices $[1,\ldots,n]$ such that:
 
@@ -1443,15 +1449,15 @@ and
 $\forall B, B' \in \mathcal{P}: \forall \beta \in B ~\forall \beta' \in B': \beta \not\equiv \beta'$.
 \end{center}
 
-For the left-hand side $\beta_1::\mathtt{c} + \beta_2::\mathtt{c} + \ldots + \beta_n::\mathtt{c}$ of the reordered rule we can replace all rule agents $[\beta_i, \ldots, \beta_j]$ which belong to the same non-crossing partition $B$ by notation $`k~\beta'$, where $\beta$ is a representative from $\beta_i, \ldots, \beta_j$ (they are all equivalent) and $k$ is number of the agents.
+For the left-hand side $\beta_1::\mathtt{c} + \beta_2::\mathtt{c} + \ldots + \beta_n::\mathtt{c}$ of the reordered rule expression we can replace all rule expressions $[\beta_i, \ldots, \beta_j]$ which belong to the same non-crossing partition $B$ by notation $`k~\beta'$, where $\beta$ is a representative from $\beta_i, \ldots, \beta_j$ (they are all equivalent) and $k$ is number of the expressions in partition $B$.
 
-Such a new rule is equivalent with the original rule what follows from rules equivalence definition (Definition~\ref{rule_equiv}).
+Such a new rule expression is equivalent with the original rule expression what follows from the appropriate rules equivalence definition (Definition~\ref{rule_equiv}).
 
-Note that this process is fully reversible, so agent enumeration in basic form can be easily reconstructed.
+Note that this process is fully reversible --we can simply enumerate all expressions for each partition.
 
 \begin{runningExample}{The example model $\mathds{M}$}
 \label{run6}
-\noindent Definition of rules:
+\noindent Definition of rule expressions:
 {\small
 \begin{enumerate}
 \item $KaiC(S\{u\}).KaiC.KaiC::cyt \Rightarrow KaiC(S\{p\}).KaiC.KaiC::cyt$
@@ -1461,13 +1467,13 @@ Note that this process is fully reversible, so agent enumeration in basic form c
 }
 \end{runningExample}
 
-\noindent Definition of rule 3 from Running example~\ref{run5} was replaced by using stoichiometry.
+\noindent Definition of rule expression 3 from Running example~\ref{run5} was replaced by a new rule expression using stoichiometry.
 
 \subsection{Locations}
 
-Probably most complex syntactic extension is application of locations. The localisation operator is intended for allowing an alternative way of expressing the hierarchically constructed agents. The main idea is to allow zooming into individual parts of complex and structure agents.
+Probably most complex syntactic extension is application of locations. The localisation operator is intended for allowing an alternative way of expressing the hierarchically constructed agent expressions. The main idea is to allow zooming into individual parts of complex and structure expressions.
 
-We define necessary condition which must hold when semantic function $\mathtt{F}$ is applied on individual agents. This notation is allowed only when the conditions hold.
+We define necessary condition which must hold when semantic function $\mathtt{F}$ is applied on individual expressions. This notation is allowed only when the conditions hold. The condition is expressed using \emph{compatibility} operator defined in Section~\ref{static_analyses}.
 
 \begin{definition}{Locations conditions.}\label{locations:conditions}
 
@@ -1484,7 +1490,7 @@ For each pair of agents $(\alpha, \beta)$ with allowed `::' operator between the
 
 \begin{runningExample}{The example model $\mathds{M}$}
 \label{run7}
-\noindent Definition of rules:
+\noindent Definition of rule expressions:
 {\small
 \begin{enumerate}
 \item $S\{u\}::KaiC::KaiC3::cyt \Rightarrow S\{p\}::KaiC::KaiC3::cyt$
@@ -1494,21 +1500,21 @@ For each pair of agents $(\alpha, \beta)$ with allowed `::' operator between the
 }
 \end{runningExample}
 
-\noindent Definition of rules 1 and 2 from Running example~\ref{run6} was replaced using locations.
+\noindent Definition of rule expressions 1 and 2 from Running example~\ref{run6} was replaced using locations.
 
 You can see localisation operator allowed us to fully use the complex signatures.
 
 \subsection{Variables}
 
-In the Running example~\ref{run7} there is still space for syntax reduction. Rules 1 and 2 are very similar except context of complex they take place in. Therefore, we will substitute this context with a variable with given domain.
+In the Running example~\ref{run7} there are additional options for syntax reduction. Rule expressions 1 and 2 are very similar except context of complex expression they take place in. Therefore, we will substitute this context with a variable with a given domain.
 
-In a rule, one rule agent might be referenced using variable $\upsilon$ as a set of rule agents it can be replaced with. Such a rule agent is referenced as $?X$. Moreover, in case when a $?X$ is used in a location, it must hold conditions from Definition~\ref{locations:conditions}.
+In a rule expression, one rule agent expression might be referenced using variable $\upsilon$ as a set of rule agent expressions it can be replaced with. Such a rule agent expression is referenced as $?X$. Moreover, in case when a $?X$ is used in a location, it must hold conditions from Definition~\ref{locations:conditions}.
 
-Each rule associated with variable can be easily rewritten as several rules where variable is replaced with agent from set of agents attached to the variable. Please note only one variable can be used per rule.
+Each rule expression associated with variable can be easily rewritten as several rule expressions where variable is replaced with agent expression from set of agent expressions attached to the variable. Please note only one variable can be used per rule expression.
 
 \begin{runningExample}{The example model $\mathds{M}$}
 \label{run8}
-\noindent Definition of rules $\mathtt{R}$:
+\noindent Definition of rule expressions:
 {\small
 \begin{enumerate}
 \item \hspace*{-0.6cm} $S\{u\}::KaiC::~?X::cyt \Rightarrow S\{p\}::KaiC::~?X::cyt ~;~ ?X = \{KaiC3, KaiBC\}$
@@ -1518,7 +1524,7 @@ Each rule associated with variable can be easily rewritten as several rules wher
 }
 \end{runningExample}
 
-\noindent Definition of rules 1 and 2 from Running example~\ref{run7} was replaced as a single rule using a variable.
+\noindent Definition of rule expressions 1 and 2 from Running example~\ref{run7} was replaced as a single rule expression with a variable.
 
 This is final syntactic extension. Compared to the original model (Running example~\ref{run1}), the resulting model is more concise and readable. More examples are in Section~\ref{case_study}.
 
@@ -1920,9 +1926,9 @@ We decided to find a minimal bound, which is in this context optimal for generat
 To actually calculate the minimal bound we take maximum value from the following measurements:
 
 \begin{enumerate}
-  \item \label{count_init} count the highest number of occurrences from all agents in initial state,
-  \item \label{count_unique} count the highest number of unique agents in all complexes of all rules,
-  \item \label{count_stoi} count the highest stoichiometry in all left and right-hand sides of the rules.
+  \item \label{count_init} count the highest number of occurrences from all complex agents in initial state,
+  \item \label{count_unique} count the highest number of unique atomic and structure agents in every complex agent of all rules,
+  \item \label{count_stoi} count the highest stoichiometry in every left and right-hand side of the rules.
 \end{enumerate}
 
 The step~(\ref{count_init}) ensures the bound $\mathtt{B}$ will not be lower than highest number of equivalent agents in the initial state. In the step~(\ref{count_unique}) we count repetitions of equivalent atomic and structure agents inside all complexes, which ensures that there will be enough agents for creation of every complex agent. The last step~(\ref{count_stoi}) takes into the account stoichiometry used in context of complex agents themselves.
@@ -2001,7 +2007,7 @@ We want to demonstrate practical purposes of a few types of static analyses defi
 
 In Figure~\ref{fgf_fragment}, there is the model defined in BCSL syntax. Note this model is a fragment of the entire model. Focus on rule~(\ref{focus_rule}). It requires both Threonine residues ($Thr$) on $FGF$ proteins to be phosphorylated ($p$). Basically, it is not possible to create a complex from $FRS$ and unphosphorylated ($u$) $FGF$ proteins.
 
-For example, we want to check whether a given complex agent {\small $FRS(Thr\{u\}, Tyr\{u\}).FGF(Thr\{u\}).R.FGF(Thr\{u\}).R::cyt$} is reachable. The agent is formed from $FGF$ proteins which are unphosphorylated ($u$) on hreonine residues ($Thr$). In traditional approach, we have to enumerate entire state space of the model and then use dynamic model checking method to check it. In our case, we can use Theorem~\ref{static_reach} and check if it is non-reachable using static reachability analysis. It results to conclusion that there is no compatible agent on any right-hand side of the rules. It follows the complex agent is non-reachable.
+For example, we want to check whether a given complex agent {\small $FRS(Thr\{u\}, Tyr\{u\}).FGF(Thr\{u\}).R.FGF(Thr\{u\}).R::cyt$} is reachable for the given model. The agent is formed from $FGF$ proteins which are unphosphorylated ($u$) on hreonine residues ($Thr$). In traditional approach, we have to enumerate entire state space of the model and then use dynamic model checking method to check it. In our case, we can use Theorem~\ref{static_reach} and check if it is non-reachable using static reachability analysis. It results to conclusion that there is no compatible agent on any right-hand side of the rules. It follows the complex agent is non-reachable.
 
 \begin{figure}[!h]
 {\footnotesize
