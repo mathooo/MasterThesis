@@ -1254,7 +1254,21 @@ $\lambda^T((a_1, a_2, \ldots, a_n), \theta) = \{~ (\theta_i, a_i) ~|~ i \in [1, 
 \end{center}
 \end{definition}
 
-Note that procedure provided in Definition~\ref{vector_to_state} can be extended to the labels of the LTS. The labels, which represent reactions applied, might contain negative numbers. These are treated independently and represent left-hand-side of the reaction (the reactants) while non-negative numbers represent right-hand-side of the reaction (the products).
+Note that procedure provided in Definition~\ref{vector_to_state} can be extended to the labels of the LTS. The labels, which represent reactions applied, might contain negative numbers. These are treated independently and represent left-hand-side of the reaction $\lambda^{T-}$ (the reactants) while non-negative numbers represent right-hand-side of the reaction $\lambda^{T+}$ (the products).
+
+\begin{definition}{LTS of BCSL model}
+Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model and $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \theta)$ be a chemical reaction model constructed from model $\mathds{M}$.
+
+We define the labeled transition system of BCSL model $\mathds{M}$, $LTS(\mathds{M}) = (S, A, T, s_0)$, from the $LTS(\mathcal{M}) = (S', A', T', s'_0)$ as follows:
+
+\begin{enumerate}
+	\item $S = \{~ s ~|~ s = \lambda^T(s', \theta) \wedge s' \in S' ~\}$,
+	\item $A = \{~ (l, r) ~|~ l = \lambda^{T-}(a', \theta) \wedge r = \lambda^{T+}(a', \theta) \wedge a' \in A' ~\} $,
+	\item $T = \{~ (s, (l, r), t) ~|~ s = \lambda^T(\vv{\mathtt{s}}, \theta) \wedge t = \lambda^T(\vv{\mathtt{p}}, \theta) \wedge l = \lambda^{T-}(\vv{\mathtt{r}}, \theta) \wedge r = \lambda^{T+}(\vv{\mathtt{r}}, \theta) \wedge (\vv{\mathtt{s}}, \vv{\mathtt{r}}, \vv{\mathtt{p}}) \in T' ~\} $,
+	\item $s_0 = \lambda^T(s'_0, \theta)$.
+\end{enumerate}
+
+\end{definition}
 
 \section{Syntactic extensions}
 \label{syntactic_extensions}
@@ -1753,12 +1767,18 @@ Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{in
 
 Reduced model $\widetilde{\mathds{M}}$ is created form given BCSL model by reducing context of complexes in rules to maximum level. This is achieved by taking supremum from compatible set $\mathscr{X}$. This procedure might produce rules with no action, i.e. not well-formed rules -- such rules are omitted. Then, only rules creating/destroying agents and complex formation/dissociation should remain, providing reduced network. Since we are reducing context, the resulting network can be equal or smaller than the original one.
 
+\begin{definition}{Compatibility of states}
+define compatibility of states of LTS
+\end{definition}
+
 \begin{definition}{Over-approximation of LTS}
 \label{over_approximation}
 
-Let $LTS, LTS'$ be labeled transition systems of some BCSL models. The $LTS'$ is \emph{over-approximation} of $LTS$ if for every path of states $S'$ in $LTS'$ there exists a path of states $S$ in LTS such that:
+Let $LTS, LTS'$ be labeled transition systems of some BCSL models. The $LTS'$ is \emph{over-approximation} of $LTS$ if for every path of states $s_1' s_2' s_3' \ldots s_n'$ in $LTS'$ there exists a path of states $s_1 s_2 s_3 \ldots s_m$ in LTS such that:
 
 \begin{center}
+$\forall s'_i, s'_{i+1} \exists s_k, s_l : l > k \wedge  $
+
 $\forall \mathtt{s'} \in S' \exists \mathtt{s} \in S : \forall \mathtt{x'} \in \mathtt{s'} \exists \mathtt{x} \in \mathtt{s} : \mathtt{x'} = \mathtt{sup}(\mathtt{x}) $.
 \end{center}
 
