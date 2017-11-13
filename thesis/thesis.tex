@@ -39,7 +39,7 @@
 \newenvironment{notation}{\bigskip\refstepcounter{counter}\noindent\textbf{Notation \thecounter~}\nopagebreak}{\bigskip}
 \newenvironment{proof}{\noindent\textit{Proof:~ }\nopagebreak}{\bigskip}
 \newenvironment{runningExample}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Running example \thecounter} \textit{#1} \par\nopagebreak}{\bigskip}
-\newenvironment{theorem}{\bigskip\refstepcounter{counter}\noindent\textbf{Theorem \thecounter }\nopagebreak}{\bigskip}
+\newenvironment{theorem}{\bigskip\refstepcounter{counter}\noindent\textbf{Theorem \thecounter }\nopagebreak}{\medskip}
 \newenvironment{lemma}{\bigskip\refstepcounter{counter}\noindent\textbf{Lemma \thecounter }\nopagebreak}{\bigskip}
 \newenvironment{remark}{\bigskip\refstepcounter{counter}\noindent\textbf{Remark \thecounter~ }\nopagebreak}{\bigskip}
 
@@ -328,11 +328,9 @@ Rule(L(s=None) + R(s=None) <> L(s=1) % R(s=1), kf, kr)
 
 \subsection{SBML-multi package}
 
-Systems Biology Markup Language (SBML)~\cite{hucka2003systems} is a standard established for systems biology. A SBML-multi package~\cite{zhang2015sbml} is able to describe all necessary rule-based features and therefore it is possible to export each such language in this format. It is the most suitable format for exchange and storage of the models but less for analysis and direct representation to the users (it is an XML format). It serves as intermediate language.
-
 \begin{figure}[!h]
 \lstset{language=XML}
-\begin{lstlisting}[basicstyle=\tiny, frame=single]
+\begin{lstlisting}[basicstyle=\scriptsize, frame=single]
 <?xml version="1.0" encoding="UTF-8"?>
 <sbml xmlns="http://www.sbml.org/sbml/level2" level="2" version="1">
   <model>
@@ -379,8 +377,10 @@ Systems Biology Markup Language (SBML)~\cite{hucka2003systems} is a standard est
   </model>
 </sbml>
 \end{lstlisting}
-\caption{Example of a simple SBML-multi model. There are included SpeciesTypes, Species which belong to these types, and Reactions where those species are interacting.}\label{SBML_example}
+\caption{Example of a simple SBML-multi model. The model requires specification of language level (version). In the definition, there are included SpeciesTypes, Species which belong to these types, and Reactions where those species are interacting. Additionally, all processes are encapsulated in compartments.}\label{SBML_example}
 \end{figure}
+
+Systems Biology Markup Language (SBML)~\cite{hucka2003systems} is a standard established for systems biology. A SBML-multi package~\cite{zhang2015sbml} is able to describe all necessary rule-based features and therefore it is possible to export each such language in this format. It is the most suitable format for exchange and storage of the models but less for analysis and direct representation to the users (it is an XML format). It serves as intermediate language.
 
 \section{Comprehensive Modeling Platform}
 \label{cmp}
@@ -512,25 +512,6 @@ An atomic entity can be a part of a structurally more complex entity. We conside
 
 Rules are specified by \emph{rule equations} enriched with additional annotation information. When defining a rule equation, identifiers of substrates and products are used to make the notation of the rules compact. Every entity appearing in a \emph{rule equation} has to be followed by the localisation operator associating it with a particular compartment. This is important especially for rules that act on both sides of a membrane. That way, a rule is always precisely localised in or between compartments. A natural stoichiometric coefficient can be placed before any entity in a rule equation. Irreversible and reversible rules are distinguished by the operators `$\Rightarrow$', `$\Leftrightarrow$'. The `$+$' symbol is used as a separator between individual substrates and individual products. A rule can also have an assigned classification. Rule classification assigns a list of higher level biophysical processes in which the rule is involved. For an example, see Figure~\ref{rule_example}.
 
-\begin{figure}[!h]
-\begin{center}
-\framebox{
-{\footnotesize
-\begin{tabular}{ l | l }
- RULE ID: & NADPH oxid.\\
- RULE EQUATION: & $NADPH :: cyt + 5 h\{$\arc$\} :: cyt + pq :: cym \Rightarrow$\\
- & $\Rightarrow NADP\{$\arc$\} :: cyt + 4 h\{$\arc$\} :: pps + pqh2 :: cym$\\
- MODIFIER: & NDH1\\
- RULE NAME: & plastoquinone reduction in cytoplasmic membrane\\
- CLASSIFICATION: & reduction, oxidation\\
- DESCRIPTION: & Oxidation of NADPH and reduction\\
- & of plastoquinone in the cytoplasmic membrane.\\
-\end{tabular}}
-}
-\end{center}
-\caption{Complete information for a rule.}\label{rule_example}
-\end{figure}
-
 In some cases, emphasis on a detailed description leads to very complex BCS models. Abstraction of some processes is needed to keep BCS models as simple as possible. To this end, rules expressing enzymatic reactions are considered in a simplified form. In fact, there should be at least two different rules describing an enzymatic reaction (one for a substrate binding and another for a catalytic step). Instead, since an enzyme is not affected during the reaction, it is affiliated to the rule as a \emph{modifier}. However, it is difficult to define precise meaning of a modifier in this case. We rather treat the modifier attribute informally as an entity \textit{which has to be present} for the rule to be enabled. The exact reaction mechanism of an enzyme is not always clear and therefore it is abstracted out.
 
 \begin{figure}[!h]
@@ -549,7 +530,7 @@ In some cases, emphasis on a detailed description leads to very complex BCS mode
 \end{tabular}}
 }
 \end{center}
-\caption{A rule employing structure entity state change. A Threonine ($Thr$) amino acid residue of a $FGF$ protein inside a $FGFR2$ complex can change its state from unphosphorylated ($u$) to phosphorylated ($p$).}
+\caption{A rule employing structure entity state change. A Threonine ($Thr$) amino acid residue of a $FGF$ protein inside a $FGFR2$ complex can change its state from unphosphorylated ($u$) to phosphorylated ($p$) (and \emph{vice versa}).}\label{rule_example}
 \end{figure}
 
 Higher abstraction comes into account when several electrons play `musical chairs' inside protein complexes. The issue is that parts of processing protein complex can have different unstable states during a short period of time. When one tries to define all rules among these proteins, combinatorial explosion of the number of states of the complex arises. Not all of these combinations are biologically correct. Even when excluding biologically inadmissible cases, the number of states is still enormous. For the purpose of BCS, we introduce a solution -- we treat a protein complex as a structure entity on which structurally simpler atomic entities change their states (not necessarily proteins) and we abstract from background processes.
@@ -569,7 +550,7 @@ An implemented model then includes complete biological annotation of all compone
 
 \subsection{Experiments Repository}
 
-The Experiments repository is a module for storage and presentation of time-series data from wet-lab experiments. Every experiment is well-grounded by precise description (device, medium, organism, etc.) and appropriate annotations. Experiments are structured -- several time series data can be attached to a single experiment. Every time series targets a specific list of measured substances together with time stamps of the individual measurements. Data can be imported and exported in simple text formats. Time series are visualised in a chart.	
+The Experiments repository is a module for storage and presentation of time-series data from wet-lab experiments. Every experiment is well-grounded by precise description (device, medium, organism, etc.) and appropriate annotations. Experiments are structured -- several time series data can be attached to a single experiment. Every time series targets a specific list of measured substances together with time stamps of the individual measurements. Time series can be visualised in a chart.	
 
 \chapter{Problem formulation}
 \label{problem_formulation}
@@ -964,13 +945,16 @@ Examples of syntax can be seen in the previous examples (Example~\ref{example:at
 When we have defined syntax of BCSL, we can proceed to BCSL model. We always consider initialised model, which means the definition contains an initial state of the system. The definition also contains rule expressions and signatures.
 
 \begin{definition}{BCSL model}
+\label{BCSL_model}
 BCSL model $\mathds{M}$ is a quadruple $(\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ where $\mathcal{R}$ is set of rule expressions, $\Sigma_\mathtt{A}$ is atomic signature, $\Sigma_\mathtt{T}$ is structure signature, and $\mathtt{init}$ is initial multiset of complex expressions $\Gamma$.
 \end{definition}
 
 BCSL model is formed by a set of rule expressions $\mathcal{R}$, which define behavior of the model. The initial multiset $\mathtt{init}$ defines the state of the model in the beginning. Atomic signature $\Sigma_\mathtt{A}$ define allowed states for all atomic agents used in the rules. FInally, structure signature $\Sigma_\mathtt{T}$ defines allowed atomic agents for all structure agents used in the rules.
 
-\begin{remark}
+\begin{remark}\label{BCS_vs_BCSL}
 At this point it is useful to sum up what is Biochemical Space as described in Section~\ref{bcs_general} formally. The BCS is formed from a database of entities and rules. These entities are actually a signature, i.e. they predefine a domain on which rules can be defined. Neglecting an initial state (which is not important for entire space), the BCS is actually a BCSL model.
+
+Additionally, BCS serves as a reference model for external kinetic models from Models repository. What we do in the process of relation is that we are actually assigning them BCSL notation. This way, smaller BCSL models are build with a reference to BCS. They inherit all annotation information provided by the reference model and gain formal representation of BCSL.
 \end{remark}
 
 \section{Additional definitions}
@@ -1009,6 +993,8 @@ Let $\mathtt{T}$ be a structure agent, $\eta$ its name, and $\Sigma_T(\mathtt{T}
 $\Sigma_T(\mathtt{\eta}) \ominus \gamma(\mathtt{T}) \myeq \{ \eta_\Sigma ~|~ \eta_\Sigma \in \Sigma_T(\mathtt{\eta}) \wedge \not\exists \mathtt{A}: (\mathtt{A} \in \gamma(\mathtt{T}) \wedge \eta(\mathtt{A}) \equiv \eta_\Sigma)\}$
 \end{center}
 \end{definition}
+
+The previous two definitions are very similar. The general difference is while in the first case we work purely with two partial compositions, in the second case we have a signature of appropriate structure agent name.
 
 \section{Semantic function}
 \label{semantic_function}
@@ -1148,6 +1134,8 @@ For a rule $\mathtt{R}$ we create the reassembled ground forms. Then, we create 
 
 \section{Chemical reaction networks}
 
+In this section, we define a simplified model that we can use to define operational semantics of BCSL model.
+
 \begin{definition}{Chemical reaction model}
 \label{crn}
 Chemical reaction model (CRM) $\mathcal{M}$ is a triple $(\mathfrak{R}, \vv{\nu}, \theta)$ such that $\mathfrak{R} \subseteq \mathbb{Z}^n$ is set of chemical reactions, $\vv{\nu} \in \mathbb{N}_0^n$ is initial vector, and $\theta \in \mathds{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
@@ -1196,7 +1184,7 @@ CRM semantics might lead to possibly infinite LTS. This process can be limited b
 
 \section{Construction of model}
 
-In previous sections we defined all required constructs to create a chemical reaction model (Definition~\ref{crn}) from a BCSL model. In this section, we provide detailed description of this process. Particularly, we define relation between CRM and BCSL models and show how can be LTS of CRM translated to LTS of BCSL model with all necessary operations.
+In this section, we define relation between CRM and BCSL models and show how can their LTSs be translated to each other.
 
 \begin{definition}{Reference vector}\label{reference_vector}
 
@@ -1257,24 +1245,28 @@ where $n = |\theta|$. &\\
 \end{center}
 \end{definition}
 
-The procedure provided in Definition~\ref{vector_to_state} can be extended to the labels of the LTS. The labels, which represent reactions applied, might contain negative numbers. Therefore, we need to define translation function for negative numbers.
+The procedure provided in Definition~\ref{vector_to_state} can be extended to the labels of the LTS. The labels, which represent reactions applied, might contain negative numbers.
 
-\begin{definition}{Negative vector to multiset translation}
+\begin{definition}{Negative part of vector to multiset translation}
 \label{neg_vector_to_state}
-
-Translation of the negative part a vector $(a_1, a_2, \ldots, a_n) \in \mathbb{N}^n$ to a multiset $\mathtt{S} = (A, \mathtt{m})$ is defined as follows:
-
-\begin{center}
-\begin{tabular}{r@{\hskip 0.05cm}l}
-$\mkern2mu\overline{\mkern-4.5mu \lambda^{-1}}((a_1, a_2, \ldots, a_n), \theta) =$ & $ \mathtt{S}$ such that\\
-$A = $ & $ \{~ \theta_i ~|~ i \in [1, \ldots, n] \wedge a_i < 0 ~\}$\\
-
-$\mathtt{m} = $& $ \{~ (\theta_i, |a_i|) ~|~ i \in [1, \ldots, n] \wedge a_i < 0 ~\}$\\
-& \\
-where $n = |\theta|$. &\\
-\end{tabular}
-\end{center}
+Translation of the negative part a vector is defined almost equally than the translation in Definition~\ref{vector_to_state} with exception that the condition $a_i > 0$ is modified to $a_i < 0$.
 \end{definition}
+
+% \begin{definition}{Negative vector to multiset translation}
+% \label{neg_vector_to_state}
+% Translation of the negative part a vector $(a_1, a_2, \ldots, a_n) \in \mathbb{N}^n$ to a multiset $\mathtt{S} = (A, \mathtt{m})$ is defined as follows:
+
+% \begin{center}
+% \begin{tabular}{r@{\hskip 0.05cm}l}
+% $\mkern2mu\overline{\mkern-4.5mu \lambda^{-1}}((a_1, a_2, \ldots, a_n), \theta) =$ & $ \mathtt{S}$ such that\\
+% $A = $ & $ \{~ \theta_i ~|~ i \in [1, \ldots, n] \wedge a_i < 0 ~\}$\\
+
+% $\mathtt{m} = $& $ \{~ (\theta_i, |a_i|) ~|~ i \in [1, \ldots, n] \wedge a_i < 0 ~\}$\\
+% & \\
+% where $n = |\theta|$. &\\
+% \end{tabular}
+% \end{center}
+% \end{definition}
 
 The positive and negative parts of labels are treated independently. The negative numbers represent left-hand side of the reaction~ $\mkern2mu\overline{\mkern-4.5mu \lambda^{-1}}$ (the reactants) while positive numbers represent right-hand side of the reaction $\lambda^{-1}$ (the products).
 
@@ -1330,17 +1322,13 @@ $\Rightarrow KaiC(S\{\varepsilon\}, T\{\varepsilon\})::cyt + KaiC(S\{\varepsilon
 \end{enumerate}
 }
 
-\noindent Definition of $\Sigma_\mathtt{A}$:
-\begin{enumerate}
-\item $(S, \{ u, p \})$,
-\item $(T, \{ a, i \})$
-\end{enumerate}
-
-\noindent Definition of $\Sigma_\mathtt{T}$:
-\begin{enumerate}
-\item $(KaiC, \{ S, T \})$,
-\item $(KaiB, \emptyset)$
-\end{enumerate}
+\begin{center}
+\begin{tabular}{l@{\hskip 1.5cm}l}
+Definition of $\Sigma_\mathtt{A}$: & Definition of $\Sigma_\mathtt{T}$:\\
+1.~ $(S, \{ u, p \})$ & 1.~ $(KaiC, \{ S, T \})$\\
+2.~ $(T, \{ a, i \})$ & 2.~ $(KaiB, \emptyset)$ \\
+\end{tabular}
+\end{center}
 
 \noindent We omit $\mathtt{init}$ definition just for simplicity of the example.
 \end{runningExample}
@@ -1697,13 +1685,7 @@ There might be cases when there are redundant rules defined in a model (Definiti
 \label{redundant_rule}
 
 Let $\mathds{M}_1 = (\mathcal{R} \cup \{ \mathtt{R} \}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ and
-$\mathds{M}_2 = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be BCSL models where $\mathtt{R}$ is a rule such that $\mathtt{R} \not\in \mathcal{R}$.
-
-We define the rule $\mathtt{R}$ as \emph{redundant} if 
-
-\begin{center}
-$LTS(\mathds{M}_1) \equiv LTS(\mathds{M}_2)$
-\end{center}
+$\mathds{M}_2 = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be BCSL models where $\mathtt{R}$ is a rule such that $\mathtt{R} \not\in \mathcal{R}$. We define the rule $\mathtt{R}$ as \emph{redundant} if $LTS(\mathds{M}_1) \equiv LTS(\mathds{M}_2)$.
 \end{definition}
 
 The redundant rule $\mathtt{R}$ does not add any semantic details to the model. It generally means the LTSs produced from the models with and without the rule are equal.
@@ -1838,8 +1820,6 @@ Generally, there is a path formed from rules in the $LTS(\mathds{M})$ such that 
 
 If we are checking whether an agent is reachable in $LTS(\mathds{M})$ for given model $\mathds{M}$, we might first check whether its super-ancestor is reachable in $LTS(\widetilde{\mathds{M}})$ of appropriate reduced model $\widetilde{\mathds{M}}$. If yes, then we are still not certain about reachability of agent itself and it has to be checked in the $LTS(\mathds{M})$. However, agent which is not reachable in $LTS(\widetilde{\mathds{M}})$ is also not reachable in $LTS(\mathds{M})$ (Theorem~\ref{non-reachability_in_reduced}).
 
-This approach can be generalised for the non-reachability of a (multi)set of complex agents, but we consider it as a future work.
-
 \subsection{Static reachability analysis}
 \label{static_reachability_analysis}
 
@@ -1910,6 +1890,25 @@ We can discuss the fact that desired signature might be in some manner \emph{lar
 % Let $\mathcal{M}$ be a BCSL model and $\Sigma$ its minimal signatures (i.e., all states and partial compositions defined in the signatures are actually used in the rules). Then, signatures $\Sigma'$ obtained by procedure (ref blah) has to be equal to the original signature $\Sigma$. In case its not, it means either there is some extra data in the $\Sigma'$ or some data is missing. Since we create $\Sigma'$ by iterating through all the rules, we construct complete signature with complete states used in the model. Therefore, if some data are missing in $\Sigma'$, then it follows given signature $\Sigma$ is not minimal. On the other hand, if there are some extra data in $\Sigma'$, then given signature $\Sigma$ is incorrect -- its missing some structure details which are being used in the model. $\QEDA$
 % \end{proof}
 
+\subsection{Translation to Petri Net}
+
+By generating reaction-based model from rule-based, which is always possible (Section~\ref{Generating reactions}), we can furthermore translate such model to a Petri Net~\cite{petri}.
+
+The translation can be summarised in the following steps: 
+
+\begin{enumerate}
+\item since BCSL rules produce a finite number of reactions, we have also a finite number of unique agents -- these are the places \emph{P},
+\item the transitions \emph{T} are the reactions,
+\item set of arcs $F$ is created from all reactions as following:
+\begin{itemize}
+  \item place input arc from each place which has label in left-hand side of the reaction (with appropriate multiplicity),
+  \item do the same for output arcs for right-hand side of the reaction,
+\end{itemize}
+\item create initial marking \emph{m} from given initial state of the model by similar procedure described above.
+\end{enumerate}
+
+Once the model is translated, we are allowed to apply all available types of analyses which are provided by Petri Nets. For example, P and T invariants, deadlock detection, coverability etc. (see~\cite{petri}).
+
 \subsection{Minimal optimal bound of the system}
 \label{optimal_bound}
 
@@ -1934,25 +1933,6 @@ To actually calculate the minimal bound we take maximum value from the following
 The step~(\ref{count_init}) ensures the bound $\mathtt{B}$ will not be lower than highest number of equivalent agents in the initial state. In the step~(\ref{count_unique}) we count repetitions of equivalent atomic and structure agents inside all complexes, which ensures that there will be enough agents for creation of every complex agent. The last step~(\ref{count_stoi}) takes into the account stoichiometry used in context of complex agents themselves.
 
 This should guarantee that it is possible to achieve high enough number of occurrences to produce any complex or combination of complexes.
-
-\subsection{Translation to Petri Net}
-
-By generating reaction-based model from rule-based, which is always possible (Section~\ref{Generating reactions}), we can furthermore translate such model to a Petri Net~\cite{petri}.
-
-The translation can be summarised in the following steps: 
-
-\begin{enumerate}
-\item since BCSL rules produce a finite number of reactions, we have also a finite number of unique agents -- these are the places \emph{P},
-\item the transitions \emph{T} are the reactions,
-\item set of arcs $F$ is created from all reactions as following:
-\begin{itemize}
-  \item place input arc from each place which has label in left-hand side of the reaction (with appropriate multiplicity),
-  \item do the same for output arcs for right-hand side of the reaction,
-\end{itemize}
-\item create initial marking \emph{m} from given initial state of the model by similar procedure described above.
-\end{enumerate}
-
-Once the model is translated, we are allowed to apply all available types of analyses which are provided by Petri Nets. For example, P and T invariants, deadlock detection, coverability etc. (see~\cite{petri}).
 
 \chapter{Case study}
 \label{case_study}
