@@ -1,5 +1,5 @@
-\documentclass[12pt]{fithesis2}
-%\documentclass[12pt, draft]{fithesis2}   % a devel version
+%\documentclass[12pt]{fithesis2}
+\documentclass[12pt, draft]{fithesis2}   % a devel version
 %\documentclass[12pt, twoside]{fithesis2} % two-sided print version
 
 % ===== LOADING PACKAGES =====
@@ -41,7 +41,7 @@
 \newenvironment{runningExample}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Running example \thecounter} \textit{#1} \par\nopagebreak}{\bigskip}
 \newenvironment{theorem}{\bigskip\refstepcounter{counter}\noindent\textbf{Theorem \thecounter }\nopagebreak}{\bigskip}
 \newenvironment{lemma}{\bigskip\refstepcounter{counter}\noindent\textbf{Lemma \thecounter }\nopagebreak}{\bigskip}
-\newenvironment{remark}{\bigskip\refstepcounter{counter}\noindent\textbf{Remark \thecounter }\nopagebreak}{\bigskip}
+\newenvironment{remark}{\bigskip\refstepcounter{counter}\noindent\textbf{Remark \thecounter~ }\nopagebreak}{\bigskip}
 
 \newcommand\mdoubleplus{\mathbin{+\mkern-7mu+}}
 \newcommand*\arc{{\fontfamily{pbk}\fontseries{db}\selectfont+}}
@@ -219,12 +219,12 @@ The mapping of a rule on a solution can be understood as a particular moment whe
   \begin{minipage}[r]{0.6\textwidth}
     {\hspace*{1.3cm}\includegraphics[scale=0.2]{pics/rule_reaction}}
 \end{minipage}
-\caption{\textbf{Example of a map-apply action}. As a solution, we use solution \textit{(a)} from Fig.~\ref{solutions:fig}. \textbf{(a)} Rule can be mapped on a \raisebox{-0.02cm}[0cm]{{\large $\square$}} and a $\bigcirc$ regardless their colors and form a complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$.  \textbf{(b)} Let's choose yellow \raisebox{-0.02cm}[0cm]{{\large $\square$}} and green $\bigcirc$ from our solution. The rule was mapped on chosen objects and they were assigned to the left-hand-side of the rule. \textbf{(c)} The rule was applied and new object (yellow-green complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$) was created. We obtained the reaction describing the particular action which has just happened.}
+\caption{\textbf{Example of a map-apply action}. As a solution, we use solution \textit{(a)} from Fig.~\ref{solutions:fig}. \textbf{(a)} Rule can be mapped on a \raisebox{-0.02cm}[0cm]{{\large $\square$}} and a $\bigcirc$ regardless their colors and form a complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$.  \textbf{(b)} Let's choose yellow \raisebox{-0.02cm}[0cm]{{\large $\square$}} and green $\bigcirc$ from our solution. The rule was mapped on chosen objects and they were assigned to the left-hand side of the rule. \textbf{(c)} The rule was applied and new object (yellow-green complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$) was created. We obtained the reaction describing the particular action which has just happened.}
 \label{map-apply:fig}
 \end{center}
 \end{figure}
 
-The mapping can also be seen as assigning particular objects from the solution to types on the left-hand-side of the rule. The rule application then represents the change of the mapped objects to new objects according to the right-hand-side of the rule (i.e., particular objects are assigned to the right-hand-side). As a by-product, we obtain an instance of the rule -- a reaction (Fig.~\ref{map-apply:fig}). %This is how we construct the set of labels (reactions) $A$ in the LTS $\mathcal{L}$.
+The mapping can also be seen as assigning particular objects from the solution to types on the left-hand side of the rule. The rule application then represents the change of the mapped objects to new objects according to the right-hand side of the rule (i.e., particular objects are assigned to the right-hand side). As a by-product, we obtain an instance of the rule -- a reaction (Fig.~\ref{map-apply:fig}). %This is how we construct the set of labels (reactions) $A$ in the LTS $\mathcal{L}$.
 
 Since this kind of graphical representation is not very suitable for machine processing and analysis, we define a formal language which is built on principles described in this chapter.
 
@@ -297,7 +297,7 @@ The Chromar language~\cite{honorato2017chromar} allows to define attributes for 
 
 Embedding this language to functional programming language Haskell increases its expressive power while making the ability of some analysis more expensive. Moreover, a user needs to understand Haskell (at least its basics) in order to use Chromar.
 
-It is important to highlight a feature which stochastic semantics of this language offers. Compared to other rule-based languages, it is capable of specifying rates for individual reactions inherited from the rule (Figure~\ref{chromar_rule}). It is allowed by variable value bindings and type-determination between left- and right-hand-side of the rule.
+It is important to highlight a feature which stochastic semantics of this language offers. Compared to other rule-based languages, it is capable of specifying rates for individual reactions inherited from the rule (Figure~\ref{chromar_rule}). It is allowed by variable value bindings and type-determination between left- and right-hand side of the rule.
 
 \begin{figure}[!h]
 \begin{center}
@@ -609,11 +609,9 @@ In this chapter, we define Biochemical Space Language formally. At first, we def
 
 The defined semantics is indirect, i.e. we do not give semantic sense to rules themselves, rather provide a procedure how to generate reactions from the rules and give semantics to them.
 
-For better readability, we provide examples of syntax for most important object with their definition. The formal definition of syntax and the relation to the objects will be given later.
-
 \section{Formal preliminaries}
 
-Before we proceed, we recall some basic notations and provide all necessary definition in order to build formal definition for the language.
+Before we proceed, we recall some basic definitions and notations in order to build formal definition for the language.
 
 %We define projection $\pi_i$ to enable iterating through multidimensional structures.
 
@@ -635,8 +633,6 @@ $ \pi_i(x_1, \ldots, x_n) = x_i $
 for some $i, n \in \mathbb{N}$ where $i \leq n$.
 \end{definition}
 
-%Next, we need to define tuples concatenation, since we work with them quite often want to make sure this operation is clear.
-
 \begin{definition}{Tuples concatenation}
 
 Let $X = (x_1, \ldots, x_n), Y = (y_1, \ldots, y_m)$ be two tuples for some $n, m \in \mathbb{N}$. Concatenation of two tuples, written $X \mdoubleplus Y$, is defined as:
@@ -645,8 +641,6 @@ Let $X = (x_1, \ldots, x_n), Y = (y_1, \ldots, y_m)$ be two tuples for some $n, 
 $X \mdoubleplus Y = (x_1, \ldots, x_n, y_1, \ldots, y_m)$.
 \end{center}
 \end{definition}
-
-%Then, we can generalise concatenation operation to multiple tuples.
 
 \begin{definition}{Sum of concatenations}
 
@@ -657,13 +651,9 @@ $\mdoubleplus_{i=1}^n T_i = T_1 \mdoubleplus T_2 \mdoubleplus \ldots \mdoubleplu
 \end{center}
 \end{definition}
 
-%A non-crossing partition of $S$ is a partition in which no two blocks "cross" each other.
-
 \begin{definition}{Non-crossing partition}
 A partition $\mathcal{P} = B_1/B_2/\ldots/B_k$ of $S = [1,\ldots,n]$ is non-crossing if  whenever a quadruple of elements $1 \leq a < b < c < d \leq n$ satisfies $a, c \in B_i$ and $b, d \in B_j$ for some $1 \leq i, j \leq k$, then in fact $i = j$; thus, the blocks do not cross.
 \end{definition}
-
-%We also need to use permutations product. For this purpose, we use common notion $\sigma$.
 
 \begin{notation}
 Let $\vv{v} = (x_1, \ldots, x_n)$ be a vector. By $\sigma(\vv{v})$ we denote set of all possible permutations of length $n$ of the vector $\vv{v}$.
@@ -708,7 +698,9 @@ Petri Net is a quadruple $\mathcal{N} = (P, T, F, m_0)$ where:
 
 \section{Objects definition}
 
-Let $\mathcal{N}_{A},~\mathcal{N}_{T},~\mathcal{N}_{\delta},~\mathcal{N}_{c}$ be mutually exclusive finite sets of atomic names, structure names, states, and compartments respectively. Moreover, $\varepsilon$ is reserved symbol and does not belong to any of these sets.
+Let $\mathcal{N}_{A}, \mathcal{N}_{T}, \mathcal{N}_{\delta}, \mathcal{N}_{c}$ be mutually exclusive finite sets of atomic names, structure names, states, and compartments respectively. Moreover, $\varepsilon$ is reserved symbol and does not belong to any of these sets.
+
+For better readability, we provide examples of syntax for most important object with their definition. The formal definition of syntax and the relation to the objects will be given in subsequent sections.
 
 \subsection{Signature}
 
@@ -744,7 +736,7 @@ Let $\mathtt{A},~ \mathtt{A}'$ be atomic agents. $\mathtt{A}$ is \emph{equivalen
 \end{definition}
 
 \begin{notation}
-Let $\mathds{A}$ be universe of all possible atomic agents.
+We use symbol $\mathds{A}$ to denote the universe of all possible atomic agents.
 \end{notation}
 
 Universe $\mathds{A}$ represents all atomic agents which can be formed according to defined sets of atomic names and states.
@@ -788,12 +780,12 @@ Let $\mathtt{T}, \mathtt{T}'$ be structure agents. $\mathtt{T}$ is \emph{equival
 The key construct of a structure agent is \emph{partial composition} defined as a list of atomic agents which are considered to be relevant parts of the structure agent. We allow this list to be empty with the meaning of a biological structure for which we do not know its composition.
 
 \begin{notation}
-Let $\mathds{T}$ be universe of all possible structure agents.
+We use symbol $\mathds{T}$ to denote the universe of all possible structure agents.
 \end{notation}
 
 Universe $\mathds{T}$ represents all structure agents which can be formed according to defined sets of structure names w.r.t. to universe of atomic agents.
 
-A typical example of a structure agent is a protein where the atomic agents are individual amino acids that are of interest in the particular setting.
+A typical example of a structure agent is a protein where the atomic agents are individual amino acids that are of interest in the particular setting. For example, only three out of a few hundreds amino acids are able to undergo some post-translational modifications, such as phosphorylation, metylation etc. It is suitable to model only these three acids instead of entire primary structure of the protein.
 
 \begin{example}{Structure agent}\label{example:structure}
 \begin{itemize}
@@ -827,7 +819,7 @@ Let $\mathtt{X}, \mathtt{X}'$ be complexes. $\mathtt{X}$ is \emph{equivalent} to
 The key element of a complex agent is \emph{sequence} describing inductively constructed coexistence expressions from existing agents. In contrast to partial composition in structure agent, we allow replication at the level of sequence (an agent of a certain name can appear more than once in a sequence).
 
 \begin{notation}
-Let $\mathds{X}$ be universe of all possible complex agents. Additionally, we denote $\mathds{U}~=~\mathds{A}~\cup~\mathds{T}~\cup~\mathds{X}$ as universe of all possible agents.
+We use symbol $\mathds{X}$ to denote the universe of all possible structure agents. Additionally, $\mathds{U}~=~\mathds{A}~\cup~\mathds{T}~\cup~\mathds{X}$ denotes universe of all possible agents.
 \end{notation}
 
 \begin{example}{Complex}\label{example:complex}
@@ -840,19 +832,17 @@ Let $\mathds{X}$ be universe of all possible complex agents. Additionally, we de
 \end{itemize}
 \end{example}
 
-The complex agents have very important role in the language. It means, an atomic or structure agent cannot exist on its own, it must be encapsulated in a complex (which might have only one item in its sequence). This guarantees each atomic and structure agent has indirectly given space location -- the compartment.
+The complex agents encapsulate other agents -- an atomic or structure agent cannot exist on its own (there might be case when only one item is in its sequence). This guarantees each atomic and structure agent has indirectly given space location -- the compartment.
 
 \subsection{Rule}
 
 \begin{definition}{Rule}
 \label{rule_definition}
-
 Rule $\mathtt{R}$ is a quintuple $(\chi, \omega, \iota, \varphi, \psi)$ where:
-
 \begin{itemize}
 \item $\chi \in \mathds{X}^n$ is a sequence of complexes,
 \item $\omega \in (\mathds{A} \cup \mathds{T})^m$ is a sequence of atomic and structure agents,
-\item $\iota \in \{ 1, \ldots, n \}$ is an index determining start of right-hand-side,
+\item $\iota \in \{ 1, \ldots, n \}$ is an index determining start of right-hand side,
 \item $\varphi \in \mathbb{N}^m$ is an index map between $\omega$ and $\chi$,
 \item $\psi \in ((\{-\} \cup \mathbb{N})^2)^n$ is an index map between agents from left and right-hand side.
 \end{itemize}
@@ -863,7 +853,7 @@ where $n, m \in \mathbb{N}$.
 The rule is quite a complicated structure. The reason is the practical definition of semantics which can be seen in following sections. Also, it is necessary to capture relationship between left and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map between the agents in $\psi$. Another index map $\varphi$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, by index $\iota$ we determine the end of left-hand side of the rule.
 
 \begin{notation}
-Let $\mathds{R}$ be universe of all possible rules.
+We use symbol $\mathds{R}$ to denote the universe of all possible rules.
 \end{notation}
 
 \begin{example}{Rule}\label{example:rule}
@@ -903,7 +893,7 @@ $\Rightarrow K(S\{p\}).B(\varnothing).C(\varnothing)::cyt + D\{a\}.A\{\varepsilo
 \end{center}
 \end{example}
 
-Not every rule gives a sense. We need to specify, when a rule is \emph{well-formed}, i.e. it gives semantically sense.
+Not every rule gives a sense. For example, a rule with no change or a rule with ambiguous relation of left and right-hand sides. In order to avoid such cases we need to specify when a rule is \emph{well-formed}, i.e. it gives semantically sense.
 
 \begin{definition}{Well-formed rule}
 Let $\mathtt{R}$ be a rule and $i,j \in \mathbb{N}$ natural numbers. We say the rule $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi)$ is \emph{well-formed} if the following conditions hold:
@@ -927,7 +917,7 @@ Reaction $\mathtt{r}$ is a pair $(\mathtt{seq}, \iota)$ where:
 
 \begin{itemize}
 \item $\mathtt{seq} \in \mathds{X}^n$ is a sequence of complexes,
-\item $\iota \in \{ 1, \ldots, n \}$ is an index determining start of right-hand-side
+\item $\iota \in \{ 1, \ldots, n \}$ is an index determining start of right-hand side
 \end{itemize}
 
 where $n, m \in \mathbb{N}$.
@@ -936,7 +926,7 @@ where $n, m \in \mathbb{N}$.
 Reaction is similar structure than rule, but much simpler. The reaction is just mediate format for giving semantics to BCSL models and it only holds information about complex contents of the rule.
 
 \begin{notation}
-We denote left-hand-side of the reaction $(\pi_1(\mathtt{seq}), \ldots, \pi_{\iota-1}(\mathtt{seq}))$ as $LHS(\mathtt{r})$ and right-hand-side of the reaction $(\pi_\iota(\mathtt{seq}), \ldots, \pi_n(\mathtt{seq}))$ as $RHS(\mathtt{r})$.
+Let $\mathtt{r}$ be a reaction. We denote left-hand side of the reaction $(\pi_1(\mathtt{seq}), \ldots, \pi_{\iota-1}(\mathtt{seq}))$ as $LHS(\mathtt{r})$ and right-hand side of the reaction $(\pi_\iota(\mathtt{seq}), \ldots, \pi_n(\mathtt{seq}))$ as $RHS(\mathtt{r})$.
 \end{notation}
 
 \section{Syntax}
@@ -966,7 +956,7 @@ rule expression & $\rho ::= \Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1
 where $m,n \in \mathbb{N}_0 \wedge m > n \wedge m + n \neq 0$ and $k \in \mathbb{N}$.
 \end{definition}
 
-Examples of syntax can be seen in the previous examples (Example~\ref{example:atomic} to \ref{example:rule}).
+Examples of syntax can be seen in the previous examples (Example~\ref{example:atomic} to \ref{example:rule}) and also in case study (Section~\ref{case_study}).
 
 \section{BCSL model}
 \label{BCSl_model}
@@ -1023,10 +1013,12 @@ $\Sigma_T(\mathtt{\eta}) \ominus \gamma(\mathtt{T}) \myeq \{ \eta_\Sigma ~|~ \et
 \section{Semantic function}
 \label{semantic_function}
 
-In the previous sections, we defined BCSL objects and BCSL model. Now, we need to connect them in order to we give semantic meaning to the model $\mathds{M}$. For this purpose, we define semantic function $\mathtt{F}$ (Definition~\ref{semantic_function}). It is defined recursively for a model $\mathds{M}$ according to expression given as an argument.
+In the previous sections, we defined BCSL model using given syntax and BCSL objects with semantic meaning. Now, we need to connect them in order to we give semantic meaning to the model $\mathds{M}$. For this purpose, we define semantic function $\mathtt{F}$ (Definition~\ref{semantic_function}). It is defined recursively for a model $\mathds{M}$ according to expression given as an argument. 
 
 \begin{definition}{Semantic function}
 \label{semantic_function}
+We define semantic function $\mathtt{F}$ according to the expression given in $\llbracket \ldots \rrbracket$ brackets as follows:
+
 \begin{center}
 \begin{tabular}{ c c l}
 $\mathtt{F} \llbracket ~\eta\{\varepsilon\}~ \rrbracket$ & = & $(\eta, \varepsilon) \in \mathds{A}$\\
@@ -1280,28 +1272,31 @@ where $n = |\theta|$. &\\
 \end{center}
 \end{definition}
 
-The positive and negative parts of labels are treated independently. The negative numbers represent left-hand-side of the reaction~ $\mkern2mu\overline{\mkern-4.5mu \lambda^{-1}}$ (the reactants) while positive numbers represent right-hand-side of the reaction $\lambda^{-1}$ (the products).
+The positive and negative parts of labels are treated independently. The negative numbers represent left-hand side of the reaction~ $\mkern2mu\overline{\mkern-4.5mu \lambda^{-1}}$ (the reactants) while positive numbers represent right-hand side of the reaction $\lambda^{-1}$ (the products).
 
 \begin{definition}{LTS of BCSL model}
 Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model and $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \theta)$ be a chemical reaction model constructed from model $\mathds{M}$.
 
-We define the labeled transition system of BCSL model $\mathds{M}$, $LTS(\mathds{M}) = (S, A, T, s_0)$, from the $LTS(\mathcal{M}) = (S', A', T', s'_0)$ such that:
+We define the labeled transition system of the BCSL model $\mathds{M}$, $LTS(\mathds{M}) = (S, A, T, s_0)$, from the $LTS(\mathcal{M}) = (S', A', T', s'_0)$ such that:
 
+\begin{center}
 \begin{enumerate}
 	\item $S = \{~ \mathtt{s} ~|~ \mathtt{s} = \lambda^{-1}(\mathtt{s}', \theta) \wedge \mathtt{s}' \in S' ~\}$,
 	\item $A = \{~ (\mathtt{l}, \mathtt{r}) ~|~ \mathtt{l} = \mkern2mu\overline{\mkern-4.5mu \lambda^{-1}}(\mathtt{a}, \theta) \wedge \mathtt{r} = \lambda^{-1}(\mathtt{a}, \theta) \wedge \mathtt{a} \in A' ~\} $,
 
 	\item $T = \Set{  (\mathtt{s}, (\mathtt{l}, \mathtt{r}), \mathtt{t})\ | \begin{array}{l}
-      \mathtt{s} = \lambda^{-1}(\vv{\mathtt{s}}, \theta) \wedge \mathtt{t} = \lambda^{-1}(\vv{\mathtt{p}}, \theta) \wedge l = \mkern2mu\overline{\mkern-4.5mu \lambda^{-1}}(\vv{\mathtt{r}}, \theta) ~\wedge \\
-      \wedge~ r = \lambda^{-1}(\vv{\mathtt{r}}, \theta) \wedge (\vv{\mathtt{s}}, \vv{\mathtt{r}}, \vv{\mathtt{p}}) \in T'
+      \mathtt{s} = \lambda^{-1}(\vv{\mathtt{s}}, \theta) \wedge \mathtt{t} = \lambda^{-1}(\vv{\mathtt{p}}, \theta) ~\wedge\\
+      \wedge~ l = \mkern2mu\overline{\mkern-4.5mu \lambda^{-1}}(\vv{\mathtt{r}}, \theta) \wedge r = \lambda^{-1}(\vv{\mathtt{r}}, \theta) ~\wedge \\
+      \wedge~ (\vv{\mathtt{s}}, \vv{\mathtt{r}}, \vv{\mathtt{p}}) \in T'
   \end{array}}$
 
 	\item $s_0 = \lambda^{-1}(s'_0, \theta)$.
 \end{enumerate}
+\end{center}
 
 \end{definition}
 
-The LTS of a BCSL model is formed by states, labels, transitions, and an initial state. The states are multisets of complex agents, labels are individual reactions (the left and right-hand-side multisets of complex agents respectively), and transitions are triples of (state, label, state) which represent edges. The initial state is a special state representing the origin of the system.
+The LTS of a BCSL model is formed by states, labels, transitions, and an initial state. The states are multisets of complex agents, labels are individual reactions (the left and right-hand side multisets of complex agents respectively), and transitions are triples of (state, label, state) which represent edges. The initial state is a special state representing the origin of the system.
 
 \section{Syntactic extensions}
 \label{syntactic_extensions}
@@ -1575,13 +1570,13 @@ The BCS language offers interesting capabilities in order to provide static anal
 Let $\mathtt{A}_1$, $\mathtt{A}_2$ be atomic agents. The agent $\mathtt{A}_1$ is \emph{compatible with} agent $\mathtt{A}_2$, written $\mathtt{A}_1 \lhd \mathtt{A}_2$, if either $\mathtt{A}_1 \equiv \mathtt{A}_2$ or $\eta(\mathtt{A}_1) \equiv \eta(\mathtt{A}_2) \wedge \delta(\mathtt{A}_1) \equiv \varepsilon $.
 \end{definition}
 
-Note that compatibility of two atomic agents is very close to their equivalence. Additionally the left-hand-side agent is allowed to have its state undefined while the state of right-hand-side agent differs. 
+Note that compatibility of two atomic agents is very close to their equivalence. Additionally the left-hand side agent is allowed to have its state undefined while the state of right-hand side agent differs. 
 
 \begin{definition}{Compatibility of structure agents}
 Let $\mathtt{T}_1, \mathtt{T}_2$ be structure agents. The agent $\mathtt{T}_1$ is \emph{compatible with} agent $\mathtt{T}_2$, written $\mathtt{T}_1 \lhd \mathtt{T}_2$, \emph{iff} either $\mathtt{T}_1 \equiv \mathtt{T}_2$ or $\eta(\mathtt{T}_1) \equiv \eta(\mathtt{T}_2) \wedge \forall \mathtt{A}_1 \in \gamma(\mathtt{T}_1) ~\exists \mathtt{A}_2 \in \gamma(\mathtt{T}_2)$ : $\mathtt{A}_1 \lhd \mathtt{A}_2$.
 \end{definition}
 
-Structure agents are compatible if we are able to create pairs from atomic agents of composition of left-hand-side agent with the right-hand-side ones such that these atomic agents are all unique. For such pairs, the agents in each pair must be compatible.
+Structure agents are compatible if we are able to create pairs from atomic agents of composition of left-hand side agent with the right-hand side ones such that these atomic agents are all unique. For such pairs, the agents in each pair must be compatible.
 
 \begin{definition}{Compatibility of complex agents}
 Let $\mathtt{X}_1$, $\mathtt{X}_2$ be complex agents. The agent $\mathtt{X}_1$ is \emph{compatible with} agent $\mathtt{X}_2$, written $\mathtt{X}_1 \lhd \mathtt{X}_2$, \emph{iff} either $\mathtt{X}_1 \equiv \mathtt{X}_2$ or $\mathtt{com}(\mathtt{X}_1) \equiv \mathtt{com}(\mathtt{X}_2) \wedge \exists \mu' \in \sigma(\mu(\mathtt{X}_2))$ such that $ \forall i \in [1, n] : \pi_i(\mu(\mathtt{X}_1)) \lhd \pi_i(\mu') $, where $n$ is length of sequence which is the same for both sequences.
@@ -1862,7 +1857,7 @@ Lets assume we have a path of states constructed by applying corresponding react
 \includegraphics[scale=0.15]{pics/static_reach}
 \end{center}
 
-In order to apply such action, there has to be at least one rule which has on its right-hand-side a complex agent compatible with the given complex agent. If there is not such agent, the agent $\mathtt{X}$ is non-reachable. $\QEDA$
+In order to apply such action, there has to be at least one rule which has on its right-hand side a complex agent compatible with the given complex agent. If there is not such agent, the agent $\mathtt{X}$ is non-reachable. $\QEDA$
 \end{proof}
 
 The Theorem~\ref{static_reach} states a very powerful fact in context of non-reachability analysis. Compared to dynamic non-reachability analysis, it completely avoids any combinatorial explosion and gives answer only by testing structural properties of rules.
@@ -1927,7 +1922,7 @@ To actually calculate the minimal bound we take maximum value from the following
 \begin{enumerate}
   \item \label{count_init} count the highest number of occurrences from all agents in initial state,
   \item \label{count_unique} count the highest number of unique agents in all complexes of all rules,
-  \item \label{count_stoi} count the highest stoichiometry in all left and right-hand-sides of the rules.
+  \item \label{count_stoi} count the highest stoichiometry in all left and right-hand sides of the rules.
 \end{enumerate}
 
 The step~(\ref{count_init}) ensures the bound $\mathtt{B}$ will not be lower than highest number of equivalent agents in the initial state. In the step~(\ref{count_unique}) we count repetitions of equivalent atomic and structure agents inside all complexes, which ensures that there will be enough agents for creation of every complex agent. The last step~(\ref{count_stoi}) takes into the account stoichiometry used in context of complex agents themselves.
@@ -1945,8 +1940,8 @@ The translation can be summarised in the following steps:
 \item the transitions \emph{T} are the reactions,
 \item set of arcs $F$ is created from all reactions as following:
 \begin{itemize}
-  \item place input arc from each place which has label in left-hand-side of the reaction (with appropriate multiplicity),
-  \item do the same for output arcs for right-hand-side of the reaction,
+  \item place input arc from each place which has label in left-hand side of the reaction (with appropriate multiplicity),
+  \item do the same for output arcs for right-hand side of the reaction,
 \end{itemize}
 \item create initial marking \emph{m} from given initial state of the model by similar procedure described above.
 \end{enumerate}
@@ -2006,7 +2001,7 @@ We want to demonstrate practical purposes of a few types of static analyses defi
 
 In Figure~\ref{fgf_fragment}, there is the model defined in BCSL syntax. Note this model is a fragment of the entire model. Focus on rule~(\ref{focus_rule}). It requires both Threonine residues ($Thr$) on $FGF$ proteins to be phosphorylated ($p$). Basically, it is not possible to create a complex from $FRS$ and unphosphorylated ($u$) $FGF$ proteins.
 
-For example, we want to check whether a given complex agent {\small $FRS(Thr\{u\}, Tyr\{u\}).FGF(Thr\{u\}).R.FGF(Thr\{u\}).R::cyt$} is reachable. The agent is formed from $FGF$ proteins which are unphosphorylated ($u$) on hreonine residues ($Thr$). In traditional approach, we have to enumerate entire state space of the model and then use dynamic model checking method to check it. In our case, we can use Theorem~\ref{static_reach} and check if it is non-reachable using static reachability analysis. It results to conclusion that there is no compatible agent on any right-hand-side of the rules. It follows the complex agent is non-reachable.
+For example, we want to check whether a given complex agent {\small $FRS(Thr\{u\}, Tyr\{u\}).FGF(Thr\{u\}).R.FGF(Thr\{u\}).R::cyt$} is reachable. The agent is formed from $FGF$ proteins which are unphosphorylated ($u$) on hreonine residues ($Thr$). In traditional approach, we have to enumerate entire state space of the model and then use dynamic model checking method to check it. In our case, we can use Theorem~\ref{static_reach} and check if it is non-reachable using static reachability analysis. It results to conclusion that there is no compatible agent on any right-hand side of the rules. It follows the complex agent is non-reachable.
 
 \begin{figure}[!h]
 {\footnotesize
@@ -2080,7 +2075,7 @@ The tool is developed in Python language (version 2.7) as open-source desktop so
 
 In the first version, there was no support for editing the models. The only functionality provided by the tool was import of the model from a text file (in a predefined format) and enumerating entire state space of the model. The implementation was done by translating to Kappa and it was rather slow and non-efficient. The single transaction (application of one rule) was delayed by translation to Kappa and then by exact matching and replacement, which might get quite complicated. However, it was a good start for the language and it was possible to analyse exported networks in external tools. There was simple GUI made in Tkinter~\cite{Tkinter}, which had several issues. The most important one was the fact that Tkinter was not designed for multithreading programming. For example, while computing a state space for the model, the whole GUI was not responsible.
 
-In the second version, we focused on speed improvement and development of a user-friendly GUI. For the speed improvement, we implemented semantics as defined in this thesis (Section~\ref{semantic_function}). Compared to previous version, in this case there was no exactly rule-based execution of the rule -- we rather translated the rules to the reactions and subsequently encoded as vector operations over integers. Therefore, one transaction was just addition of one vector (left-hand-side) and subtraction of another one (right-hand-side). The GUI was reimplemented in PyQt4~\cite{summerfield2007rapid}, which naturally works with multithreading. It was significant improvement from performance point of the view. Moreover, we improved input/output formats. For input we defined BCSL model format, which serves for import. As output format we have chosen JSON~\cite{json}, which is very suitable for its simplicity and support by many external tools.
+In the second version, we focused on speed improvement and development of a user-friendly GUI. For the speed improvement, we implemented semantics as defined in this thesis (Section~\ref{semantic_function}). Compared to previous version, in this case there was no exactly rule-based execution of the rule -- we rather translated the rules to the reactions and subsequently encoded as vector operations over integers. Therefore, one transaction was just addition of one vector (left-hand side) and subtraction of another one (right-hand side). The GUI was reimplemented in PyQt4~\cite{summerfield2007rapid}, which naturally works with multithreading. It was significant improvement from performance point of the view. Moreover, we improved input/output formats. For input we defined BCSL model format, which serves for import. As output format we have chosen JSON~\cite{json}, which is very suitable for its simplicity and support by many external tools.
 
 \begin{figure}[!h]
 \begin{center}
@@ -2176,15 +2171,15 @@ $\mathds{U}$ & & universe of all possible agents\\
 $\mathtt{R}$ & & rule\\
  & $\chi$ & sequence of complexes\\
  & $\omega$ & sequence of atomic and structure agents\\
- & $\iota$ & index determining start of right-hand-side\\
+ & $\iota$ & index determining start of right-hand side\\
  & $\varphi$ & index map between $\omega$ and $\chi$\\
  & $\psi$ & is an index map between agents from left-\\
  & & and right-hand side\\
 $\mathds{R}$ & & universe of all possible rules\\
 \hline 
 $\mathtt{r}$ & & reaction\\
- & $LHS(\mathtt{r})$ & left-hand-side of the reaction\\
- & $RHS(\mathtt{r})$ & right-hand-side of the reaction\\
+ & $LHS(\mathtt{r})$ & left-hand side of the reaction\\
+ & $RHS(\mathtt{r})$ & right-hand side of the reaction\\
 \hline 
 $\alpha$ & & atomic expression\\
 $\tau$ & & structure expression\\
@@ -2248,7 +2243,7 @@ $\lambda(\mathtt{S}, \theta)$ & & multiset to vector translation\\
 % \begin{enumerate}
 % \item we allow only \emph{mass action} kinetics
 
-% The positive thing about this kinetics is that all it needs is a given parameter. The rate is computed as multiple of the parameter with all agents on the left-hand-side of the rule. Since the stoichiometry is allowed in this case, the mapping is not always clear. For this reason we multiply all possible mappings together, which gives appropriate results.
+% The positive thing about this kinetics is that all it needs is a given parameter. The rate is computed as multiple of the parameter with all agents on the left-hand side of the rule. Since the stoichiometry is allowed in this case, the mapping is not always clear. For this reason we multiply all possible mappings together, which gives appropriate results.
 
 % \item the first left agent
 
