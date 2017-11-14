@@ -2118,9 +2118,21 @@ Since there are some graphs and charts generated in BCSgen, we decided to integr
 
 \chapter{Conclusions}
 
-what we have done so far
+In the first part of this thesis, we have explained the background of the work. Particularly, we provided explanation of the principles of rule-based modelling using schematic examples. Several existing rule-based languages have been introduced with their key features. Comprehensive modeling platform as a framework for modelling biochemical processes has been described with all its important modules such as Model repository and Biochemical Space.
+
+In the second part, we have formally defined Biochemical Space Language as a description format for Biochemical Space. Together with very concise and \emph{human-readable} syntax we have defined operational semantics. An indirect approach has been chosen for practical purposes. Moreover, several syntactic extensions were defined to increase readability and maintenance of the language.
+
+In the third part, we have introduced analysing approaches which could be directly used on model defined using the language. Those include dynamic analyses such as model checking and simulation, but also static analyses. We have defined a few types of static analyses which can be use without enumerating entire behavior of the model.
+
+The last part was dedicated for practical usage of the language and provided analysis formalisms. Namely, in the case study we have demonstrated how can be abstractions of the language used in particular modelling situations. We have also shown practical impact of defined static analyses on investigating behavior of the model effectively. Finally, we have presented implementation of a software tool BCSgen, which was developed in order to provide support for maintenance and analysis of the models.
 
 future work (mention all of them)
+
+rates
+web-based BCSgen
+generalised static analysis approaches
+
+% This approach can be generalised for the non-reachability of a (multi)set of complex agents, but we consider it as a future work. (Theorem 5.2.19) + the other one
 
 \bibliographystyle{citeStyle}
 {\small
@@ -2131,73 +2143,77 @@ future work (mention all of them)
 
 \chapter{List of used notation}
 
-\begin{tabular}{c c | l}
-$\sigma(\vv{v})$ & & set of permutations of vector $\vv{v}$ of length $|\vv{v}|$\\
-$X \mdoubleplus Y$ & & tuples concatenation\\
-$\mdoubleplus_{i=1}^n T_i$ & & generalised concatenation\\
-$\Xi(Y)$ & & reassembly of tuples\\
-$\pi_i$ & & projection on dimension i\\
+\begin{center}
+\begin{tabular}{c | l}
+$\sigma(\vv{v})$ & set of permutations of vector $\vv{v}$ of length $|\vv{v}|$\\
+$X \mdoubleplus Y$ & tuples concatenation\\
+$\mdoubleplus_{i=1}^n T_i$ & generalised concatenation\\
+$\Xi(Y)$ & reassembly of tuples\\
+$\pi_i$ & projection on dimension i\\
 \hline 
-$\Sigma_{\mathtt{A}}$ & & atomic signature \\
-$\Sigma_{\mathtt{T}}$ & & structure signature \\
+$\Sigma_{\mathtt{A}}$ & atomic signature \\
+$\Sigma_{\mathtt{T}}$ & structure signature \\
 \hline 
-$\mathtt{A}$ & & atomic agent \\
- & $\eta$ & name \\
- & $\delta$ & state \\
- & $\varepsilon$ & empty state (not specified)\\
-$\mathds{A}$ & & universe of all possible atomic agents \\
+$\mathtt{A}$ & atomic agent \\
+$\eta$ & name \\
+$\delta$ & state \\
+$\varepsilon$ & empty state (not specified)\\
+$\mathds{A}$ & universe of all possible atomic agents \\
 \hline 
-$\mathtt{T}$ & & structure agent \\
- & $\eta$ & name \\
- & $\gamma$ & partial composition\\
-$\mathds{T}$ & & universe of all possible structure agents\\
+$\mathtt{T}$ & structure agent \\
+$\eta$ & name \\
+$\gamma$ & partial composition\\
+$\mathds{T}$ & universe of all possible structure agents\\
 \hline 
-$\mathtt{X}$ & & complex agent\\
- & $\mu$ & sequence of agents\\
- & $\mathtt{com}$ & compartment\\
-$\mathds{X}$ & & universe of all possible complex agents\\
-$\mathds{U}$ & & universe of all possible agents\\
+$\mathtt{X}$ & complex agent\\
+$\mu$ & sequence of agents\\
+$\mathtt{com}$ & compartment\\
+$\mathds{X}$ & universe of all possible complex agents\\
+$\mathds{U}$ & universe of all possible agents\\
 \hline 
-$\mathtt{R}$ & & rule\\
- & $\chi$ & sequence of complexes\\
- & $\omega$ & sequence of atomic and structure agents\\
- & $\iota$ & index determining start of right-hand side\\
- & $\varphi$ & index map between $\omega$ and $\chi$\\
- & $\psi$ & is an index map between agents from left-\\
- & & and right-hand side\\
-$\mathds{R}$ & & universe of all possible rules\\
+$\mathtt{R}$ & rule\\
+$\chi$ & sequence of complexes\\
+$\omega$ & sequence of atomic and structure agents\\
+$\iota$ & index determining start of right-hand side\\
+$\varphi$ & index map between $\omega$ and $\chi$\\
+$\psi$ & is an index map between agents from left-\\
+ & and right-hand side\\
+$\mathds{R}$ & universe of all possible rules\\
 \hline 
-$\mathtt{r}$ & & reaction\\
- & $LHS(\mathtt{r})$ & left-hand side of the reaction\\
- & $RHS(\mathtt{r})$ & right-hand side of the reaction\\
+$\mathtt{r}$ & reaction\\
+$LHS(\mathtt{r})$ & left-hand side of the reaction\\
+$RHS(\mathtt{r})$ & right-hand side of the reaction\\
 \hline 
-$\alpha$ & & atomic expression\\
-$\tau$ & & structure expression\\
-$\Gamma$ & & complex expression\\
-$\varrho$ & & rule expression\\
+$\alpha$ & atomic expression\\
+$\tau$ & structure expression\\
+$\Gamma$ & complex expression\\
+$\varrho$ & rule expression\\
 \end{tabular}
+\end{center}
 
-\begin{tabular}{c c | l}
-$\mathds{M}$ & & BCSL model\\
- & $\mathcal{R}$ & set of rule expressions\\
- & $\mathtt{init}$ & initial multiset of complex expressions\\
+\begin{center}
+\begin{tabular}{c | l}
+$\mathds{M}$ & BCSL model\\
+$\mathcal{R}$ & set of rule expressions\\
+$\mathtt{init}$ & initial multiset of complex expressions\\
 \hline 
-$\gamma \ominus \gamma'$ & & difference of partial compositions\\
-$\Sigma_T(\mathtt{\eta(\mathtt{T})}) \ominus \gamma(\mathtt{T})$ & & difference of partial composition and\\
- & & structure signature\\
+$\gamma \ominus \gamma'$ & difference of partial compositions\\
+$\Sigma_T(\mathtt{\eta(\mathtt{T})}) \ominus \gamma(\mathtt{T})$ & difference of partial composition and\\
+ & structure signature\\
  \hline 
-$\mathtt{F}$ & & semantic function\\
-$\mathcal{G}$ & & ground form function\\
+$\mathtt{F}$ & semantic function\\
+$\mathcal{G}$ & ground form function\\
 \hline 
-$\mathcal{M}$ & & Chemical reaction model\\
- & $\mathfrak{R}$ & set of chemical reactions\\
- & $\vv{\nu}$ & initial vector\\
- & $\theta$ & vector of reference complexes\\
+$\mathcal{M}$ & Chemical reaction model\\
+$\mathfrak{R}$ & set of chemical reactions\\
+$\vv{\nu}$ & initial vector\\
+$\theta$ & vector of reference complexes\\
 \hline 
-$\zeta$ & & chemical reaction application\\
-$\mathtt{S}$ & & a multiset of agents\\
-$\lambda(\mathtt{S}, \theta)$ & & multiset to vector translation\\
+$\zeta$ & chemical reaction application\\
+$\mathtt{S}$ & a multiset of agents\\
+$\lambda(\mathtt{S}, \theta)$ & multiset to vector translation\\
 \end{tabular}
+\end{center}
 
 % \chapter{Discussion about rates and how they could be solved}
 % \label{rates_discussion}
@@ -2245,7 +2261,7 @@ $\lambda(\mathtt{S}, \theta)$ & & multiset to vector translation\\
 \begin{figure}[!h]
 {\tiny
 \begin{center}
-\begin{tabular}{r c l}
+\begin{tabular}{ r c l }
 $FGF::cyt + R::cyt $ & $\Leftrightarrow$ & $ FGF.R::cyt$\\
 $2~ FGF.R::cyt $ & $\Leftrightarrow$ & $ FGF.R.FGF.R::cyt$\\
 $FGF(Thr\{u\}).R.FGF.R::cyt $ & $\Leftrightarrow$ & $ FGF(Thr\{p\}).R.FGF.R::cyt$\\
