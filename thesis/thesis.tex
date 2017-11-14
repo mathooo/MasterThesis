@@ -132,13 +132,13 @@ key words
 
 Modelling in computational systems biology often comprises studying a complex biochemical system involving a large number of interacting species. Conventional modeling approaches explicitly specify entire chemical reaction networks. Particularly, models have form of lists of biochemical species and their reactions. The issue with this approach is that it is not always effective or even possible to enumerate all the interactions. Typically, biological systems contain a huge number of species with numerous interactions.
 
-Rule-based modelling approaches describe biological interactions in terms of rules, avoiding the combinatorial explosion of underlying system. Rules are patterns which define how groups of species with some common properties behave in the given system. The rule-based model can be be translated into a model such as Markov chains or differential equations or analysed in its original form. Rule-based modeling is especially effective in cases when the model contains a limited number of patterns. Typical representatives of such cases are biochemical models of living organisms.
+Rule-based modelling approaches describe biological interactions in terms of rules, avoiding the combinatorial explosion of underlying system. Rules are patterns which define how groups of species with some common properties behave in the given system. The rule-based model can be translated into a model such as Markov chains or differential equations or analysed in its original form. Rule-based modeling is especially effective in cases when the model contains a limited number of patterns. Typical representatives of such cases are biochemical models of living organisms.
 
-In this work we focus on development of a novel rule-based language called Biochemical Space language. The motivation was to establish a rule-based \emph{human-readable} language which in easy to read, write, and maintain by people even from other disciplines than computer science. It serves as description format for Biochemical Space~\cite{BCS}, a core part of Comprehensive Modeling Platform~\cite{cs2bio2013}. Since the language is used for specification of biochemical species and interactions within the platform, its dedicated purpose is to be directly presentable to the users.
+In this thesis we focus on development of a novel rule-based language called Biochemical Space language. The motivation was to establish a rule-based \emph{human-readable} language which in easy to read, write, and maintain by people even from other disciplines than computer science. It serves as description format for Biochemical Space~\cite{BCS}, a core part of Comprehensive Modeling Platform~\cite{cs2bio2013}. Since the language is used for specification of biochemical species and interactions within the platform, its dedicated purpose is to be directly presentable to the users.
 
 The goal of this thesis is to formally define syntax and semantics of Biochemical Space language and provide techniques to analyse models written in the language. 
 
-In Chapter~\ref{background} we provide an introduction to rule-based modelling, describe differences between the rule-based and the traditional approaches, reveal key features of existing rule-based formalisms, and explain purpose of Comprehensive Modeling Platform and its parts. In Chapter~\ref{problem_formulation} we specify particular tasks of this thesis in context of preliminary work. In Chapter~\ref{formal_definition} we define syntax and semantics of Biochemical Space language and specify several syntactic extensions which improve readability of the language. Chapter~\ref{analysis} provides brief description of dynamic analysis techniques and propose a few types of static analyses. In Chapter~\ref{case_study} we show usability of the language on several case studies and then demonstrate usability of proposed static analyses in practice (only on the theoretical level). In final Chapter~\ref{implementation} we explain history of development of BCSgen, a software tool to support the usage of language. 
+In Chapter~\ref{background} we provide an introduction to rule-based modelling, describe differences between the rule-based and the traditional approaches, reveal key features of existing rule-based formalisms, and explain purpose of Comprehensive Modeling Platform and its parts. In Chapter~\ref{problem_formulation} we specify particular tasks of this thesis in context of preliminary work. In Chapter~\ref{formal_definition} we define syntax and semantics of Biochemical Space language and specify several syntactic extensions which improve readability of the language. Chapter~\ref{analysis} provides brief description of dynamic analysis techniques and propose a few types of static analyses. In Chapter~\ref{case_study} we show usability of the language on several case studies and then demonstrate usability of proposed static analyses in practice. In final Chapter~\ref{implementation} we explain history of development of BCSgen, a software tool to support the usage of the language. 
 
 \chapter{Background}
 \label{background}
@@ -1035,13 +1035,12 @@ $(\chi, \omega, \iota, \varphi, \psi) \in \mathds{R}$ :\\
 
 & \hspace*{-0.3cm} $\{~ (i,j) ~|~ i \in [1, \pi_\iota(\varphi)] \wedge j \in [\pi_\iota(\varphi), |\omega|] \wedge |i-j| \equiv \pi_\iota(\varphi)~\} ~\cup$ \\
 
-\hspace*{-0.3cm}$\psi =$ & \hspace*{-0.3cm} $\{~ (i, -) ~|~ i \in [k, \pi_\iota(\varphi)] \wedge k = |~ \{ \pi_\iota(\varphi) + 1, \ldots, | \alpha | \} ~| ~\} ~\cup$\\
+\hspace*{-0.3cm}$\psi =$ & \hspace*{-0.3cm} $\{~ (i, -) ~|~ i \in [k, \pi_\iota(\varphi)] \wedge k = | \omega | - \pi_\iota(\varphi) + 1 ~| ~\} ~\cup$\\
 
-& \hspace*{-0.3cm} $ \{~ (-, j) ~|~ j \in [k, |\alpha|] \wedge k = 2 * \pi_\iota(\varphi) ~\}$
+& \hspace*{-0.3cm} $ \{~ (-, j) ~|~ j \in [k, |\omega|] \wedge k = 2 * \pi_\iota(\varphi) ~\}$
 \end{tabular}
 
-
-\vspace*{0.5cm} where $\psi$ is lexicographically sorted such that $'-' > i$ for every $i \in \mathbb{N}$.
+where all descending intervals in definition of $\psi$ are ignored and $\psi$ is lexicographically sorted set such that symbol $'-' > i$ for every $i \in \mathbb{N}$.
 
 \end{itemize}
 \end{center}
@@ -2092,8 +2091,7 @@ Since there are some graphs and charts generated in BCSgen, we decided to integr
 
 \vspace*{-0.5cm}As a future work for the tool we are planning to reimplement it to a web-based version. It should be integrated in CMP (Section~\ref{cmp}) to allow direct analysis of the models and appropriate parts of Biochemical Space. 
 
-
-\chapter{Discussion}
+% \chapter{Discussion}
 
 % \subsubsection{The difference between BCS and BCSL}
 
@@ -2119,6 +2117,10 @@ Since there are some graphs and charts generated in BCSgen, we decided to integr
 % To sum it up, BCS serves as definition domain for models written in BCSL (so called signature). It defines what can and what cannot be written in models and also increases rule compactness due to syntactic extensions. For example, some context might be omitted from the rule because it can be reconstructed from the signature.
 
 \chapter{Conclusions}
+
+what we have done so far
+
+future work (mention all of them)
 
 \bibliographystyle{citeStyle}
 \bibliography{papers}
