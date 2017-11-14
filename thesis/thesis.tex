@@ -930,7 +930,7 @@ complex expression & $\Gamma ::= \beta_1~.~\ldots~.~\beta_k :: c$\\
  & $\beta_i ::= \alpha ~|~ \tau$\\
  & $c ::= n \in \mathcal{N}_{c}$\\
  & \\
-rule expression & $\rho ::= \Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \ldots + \Gamma_m $
+rule expression & $\varrho ::= \Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \ldots + \Gamma_m $
 \end{tabular}
 
 \end{center}
@@ -946,7 +946,7 @@ When we have defined syntax of BCSL, we can proceed to BCSL model. We always con
 
 \begin{definition}{BCSL model}
 \label{BCSL_model}
-BCSL model $\mathds{M}$ is a quadruple $(\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ where $\mathcal{R}$ is set of rule expressions, $\Sigma_\mathtt{A}$ is atomic signature, $\Sigma_\mathtt{T}$ is structure signature, and $\mathtt{init}$ is initial multiset of complex expressions $\Gamma$.
+BCSL model $\mathds{M}$ is a quadruple $(\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ where $\mathcal{R}$ is set of rule expressions, $\Sigma_\mathtt{A}$ is atomic signature, $\Sigma_\mathtt{T}$ is structure signature, and $\mathtt{init}$ is initial multiset of complex expressions.
 \end{definition}
 
 BCSL model is formed by a set of rule expressions $\mathcal{R}$, which define behavior of the model. The initial multiset $\mathtt{init}$ defines the state of the model in the beginning. Atomic signature $\Sigma_\mathtt{A}$ define allowed states for all atomic agents used in the rules. FInally, structure signature $\Sigma_\mathtt{T}$ defines allowed atomic agents for all structure agents used in the rules.
@@ -1150,9 +1150,9 @@ By Notation~\ref{nonnegative} we denote the condition that a vector is formed on
 
 \begin{definition}{Chemical reaction application}
 
-Chemical reaction application $\varrho$ is a relation $\varrho \subseteq \mathbb{N}_0^n \times \mathbb{Z}^n \times \mathbb{N}_0^n$ such that 
+Chemical reaction application $\zeta \subseteq \mathbb{N}_0^n \times \mathbb{Z}^n \times \mathbb{N}_0^n$ is a relation such that 
 \begin{center}
-$(\vv{\upsilon}, \vv{\mathtt{r}}, \vv{\mathtt{u}}) \in \varrho \myeq \vv{\mathtt{u}} = \vv{\upsilon} + \vv{\mathtt{r}} \wedge N(\vv{\mathtt{u}})$.
+$(\vv{\upsilon}, \vv{\mathtt{r}}, \vv{\mathtt{u}}) \in \zeta \myeq \vv{\mathtt{u}} = \vv{\upsilon} + \vv{\mathtt{r}} \wedge N(\vv{\mathtt{u}})$.
 \end{center}
 \end{definition}
 
@@ -1168,11 +1168,11 @@ Let $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \theta)$ be a chemical reaction mode
 
 	\begin{tabular}{l l}
 	\textit{Basis}: & $\vv{\nu} \in S$\\
-	\textit{Induction}: & $ \vv{\mathtt{s}} \in S \Rightarrow \forall \vv{r} \in \mathfrak{R}: \vv{\mathtt{p}} \in S $ such that $(\vv{\mathtt{s}}, \vv{\mathtt{r}}, \vv{\mathtt{p}}) \in \varrho $\\
+	\textit{Induction}: & $ \vv{\mathtt{s}} \in S \Rightarrow \forall \vv{r} \in \mathfrak{R}: \vv{\mathtt{p}} \in S $ such that $(\vv{\mathtt{s}}, \vv{\mathtt{r}}, \vv{\mathtt{p}}) \in \zeta $\\
 	\end{tabular}
  
 	\item $ A = \mathfrak{R} $,
-	\item $ T = \{~ (\vv{\mathtt{s}}, \vv{\mathtt{r}}, \vv{\mathtt{p}}) ~|~ \vv{\mathtt{s}}, \vv{\mathtt{p}} \in S \wedge \vv{\mathtt{r}} \in \mathfrak{R}  \wedge (\vv{\mathtt{s}}, \vv{\mathtt{r}}, \vv{\mathtt{p}}) \in \varrho ~\} $,
+	\item $ T = \{~ (\vv{\mathtt{s}}, \vv{\mathtt{r}}, \vv{\mathtt{p}}) ~|~ \vv{\mathtt{s}}, \vv{\mathtt{p}} \in S \wedge \vv{\mathtt{r}} \in \mathfrak{R}  \wedge (\vv{\mathtt{s}}, \vv{\mathtt{r}}, \vv{\mathtt{p}}) \in \zeta ~\} $,
 	\item $ s_0 = \vv{\nu} $.
 \end{enumerate}
 \end{definition}
@@ -1214,7 +1214,7 @@ $a_i$ =
 Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. In order to construct chemical reaction model $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \theta)$ from the model $\mathds{M}$, we need to apply the following steps:
 
 \begin{enumerate}
-\item generate reactions for all rules $\mathtt{F}(\mathtt{R}) \in \mathcal{R}$ (Definition~\ref{generate_reactions}),
+\item generate reactions for all rules $\mathtt{F}(\varrho) \in \mathcal{R}$ (Definition~\ref{generate_reactions}),
 \item construct reference vector $\theta$ (Definition~\ref{reference_vector}),
 \item create initial vector $\vv{\nu} = \lambda(\mathtt{S}, \theta)$ from initial multiset $\mathtt{S}$ where $\mathtt{S} = \{ \mathtt{X} ~|~ \mathtt{X} = \mathtt{F}(\Gamma) \wedge \Gamma \in \mathtt{init} \}$ (Definition~\ref{state_to_vector}),
 \item construct set of chemical reactions $\mathfrak{R}$ from the set reactions, where individual vector reaction $\vv{r}$ is created from a reaction $\mathtt{r}$ as following:
@@ -1303,7 +1303,7 @@ For better demonstration we provide a running example, which will go through all
 \begin{runningExample}{The example model $\mathds{M}$}
 \label{run1}
 
-\noindent Definition of rule expressions $\varrho$:
+\noindent Definition of rule expressions:
 {\footnotesize
 \begin{enumerate}
 \item $KaiC(S\{u\}, T\{\varepsilon\}).KaiC(S\{\varepsilon\}, T\{\varepsilon\}).KaiC(S\{\varepsilon\}, T\{\varepsilon\})::cyt \Rightarrow $
@@ -1764,7 +1764,7 @@ There might be cases when eliminating context of the given BCSL model preserves 
 Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. We define \emph{reduced model} $\widetilde{\mathds{M}}$ as a pair $(\widetilde{\mathcal{R}}, \mathtt{I})$ where $\widetilde{\mathcal{R}}$ is set of rule expression and $\mathtt{I}$ is initial multiset of complex agent expressions where the following conditions hold:
 
 \begin{enumerate}
-	\item for every well-formed rule $\mathtt{F}(\rho') = (\chi', \omega', \iota', \varphi', \psi') \in \mathds{R}$ such that $\rho' \in \widetilde{\mathcal{R}}$ and appropriate original rule $\mathtt{F}(\rho) = (\chi, \omega, \iota, \varphi, \psi) \in \mathds{R}$ such that $\rho \in \mathcal{R}$ holds:
+	\item for every well-formed rule $\mathtt{F}(\varrho') = (\chi', \omega', \iota', \varphi', \psi') \in \mathds{R}$ such that $\varrho' \in \widetilde{\mathcal{R}}$ and appropriate original rule $\mathtt{F}(\varrho) = (\chi, \omega, \iota, \varphi, \psi) \in \mathds{R}$ such that $\varrho \in \mathcal{R}$ holds:
 
 	\begin{center}
 	$\forall i \in [1, k]: \pi_i(\chi') \equiv \mathtt{sup}(\mathscr{X})$
@@ -1855,7 +1855,7 @@ The BCSL model definition as given in Section~\ref{BCSl_model} can be reduced by
 
 \begin{enumerate}
 \item prepare empty signature sets $\Sigma_\mathtt{A}$ and $\Sigma_\mathtt{T}$, 
-\item create rule $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi)$ for every rule expression $\rho$ using semantic function $\mathtt{F}$,
+\item create rule $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi)$ for every rule expression $\varrho$ using semantic function $\mathtt{F}$,
 \item iterate through all $\omega \in \mathtt{R}$ and:
 \begin{enumerate}
   \item \label{atomic_iter} for every atomic agent $\mathtt{A}$ do the following:
@@ -2123,7 +2123,9 @@ what we have done so far
 future work (mention all of them)
 
 \bibliographystyle{citeStyle}
+{\small
 \bibliography{papers}
+}
 
 \appendix
 
@@ -2172,7 +2174,7 @@ $\mathtt{r}$ & & reaction\\
 $\alpha$ & & atomic expression\\
 $\tau$ & & structure expression\\
 $\Gamma$ & & complex expression\\
-$\rho$ & & rule expression\\
+$\varrho$ & & rule expression\\
 \end{tabular}
 
 \begin{tabular}{c c | l}
@@ -2192,7 +2194,7 @@ $\mathcal{M}$ & & Chemical reaction model\\
  & $\vv{\nu}$ & initial vector\\
  & $\theta$ & vector of reference complexes\\
 \hline 
-$\varrho$ & & chemical reaction application\\
+$\zeta$ & & chemical reaction application\\
 $\mathtt{S}$ & & a multiset of agents\\
 $\lambda(\mathtt{S}, \theta)$ & & multiset to vector translation\\
 \end{tabular}
