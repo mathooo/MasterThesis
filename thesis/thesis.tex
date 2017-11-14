@@ -34,14 +34,14 @@
 
 \newcounter{counter}[section]
 \renewcommand{\thecounter}{\thesection.\arabic{counter}}
-\newenvironment{definition}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Definition \thecounter } \textit{#1} \par\nopagebreak}{\bigskip}
-\newenvironment{example}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Example \thecounter} \textit{#1} \par\nopagebreak}{\bigskip}
-\newenvironment{notation}{\bigskip\refstepcounter{counter}\noindent\textbf{Notation \thecounter~}\nopagebreak}{\bigskip}
-\newenvironment{proof}{\noindent\textit{Proof:~ }\nopagebreak}{\bigskip}
-\newenvironment{runningExample}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Running example \thecounter} \textit{#1} \par\nopagebreak}{\bigskip}
-\newenvironment{theorem}{\bigskip\refstepcounter{counter}\noindent\textbf{Theorem \thecounter }\nopagebreak}{\medskip}
-\newenvironment{lemma}{\bigskip\refstepcounter{counter}\noindent\textbf{Lemma \thecounter }\nopagebreak}{\bigskip}
-\newenvironment{remark}{\bigskip\refstepcounter{counter}\noindent\textbf{Remark \thecounter~ }\nopagebreak}{\bigskip}
+\newenvironment{definition}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Definition \thecounter } \emph{#1} \par\nopagebreak \begin{itshape}}{\end{itshape}\bigskip}
+\newenvironment{example}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Example \thecounter} \emph{#1} \par\nopagebreak}{\bigskip}
+\newenvironment{notation}{\bigskip\refstepcounter{counter}\noindent\textbf{Notation \thecounter~}\nopagebreak \begin{itshape}}{\end{itshape}\bigskip}
+\newenvironment{proof}{\noindent\emph{Proof:~ }\nopagebreak \begin{itshape}}{\end{itshape}\bigskip}
+\newenvironment{runningExample}[1]{\bigskip\refstepcounter{counter}\noindent\textbf{Running example \thecounter} \emph{#1} \par\nopagebreak}{\bigskip}
+\newenvironment{theorem}{\bigskip\refstepcounter{counter}\noindent\textbf{Theorem \thecounter }\nopagebreak \begin{itshape}}{\end{itshape}\medskip}
+\newenvironment{lemma}{\bigskip\refstepcounter{counter}\noindent\textbf{Lemma \thecounter }\nopagebreak \begin{itshape}}{\end{itshape}\bigskip}
+\newenvironment{remark}{\bigskip\refstepcounter{counter}\noindent\textbf{Remark \thecounter~ }\nopagebreak \begin{itshape}}{\end{itshape}\bigskip}
 
 \newcommand\mdoubleplus{\mathbin{+\mkern-7mu+}}
 \newcommand*\arc{{\fontfamily{pbk}\fontseries{db}\selectfont+}}
@@ -120,11 +120,11 @@ I would especially like to thank my amazing family for the love, support, and co
 \bigskip
 
 \noindent I would like to thank my advisor, David Šafránek for guiding and 
-supporting me over the years. You have set an example of excellence as a researcher, mentor, and instructor.
+supporting me over the years. You have set an example of excellence as a mentor and researcher.
 
 \bigskip
 
-\noindent  I would like to thank my colleges of Systems Biology Laboratory for all discussions, help, and feedback the provided.  
+\noindent  I would like to thank all members of the Systems Biology Laboratory for all discussions, help, and feedback they have provided.  
 
 \bigskip
 
@@ -182,7 +182,7 @@ The rules are patterns which describe behavior of groups of objects. A rule has 
 \subfloat[]{\includegraphics[scale=0.23]{pics/solution_first}\label{sol:s1}}
 \hspace*{1cm}
 \subfloat[]{\includegraphics[scale=0.23]{pics/solution_second}\label{sol:s2}}
-\caption{\textbf{Examples of solutions}. \textbf{(a)} An example of graphical representation of a solution. \textbf{(b)} Updated solution after rules from Fig.~\ref{rules:fig} were applied. The first rule \textit{(a)} was applied on the yellow \raisebox{-0.02cm}[0cm]{{\large $\square$}} and green $\bigcirc$ and produced yellow-green complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$. Note there are more options how the rule could be mapped -- each combination of free \raisebox{-0.02cm}[0cm]{{\large $\square$}} and $\bigcirc$. The second rule \textit{(b)} was applied on red-cyan complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$ where the color of \raisebox{-0.02cm}[0cm]{{\large $\square$}} was changed from red to green. The third rule \textit{(c)} couldn't be applied because there is no such complex with yellow $\bigcirc$. }
+\caption{\textbf{Examples of solutions}. \textbf{(a)} An example of graphical representation of a solution. \textbf{(b)} Updated solution after rules from Fig.~\ref{rules:fig} were applied. The first rule \emph{(a)} was applied on the yellow \raisebox{-0.02cm}[0cm]{{\large $\square$}} and green $\bigcirc$ and produced yellow-green complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$. Note there are more options how the rule could be mapped -- each combination of free \raisebox{-0.02cm}[0cm]{{\large $\square$}} and $\bigcirc$. The second rule \emph{(b)} was applied on red-cyan complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$ where the color of \raisebox{-0.02cm}[0cm]{{\large $\square$}} was changed from red to green. The third rule \emph{(c)} couldn't be applied because there is no such complex with yellow $\bigcirc$. }
 \label{solutions:fig}
 \end{center}
 \end{figure}
@@ -214,7 +214,7 @@ The rules are patterns which describe behavior of groups of objects. A rule has 
 \end{center}
 \end{figure}
 
-The rule is mapped on a solution. Then it can be applied and a new solution is produced. The mapping is not always successful (Fig.~\ref{solutions:fig}, application of rule \textit{c}). %By repeating map-apply action, we obtain a \textit{Labelled transition system} $\mathcal{L}$ (Definition~\ref{lts}).
+The rule is mapped on a solution. Then it can be applied and a new solution is produced. The mapping is not always successful (Fig.~\ref{solutions:fig}, application of rule \emph{c}). %By repeating map-apply action, we obtain a \emph{Labelled transition system} $\mathcal{L}$ (Definition~\ref{lts}).
 
 The mapping of a rule on a solution can be understood as a particular moment when the objects in the solution have just the conformation suitable for the rule and therefore the rule can be applied. Since the distribution of objects is random, we can assume a sequence of objects needed for rule (if there are such objects) is always available.
 
@@ -240,7 +240,7 @@ The mapping of a rule on a solution can be understood as a particular moment whe
   \begin{minipage}[r]{0.6\textwidth}
     {\hspace*{1.3cm}\includegraphics[scale=0.2]{pics/rule_reaction}}
 \end{minipage}
-\caption{\textbf{Example of a map-apply action}. As a solution, we use solution \textit{(a)} from Fig.~\ref{solutions:fig}. \textbf{(a)} Rule can be mapped on a \raisebox{-0.02cm}[0cm]{{\large $\square$}} and a $\bigcirc$ regardless their colors and form a complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$.  \textbf{(b)} Let's choose yellow \raisebox{-0.02cm}[0cm]{{\large $\square$}} and green $\bigcirc$ from our solution. The rule was mapped on chosen objects and they were assigned to the left-hand side of the rule. \textbf{(c)} The rule was applied and new object (yellow-green complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$) was created. We obtained the reaction describing the particular action which has just happened.}
+\caption{\textbf{Example of a map-apply action}. As a solution, we use solution \emph{(a)} from Fig.~\ref{solutions:fig}. \textbf{(a)} Rule can be mapped on a \raisebox{-0.02cm}[0cm]{{\large $\square$}} and a $\bigcirc$ regardless their colors and form a complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$.  \textbf{(b)} Let's choose yellow \raisebox{-0.02cm}[0cm]{{\large $\square$}} and green $\bigcirc$ from our solution. The rule was mapped on chosen objects and they were assigned to the left-hand side of the rule. \textbf{(c)} The rule was applied and new object (yellow-green complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$) was created. We obtained the reaction describing the particular action which has just happened.}
 \label{map-apply:fig}
 \end{center}
 \end{figure}
@@ -272,9 +272,9 @@ There are several rule-based languages dedicated for modeling of biological syst
 \subsection{Kappa}
 \label{kappa}
 
-The Kappa language~\cite{kappa_formal} was primary developed for the modeling of protein-protein interactions. The key structures used in the language are \textit{agents} with \textit{binding sites}, which allow formation of \emph{bonds} between the agents. Each binding site must be unique with at most one bond. Each site can occur in one of several pre-defined states.
+The Kappa language~\cite{kappa_formal} was primary developed for the modeling of protein-protein interactions. The key structures used in the language are \emph{agents} with \emph{binding sites}, which allow formation of \emph{bonds} between the agents. Each binding site must be unique with at most one bond. Each site can occur in one of several pre-defined states.
 
-The Kappa \textit{rules} are changing properties of the agents. Particularly, it might add/delete/change a bond or a state of one or multiple agents at once. The rules are just patterns with two sides where each of them is a sequence of agents delimited by a comma. Same as all the other rule-based languages, when some context is not relevant, the just omit it. Example of a rule is in Figure~\ref{kappa-rule}.
+The Kappa \emph{rules} are changing properties of the agents. Particularly, it might add/delete/change a bond or a state of one or multiple agents at once. The rules are just patterns with two sides where each of them is a sequence of agents delimited by a comma. Same as all the other rule-based languages, when some context is not relevant, the just omit it. Example of a rule is in Figure~\ref{kappa-rule}.
 
 \begin{figure}[!h]
 \begin{center}
@@ -533,7 +533,7 @@ An atomic entity can be a part of a structurally more complex entity. We conside
 
 Rules are specified by \emph{rule equations} enriched with additional annotation information. When defining a rule equation, identifiers of substrates and products are used to make the notation of the rules compact. Every entity appearing in a \emph{rule equation} has to be followed by the localisation operator associating it with a particular compartment. This is important especially for rules that act on both sides of a membrane. That way, a rule is always precisely localised in or between compartments. A natural stoichiometric coefficient can be placed before any entity in a rule equation. Irreversible and reversible rules are distinguished by the operators `$\Rightarrow$', `$\Leftrightarrow$'. The `$+$' symbol is used as a separator between individual substrates and individual products. A rule can also have an assigned classification. Rule classification assigns a list of higher level biophysical processes in which the rule is involved. For an example, see Figure~\ref{rule_example}.
 
-In some cases, emphasis on a detailed description leads to very complex BCS models. Abstraction of some processes is needed to keep BCS models as simple as possible. To this end, rules expressing enzymatic reactions are considered in a simplified form. In fact, there should be at least two different rules describing an enzymatic reaction (one for a substrate binding and another for a catalytic step). Instead, since an enzyme is not affected during the reaction, it is affiliated to the rule as a \emph{modifier}. However, it is difficult to define precise meaning of a modifier in this case. We rather treat the modifier attribute informally as an entity \textit{which has to be present} for the rule to be enabled. The exact reaction mechanism of an enzyme is not always clear and therefore it is abstracted out.
+In some cases, emphasis on a detailed description leads to very complex BCS models. Abstraction of some processes is needed to keep BCS models as simple as possible. To this end, rules expressing enzymatic reactions are considered in a simplified form. In fact, there should be at least two different rules describing an enzymatic reaction (one for a substrate binding and another for a catalytic step). Instead, since an enzyme is not affected during the reaction, it is affiliated to the rule as a \emph{modifier}. However, it is difficult to define precise meaning of a modifier in this case. We rather treat the modifier attribute informally as an entity \emph{which has to be present} for the rule to be enabled. The exact reaction mechanism of an enzyme is not always clear and therefore it is abstracted out.
 
 \begin{figure}[!h]
 \begin{center}
@@ -618,7 +618,7 @@ Before we proceed, we recall some basic definitions and notations in order to bu
 %We define projection $\pi_i$ to enable iterating through multidimensional structures.
 
 \begin{definition}{Multiset}
-We define a multiset $O$ as a pair $(A, \mathtt{m})$ where $A$ is some set and $ \mathtt{m} : A \rightarrow \mathbb{N} $ is a function from $A$ to the set of positive integers. The set $A$ is called the \emph{underlying set of elements}. For each $a$ in $A$ the \emph{multiplicity} (that is, number of occurrences) of a is the number $\mathtt{m}(a)$.
+We define a \emph{multiset} $O$ as a pair $(A, \mathtt{m})$ where $A$ is some set and $ \mathtt{m} : A \rightarrow \mathbb{N} $ is a function from $A$ to the set of positive integers. The set $A$ is called the \emph{underlying set of elements}. For each $a$ in $A$ the \emph{multiplicity} (that is, number of occurrences) of a is the number $\mathtt{m}(a)$.
 \end{definition}
 
 \begin{notation}
@@ -626,7 +626,7 @@ Let $O = (A, m)$ be a multiset. By $x \in O$ we usually denote the fact that the
 \end{notation}
 
 \begin{definition}{Projection}
-Projection $\pi_i : X^n \rightarrow X $ is defined as follows:
+\emph{Projection} $\pi_i : X^n \rightarrow X $ is defined as follows:
 
 \begin{center}
 $ \pi_i(x_1, \ldots, x_n) = x_i $
@@ -637,7 +637,7 @@ for some $i, n \in \mathbb{N}$ where $i \leq n$.
 
 \begin{definition}{Tuples concatenation}
 
-Let $X = (x_1, \ldots, x_n), Y = (y_1, \ldots, y_m)$ be two tuples for some $n, m \in \mathbb{N}$. Concatenation of two tuples, written $X \mdoubleplus Y$, is defined as:
+Let $X = (x_1, \ldots, x_n), Y = (y_1, \ldots, y_m)$ be two tuples for some $n, m \in \mathbb{N}$. \emph{Concatenation} of two tuples, written $X \mdoubleplus Y$, is defined as:
 
 \begin{center}
 $X \mdoubleplus Y = (x_1, \ldots, x_n, y_1, \ldots, y_m)$.
@@ -646,7 +646,7 @@ $X \mdoubleplus Y = (x_1, \ldots, x_n, y_1, \ldots, y_m)$.
 
 \begin{definition}{Sum of concatenations}
 
-Let $T = (T_1, T_2, \ldots, T_n)$ be sequence of tuples. Concatenation of sequence of tuples $\mdoubleplus_{i=1}^n T_i$ is defined as:
+Let $T = (T_1, T_2, \ldots, T_n)$ be sequence of tuples. \emph{Concatenation} of sequence of tuples $\mdoubleplus_{i=1}^n T_i$ is defined as:
 
 \begin{center}
 $\mdoubleplus_{i=1}^n T_i = T_1 \mdoubleplus T_2 \mdoubleplus \ldots \mdoubleplus T_n $
@@ -654,7 +654,7 @@ $\mdoubleplus_{i=1}^n T_i = T_1 \mdoubleplus T_2 \mdoubleplus \ldots \mdoubleplu
 \end{definition}
 
 \begin{definition}{Non-crossing partition}
-A partition $\mathcal{P} = B_1/B_2/\ldots/B_k$ of $S = [1,\ldots,n]$ is non-crossing if  whenever a quadruple of elements $1 \leq a < b < c < d \leq n$ satisfies $a, c \in B_i$ and $b, d \in B_j$ for some $1 \leq i, j \leq k$, then in fact $i = j$; thus, the blocks do not cross.
+A partition $\mathcal{P} = B_1/B_2/\ldots/B_k$ of $S = [1,\ldots,n]$ is \emph{non-crossing} if  whenever a quadruple of elements $1 \leq a < b < c < d \leq n$ satisfies $a, c \in B_i$ and $b, d \in B_j$ for some $1 \leq i, j \leq k$, then in fact $i = j$; thus, the blocks do not cross.
 \end{definition}
 
 \begin{notation}
@@ -662,7 +662,7 @@ Let $\vv{v} = (x_1, \ldots, x_n)$ be a vector. By $\sigma(\vv{v})$ we denote set
 \end{notation}
 
 \begin{definition}{Labelled transition system}\label{lts}
-\textit{Labelled transition system} (LTS) $\mathcal{L}$ is a quadruple $(S, A, T, s_0)$ where:
+\emph{Labelled transition system} (LTS) $\mathcal{L}$ is a quadruple $(S, A, T, s_0)$ where:
 
 \begin{itemize}
   \item $S$ is a (potentially infinite) set of states (solutions),
@@ -688,7 +688,7 @@ $\forall \mathtt{s}_i, \mathtt{s}_{i+1} : (\mathtt{s}_i, \mathtt{a}, \mathtt{s}_
 \end{definition}
 
 \begin{definition}{Petri Net}
-Petri Net is a quadruple $\mathcal{N} = (P, T, F, m_0)$ where:
+We define \emph{Petri Net} as a quadruple $\mathcal{N} = (P, T, F, m_0)$ where:
 
 \begin{itemize}
 	\item $P$ is a finite non-empty set of \emph{places},
@@ -707,9 +707,9 @@ For better readability, we provide examples of syntax for most important object 
 \subsection{Signature}
 
 \begin{definition}{Signature}
-Atomic signature $\Sigma_{\mathtt{A}} \subseteq \mathcal{N}_{A} \times 2^{\mathcal{N}_{\delta}}$ associates atomic names with set of state names. 
+\emph{Atomic signature} $\Sigma_{\mathtt{A}} \subseteq \mathcal{N}_{A} \times 2^{\mathcal{N}_{\delta}}$ associates atomic names with set of state names. 
 
-Structure signature $\Sigma_{\mathtt{T}} \subseteq \mathcal{N}_{T} \times 2^{\mathcal{N}_{A}}$ associates structure names with set of atomic names. 
+\emph{Structure signature} $\Sigma_{\mathtt{T}} \subseteq \mathcal{N}_{T} \times 2^{\mathcal{N}_{A}}$ associates structure names with set of atomic names. 
 \end{definition}
 
 Signatures define a set of allowed states for an atomic name and a allowed set of atomic names for a structure name. The deeper meaning will be revealed after next part of definitions.
@@ -724,7 +724,7 @@ Signatures define a set of allowed states for an atomic name and a allowed set o
 \subsection{Atomic agent}
 
 \begin{definition}{Atomic agent}
-Atomic agent $\mathtt{A}$ is a pair $(\eta, \delta)$ where $\eta \in \mathcal{N}_{A}$ is a name and \\ $\delta~\in~\mathcal{N}_{\delta} \cup \{ \varepsilon \}$ is a state.
+We define \emph{atomic agent} $\mathtt{A}$ as a pair $(\eta, \delta)$ where $\eta \in \mathcal{N}_{A}$ is a name and $\delta~\in~\mathcal{N}_{\delta} \cup \{ \varepsilon \}$ is a state.
 \end{definition}
 
 Atomic agents are the simplest objects used for describing biological entities. An atomic signature with the same name as the atomic agent defines all allowed states for it (with additional $\varepsilon$ state).
@@ -764,7 +764,7 @@ Please note state $\varepsilon$ does not mean the agent is in \emph{none} state,
 \subsection{Structure agent}
 
 \begin{definition}{Structure agent}
-Structure agent $\mathtt{T}$ is a pair $(\eta, \gamma)$ where $\eta \in \mathcal{N}_{T}$ is a name and $\gamma \subseteq \mathds{A}$ is a set of atomic agents called partial composition.
+We define \emph{structure agent} $\mathtt{T}$ as a pair $(\eta, \gamma)$ where $\eta \in \mathcal{N}_{T}$ is a name and $\gamma \subseteq \mathds{A}$ is a set of atomic agents called partial composition.
 \end{definition}
 
 A structure agent represents a biochemical object that is composed from several known atomic agents while we know that a composition is abstract and not necessarily complete. To incorporate this kind of abstraction into our language, a structure agent is defined to be labeled with a unique name and it is constructed only from atomic agents considered in the same physical compartment.
@@ -805,7 +805,7 @@ A typical example of a structure agent is a protein where the atomic agents are 
 \subsection{Complex agent}
 
 \begin{definition}{Complex agent}
-Complex agent $\mathtt{X}$ is a pair $(\mu, \mathtt{com})$ where $\mu \in (\mathds{A} \cup \mathds{T})^n$ is a sequence of agents, $\mathtt{com} \in \mathcal{N}_{c}$ is a compartment, and $n \in \mathbb{N}$.
+We define \emph{complex agent} $\mathtt{X}$ as a pair $(\mu, \mathtt{com})$ where $\mu \in (\mathds{A} \cup \mathds{T})^n$ is a sequence of agents, $\mathtt{com} \in \mathcal{N}_{c}$ is a compartment, and $n \in \mathbb{N}$.
 \end{definition}
 
 A complex agent represents a non-trivial composite biochemical object that is inductively constructed from already known biological objects. In common rule-based languages this is typically defined by introducing bonds between individual biochemical objects. In BCSL we abstract from detailed specification of bonds and we rather assume a complex as a coexistence of certain objects in a particular group. Moreover, a complex agent resides in a compartment which gives it a space position.
@@ -840,7 +840,7 @@ The complex agents encapsulate other agents -- an atomic or structure agent cann
 
 \begin{definition}{Rule}
 \label{rule_definition}
-Rule $\mathtt{R}$ is a quintuple $(\chi, \omega, \iota, \varphi, \psi)$ where:
+We define \emph{rule} $\mathtt{R}$ as a quintuple $(\chi, \omega, \iota, \varphi, \psi)$ where:
 \begin{itemize}
 \item $\chi \in \mathds{X}^n$ is a sequence of complexes,
 \item $\omega \in (\mathds{A} \cup \mathds{T})^m$ is a sequence of atomic and structure agents,
@@ -915,7 +915,7 @@ Please note the conditions for well-formed rules do not apply on those agents wh
 
 \begin{definition}{Reaction}
 
-Reaction $\mathtt{r}$ is a pair $(\mathtt{seq}, \iota)$ where:
+We define \emph{reaction} $\mathtt{r}$ as a pair $(\mathtt{seq}, \iota)$ where:
 
 \begin{itemize}
 \item $\mathtt{seq} \in \mathds{X}^n$ is a sequence of complexes,
@@ -934,9 +934,10 @@ Let $\mathtt{r}$ be a reaction. We denote left-hand side of the reaction $(\pi_1
 \section{Syntax}
 \label{syntax}
 
-In this section, we define grammar for the BCSL. As proposed in Section~\ref{problem_formulation}, the syntax must be simple and readable. It was already defined in~\cite{Ded201627}, here we provide an improved and simplified version of the definition.
+In Definition~\ref{grammar}, we provide grammar defining syntax of the BCSL. As proposed in Section~\ref{problem_formulation}, the syntax must be simple and readable. It was already defined in~\cite{Ded201627}, here we provide an improved and simplified version of the definition.
 
 \begin{definition}{Grammar}
+\label{grammar}
 \begin{center}
 \begin{tabular}{ l l }
 atomic expression & $\alpha ::= \eta\{s\} ~|~ \eta\{\varepsilon\}$\\
@@ -967,7 +968,7 @@ When we have defined syntax of BCSL, we can proceed to BCSL model. We always con
 
 \begin{definition}{BCSL model}
 \label{BCSL_model}
-BCSL model $\mathds{M}$ is a quadruple $(\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ where $\mathcal{R}$ is set of rule expressions, $\Sigma_\mathtt{A}$ is atomic signature, $\Sigma_\mathtt{T}$ is structure signature, and $\mathtt{init}$ is initial multiset of complex expressions.
+\emph{BCSL model} $\mathds{M}$ is a quadruple $(\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ where $\mathcal{R}$ is set of rule expressions, $\Sigma_\mathtt{A}$ is atomic signature, $\Sigma_\mathtt{T}$ is structure signature, and $\mathtt{init}$ is initial multiset of complex expressions.
 \end{definition}
 
 BCSL model is formed by a set of rule expressions $\mathcal{R}$, which define behavior of the model. The initial multiset $\mathtt{init}$ defines the state of the model in the beginning. Atomic signature $\Sigma_\mathtt{A}$ define allowed states for all atomic agents used in the rules. FInally, structure signature $\Sigma_\mathtt{T}$ defines allowed atomic agents for all structure agents used in the rules.
@@ -986,7 +987,7 @@ Reassembly operation $\Xi$ is quite a simple action on tuples. Basically, we nee
 
 \begin{definition}{Reassembly operation}
 
-Let $Y$ be a set of tuples of particular form, where each $y \in Y$ has particular form $((a_1, b_1), (a_2, b_2), \ldots, (a_n, b_n))$. Then \emph{reassembly operation} $\Xi$ is defined as following:
+Let $Y$ be a set of tuples of particular form, where each $y \in Y$ has particular form $((a_1, b_1), (a_2, b_2), \ldots, (a_n, b_n))$. Then \emph{reassembly operation} $\Xi$ is defined as follows:
 
 \begin{center}
 $\Xi(Y) = \{~  x ~|~ y \in Y \wedge x = (\mdoubleplus_{i=1}^{|y|} \pi_1(y_i)) \mdoubleplus (\mdoubleplus_{i=1}^{|y|} \pi_2(y_i)) ~\}$
@@ -997,7 +998,7 @@ We need to define difference of partial compositions of structure agents $\gamma
 
 \begin{definition}{Difference of partial compositions}
 
-Let $\gamma, \gamma'$ be two partial compositions. We define difference of these two sets on names of its atomic agents as follows:
+Let $\gamma, \gamma'$ be two partial compositions. We define \emph{difference of partial compositions} as follows:
 
 \begin{center}
 $\gamma \ominus \gamma' \myeq \{ \eta_\alpha ~|~ \exists \mathtt{A}: (\mathtt{A} \in \gamma \wedge \eta(\mathtt{A}) \equiv \eta_\alpha ) \wedge \not\exists \mathtt{A}': (\mathtt{A}' \in \gamma' \wedge \eta(\mathtt{A}') \equiv \eta_\alpha)\}$
@@ -1008,7 +1009,7 @@ Similarly as in previous definition, we need to be able to find difference in co
 
 \begin{definition}{Difference of partial composition and structure signature}
 
-Let $\mathtt{T}$ be a structure agent, $\eta$ its name, and $\Sigma_T(\mathtt{T})$ appropriate signature. We define difference of partial composition $\gamma(\mathtt{T})$ and structure signature $\Sigma_T(\mathtt{T})$ as follows:
+Let $\mathtt{T}$ be a structure agent, $\eta$ its name, and $\Sigma_T(\mathtt{T})$ appropriate signature. We define \emph{difference of partial composition} $\gamma(\mathtt{T})$ \emph{and structure signature} $\Sigma_T(\mathtt{T})$ as follows:
 
 \begin{center}
 $\Sigma_T(\mathtt{\eta}) \ominus \gamma(\mathtt{T}) \myeq \{ \eta_\Sigma ~|~ \eta_\Sigma \in \Sigma_T(\mathtt{\eta}) \wedge \not\exists \mathtt{A}: (\mathtt{A} \in \gamma(\mathtt{T}) \wedge \eta(\mathtt{A}) \equiv \eta_\Sigma)\}$
@@ -1024,7 +1025,7 @@ In the previous sections, we defined BCSL model using given syntax and BCSL obje
 
 \begin{definition}{Semantic function}
 \label{semantic_function}
-We define semantic function $\mathtt{F}$ according to the expression given in $\llbracket \ldots \rrbracket$ brackets as follows:
+We define \emph{semantic function} $\mathtt{F}$ according to the expression given in double square brackets $\llbracket \ldots \rrbracket$ as follows:
 
 \begin{center}
 \begin{tabular}{ c c l}
@@ -1074,9 +1075,9 @@ Please note by applying semantic function $\mathtt{F}$ on expressions from Examp
 
 \emph{Ground form} represents appending context to agents according to signature (we assume signature is always available and therefore we omit it in ground from function arguments). Particularly, this process means adding details to partial compositions and adding states of atomic agents according to defined signatures. Since there are typically multiple states allowed for an atomic agent, this processes leads to multiple options how to add a context. This is natural consequence of fact that a rule is an abstract representation of multiple reactions. 
 
-\begin{definition}{Ground form}
+\begin{definition}{Ground form function}
 \label{ground_form}
-We define ground from function $\mathcal{G}$ for objects (middle column) of particular type (left column) as:
+We define \emph{ground from function} $\mathcal{G}$ for objects (middle column) of particular type (left column) as:
 
 {\small
 \begin{center}
@@ -1150,7 +1151,7 @@ $\forall i \in [1, \ldots, n]: $ & $\mathtt{X}_i = \big( (\pi_{\varphi_{i-1}+1}(
 \end{center}
 \end{definition}
 
-For a rule $\mathtt{R}$ we create the reassembled ground forms. Then, we create a set of reactions from created tuples of agents such that we preserve structure of original complex agents of rule $\mathtt{R}$. They are constructed using sequence of indices $\varphi$, which indicates the last positions in complex structures. In the case when for a particular complex agent $\mathtt{X}_i$ holds that $\pi_{\varphi_{i-1}+1}(y) = \pi_{\varphi_i}(y)$, the produced sequence $\mu$ is a singleton.
+In Defintion~\ref{generate_reactions} we create the reassembled ground forms for a rule $\mathtt{R}$ . Then, we create a set of reactions from created tuples of agents such that we preserve structure of original complex agents of rule $\mathtt{R}$. They are constructed using sequence of indices $\varphi$, which indicates the last positions in complex structures. In the case when for a particular complex agent $\mathtt{X}_i$ holds that $\pi_{\varphi_{i-1}+1}(y) = \pi_{\varphi_i}(y)$, the produced sequence $\mu$ is a singleton.
 
 \section{Chemical reaction networks}
 
@@ -1158,7 +1159,7 @@ In this section, we define a simplified model that we can use to define operatio
 
 \begin{definition}{Chemical reaction model}
 \label{crn}
-Chemical reaction model (CRM) $\mathcal{M}$ is a triple $(\mathfrak{R}, \vv{\nu}, \theta)$ such that $\mathfrak{R} \subseteq \mathbb{Z}^n$ is set of chemical reactions, $\vv{\nu} \in \mathbb{N}_0^n$ is initial vector, and $\theta \in \mathds{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
+\emph{Chemical reaction model} (CRM) $\mathcal{M}$ is a triple $(\mathfrak{R}, \vv{\nu}, \theta)$ such that $\mathfrak{R} \subseteq \mathbb{Z}^n$ is set of chemical reactions, $\vv{\nu} \in \mathbb{N}_0^n$ is initial vector, and $\theta \in \mathds{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
 \end{definition}
 
 Chemical reaction model is a simple model, where chemical reactions and initial state are vectors over integers. Moreover, there is a reference vector of complex agents, which servers for identifying underlaying agents behind the integers (according to particular position in vectors).
@@ -1171,7 +1172,7 @@ By Notation~\ref{nonnegative} we denote the condition that a vector is formed on
 
 \begin{definition}{Chemical reaction application}
 
-Chemical reaction application $\zeta \subseteq \mathbb{N}_0^n \times \mathbb{Z}^n \times \mathbb{N}_0^n$ is a relation such that 
+\emph{Chemical reaction application} $\zeta \subseteq \mathbb{N}_0^n \times \mathbb{Z}^n \times \mathbb{N}_0^n$ is a relation such that 
 \begin{center}
 $(\vv{\upsilon}, \vv{\mathtt{r}}, \vv{\mathtt{u}}) \in \zeta \myeq \vv{\mathtt{u}} = \vv{\upsilon} + \vv{\mathtt{r}} \wedge N(\vv{\mathtt{u}})$.
 \end{center}
@@ -1182,14 +1183,14 @@ Note some values in chemical reactions might be negative. When applying reaction
 \begin{definition}{Semantics of chemical reaction model}
 \label{states_creation}
 
-Let $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \theta)$ be a chemical reaction model. The labeled transition system of model $\mathcal{M}$, $LTS(\mathcal{M})$ (Definition~\ref{lts}), is defined as a tuple $(S, A, T, s_0)$ such that:
+Let $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \theta)$ be a chemical reaction model. The \emph{semantics of chemical reaction model} $\mathcal{M}$ are given in terms of the labeled transition system, $LTS(\mathcal{M})$, is defined as a tuple $(S, A, T, s_0)$ such that:
 
 \begin{enumerate}
 	\item $ S $ is defined inductively:
 
 	\begin{tabular}{l l}
-	\textit{Basis}: & $\vv{\nu} \in S$\\
-	\textit{Induction}: & $ \vv{\mathtt{s}} \in S \Rightarrow \forall \vv{r} \in \mathfrak{R}: \vv{\mathtt{p}} \in S $ such that $(\vv{\mathtt{s}}, \vv{\mathtt{r}}, \vv{\mathtt{p}}) \in \zeta $\\
+	\emph{Basis}: & $\vv{\nu} \in S$\\
+	\emph{Induction}: & $ \vv{\mathtt{s}} \in S \Rightarrow \forall \vv{r} \in \mathfrak{R}: \vv{\mathtt{p}} \in S $ such that $(\vv{\mathtt{s}}, \vv{\mathtt{r}}, \vv{\mathtt{p}}) \in \zeta $\\
 	\end{tabular}
  
 	\item $ A = \mathfrak{R} $,
@@ -1219,7 +1220,7 @@ $$\Theta = \{~ \mathtt{X} ~|~ \mathtt{X} \in \mathtt{seq}(\mathtt{r}) \wedge \ma
 The reference vector enumerates all possible complex agents created for a model and assigns them a unique index. 
 
 \begin{definition}{Multiset to vector translation}\label{state_to_vector}
-Translation of a multiset $\mathtt{S} \subseteq \mathds{X}$ to a vector $(a_1, a_2, \ldots, a_n) \in \mathbb{N}^n$ is defined as follows:
+\emph{Translation of a multiset} $\mathtt{S} \subseteq \mathds{X}$ \emph{to a vector} $(a_1, a_2, \ldots, a_n) \in \mathbb{N}^n$ is defined as follows:
 \begin{center}
 $\lambda(\mathtt{S}, \theta) = (a_1, a_2, \ldots, a_n)$ such that 
 $a_i$ =
@@ -1251,7 +1252,7 @@ In Definition~\ref{states_creation} we show how to create an LTS from a chemical
 \begin{definition}{Vector to multiset translation}
 \label{vector_to_state}
 
-Translation of a vector $(a_1, a_2, \ldots, a_n) \in \mathbb{N}^n$ to a multiset $\mathtt{S} = (A, \mathtt{m})$ is defined as follows:
+\emph{Translation of a vector} $(a_1, a_2, \ldots, a_n) \in \mathbb{N}^n$ \emph{to a multiset} $\mathtt{S} = (A, \mathtt{m})$ is defined as follows:
 
 \begin{center}
 \begin{tabular}{r@{\hskip 0.05cm}l}
@@ -1269,7 +1270,7 @@ The procedure provided in Definition~\ref{vector_to_state} can be extended to th
 
 \begin{definition}{Negative part of vector to multiset translation}
 \label{neg_vector_to_state}
-Translation of the negative part a vector is defined almost equally than the translation in Definition~\ref{vector_to_state} with exception that the condition $a_i > 0$ is modified to $a_i < 0$.
+Translation of the \emph{negative} part a vector is defined almost equally than the translation in Definition~\ref{vector_to_state} with exception that the condition $a_i > 0$ is modified to $a_i < 0$.
 \end{definition}
 
 % \begin{definition}{Negative vector to multiset translation}
@@ -1293,7 +1294,7 @@ The positive and negative parts of labels are treated independently. The negativ
 \begin{definition}{LTS of BCSL model}
 Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model and $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \theta)$ be a chemical reaction model constructed from model $\mathds{M}$.
 
-We define the labeled transition system of the BCSL model $\mathds{M}$, $LTS(\mathds{M}) = (S, A, T, s_0)$, from the $LTS(\mathcal{M}) = (S', A', T', s'_0)$ such that:
+We define \emph{the labeled transition system of the BCSL model} $\mathds{M}$, $LTS(\mathds{M}) = (S, A, T, s_0)$, from the $LTS(\mathcal{M}) = (S', A', T', s'_0)$ such that:
 
 \begin{center}
 \begin{enumerate}
@@ -1559,7 +1560,7 @@ Reachability analysis is a particular task of model checking for determining whe
 
 \begin{definition}{Reachability relation}
 \label{reachability_relation}
-For an LTS $\mathcal{L} = (S, A, T, s_0)$ the reachability relation of $\mathcal{L}$ is the transitive closure of $T$, which is a of all ordered pairs $(s,t)$ of states in $S$ for which there exists a sequence of states $s = s_0, s_1, s_2, \ldots, s_k = t$ such that the transition $(s_{i-1}, a, s_i)$ is in $T$ for all $1 \leq i \leq k$ and for some $a$ in $A$.
+For an LTS $\mathcal{L} = (S, A, T, s_0)$ the \emph{reachability relation} of $\mathcal{L}$ is the transitive closure of $T$, which is a of all ordered pairs $(s,t)$ of states in $S$ for which there exists a sequence of states $s = s_0, s_1, s_2, \ldots, s_k = t$ such that the transition $(s_{i-1}, a, s_i)$ is in $T$ for all $1 \leq i \leq k$ and for some $a$ in $A$.
 \end{definition}
 
 In our case, reachability analysis can be generalised to checking whether for some multiset of complex agents $\mathtt{s}'$ there exists a reachable state $s \in S$ of an LTS $\mathcal{L}$ such that $\mathtt{s}' \subseteq s$. In other words, we are interested only in particular agents regardless other context in the reachable state. This might generally lead to multiple reachable states and then we can for example consider a shortest path etc.
@@ -1686,8 +1687,6 @@ $ \mkern2mu\overline{\mkern-4.5mu \mathscr{X}} \subseteq \mathscr{X}: \forall \m
 
 Note that for any complex agent $\mathtt{X}$ there exists just one compatible subset. The reason follows from Lemma~\ref{exists_one_comp_set} and the definition of the subset.
 
-
-
 \begin{remark}
 \label{generating_vs_compatibility}
 In the process of generating reactions from the rules (Section~\ref{Generating reactions}), we are using ground form function (Definition~\ref{ground_form}). The function basically adds context to individual complex agents (and its substructures). In the definition of the function we provided exact procedure how to generate such agents.
@@ -1701,30 +1700,27 @@ When we look at the process more theoretically, a set of appropriate complex age
 
 There might be cases when there are redundant rules defined in a model (Definition~\ref{redundant_rule}). This might be done for example by inattention of modeller in combination with high level of abstraction language uses. These rules do not cause any semantical difference, but can possibly slow down dynamic and/or static analysis, eventually undesirably affect the results of analysis.
 
-\begin{definition}{Redundant rule}
+\begin{definition}{Redundant rule expression}
 \label{redundant_rule}
 
-Let $\mathds{M}_1 = (\mathcal{R} \cup \{ \mathtt{R} \}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ and
-$\mathds{M}_2 = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be BCSL models where $\mathtt{R}$ is a rule such that $\mathtt{R} \not\in \mathcal{R}$. We define the rule $\mathtt{R}$ as \emph{redundant} if $LTS(\mathds{M}_1) \equiv LTS(\mathds{M}_2)$.
+Let $\mathds{M}_1 = (\mathcal{R} \cup \{ \varrho \}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ and
+$\mathds{M}_2 = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be BCSL models where $\varrho$ is a rule expression such that $\varrho \not\in \mathcal{R}$. We define the rule expression $\varrho$ as \emph{redundant} if $LTS(\mathds{M}_1) \equiv LTS(\mathds{M}_2)$.
 \end{definition}
 
-The redundant rule $\mathtt{R}$ does not add any semantic details to the model. It generally means the LTSs produced from the models with and without the rule are equal.
+The redundant rule expression $\varrho$ does not add any semantic information to the model. It generally means the LTSs produced from the models with and without the rule expression are equal.
 
 \begin{theorem}
 \label{redundant_if}
-Let $\mathtt{R}, \mathtt{R}'$ be two well-formed rules of form:
-
-$$ \Gamma_1 + \Gamma_2 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \Gamma_{n+2} + \ldots + \Gamma_{m} $$
-
-for some $m,n \in \mathbb{N}$. The rule $\mathtt{R}$ is \emph{redundant} if
-
+Let $\varrho, \varrho'$ be two rule expressions of form:
 \begin{center}
-$ \forall i \in [ 1, m ]: \mathtt{F}(\Gamma_i) \lhd \mathtt{F}(\Gamma'_i). $
+$ \Gamma_1 + \Gamma_2 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \Gamma_{n+2} + \ldots + \Gamma_{m} $
 \end{center}
+
+for some $m,n \in \mathbb{N}$ such that $\mathtt{F}(\varrho), \mathtt{F}(\varrho')$ are well-formed rules. The rule expression $\varrho$ is \emph{redundant} if $ \forall i \in [ 1, m ]: \mathtt{F}(\Gamma_i) \lhd \mathtt{F}(\Gamma'_i). $
 \end{theorem}
 
 \begin{proof}
-The problem whether the elimination of redundant rules preserves semantics can be reduced to a simple question -- if it holds for single pair of complex agents for a position $k$ in the rules, then it generally holds for entire rule, because the condition of redundancy holds for each pair of complexes independently.
+The problem whether the elimination of redundant rule expression preserves semantics can be reduced to a simple question -- if it holds for single pair of complex agents for a position $k$ in the appropriate rules, then it generally holds for entire rule, because the condition of redundancy holds for each pair of complexes independently.
 
 The complex agents $\mathtt{X}_k = \mathtt{F}(\Gamma_k)$ and $\mathtt{X}'_k = \mathtt{F}(\Gamma'_k)$ both belong to the same compatible set $\mathscr{X}$ since $\mathtt{X}_k \lhd \mathtt{X}'_k$, which follows from the condition of the theorem. 
 
@@ -1737,15 +1733,15 @@ Applied generally on entire rule, the produced set of reactions from the redunda
 
 For the proof we used compatible sets of complex agents and the fact that when we are generating reactions from rules, we are actually enumerating all agents from the compatible set which are \emph{compatible with} original agent in the rule (Remark~\ref{generating_vs_compatibility}).
 
-\begin{example}{Redundant rules}
-Lets have two rules:
+\begin{example}{Redundant rule expression}
+Lets have two rule expressions:
 
 \begin{enumerate}
 	\item \label{rule_red_1} $K(S\{u\}).K::cell \Rightarrow K(S\{p\}).K::cell$
 	\item \label{rule_red_2} $K(S\{u\}, T\{i\}).K::cell \Rightarrow K(S\{p\}, T\{i\}).K::cell$
 \end{enumerate}
 
-Considering structure signature $\Sigma_\mathtt{T}(K) = \{ S, T \} $ and atomic signatures $\Sigma_\mathtt{A}(S) = \{ u, p \} $ and $\Sigma_\mathtt{A}(T) = \{ a, i \} $, the rule (\ref{rule_red_1}) produces following set of eight reactions:
+Considering structure signature $\Sigma_\mathtt{T}(K) = \{ S, T \} $ and atomic signatures $\Sigma_\mathtt{A}(S) = \{ u, p \} $ and $\Sigma_\mathtt{A}(T) = \{ a, i \} $, the rule expression (\ref{rule_red_1}) produces following set of eight reactions:
 
 {\small
 \begin{center}
@@ -1761,7 +1757,7 @@ K(S\{u\}, T\{i\}).K(S\{p\}, T\{i\})::cell \Rightarrow K(S\{p\}, T\{i\}).K(S\{p\}
 \end{center}
 }
 
-while the rule (\ref{rule_red_2}) produces set of reaction which a subset of the previous one:
+while the rule expression (\ref{rule_red_2}) produces set of reaction which a subset of the previous one:
 
 {\small
 \begin{center}
@@ -1778,7 +1774,7 @@ K(S\{u\}, T\{i\}).K(S\{p\}, T\{i\})::cell \Rightarrow K(S\{p\}, T\{i\}).K(S\{p\}
 \subsection{Context-based reduction}
 \label{context_reduction}
 
-There might be cases when eliminating context of the given BCSL model preserves some properties while making the analysis of the model simpler. To make it possible, we have to define such a reduced model and show what kind of information does it preserve.
+There might be cases when eliminating context of the given BCSL model preserves some properties while making the analysis of the model simpler. This is particularly case of dynamic analysis, where minor change in the model specification can dramatically affect the behavior. To make it possible, we have to define such a reduced model and show what kind of information does it preserve.
 
 \begin{definition}{Reduced model}
 \label{reduced_model}
@@ -1850,10 +1846,10 @@ Since we have defined compatibility operator for agents, we can apply static rea
 Let $\mathcal{R}_f$ be a set of rules created from set of rule expressions $\mathcal{R}$ of given model $\mathds{M}$ using semantic function $\mathtt{F}$ and $\mathtt{X}$ be a complex agent. The complex agent $\mathtt{X}$ is non-reachable w.r.t. set of rules $\mathcal{R}_f$ \emph{if}:
 
 \begin{center}
-$\forall \mathtt{R} \in \mathcal{R}_f$ where $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi)$ holds:
-
-$\forall \mathtt{X}' \in \chi: \neg (\mathtt{X}' \lhd \mathtt{X})$.
+$\forall~ \mathtt{R} \in \mathcal{R}_f: \forall \mathtt{X}' \in \chi: \neg (\mathtt{X}' \lhd \mathtt{X})$
 \end{center}
+
+\noindent such that $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi)$.
 \end{theorem}
 
 \begin{proof}
