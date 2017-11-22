@@ -153,9 +153,9 @@ formal specification, biological systems, systems biology, rule-based language
 
 Modelling in computational systems biology often comprises studying a complex biochemical system involving a large number of interacting species. Conventional modeling approaches explicitly specify entire chemical reaction networks. Particularly, models have form of lists of biochemical species and their reactions. The issue with this approach is that it is not always effective or even possible to enumerate all the interactions. Typically, biological systems contain a huge number of species with numerous interactions.
 
-Rule-based modelling approaches describe biological interactions in terms of rules, avoiding the combinatorial explosion of underlying system. Rules are patterns which define how groups of species with some common properties behave in the given system. The rule-based model can be translated into a model such as Markov chains or differential equations or analysed in its original form. Rule-based modeling is especially effective in cases when the model contains a limited number of patterns. Typical representatives of such cases are biochemical models of living organisms.
+Rule-based modelling approaches describe biological interactions in terms of rules, avoiding the combinatorial explosion of underlying system. Rules are patterns which define how groups of species with some common properties behave in the given system. The rule-based model can be translated into a model such as Markov chains or differential equations, alternatively analysed in its original form. Rule-based modeling is especially effective in cases when the model contains a limited number of patterns. Typical representatives of such cases are biochemical models of living organisms.
 
-In this thesis we focus on development of a novel rule-based language called Biochemical Space language. The motivation was to establish a rule-based \emph{human-readable} language which in easy to read, write, and maintain by people even from other disciplines than computer science. It serves as description format for Biochemical Space~\cite{BCS}, a core part of Comprehensive Modeling Platform~\cite{cs2bio2013}. Since the language is used for specification of biochemical species and interactions within the platform, its dedicated purpose is to be directly presentable to the users.
+In this thesis we focus on development of a novel rule-based language called Biochemical Space language. The motivation was to establish a rule-based \emph{human-readable} language which is easy to read, write, and maintain by people even from other disciplines than computer science. It serves as description format for Biochemical Space~\cite{BCS}, a core part of Comprehensive Modeling Platform~\cite{cs2bio2013}. Since the language is used for specification of biochemical species and interactions within the platform, its dedicated purpose is to be directly presentable to the users.
 
 The goal of this thesis is to formally define syntax and semantics of Biochemical Space language and provide techniques to analyse models written in the language. 
 
@@ -183,7 +183,7 @@ The rules are patterns which describe behavior of groups of objects. A rule has 
 \hspace*{1cm}
 \subfloat[]{\includegraphics[scale=0.23]{pics/solution_second}\label{sol:s2}}
 \end{center}
-\caption{\textbf{Examples of solutions}. \textbf{(a)} An example of graphical representation of a solution. \textbf{(b)} Updated solution after the rules from Fig.~\ref{rules:fig} were applied. The first rule \emph{(a)} was applied on the yellow {\large $\square$} and the green $\bigcirc$ and produced the yellow-green complex {\large $\square$}--$\bigcirc$. Note there are more options how the rule could be mapped -- each combination of free {\large $\square$} and $\bigcirc$. The second rule \emph{(b)} was applied on the red-cyan complex {\large $\square$}--$\bigcirc$ where the color of {\large $\square$} was changed from red to green. The third rule \emph{(c)} couldn't be applied because there is no such complex with a yellow $\bigcirc$. }\label{solutions:fig}
+\caption{Examples of solutions. \textbf{(a)} An example of graphical representation of a solution. \textbf{(b)} Updated solution after the rules from Fig.~\ref{rules:fig} were applied. The first rule \emph{(1)} was applied on the yellow {\large $\square$} and the green $\bigcirc$ and produced the yellow-green complex {\large $\square$}--$\bigcirc$. Note there are more options how the rule could be mapped -- each combination of free {\large $\square$} and $\bigcirc$. The second rule \emph{(2)} was applied on the red-cyan complex {\large $\square$}--$\bigcirc$ where the color of {\large $\square$} was changed from red to green. The third rule \emph{(3)} couldn't be applied because there is no such complex with a yellow $\bigcirc$. }\label{solutions:fig}
 \end{figure}
 
 % replace all 
@@ -193,27 +193,27 @@ The rules are patterns which describe behavior of groups of objects. A rule has 
 \begin{figure}[!h]
 \begin{center}
 \begin{minipage}[l]{0.1\textwidth}
-    \textbf{(a)}
+    \textbf{(1)}
   \end{minipage}
   \begin{minipage}[r]{0.6\textwidth}
     {\hspace*{0.8cm}\includegraphics[scale=0.2]{pics/rule_complex}}
 \end{minipage}
 
 \begin{minipage}[l]{0.1\textwidth}
-    \textbf{(b)}
+    \textbf{(2)}
   \end{minipage}
   \begin{minipage}[r]{0.6\textwidth}
     {\hspace*{1.35cm}\includegraphics[scale=0.2]{pics/rule_change}}
 \end{minipage}
 
 \begin{minipage}[l]{0.1\textwidth}
-    \textbf{(c)}
+    \textbf{(3)}
   \end{minipage}
   \begin{minipage}[r]{0.6\textwidth}
     {\hspace*{1.3cm}\includegraphics[scale=0.2]{pics/rule_diss}}
 \end{minipage}
 \end{center}
-\caption{\textbf{Examples of rules}. Rule \textbf{(a)}: a {\large $\square$} and a $\bigcirc$ can form a complex {\large $\square$}--$\bigcirc$ regardless their colors. Rule \textbf{(b)}: a {\large $\square$} is allowed to change its color from red to green only if is in a complex with a $\bigcirc$ regardless its color. Rule \textbf{(c)}: the rule can disassemble the complex only if the $\bigcirc$ is yellow.}\label{rules:fig}
+\caption{Examples of rules. Rule \textbf{(1)}: a {\large $\square$} and a $\bigcirc$ can form a complex {\large $\square$}--$\bigcirc$ regardless their colors. Rule \textbf{(2)}: a {\large $\square$} is allowed to change its color from red to green only if is in a complex with a $\bigcirc$ regardless its color. Rule \textbf{(3)}: the rule can disassemble the complex only if the $\bigcirc$ is yellow.}\label{rules:fig}
 \end{figure}
 
 The rule is mapped on a solution. Then it can be applied and a new solution is produced. The mapping is not always successful (Fig.~\ref{solutions:fig}, application of rule \emph{c}). %By repeating map-apply action, we obtain a \emph{Labelled transition system} $\mathcal{L}$ (Definition~\ref{lts}).
@@ -243,7 +243,7 @@ The mapping of a rule on a solution can be understood as a particular moment whe
     {\hspace*{1.3cm}\includegraphics[scale=0.2]{pics/rule_reaction}}
 \end{minipage}
 \end{center}
-\caption{\textbf{Example of a map-apply action}. As a solution, we use the solution (a) from Fig.~\ref{solutions:fig}. \textbf{(a)} Rule can be mapped on a {\large $\square$} and a $\bigcirc$ regardless their colors and form a complex {\large $\square$}--$\bigcirc$.  \textbf{(b)} We randomly choose the yellow {\large $\square$} and the green $\bigcirc$ from our solution. The rule was mapped on chosen objects and they were assigned to the left-hand side of the rule. \textbf{(c)} The rule was applied and new object (the yellow-green complex {\large $\square$}--$\bigcirc$) was created. We obtained the reaction describing the particular action which has just happened.}\label{map-apply:fig}
+\caption{Example of a map-apply action. As a solution, we use the solution (a) from Fig.~\ref{solutions:fig}. \textbf{(a)} Rule can be mapped on a {\large $\square$} and a $\bigcirc$ regardless their colors and form a complex {\large $\square$}--$\bigcirc$.  \textbf{(b)} We randomly choose the yellow {\large $\square$} and the green $\bigcirc$ from our solution. The rule was mapped on chosen objects and they were assigned to the left-hand side of the rule. \textbf{(c)} The rule was applied and new object (the yellow-green complex {\large $\square$}--$\bigcirc$) was created. We obtained the reaction describing the particular action which has just happened.}\label{map-apply:fig}
 \end{figure}
 
 The mapping can also be seen as assigning particular objects from the solution to types on the left-hand side of the rule. The rule application then represents the change of the mapped objects to new objects according to the right-hand side of the rule (i.e., particular objects are assigned to the right-hand side). As a by-product, we obtain an instance of the rule -- a reaction (Fig.~\ref{map-apply:fig}). %This is how we construct the set of labels (reactions) $A$ in the LTS $\mathcal{L}$.
@@ -310,7 +310,7 @@ Example of a rule is given in Figure~\ref{bngl-rule}.
 (b) & A(bsa) + B(bsb$\sim$a) $\rightarrow$ A(bsa!1).B(bsb$\sim$a!1) \\
 \end{tabular}
 \end{center}
-\caption{Example of a BGNL rule. (a) Definition of associated agents. There are allowed two agents, A and B, both with a binding site which might occur in two possible states. (b) The rule itself. Note the A and B agents must first create \emph{reaction complex} denoted by `+' (i.e., they must be close to each other) and then they create \emph{complex of agents} denoted by `.' (i.e., they are physically connected).}\label{bngl-rule}
+\caption{Example of a BNGL rule. (a) Definition of associated agents. There are allowed two agents, A and B, both with a binding site which might occur in two possible states. (b) The rule itself. Note the A and B agents must first create \emph{reaction complex} denoted by `+' (i.e., they must be close to each other) and then they create \emph{complex of agents} denoted by `.' (i.e., they are physically connected).}\label{bngl-rule}
 \end{figure}
 
 \subsection{Chromar}
@@ -332,7 +332,7 @@ However, when it comes to readability and presentation to the user, the language
 
 \subsection{PySB}
 
-The PySB language~\cite{Lopez646} works as a package in Python programming language. The definition of the models directly in the code allows to use the full syntax of Python, what significantly increases expression power of PySB. On the other hand, it might be hard to follow abstractions which are possible this way and models themselves are hard to analyze. Moreover, the core of the language is made by translating to BGNL~\ref{bngl}. An example of a rule is given in Figure~\ref{pysb_rule}.
+The PySB language~\cite{Lopez646} works as a package in Python programming language. The definition of the models directly in the code allows to use the full syntax of Python, what significantly increases expression power of PySB. On the other hand, it might be hard to follow abstractions which are possible this way and models themselves are hard to analyze. Moreover, the core of the language is made by translating to BNGL (Section~\ref{bngl}). An example of a rule is given in Figure~\ref{pysb_rule}.
 
 \begin{figure}[!h]
 \begin{center}
@@ -452,8 +452,8 @@ Comprehensive Modeling Platform (CMP)~\cite{cs2bio2013} is an online platform pr
 
 \draw[myarrow, draw=mydarkgreen, fill=mydarkgreen, shorten >=1pt, line width=1pt] (models) to (sbml);
 
-\draw[thick, draw=graybright, fill=graybright] (-4.5, 27) -- (7.5, 27);
-\draw[thick, draw=graybright, fill=graybright] (-4.5, 25) -- (7.5, 25);
+\draw[thick, dashed, draw=graybright, fill=graybright] (-4.5, 27) -- (7.5, 27);
+\draw[thick, dashed, draw=graybright, fill=graybright] (-4.5, 25) -- (7.5, 25);
 \end{tikzpicture}
 \end{center}
 \caption{An overview of Comprehensive Modeling Platform. It is composed of three layers: (1) input to the platform, all the relevant data; (2) Biochemical Space as a intermediate format for the data; (3) output of the platform, results of analysis and visualisation.}\label{cmp_overview}
@@ -464,7 +464,7 @@ Comprehensive Modeling Platform (CMP)~\cite{cs2bio2013} is an online platform pr
 
 The platform consists of several dedicated modules (Fig.~\ref{cmp_overview}), all connected to a central module -- \emph{Biochemical Space} (BCS)~\cite{BCS}, the backbone of the platform. BCS provides formal description and annotation of the biological system and it is based on the hierarchy of selected biological processes. It is accompanied with schemas representing relevant biological processes in the context of the modelled system. For each process, there are presented relevant models, chemical entities, and rules. Presentation of every process includes detailed information and links to the relevant internal and external sources.
 
-BCS provides a well-described biological background for mathematical models of processes taking place in a specific organism. Complete BCS provides a connection between existing ontologies and mathematical models. BCS has a \emph{human-readable} format which can be easily edited in a dedicated editor and visualised within the platform. The first part of a BCS is represented by a set of \emph{entities}, while the second part contains \emph{rules}.
+BCS provides a well-described biological background for mathematical models of processes taking place in a specific organism. Complete BCS provides a connection between existing ontologies and mathematical models. BCS has a \emph{human-readable} format which can be easily edited in a dedicated editor and visualised within the platform. BCS is represented by two parts -- a set of \emph{entities} and a set of \emph{rules}.
 
 When building the BCS, emphasis is put on well-defined and complete annotations. Links to the relevant ontologies must be specified for each entity and rule. Unique IDs provided by ontologies can help to automatically detect duplicities. IDs are also used to create hypertext links to related ontologies on the web, thus providing one part of the already mentioned connection between ontologies and models. At this moment, links to KEGG~\cite{Kanehisa04012016}, ChEBI~\cite{ChEBI}, CyanoBase~\cite{CyanoBase}, and other databases are supported (example of usage is in Figure~\ref{database_links}). A single entity or a rule can have multiple links to several external databases. An example is presence of a particular entity in ChEBI as well as in KEGG.
 
@@ -555,9 +555,9 @@ In some cases, emphasis on a detailed description leads to a very complex BCS mo
 \caption{A rule employing structure entity state change. A Threonine ($Thr$) amino acid residue of a $FGF$ protein inside a $FGFR2$ complex can change its state from unphosphorylated ($u$) to phosphorylated ($p$) (and \emph{vice versa}).}\label{rule_example}
 \end{figure}
 
-Higher abstraction comes into account when several electrons play `musical chairs' inside protein complexes. The issue is that parts of processing protein complex can have different unstable states during a short period of time. When one tries to define all rules among these proteins, combinatorial explosion of the number of states of the complex arises. Not all of these combinations are biologically correct. Even when excluding biologically inadmissible cases, the number of states is still enormous. For the purpose of BCS, we introduce a solution -- we treat a protein complex as a structure entity on which structurally simpler atomic entities change their states (not necessarily proteins) and we abstract from the background processes.
+Higher abstraction comes into account when several electrons play `musical chairs' inside protein complexes. The issue is that parts of processing protein complex can have different unstable states during a short period of time. When one tries to define all rules among these proteins, combinatorial explosion of the number of states of the complex arises. Not all of these combinations are biologically correct. Even when excluding biologically inadmissible cases, the number of states is still enormous. For the purpose of BCS, we introduce a solution -- we treat a protein complex as a structure entity on which structurally simpler atomic entities change their states (not necessarily proteins) and we abstract out the background processes.
 
-When describing particular process or object we can go almost infinitely deeper into the details. Even if the depth is not infinite, it is deep enough to lead into state when the description is larger than object itself. Imagine that you want to describe a molecule as position of each atom. You definitely need more space to store such information than the molecule itself occupies.
+When describing particular process or object we can go almost infinitely deep into the details. Even if the depth is not infinite, it is deep enough to lead into state when the description is larger than object itself. Imagine that you want to describe a molecule as position of each atom. You definitely need more space to store such information than the molecule itself occupies.
 
 When creating BCS for a system, we choose a level of details which we do not exceed. This ensures the size of BCS will not exponentially increase with additional details. The problem can occur when we try to map a model which uses more detailed description of the system than BCS does. However, we simply allow relating multiple model objects to BCS objects and \emph{vice versa}. For example, multiple model reactions might be mapped on one BCS rule denoting the fact the process represented by the rule can be described in more details by the reactions. On the other hand, model might neglect some details. Then for example, a reaction can be mapped on multiple rules with similar meaning than in the previous case.
 
@@ -786,9 +786,9 @@ The key construct of a structure agent is \emph{partial composition} defined as 
 We use symbol $\mathds{T}$ to denote the universe of all possible structure agents.
 \end{notation}
 
-Universe $\mathds{T}$ represents all structure agents which can be formed according to defined sets of structure names w.r.t. to universe of atomic agents.
+Universe $\mathds{T}$ represents all structure agents which can be formed according to defined sets of structure names w.r.t. universe of atomic agents.
 
-A typical example of a structure agent is a protein where the atomic agents are individual amino acids that are of interest in the particular setting. For example, only three out of a few hundreds amino acids are able to undergo some post-translational modifications, such as phosphorylation, metylation etc. It is suitable to model only these three acids instead of entire primary structure of the protein.
+A typical example of a structure agent is a protein where the atomic agents are individual amino acids that are of interest in the particular setting. For example,  imagine that in our system only three out of a few hundreds amino acids are able to undergo some post-translational modifications, such as phosphorylation, metylation etc. It is suitable to model only these three acids instead of entire primary structure of the protein.
 
 \begin{example}{Structure agent}\label{example:structure}
 \begin{itemize}
@@ -984,7 +984,7 @@ Additionally, BCS serves as a reference model for external kinetic models from M
 
 Before we proceed, there are a few necessary definitions. These definitions are required in next section in order to generate reactions from rules.
 
-Reassembly operation $\Xi$ is quite a simple action on tuples. Basically, we need to reorganise tuple which has form $((a_1, b_1), (a_2, b_2),\\ \ldots, (a_n, b_n))$ to a tuple of form $(a_1, a_2, \ldots, a_n, b_1, b_2, \ldots,  b_n)$. We define reassembly operation $\Xi$ generally on a set of tuples. 
+Reassembly operation $\Xi$ is quite a simple action on tuples. We need to reorganise tuple which has form $((a_1, b_1), (a_2, b_2), \ldots, (a_n, b_n))$ to a tuple of form $(a_1, a_2, \ldots, a_n, b_1, b_2, \ldots,  b_n)$. We define reassembly operation $\Xi$ generally on a set of tuples. 
 
 \begin{definition}{Reassembly operation}
 
@@ -1152,7 +1152,7 @@ $\forall i \in [1, \ldots, n]: $ & $\mathtt{X}_i = \big( (\pi_{\varphi_{i-1}+1}(
 \end{center}
 \end{definition}
 
-In Defintion~\ref{generate_reactions} we create the reassembled ground forms for a rule $\mathtt{R}$ . Then, we create a set of reactions from created tuples of agents such that we preserve structure of original complex agents of rule $\mathtt{R}$. They are constructed using sequence of indices $\varphi$, which indicates the last positions in complex structures. In the case when for a particular complex agent $\mathtt{X}_i$ holds that $\pi_{\varphi_{i-1}+1}(y) = \pi_{\varphi_i}(y)$, the produced sequence $\mu$ is a singleton.
+In Defintion~\ref{generate_reactions} we create the reassembled ground forms for a rule $\mathtt{R}$. Then, we create a set of reactions from created tuples of agents such that we preserve structure of original complex agents of rule $\mathtt{R}$. They are constructed using sequence of indices $\varphi$, which indicates the last positions in complex structures. In the case when for a particular complex agent $\mathtt{X}_i$ holds that $\pi_{\varphi_{i-1}+1}(y) = \pi_{\varphi_i}(y)$, the produced sequence $\mu$ is a singleton.
 
 \section{Chemical reaction networks}
 
@@ -1545,7 +1545,7 @@ In the previous chapters, we defined BCS language. From the provided examples an
 
 However, descriptive properties are not enough for using computational methods in order to analyse particular processes. In this chapter we describe basic approaches we employ for our language and propose several methods which could be potentially used in context of static analysis.
 
-We distinguish two general approached in model analysis -- dynamic and static. Dynamic analysis is enabled by some form of executing the model. It requires either enumerating all possible scenarios of behavior of a model (called \emph{state space}) or applying assumptions in order to calculate average behavior (simulation). Static analysis provides information without execution of the model, just by investigating its structure. Both approaches require to build particular mechanisms which enable application of the analysis.
+We distinguish two general approached in model analysis -- dynamic and static. Dynamic analysis is enabled by some form of executing the model. It requires either enumerating all possible scenarios of behavior of a model (called \emph{state space}) or applying assumptions in order to calculate an average behavior (such as simulation). Static analysis provides information without execution of the model, just by investigating its structure. Both approaches require to build particular mechanisms which enable application of the analysis.
 
 \section{Dynamic analysis}
 
@@ -1571,7 +1571,7 @@ In the case when we consider reachability \emph{only} from the initial state $s_
 \subsection{Simulation}
 \label{simulation}
 
-Computer simulations reproduce the behavior of a system using a mathematical model. The simulation is a numerical solution which tries to mimic the behavior of the real system over time. Once we want to simulate BCSL model, regardless the approach we choose it is necessary to enrich the rules by kinetic rates~\cite{mcnaught1997compendium}. The rates basically express the speed of the rule.
+Computer simulations reproduce the behavior of a system using a mathematical model. For the purpose of this thesis, the simulation is a numerical solution which tries to mimic the behavior of the real system over time. Once we want to simulate BCSL model, regardless the approach we choose, it is necessary to enrich the rules by kinetic rates~\cite{mcnaught1997compendium}. The rates basically express the speed of the rule.
 
 However, assigning a rate to the rule is not a simple task. The simplest solution is to reference only fully defined objects in the kinetic rates. However, we would like to express the context of the rule also in the rate. That typically means changing context in rate and the rule accordingly. This approach is non-trivial and we keep it as a future work.
 
@@ -1598,7 +1598,7 @@ Structure agents are compatible if we are able to create pairs from atomic agent
 Let $\mathtt{X}_1$, $\mathtt{X}_2$ be complex agents. The agent $\mathtt{X}_1$ is \emph{compatible with} agent $\mathtt{X}_2$, written $\mathtt{X}_1 \lhd \mathtt{X}_2$, \emph{iff} either $\mathtt{X}_1 \equiv \mathtt{X}_2$ or $\mathtt{com}(\mathtt{X}_1) \equiv \mathtt{com}(\mathtt{X}_2) \wedge \exists \mu' \in \sigma(\mu(\mathtt{X}_2))$ such that $ \forall i \in [1, n] : \pi_i(\mu(\mathtt{X}_1)) \lhd \pi_i(\mu') $, where $n$ is length of sequence which is the same for both sequences.
 \end{definition}
 
-Complex agents are compatible of there exists a permutation of sequence of the first agent such that individual agents on the same position in both sequences are compatible.
+Complex agents are compatible if there exists a permutation of sequence of the first agent such that individual agents on the same position in both sequences are compatible.
 
 The insight from the previous chapters is that an agent might have its ancestors and successors. The compatibility operator formulates this relationship formally. Each successor is compatible with its ancestor, but the reverse relation does not hold. The successor has always more details specified.
 
@@ -1637,7 +1637,7 @@ A finite set $\mathscr{X} \subseteq \mathds{X}$ is a \emph{compatible set} if:
 The compatible set $\mathscr{X}$ inherits partial order relation defined on $\mathds{X}_\leq$, which follows from conditions (\ref{compatible_cond}) and (\ref{non_compatible_cond}) of Definition~\ref{compatible_set}.
 \end{remark}
 
-A compatible set $\mathscr{X}$ is contains partially ordered complex agents. Assuming we ignore states of individual atomic agents (including those inside partial compositions of structure agents), these complex agents are all equal. In other words, they all contain the same sequence of agent names. Example of a compatible set is given in Figure~\ref{compatible_set_example}.
+A compatible set $\mathscr{X}$ contains partially ordered complex agents. Assuming we ignore states of individual atomic agents (including those inside partial compositions of structure agents), these complex agents are all equal. In other words, they all contain the same sequence of agent names. Example of a compatible set is given in Figure~\ref{compatible_set_example}.
 
 \begin{lemma}
 \label{global_supremum}
@@ -1668,7 +1668,7 @@ Then, the condition~(\ref{non_compatible_cond}) claims that no complex agent fro
 % via identity?
 \end{proof}
 
-Practically, compatible sets can be used for a deeper static analysis on level of complexes~\ref{context_reduction} and for finding non-trivial relationships between the rules~\ref{rule_redundancy}.
+Practically, compatible sets can be used for static analysis on level of complexes~\ref{context_reduction} and for finding non-trivial relationships between the rules~\ref{rule_redundancy}.
 
 %\vspace*{0.5cm}\noindent\textbf{Note:} There always exists a compatible set $\mathscr{X}$ for a complex agent $\mathtt{X}$ which follows from Lemma~\ref{exists_one_comp_set}.
 
@@ -1965,7 +1965,7 @@ Entire biochemical space of cyanobacteria is formed from over 1000 entities and 
 
 The circadian clock of cyanobacteria~\cite{CCR} is formed by three proteins $KaiA$, $KaiB$, and $KaiC$ (with additional presence of $ATP$). The key role plays $KaiC$. Compared to the other two proteins, it is physically the largest one. Its primary structure is a sequence of amino acids, where two particular are important for the modelling -- threonine 432 and serine 431. These two amino acids can be enriched by phosphoryl group in process commonly known as phosphorylation~\cite{cohen2002origins}. However, the sites are accessible only when the protein forms a homohexamer -- a structure of six $KaiC$ proteins. For the phosphorylation $KaiA$ proteins are responsible while $KaiB$ proteins inactivate $KaiA$s, which leads to autodephosphorylation of $KaiC$ protein. There are several complexes which can be formed from mentioned proteins according to current situation with the $KaiC$ hexamer (Figure~\ref{phospho_rule}).
 
-It is important to note the $KaiA$ and $KaiB$ proteins only \emph{enhance} the phosphorylation process, but do not enable/disable it completely. When it comes to quantitative description of the system, it is necessary to depict all possible actions. Particularly, we need to express the fact the phosphorylation process happens regardless the particular complex $KaiC$ protein is currently in. 
+It is important to note the $KaiA$ and $KaiB$ proteins only \emph{enhance} (resp. \emph{suppress}) the phosphorylation process, but do not enable/disable it completely. When it comes to quantitative description of the system, it is necessary to depict all possible actions. Particularly, we need to express the fact the phosphorylation process happens regardless the particular complex $KaiC$ protein is currently in. 
 
 \begin{figure}[!h]
 {\small
@@ -2004,7 +2004,7 @@ $ ps2(oec\{2+\}, yz\{+\})::tlm \Leftrightarrow ps2(oec\{3+\}, yz\{n\})::tlm $
 
 We want to demonstrate practical purposes of a few types of static analyses defined in Section~\ref{static_analyses}. Yamada et al. 2004~\cite{yamada2004model} is a model of \emph{fibroblast growth factor} (FGF) signaling pathway. The model represents a signaling pathway, which is typically a cascade of signal transduction. It means if something goes wrong on a particular point in the cascade, it will influence the rest of the pathway. Entire model written in BCSL syntax is provided in Appendix~\ref{yamada_complete}. It consists of 20 entities interacting in 56 rules. Most of proteins can undergo phosphorylation (state change from $u$ to $p$ on some amino acid residues). We consider initial conditions such that there are all required entities in one or two repetitions (some complexes require multiplicity). In such case, the number of reachable state grows up to $2^{72}$, which too high to be effectively enumerated.
 
-In Figure~\ref{fgf_fragment}, there is the model defined in BCSL syntax. Note this model is a fragment of the entire model. Focus on rule~(\ref{focus_rule}). It requires both Threonine residues ($Thr$) on $FGF$ proteins to be phosphorylated ($p$). Basically, it is not possible to create a complex from $FRS$ and unphosphorylated ($u$) $FGF$ proteins.
+In Figure~\ref{fgf_fragment}, there is the model defined in BCSL syntax. Note this model is a fragment of the entire model. Focus on the rule~(\ref{focus_rule}). It requires both Threonine residues ($Thr$) on $FGF$ proteins to be phosphorylated ($p$). Basically, it is not possible to create a complex from $FRS$ and unphosphorylated ($u$) $FGF$ proteins.
 
 For example, we want to check whether a given complex agent {\small $FRS(Thr\{u\}, Tyr\{u\}).FGF(Thr\{u\}).R.FGF(Thr\{u\}).R::cyt$} is reachable for the given model. The agent is formed from $FGF$ proteins which are unphosphorylated ($u$) on hreonine residues ($Thr$). In traditional approach, we have to enumerate entire state space of the model and then use dynamic model checking method to check it. In our case, we can use Theorem~\ref{static_reach} and check if it is non-reachable using static reachability analysis. It results to conclusion that there is no compatible agent on any right-hand side of the rules. It follows the complex agent is non-reachable.
 
@@ -2100,7 +2100,11 @@ We implemented some dynamic analysis -- model simulation and reachability analys
 \end{center}
 \end{figure}
 
-Since there are some graphs and charts generated in BCSgen, we decided to integrate visualisation tools into it. We used two libraries -- vis.js~\cite{almende2016vis} for interactive networks visualisation and MatPlotLib~\cite{hunter2007matplotlib}, a Python library suitable for visualisation of time series. Vis.js is used for exploration of state space with highlighting chosen node and announcing content of the node. It is possible to display paths from the initial state to other states, which satisfy reachability condition given in reachability analysis part (Figure~\ref{gui_reach}). This is very demonstrative and suitable for educational purposes. However, such visualisation has its limitations. For example, huge graphs are very difficult to display -- on the other hand, for a high number of nodes it is not even useful. The MatPlotLib provides visualisation of simulation results. It possible to zoom the chart, hide/show individual curves, and export the current view as a picture.
+Since there are some graphs and charts generated in BCSgen, we decided to integrate visualisation tools into it. We used two libraries -- vis.js~\cite{almende2016vis} for interactive networks visualisation and MatPlotLib~\cite{hunter2007matplotlib}, a Python library suitable for visualisation of time series.
+
+Vis.js is used for exploration of state space with highlighting chosen node and announcing content of the node. It is possible to display paths from the initial state to other states, which satisfy reachability condition given in reachability analysis part (Figure~\ref{gui_reach}). This is very demonstrative and suitable for educational purposes. However, such visualisation has its limitations. For example, huge graphs are very difficult to display -- on the other hand, for a high number of nodes it is not even useful.
+
+The MatPlotLib provides visualisation of simulation results. It possible to zoom the chart, hide/show individual curves, and export the current view as a picture.
 
 \begin{figure}[!h]
 \begin{center}
@@ -2108,8 +2112,6 @@ Since there are some graphs and charts generated in BCSgen, we decided to integr
 \caption{A graph showing LTS of given model. There are a few types of vertices in the graph: \textbf{orange} -- the initial state; \textbf{dark green} -- states satisfying condition given in right panel of the GUI; \textbf{bright green} -- path from initial to chosen reachable state.}\label{gui_reach}
 \end{center}
 \end{figure}
-
-\vspace*{-0.5cm}As a future work for the tool we are planning to reimplement it to a web-based version. It should be integrated in CMP (Section~\ref{cmp}) to allow direct analysis of the models and appropriate parts of Biochemical Space. 
 
 % \chapter{Discussion}
 
@@ -2148,9 +2150,9 @@ The last part was dedicated for practical usage of the language and provided ana
 
 As a future work, we want to improve specification of kinetic rates for the BCSL rules. In the current stage, we allow to reference only fully defined objects in the kinetic rates. This is a very limiting restriction, because it would be natural to change context in rate and the rule simultaneously.
 
-Next goal for the future work is to make some of the static analyses more general. Particularly, some of non-reachability analyses were defined only for a single complex agent. We want to promote these analyses in order to be applied on sets (or multisets) of agents.
+The next goal for the future work is to make some of the static analyses more general. Particularly, some of non-reachability analyses were defined only for a single complex agent. We want to promote these analyses in order to be applied on sets (or multisets) of agents.
 
-Finally, the desktop-based software tool BCSgen is planned to have a web-based version. This step is necessary in order to support model-building and analysis tasks directly within Comprehensive modeling platform, which is purely web-based.
+Finally, as a future work for the tool BCSgen we are planning to reimplement it to a web-based version. It should be integrated in Comprehensive modeling platform (Section~\ref{cmp}) to allow direct analysis of the models and appropriate parts of Biochemical Space. 
 
 \bibliographystyle{citeStyle}
 {\small
