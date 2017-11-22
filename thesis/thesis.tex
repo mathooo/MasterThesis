@@ -182,10 +182,13 @@ The rules are patterns which describe behavior of groups of objects. A rule has 
 \subfloat[]{\includegraphics[scale=0.23]{pics/solution_first}\label{sol:s1}}
 \hspace*{1cm}
 \subfloat[]{\includegraphics[scale=0.23]{pics/solution_second}\label{sol:s2}}
-\caption{\textbf{Examples of solutions}. \textbf{(a)} An example of graphical representation of a solution. \textbf{(b)} Updated solution after the rules from Fig.~\ref{rules:fig} were applied. The first rule \emph{(a)} was applied on the yellow \raisebox{-0.02cm}[0cm]{{\large $\square$}} and the green $\bigcirc$ and produced the yellow-green complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$. Note there are more options how the rule could be mapped -- each combination of free \raisebox{-0.02cm}[0cm]{{\large $\square$}} and $\bigcirc$. The second rule \emph{(b)} was applied on the red-cyan complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$ where the color of \raisebox{-0.02cm}[0cm]{{\large $\square$}} was changed from red to green. The third rule \emph{(c)} couldn't be applied because there is no such complex with a yellow $\bigcirc$. }
-\label{solutions:fig}
 \end{center}
+\caption{\textbf{Examples of solutions}. \textbf{(a)} An example of graphical representation of a solution. \textbf{(b)} Updated solution after the rules from Fig.~\ref{rules:fig} were applied. The first rule \emph{(a)} was applied on the yellow {\large $\square$} and the green $\bigcirc$ and produced the yellow-green complex {\large $\square$}--$\bigcirc$. Note there are more options how the rule could be mapped -- each combination of free {\large $\square$} and $\bigcirc$. The second rule \emph{(b)} was applied on the red-cyan complex {\large $\square$}--$\bigcirc$ where the color of {\large $\square$} was changed from red to green. The third rule \emph{(c)} couldn't be applied because there is no such complex with a yellow $\bigcirc$. }\label{solutions:fig}
 \end{figure}
+
+% replace all 
+% {\large $\square$}
+% to \raisebox{-0.02cm}[0cm]{{\large $\square$}}
 
 \begin{figure}[!h]
 \begin{center}
@@ -209,9 +212,8 @@ The rules are patterns which describe behavior of groups of objects. A rule has 
   \begin{minipage}[r]{0.6\textwidth}
     {\hspace*{1.3cm}\includegraphics[scale=0.2]{pics/rule_diss}}
 \end{minipage}
-\caption{\textbf{Examples of rules}. Rule \textbf{(a)}: a \raisebox{-0.02cm}[0cm]{{\large $\square$}} and a $\bigcirc$ can form a complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$ regardless their colors. Rule \textbf{(b)}: a \raisebox{-0.02cm}[0cm]{{\large $\square$}} is allowed to change its color from red to green only if is in a complex with a $\bigcirc$ regardless its color. Rule \textbf{(c)}: the rule can disassemble the complex only if the $\bigcirc$ is yellow.}
-\label{rules:fig}
 \end{center}
+\caption{\textbf{Examples of rules}. Rule \textbf{(a)}: a {\large $\square$} and a $\bigcirc$ can form a complex {\large $\square$}--$\bigcirc$ regardless their colors. Rule \textbf{(b)}: a {\large $\square$} is allowed to change its color from red to green only if is in a complex with a $\bigcirc$ regardless its color. Rule \textbf{(c)}: the rule can disassemble the complex only if the $\bigcirc$ is yellow.}\label{rules:fig}
 \end{figure}
 
 The rule is mapped on a solution. Then it can be applied and a new solution is produced. The mapping is not always successful (Fig.~\ref{solutions:fig}, application of rule \emph{c}). %By repeating map-apply action, we obtain a \emph{Labelled transition system} $\mathcal{L}$ (Definition~\ref{lts}).
@@ -240,9 +242,8 @@ The mapping of a rule on a solution can be understood as a particular moment whe
   \begin{minipage}[r]{0.6\textwidth}
     {\hspace*{1.3cm}\includegraphics[scale=0.2]{pics/rule_reaction}}
 \end{minipage}
-\caption{\textbf{Example of a map-apply action}. As a solution, we use the solution (a) from Fig.~\ref{solutions:fig}. \textbf{(a)} Rule can be mapped on a \raisebox{-0.02cm}[0cm]{{\large $\square$}} and a $\bigcirc$ regardless their colors and form a complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$.  \textbf{(b)} We randomly choose the yellow \raisebox{-0.02cm}[0cm]{{\large $\square$}} and the green $\bigcirc$ from our solution. The rule was mapped on chosen objects and they were assigned to the left-hand side of the rule. \textbf{(c)} The rule was applied and new object (the yellow-green complex \raisebox{-0.02cm}[0cm]{{\large $\square$}}--$\bigcirc$) was created. We obtained the reaction describing the particular action which has just happened.}
-\label{map-apply:fig}
 \end{center}
+\caption{\textbf{Example of a map-apply action}. As a solution, we use the solution (a) from Fig.~\ref{solutions:fig}. \textbf{(a)} Rule can be mapped on a {\large $\square$} and a $\bigcirc$ regardless their colors and form a complex {\large $\square$}--$\bigcirc$.  \textbf{(b)} We randomly choose the yellow {\large $\square$} and the green $\bigcirc$ from our solution. The rule was mapped on chosen objects and they were assigned to the left-hand side of the rule. \textbf{(c)} The rule was applied and new object (the yellow-green complex {\large $\square$}--$\bigcirc$) was created. We obtained the reaction describing the particular action which has just happened.}\label{map-apply:fig}
 \end{figure}
 
 The mapping can also be seen as assigning particular objects from the solution to types on the left-hand side of the rule. The rule application then represents the change of the mapped objects to new objects according to the right-hand side of the rule (i.e., particular objects are assigned to the right-hand side). As a by-product, we obtain an instance of the rule -- a reaction (Fig.~\ref{map-apply:fig}). %This is how we construct the set of labels (reactions) $A$ in the LTS $\mathcal{L}$.
@@ -451,8 +452,8 @@ Comprehensive Modeling Platform (CMP)~\cite{cs2bio2013} is an online platform pr
 
 \draw[myarrow, draw=mydarkgreen, fill=mydarkgreen, shorten >=1pt, line width=1pt] (models) to (sbml);
 
-\draw[thick, dash dot, draw=graybright, fill=graybright] (-4.5, 27) -- (7.5, 27);
-\draw[thick, dash dot, draw=graybright, fill=graybright] (-4.5, 25) -- (7.5, 25);
+\draw[thick, draw=graybright, fill=graybright] (-4.5, 27) -- (7.5, 27);
+\draw[thick, draw=graybright, fill=graybright] (-4.5, 25) -- (7.5, 25);
 \end{tikzpicture}
 \end{center}
 \caption{An overview of Comprehensive Modeling Platform. It is composed of three layers: (1) input to the platform, all the relevant data; (2) Biochemical Space as a intermediate format for the data; (3) output of the platform, results of analysis and visualisation.}\label{cmp_overview}
@@ -1062,7 +1063,7 @@ $(\chi, \omega, \iota, \varphi, \psi) \in \mathds{R}$ :\\
 & \hspace*{-0.3cm} $ \{~ (-, j) ~|~ j \in [k, |\omega|] \wedge k = 2 * \pi_\iota(\varphi) ~\}$
 \end{tabular}
 
-where all descending intervals in definition of $\psi$ are ignored and $\psi$ is lexicographically sorted set such that symbol $'-' > i$ for every $i \in \mathbb{N}$.
+where $\psi$ is defined together with an ordering such that symbol $'-' > i$ for every $i \in \mathbb{N}$ and all descending intervals in definition of $\psi$ are ignored.
 
 \end{itemize}
 \end{center}
@@ -1077,7 +1078,7 @@ Please note by applying semantic function $\mathtt{F}$ on expressions from Examp
 
 \begin{definition}{Ground form function}
 \label{ground_form}
-We define \emph{ground from function} $\mathcal{G}$ for objects (middle column) of particular type (left column) as:
+We define \emph{ground form function} $\mathcal{G}$ for objects (middle column) of particular type (left column) as:
 
 {\small
 \begin{center}
@@ -1165,7 +1166,7 @@ In this section, we define a simplified model that we can use to define operatio
 Chemical reaction model is a simple model, where chemical reactions and initial state are vectors over integers. Moreover, there is a reference vector of complex agents, which servers for identifying underlaying agents behind the integers (according to particular position in vectors).
 
 \begin{notation}\label{nonnegative}
-We denote $N(\vv{\nu})$ condition $\forall i \in \vv{\nu}: i \in \mathbb{N}_0$.
+We denote $N(\vv{\mathtt{u}})$ condition $\forall i \in [1, \ldots, |\vv{\mathtt{u}}|]: \vv{\mathtt{u}}_i \in \mathbb{N}_0$.
 \end{notation}
 
 By Notation~\ref{nonnegative} we denote the condition that a vector is formed only by non-negative integers.
@@ -1602,7 +1603,7 @@ Complex agents are compatible of there exists a permutation of sequence of the f
 The insight from the previous chapters is that an agent might have its ancestors and successors. The compatibility operator formulates this relationship formally. Each successor is compatible with its ancestor, but the reverse relation does not hold. The successor has always more details specified.
 
 \begin{notation}
-Let $\beta_1, \beta_2$ be two agents. We denote $\beta_1 \Delta \beta_2$ the fact the agents are compatible \emph{iff} either $\beta_1 \lhd \beta_2$ or $\beta_2 \lhd \beta_1$ holds.
+Let $x, y$ be two agents. We denote $x \Delta y$ the fact the agents are compatible \emph{iff} either $x \lhd y$ or $y \lhd x$ holds.
 \end{notation}
 
 \begin{definition}{Partial order of agents}
@@ -1660,7 +1661,7 @@ For every complex agent $\mathtt{X}$ there exists exactly one compatible set $\m
 \end{lemma}
 
 \begin{proof}
-Lets assume a complex agent $\mathtt{X}$ belongs to two compatible sets, namely $\mathtt{X} \in \mathscr{X}_1, \mathscr{X}_2$. From the Definition~\ref{compatible_set} condition~(\ref{compatible_cond}) follows that there exists a $\mathtt{X}_1 \in \mathscr{X}_1$ such that $\mathtt{X} \lhd \mathtt{X}_1$. 
+Let us assume a complex agent $\mathtt{X}$ belongs to two compatible sets, namely $\mathtt{X} \in \mathscr{X}_1, \mathscr{X}_2$. From the Definition~\ref{compatible_set} condition~(\ref{compatible_cond}) follows that there exists a $\mathtt{X}_1 \in \mathscr{X}_1$ such that $\mathtt{X} \lhd \mathtt{X}_1$. 
 
 Then, the condition~(\ref{non_compatible_cond}) claims that no complex agent from $\mathscr{X}_1$ and no complex agent from $\mathscr{X}_2$ can be compatible. Namely, $\mathtt{X}_1 \in \mathscr{X}_1$ cannot be compatible with $\mathtt{X} \in \mathscr{X}_2$. However, $\mathtt{X}$ and $\mathtt{X}_1$ are compatible (namely $\mathtt{X} \lhd \mathtt{X}_1$). It follows $\mathtt{X} \not\in \mathscr{X}_2$, what is a contradiction. $\QEDA$
 
@@ -1680,6 +1681,8 @@ Let $\mathscr{X} \subseteq \mathds{X}$ be a compatible set and $\mathtt{X} \in \
 \begin{center}
 $ \mkern2mu\overline{\mkern-4.5mu \mathscr{X}} \subseteq \mathscr{X}: \forall \mathtt{X}' \in \mkern2mu\overline{\mkern-4.5mu \mathscr{X}}: (\mathtt{X}' \lhd \mathtt{X} \wedge \forall \mathtt{X}'' \in \mkern2mu\overline{\mkern-4.5mu \mathscr{X}}: \neg (\mathtt{X}'' \lhd \mathtt{X}') )$
 \end{center}
+
+where $\mathtt{X}' \neq \mathtt{X}''$.
 \end{definition}
 
 
@@ -1734,7 +1737,7 @@ Applied generally on entire rule, the produced set of reactions from the redunda
 For the proof we used compatible sets of complex agents and the fact that when we are generating reactions from rules, we are actually enumerating all agents from the compatible set which are \emph{compatible with} original agent in the rule (Remark~\ref{generating_vs_compatibility}).
 
 \begin{example}{Redundant rule expression}
-Lets have two rule expressions:
+Let us have two rule expressions:
 
 \begin{enumerate}
 	\item \label{rule_red_1} $K(S\{u\}).K::cell \Rightarrow K(S\{p\}).K::cell$
@@ -1829,7 +1832,7 @@ Let $\mathtt{X}$ be a complex agent, $\mathscr{X}$ be a compatible set for $\mat
 \end{theorem}
 
 \begin{proof}
-Lets assume a complex agent $\mathtt{sup}(\mathscr{X})$ is non-reachable in $LTS(\widetilde{\mathds{M}})$, but $\mathtt{X} \in \mathscr{X}$ is reachable in $LTS(\mathds{M})$.
+Let us assume a complex agent $\mathtt{sup}(\mathscr{X})$ is non-reachable in $LTS(\widetilde{\mathds{M}})$, but $\mathtt{X} \in \mathscr{X}$ is reachable in $LTS(\mathds{M})$.
 
 Generally, there is a path formed from rules in the $LTS(\mathds{M})$ such that we transform complex agents from initial agents to desired complex agent $\mathtt{X}$. When we move to context of $LTS(\widetilde{\mathds{M}})$, there is no such path for $\mathtt{sup}(\mathscr{X})$. However, according to Definition~\ref{reduced_model}, for every such rule there exist a reduced rule, such that all interacting complexes are reduced to their supremas. Therefore, if we could apply an original rule on a complex agent, we can do the same with reduced rule and its supremum. It follows there must exist such path also in $LTS(\widetilde{\mathds{M}})$ and the complex agent $\mathtt{sup}(\mathscr{X})$ is reachable, what is a contradiction. $\QEDA$
 \end{proof}
@@ -1846,20 +1849,20 @@ Since we have defined compatibility operator for agents, we can apply static rea
 Let $\mathcal{R}_f$ be a set of rules created from set of rule expressions $\mathcal{R}$ of given model $\mathds{M}$ using semantic function $\mathtt{F}$ and $\mathtt{X}$ be a complex agent. The complex agent $\mathtt{X}$ is non-reachable w.r.t. set of rules $\mathcal{R}_f$ \emph{if}:
 
 \begin{center}
-$\forall~ \mathtt{R} \in \mathcal{R}_f: \forall \mathtt{X}' \in \chi: \neg (\mathtt{X}' \lhd \mathtt{X})$
+$\forall~ \mathtt{R} \in \mathcal{R}_f: \forall i \in [1, \ldots, \iota] : \neg ( \pi_i(\chi) \lhd \mathtt{X})$
 \end{center}
 
 \noindent such that $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi)$.
 \end{theorem}
 
 \begin{proof}
-Lets assume we have a path of states constructed by applying corresponding reactions created from rules $\mathcal{R}_f$. It does not matter how many rules we have to apply in order to create desired complex agent $\mathtt{X}$ from the initial state. At some point on the path, we inevitably have to create a complex agent $\mathtt{X}_2 \lhd \mathtt{X}$ from a complex agent $\mathtt{X}_1$ applying a rule $\mathtt{R}$. 
+Let us assume we have a path of states constructed by applying corresponding reactions created from rules $\mathcal{R}_f$ where $\mathtt{X}$ is reachable. At some point on the path, we inevitably have to create a complex agent $\mathtt{X}_2 \lhd \mathtt{X}$ from a complex agent $\mathtt{X}_1$ applying a rule $\mathtt{R}$. 
 
 \begin{center}
 \includegraphics[scale=0.15]{pics/static_reach}
 \end{center}
 
-In order to apply such action, there has to be at least one rule which has on its right-hand side a complex agent compatible with the given complex agent. If there is not such agent, the agent $\mathtt{X}$ is non-reachable. $\QEDA$
+It requires there has to be a complex agent $\mathtt{X}_2'$ in the rule which is compatible with the complex agent $\mathtt{X}_2$. If there is not such an agent, the agent $\mathtt{X}$ is non-reachable. $\QEDA$
 \end{proof}
 
 The Theorem~\ref{static_reach} states a very powerful fact in context of non-reachability analysis. Compared to dynamic non-reachability analysis, it completely avoids any combinatorial explosion and gives answer only by testing structural properties of rules.
@@ -2203,6 +2206,7 @@ $\alpha$ & atomic expression\\
 $\tau$ & structure expression\\
 $\Gamma$ & complex expression\\
 $\varrho$ & rule expression\\
+$\beta$ & atomic or structure expression\\
 \end{tabular}
 \end{center}
 
