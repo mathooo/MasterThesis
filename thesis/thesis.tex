@@ -150,15 +150,15 @@ formal specification, biological systems, systems biology, rule-based language
 
 \chapter{Introduction}
 
-Modelling in computational systems biology often comprises studying a complex biochemical system involving a large number of interacting species. Conventional modelling approaches explicitly specify entire chemical reaction networks. Models have form of lists of biochemical species and their reactions. The issue with this approach is that it is not always effective or even possible to enumerate all the interactions. Typically, biological systems contain a huge number of species with numerous interactions.
+Modelling in computational systems biology often comprises studying a complex biochemical system involving a large number of interacting species. Conventional modelling approaches explicitly specify entire chemical reaction networks. Models have form of lists of biochemical species and their reactions. The issue with this approach is that it is not always effective or even possible to enumerate all the interactions. Typically, biological system contain a huge number of species with numerous interactions.
 
-Rule-based modelling approaches describe biological interactions in terms of rules, avoiding the combinatorial explosion of underlying system. Rules are patterns which define how groups of species with some common properties behave in the given system. The rule-based model can be translated into a model such as Markov chains or differential equations, alternatively analysed in its original form. Rule-based modelling is especially effective in cases when the model contains a limited number of patterns. Typical representatives of such cases are biochemical models of living organisms.
+Rule-based modelling approaches describe biological interactions in terms of rules, avoiding the combinatorial explosion of underlying system. Rules are patterns which define how groups of specie with some common properties behave in the given system. The rule-based model can be translated into a model such as Markov chains or differential equations, alternatively analysed in its original form. Rule-based modelling is especially effective in cases when the model contains a limited number of patterns. Typical representatives of such cases are biochemical models of living organisms.
 
 In this thesis we focus on development of a novel rule-based language called Biochemical Space language. The motivation was to establish a rule-based \emph{human-readable} language which is easy to read, write, and maintain by people even from other disciplines than computer science. It serves as description format for Biochemical Space~\cite{BCS}, a core part of Comprehensive Modeling Platform~\cite{cs2bio2013}. Since the language is used for specification of biochemical species and interactions within the platform, its dedicated purpose is to be directly presentable to the users.
 
 The goal of this thesis is to formally define syntax and semantics of Biochemical Space language and provide techniques to analyse models written in the language. 
 
-In Chapter~\ref{background} we provide an introduction to rule-based modelling, describe differences between the rule-based and the traditional approaches, reveal key features of existing rule-based formalisms, and explain purpose of Comprehensive Modeling Platform and its parts. In Chapter~\ref{problem_formulation} we specify particular tasks of this thesis in context of preliminary work. In Chapter~\ref{formal_definition} we define syntax and semantics of Biochemical Space language and specify several syntactic extensions which improve readability of the language. Chapter~\ref{analysis} provides brief description of dynamic analysis techniques and propose a few types of static analyses. In Chapter~\ref{case_study} we show usability of the language on several case studies and then demonstrate usability of proposed static analyses in practice. In final Chapter~\ref{implementation} we explain history of development of BCSgen, a software tool to support the usage of the language. 
+In Chapter~\ref{background} we provide an introduction to rule-based modelling, describe differences between the rule-based and the traditional approaches, reveal key features of existing rule-based formalisms, and explain purpose of Comprehensive Modeling Platform and its parts. In Chapter~\ref{problem_formulation} we specify particular tasks of this thesis in the context of preliminary work. In Chapter~\ref{formal_definition} we define syntax and semantics of Biochemical Space language and specify several syntactic extensions, which improve readability of the language. Chapter~\ref{analysis} provides brief description of dynamic analysis techniques and propose a few types of static analyses. Chapter~\ref{case_study} shows usability of the language on several case studies and then demonstrate usability of proposed static analyses in practice. In final Chapter~\ref{implementation} we explain history of development of BCSgen, a software tool to support the usage of the language. 
 
 \chapter{Background}
 \label{background}
@@ -767,7 +767,7 @@ Note state $\varepsilon$ does not mean the agent is in \emph{none} state, but ra
 We define \emph{structure agent} $\mathtt{T}$ as a pair $(\eta, \gamma)$ where $\eta \in \mathcal{N}_{T}$ is a name and $\gamma \subseteq \mathds{A}$ is a set of atomic agents called partial composition.
 \end{definition}
 
-A structure agent represents a biochemical object that is composed of several known atomic agents while we know that a composition is abstract and not necessarily complete. To incorporate this kind of abstraction into our language, a structure agent is defined to be Let us with a unique name and it is constructed only from atomic agents considered in the same physical compartment.
+A structure agent represents a biochemical object that is composed of several known atomic agents while we know that a composition is abstract and not necessarily complete. To incorporate this kind of abstraction into our language, a structure agent is defined to be labelled with a unique name and it is constructed only from atomic agents considered in the same physical compartment.
 
 \begin{notation}
 Let $\mathtt{T}$ be a structure agent. We denote by $\eta(\mathtt{T})$ its name and by $\gamma(\mathtt{A})$ its partial composition.
@@ -779,7 +779,7 @@ Let $\mathtt{T}, \mathtt{T}'$ be structure agents. $\mathtt{T}$ is \emph{equival
 %\forall \mathtt{A} \in \gamma(\mathtt{T}) ~\exists \mathtt{A}' \in \gamma(\mathtt{T}') : \mathtt{A} \equiv \mathtt{A}' \wedge \forall \mathtt{A}' \in \gamma(\mathtt{T}') ~\exists \mathtt{A} \in \gamma(\mathtt{T}) : \mathtt{A}' \equiv \mathtt{A}$.
 \end{definition}
 
-The key construct of a structure agent is \emph{partial composition} defined as a list of atomic agents which are considered to be relevant parts of the structure agent. We allow this list to be empty with the meaning of a biological structure for which we do not know its composition.
+The key construct of a structure agent is \emph{partial composition} defined as a set of atomic agents which are considered to be relevant parts of the structure agent. We allow this set to be empty with the meaning of a biological structure for which we do not know its composition.
 
 \begin{notation}
 We use symbol $\mathds{T}$ to denote the universe of all possible structure agents.
@@ -844,15 +844,15 @@ We define \emph{rule} $\mathtt{R}$ as a quintuple $(\chi, \omega, \iota, \varphi
 \begin{itemize}
 \item $\chi \in \mathds{X}^n$ is a sequence of complexes,
 \item $\omega \in (\mathds{A} \cup \mathds{T})^m$ is a sequence of atomic and structure agents,
-\item $\iota \in \{ 1, \ldots, n \}$ is an index determining start of right-hand side,
-\item $\varphi \in \mathbb{N}^m$ is an index map between $\omega$ and $\chi$,
-\item $\psi \in ((\{-\} \cup \mathbb{N})^2)^n$ is an index map between agents from left and right-hand side.
+\item $\iota \in \{ 0, \ldots, n \}$ is an index determining the end of left side of $\chi$,
+\item $\varphi \in \mathbb{N}^m$ is an index map from $\omega$ to $\chi$,
+\item $\psi \in ((\{-\} \cup \mathbb{N})^2)^n$ is an index map from left-hand side agents to right-hand side agents
 \end{itemize}
 
 where $n, m \in \mathbb{N}$.
 \end{definition}
 
-The rule is quite a complicated structure. The reason is the practical definition of semantics which can be seen in following sections. Also, it is necessary to capture relationship between left and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map between the agents in $\psi$. Another index map $\varphi$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, by index $\iota$ we determine the end of left-hand side of the rule.
+The reason for this particular definition of the rule is so-called \emph{practical} definition of semantics which can be seen in following sections. Also, it is necessary to capture relationship between left and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map between the agents in $\psi$. Another index map $\varphi$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, by index $\iota$ we determine the end of left-hand side of the rule.
 
 \begin{notation}
 We use symbol $\mathds{R}$ to denote the universe of all possible rules.
@@ -919,7 +919,7 @@ We define \emph{reaction} $\mathtt{r}$ as a pair $(\mathtt{seq}, \iota)$ where:
 
 \begin{itemize}
 \item $\mathtt{seq} \in \mathds{X}^n$ is a sequence of complexes,
-\item $\iota \in \{ 1, \ldots, n \}$ is an index determining start of right-hand side
+\item $\iota \in \{ 0, \ldots, n \}$ is an index determining start of right-hand side
 \end{itemize}
 
 where $n, m \in \mathbb{N}$.
@@ -928,7 +928,7 @@ where $n, m \in \mathbb{N}$.
 Reaction is similar structure than rule, but much simpler. The reaction is just mediate format for giving semantics to BCSL models and it only holds information about complex contents of the rule.
 
 \begin{notation}
-Let $\mathtt{r}$ be a reaction. We denote left-hand side of the reaction $(\pi_1(\mathtt{seq}), \ldots, \pi_{\iota-1}(\mathtt{seq}))$ as $LHS(\mathtt{r})$ and right-hand side of the reaction $(\pi_\iota(\mathtt{seq}), \ldots, \pi_n(\mathtt{seq}))$ as $RHS(\mathtt{r})$.
+Let $\mathtt{r}$ be a reaction. We denote left-hand side of the reaction $(\pi_1(\mathtt{seq}), \ldots, \pi_{\iota}(\mathtt{seq}))$ as $LHS(\mathtt{r})$ and right-hand side of the reaction $(\pi_{\iota+1}(\mathtt{seq}), \ldots, \pi_n(\mathtt{seq}))$ as $RHS(\mathtt{r})$.
 \end{notation}
 
 \section{Syntax}
@@ -1055,11 +1055,11 @@ $(\chi, \omega, \iota, \varphi, \psi) \in \mathds{R}$ :\\
 
 \item \begin{tabular}{l l}
 
-& \hspace*{-0.3cm} $\{~ (i,j) ~|~ i \in [1, \pi_\iota(\varphi)] \wedge j \in [\pi_\iota(\varphi), |\omega|] \wedge |i-j| \equiv \pi_\iota(\varphi)~\} ~\cup$ \\
+& \hspace*{-0.3cm} $\{~ (i,j) ~|~ i \in [1, \pi_\iota(\varphi)] \wedge j \in [\pi_{\iota+1}(\varphi), |\omega|] \wedge |i-j| \equiv \pi_\iota(\varphi)~\} ~\cup$ \\
 
 \hspace*{-0.3cm}$\psi =$ & \hspace*{-0.3cm} $\{~ (i, -) ~|~ i \in [k, \pi_\iota(\varphi)] \wedge k = | \omega | - \pi_\iota(\varphi) + 1 ~| ~\} ~\cup$\\
 
-& \hspace*{-0.3cm} $ \{~ (-, j) ~|~ j \in [k, |\omega|] \wedge k = 2 * \pi_\iota(\varphi) ~\}$
+& \hspace*{-0.3cm} $ \{~ (-, j) ~|~ j \in [k, |\omega|] \wedge k = 2 * \pi_{\iota+1}(\varphi) ~\}$
 \end{tabular}
 
 where $\psi$ is defined together with an ordering such that symbol $'-' > i$ for every $i \in \mathbb{N}$ and all descending intervals in definition of $\psi$ are ignored.
@@ -1848,7 +1848,7 @@ Since we have defined compatibility operator for agents, we can apply static rea
 Let $\mathcal{R}_f$ be a set of rules created from set of rule expressions $\mathcal{R}$ of given model $\mathds{M}$ using semantic function $\mathtt{F}$ and $\mathtt{X}$ be a complex agent. The complex agent $\mathtt{X}$ is non-reachable w.r.t. set of rules $\mathcal{R}_f$ \emph{if}:
 
 \begin{center}
-$\forall~ \mathtt{R} \in \mathcal{R}_f: \forall i \in [1, \ldots, \iota] : \neg ( \pi_i(\chi) \lhd \mathtt{X})$
+$\forall~ \mathtt{R} \in \mathcal{R}_f: \forall i \in [\iota+1, \ldots, |\chi|] : \neg ( \pi_i(\chi) \lhd \mathtt{X})$
 \end{center}
 
 \noindent such that $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi)$.
