@@ -1270,7 +1270,7 @@ The procedure provided in Definition~\ref{vector_to_state} can be extended to th
 
 \begin{definition}{Negative part of vector to multiset translation}
 \label{neg_vector_to_state}
-Translation of the \emph{negative} part a vector is defined almost equally than the translation in Definition~\ref{vector_to_state} with exception that the condition $a_i > 0$ is modified to $a_i < 0$.
+Translation of the \emph{negative} part a vector $\mkern2mu\overline{\mkern-4.5mu \lambda^{-1}}$ is defined almost equally than the translation in Definition~\ref{vector_to_state} with exception that the condition $a_i > 0$ is modified to $a_i < 0$.
 \end{definition}
 
 % \begin{definition}{Negative vector to multiset translation}
@@ -1301,7 +1301,7 @@ We define \emph{the labelled transition system of the BCSL model} $\mathds{M}$, 
 	\item $S = \{~ \mathtt{s} ~|~ \mathtt{s} = \lambda^{-1}(\mathtt{s}', \theta) \wedge \mathtt{s}' \in S' ~\}$,
 	\item $A = \{~ (\mathtt{l}, \mathtt{r}) ~|~ \mathtt{l} = \mkern2mu\overline{\mkern-4.5mu \lambda^{-1}}(\mathtt{a}, \theta) \wedge \mathtt{r} = \lambda^{-1}(\mathtt{a}, \theta) \wedge \mathtt{a} \in A' ~\} $,
 
-	\item $T = \Set{  (\mathtt{s}, (\mathtt{l}, \mathtt{r}), \mathtt{t})\ | \begin{array}{l}
+	\item $T = \Set{  (\mathtt{s}, (\mathtt{l}, \mathtt{r}), \mathtt{t})\ | \begin{array}{c}
       \mathtt{s} = \lambda^{-1}(\vv{\mathtt{s}}, \theta) \wedge \mathtt{t} = \lambda^{-1}(\vv{\mathtt{p}}, \theta) ~\wedge\\
       \wedge~ l = \mkern2mu\overline{\mkern-4.5mu \lambda^{-1}}(\vv{\mathtt{r}}, \theta) \wedge r = \lambda^{-1}(\vv{\mathtt{r}}, \theta) ~\wedge \\
       \wedge~ (\vv{\mathtt{s}}, \vv{\mathtt{r}}, \vv{\mathtt{p}}) \in T'
