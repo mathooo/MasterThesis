@@ -24,7 +24,6 @@
 \usepackage{esvect}
 \usepackage{url}
 \usepackage{dsfont}
-\usepackage{color}
 \usepackage{tikz}
 \usepackage{pythonhighlight}
 \usepackage[hidelinks]{hyperref}
@@ -151,9 +150,9 @@ formal specification, biological systems, systems biology, rule-based language
 
 \chapter{Introduction}
 
-Modelling in computational systems biology often comprises studying a complex biochemical system involving a large number of interacting species. Conventional modeling approaches explicitly specify entire chemical reaction networks. Models have form of lists of biochemical species and their reactions. The issue with this approach is that it is not always effective or even possible to enumerate all the interactions. Typically, biological systems contain a huge number of species with numerous interactions.
+Modelling in computational systems biology often comprises studying a complex biochemical system involving a large number of interacting species. Conventional modelling approaches explicitly specify entire chemical reaction networks. Models have form of lists of biochemical species and their reactions. The issue with this approach is that it is not always effective or even possible to enumerate all the interactions. Typically, biological systems contain a huge number of species with numerous interactions.
 
-Rule-based modelling approaches describe biological interactions in terms of rules, avoiding the combinatorial explosion of underlying system. Rules are patterns which define how groups of species with some common properties behave in the given system. The rule-based model can be translated into a model such as Markov chains or differential equations, alternatively analysed in its original form. Rule-based modeling is especially effective in cases when the model contains a limited number of patterns. Typical representatives of such cases are biochemical models of living organisms.
+Rule-based modelling approaches describe biological interactions in terms of rules, avoiding the combinatorial explosion of underlying system. Rules are patterns which define how groups of species with some common properties behave in the given system. The rule-based model can be translated into a model such as Markov chains or differential equations, alternatively analysed in its original form. Rule-based modelling is especially effective in cases when the model contains a limited number of patterns. Typical representatives of such cases are biochemical models of living organisms.
 
 In this thesis we focus on development of a novel rule-based language called Biochemical Space language. The motivation was to establish a rule-based \emph{human-readable} language which is easy to read, write, and maintain by people even from other disciplines than computer science. It serves as description format for Biochemical Space~\cite{BCS}, a core part of Comprehensive Modeling Platform~\cite{cs2bio2013}. Since the language is used for specification of biochemical species and interactions within the platform, its dedicated purpose is to be directly presentable to the users.
 
@@ -175,7 +174,7 @@ There are multiple approaches to rule-based modelling, but all of them match in 
 
 We represent a rule-based model $\mathds{M}$ as a set of rules and an \emph{initial solution} of interacting objects. We understand the solution as a mixture of individual objects which are randomly distributed (Figure~\ref{solutions:fig}a). Therefore, we cannot assign them any order and we represent them as multisets. From biological perspective, this representation of solution is as close as is possible to the reality while preserving conciseness.
 
-The rules are patterns which describe behavior of groups of objects. A rule has form of an abstract chemical reaction, where substrates and products take place. The difference is that a reaction only operates on particular objects, while in the rule groups of objects are interacting. Therefore, the reaction can be seen as a special case of the rule (Figure~\ref{rules:fig}), where the type represents exactly one object.
+The rules are patterns which describe behaviour of groups of objects. A rule has form of an abstract chemical reaction, where substrates and products take place. The difference is that a reaction only operates on particular objects, while in the rule groups of objects are interacting. Therefore, the reaction can be seen as a special case of the rule (Figure~\ref{rules:fig}), where the type represents exactly one object.
 
 \begin{figure}[!h]
 \begin{center}
@@ -183,7 +182,7 @@ The rules are patterns which describe behavior of groups of objects. A rule has 
 \hspace*{1cm}
 \subfloat[]{\includegraphics[scale=0.23]{pics/solution_second}\label{sol:s2}}
 \end{center}
-\caption{Examples of solutions. \textbf{(a)} An example of graphical representation of a solution. \textbf{(b)} Updated solution after the rules from Figure~\ref{rules:fig} were applied. The first rule \emph{(1)} was applied on the yellow {\large $\square$} and the green $\bigcirc$ and produced the yellow-green complex {\large $\square$}--$\bigcirc$. Note there are more options how the rule could be mapped -- each combination of free {\large $\square$} and $\bigcirc$. The second rule \emph{(2)} was applied on the red-cyan complex {\large $\square$}--$\bigcirc$ where the color of {\large $\square$} was changed from red to green. The third rule \emph{(3)} couldn't be applied because there is no such complex with a yellow $\bigcirc$. }\label{solutions:fig}
+\caption{Examples of solutions. \textbf{(a)} An example of graphical representation of a solution. \textbf{(b)} Updated solution after the rules from Figure~\ref{rules:fig} were applied. The first rule \emph{(1)} was applied on the yellow {\large $\square$} and the green $\bigcirc$ and produced the yellow-green complex {\large $\square$}--$\bigcirc$. Note there are more options how the rule could be mapped -- each combination of free {\large $\square$} and $\bigcirc$. The second rule \emph{(2)} was applied on the red-cyan complex {\large $\square$}--$\bigcirc$ where the colour of {\large $\square$} was changed from red to green. The third rule \emph{(3)} couldn't be applied because there is no such complex with a yellow $\bigcirc$. }\label{solutions:fig}
 \end{figure}
 
 % replace all 
@@ -213,7 +212,7 @@ The rules are patterns which describe behavior of groups of objects. A rule has 
     {\hspace*{1.3cm}\includegraphics[scale=0.2]{pics/rule_diss}}
 \end{minipage}
 \end{center}
-\caption{Examples of rules. Rule \textbf{(1)}: a {\large $\square$} and a $\bigcirc$ can form a complex {\large $\square$}--$\bigcirc$ regardless their colors. Rule \textbf{(2)}: a {\large $\square$} is allowed to change its color from red to green only if is in a complex with a $\bigcirc$ regardless its color. Rule \textbf{(3)}: the rule can disassemble the complex only if the $\bigcirc$ is yellow.}\label{rules:fig}
+\caption{Examples of rules. Rule \textbf{(1)}: a {\large $\square$} and a $\bigcirc$ can form a complex {\large $\square$}--$\bigcirc$ regardless their colours. Rule \textbf{(2)}: a {\large $\square$} is allowed to change its colour from red to green only if is in a complex with a $\bigcirc$ regardless its colour. Rule \textbf{(3)}: the rule can disassemble the complex only if the $\bigcirc$ is yellow.}\label{rules:fig}
 \end{figure}
 
 The rule is mapped on a solution. Then it can be applied and a new solution is produced. The mapping is not always successful (Figure~\ref{solutions:fig}, application of rule \emph{c}). %By repeating map-apply action, we obtain a \emph{Labelled transition system} $\mathcal{L}$ (Definition~\ref{lts}).
@@ -243,7 +242,7 @@ The mapping of a rule on a solution can be understood as a particular moment whe
     {\hspace*{1.3cm}\includegraphics[scale=0.2]{pics/rule_reaction}}
 \end{minipage}
 \end{center}
-\caption{Example of a map-apply action. As a solution, we use the solution (a) from Figure~\ref{solutions:fig}. \textbf{(a)} Rule can be mapped on a {\large $\square$} and a $\bigcirc$ regardless their colors and form a complex {\large $\square$}--$\bigcirc$.  \textbf{(b)} We randomly choose the yellow {\large $\square$} and the green $\bigcirc$ from our solution. The rule was mapped on chosen objects and they were assigned to the left-hand side of the rule. \textbf{(c)} The rule was applied and new object (the yellow-green complex {\large $\square$}--$\bigcirc$) was created. We obtained the reaction describing the particular action which has just happened.}\label{map-apply:fig}
+\caption{Example of a map-apply action. As a solution, we use the solution (a) from Figure~\ref{solutions:fig}. \textbf{(a)} Rule can be mapped on a {\large $\square$} and a $\bigcirc$ regardless their colours and form a complex {\large $\square$}--$\bigcirc$.  \textbf{(b)} We randomly choose the yellow {\large $\square$} and the green $\bigcirc$ from our solution. The rule was mapped on chosen objects and they were assigned to the left-hand side of the rule. \textbf{(c)} The rule was applied and new object (the yellow-green complex {\large $\square$}--$\bigcirc$) was created. We obtained the reaction describing the particular action which has just happened.}\label{map-apply:fig}
 \end{figure}
 
 The mapping can also be seen as assigning particular objects from the solution to types on the left-hand side of the rule. The rule application then represents the change of the mapped objects to new objects according to the right-hand side of the rule (i.e., particular objects are assigned to the right-hand side). As a by-product, we obtain an instance of the rule -- a reaction (Figure~\ref{map-apply:fig}). %This is how we construct the set of labels (reactions) $A$ in the LTS $\mathcal{L}$.
@@ -268,12 +267,12 @@ The rule and the reaction differ in the level of abstraction. In this context we
 \section{Rule-based languages}
 \label{rule_based_languages}
 
-There are several rule-based languages dedicated for modeling of the biological systems. Each of them uses different features and abstractions. In this chapter, we will highlight the key features for some representatives of them.
+There are several rule-based languages dedicated for modelling of the biological systems. Each of them uses different features and abstractions. In this chapter, we will highlight the key features for some representatives of them.
 
 \subsection{Kappa language}
 \label{kappa}
 
-The Kappa language~\cite{kappa_formal} was primary developed for the modeling of protein interactions. The key structures used in the language are \emph{agents} with \emph{binding sites}, which allow formation of \emph{bonds} between the agents. Each binding site must be unique with at most one bond. Each site can occur in one of several pre-defined states.
+The Kappa language~\cite{kappa_formal} was primary developed for the modelling of protein interactions. The key structures used in the language are \emph{agents} with \emph{binding sites}, which allow formation of \emph{bonds} between the agents. Each binding site must be unique with at most one bond. Each site can occur in one of several pre-defined states.
 
 The Kappa \emph{rules} are changing properties of the agents. Particularly, it might add, delete, or change a bond or a state of one or multiple agents at once. The rules are patterns with two sides where each of them is a sequence of agents delimited by a comma. Same as all the other rule-based languages, when some context is not relevant, it is omitted. Example of a rule is in Figure~\ref{kappa-rule}.
 
@@ -332,7 +331,7 @@ However, when it comes to readability and presentation to the user, the language
 
 \subsection{PySB}
 
-The PySB language~\cite{Lopez646} works as a package in Python programming language. The definition of the models directly in the code allows to use the full syntax of Python, what significantly increases expression power of PySB. On the other hand, it might be hard to follow abstractions which are possible this way and models themselves are hard to analyze. Moreover, the core of the language is made by translating to BNGL (Section~\ref{bngl}). An example of a rule is given in Figure~\ref{pysb_rule}.
+The PySB language~\cite{Lopez646} works as a package in Python programming language. The definition of the models directly in the code allows to use the full syntax of Python, what significantly increases expression power of PySB. On the other hand, it might be hard to follow abstractions which are possible this way and models themselves are hard to analyse. Moreover, the core of the language is made by translating to BNGL (Section~\ref{bngl}). An example of a rule is given in Figure~\ref{pysb_rule}.
 
 \begin{figure}[!h]
 \begin{center}
@@ -768,7 +767,7 @@ Note state $\varepsilon$ does not mean the agent is in \emph{none} state, but ra
 We define \emph{structure agent} $\mathtt{T}$ as a pair $(\eta, \gamma)$ where $\eta \in \mathcal{N}_{T}$ is a name and $\gamma \subseteq \mathds{A}$ is a set of atomic agents called partial composition.
 \end{definition}
 
-A structure agent represents a biochemical object that is composed of several known atomic agents while we know that a composition is abstract and not necessarily complete. To incorporate this kind of abstraction into our language, a structure agent is defined to be labeled with a unique name and it is constructed only from atomic agents considered in the same physical compartment.
+A structure agent represents a biochemical object that is composed of several known atomic agents while we know that a composition is abstract and not necessarily complete. To incorporate this kind of abstraction into our language, a structure agent is defined to be Let us with a unique name and it is constructed only from atomic agents considered in the same physical compartment.
 
 \begin{notation}
 Let $\mathtt{T}$ be a structure agent. We denote by $\eta(\mathtt{T})$ its name and by $\gamma(\mathtt{A})$ its partial composition.
@@ -908,7 +907,7 @@ Let $\mathtt{R}$ be a rule and $i,j \in \mathbb{N}$ natural numbers. We say the 
 
 \end{definition}
 
-A rule is well-formed if it does any action. It means, some change has to occur during rule application. This is ensured by condition~(\ref{cond1}), which requires at least one pair of complexes from left and right-hand side of the rule to be different. The second condition~(\ref{cond2}) has to hold on order to guarantee pairs of structure and atomic agents in $\omega$ of the rule have the same name. This condition is crutial for ground form function $\mathcal{G}$ defined in Section~\ref{ground_forms}, where adding context to different agents do not give a sense. 
+A rule is well-formed if it does any action. It means, some change has to occur during rule application. This is ensured by condition~(\ref{cond1}), which requires at least one pair of complexes from left and right-hand side of the rule to be different. The second condition~(\ref{cond2}) has to hold on order to guarantee pairs of structure and atomic agents in $\omega$ of the rule have the same name. This condition is crucial for ground form function $\mathcal{G}$ defined in Section~\ref{ground_forms}, where adding context to different agents do not give a sense. 
 
 Please note the conditions for well-formed rules do not apply on those agents which do not have a pair on the other side of the rule.
 
@@ -972,7 +971,7 @@ When we have defined syntax of BCSL, we can proceed to BCSL model. We always con
 \emph{BCSL model} $\mathds{M}$ is a quadruple $(\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ where $\mathcal{R}$ is set of rule expressions, $\Sigma_\mathtt{A}$ is atomic signature, $\Sigma_\mathtt{T}$ is structure signature, and $\mathtt{init}$ is initial multiset of complex expressions.
 \end{definition}
 
-BCSL model is formed by a set of rule expressions $\mathcal{R}$, which define behavior of the model. The initial multiset $\mathtt{init}$ defines the state of the model in the beginning. Atomic signature $\Sigma_\mathtt{A}$ define allowed states for all atomic agents used in the rules. Finally, structure signature $\Sigma_\mathtt{T}$ defines allowed atomic agents for all structure agents used in the rules.
+BCSL model is formed by a set of rule expressions $\mathcal{R}$, which define behaviour of the model. The initial multiset $\mathtt{init}$ defines the state of the model in the beginning. Atomic signature $\Sigma_\mathtt{A}$ define allowed states for all atomic agents used in the rules. Finally, structure signature $\Sigma_\mathtt{T}$ defines allowed atomic agents for all structure agents used in the rules.
 
 \begin{remark}\label{BCS_vs_BCSL}
 At this point it is useful to sum up what is Biochemical Space as described in Section~\ref{bcs_general} formally. The BCS is formed from a database of entities and rules. These entities are actually a signature, i.e. they predefine a domain on which rules can be defined. Neglecting an initial state (which is not relevant for entire space), the BCS is actually a BCSL model.
@@ -1163,7 +1162,7 @@ In this section, we define a simplified model that we can use to define operatio
 \emph{Chemical reaction model} (CRM) $\mathcal{M}$ is a triple $(\mathfrak{R}, \vv{\nu}, \theta)$ such that $\mathfrak{R} \subseteq \mathbb{Z}^n$ is set of chemical reactions, $\vv{\nu} \in \mathbb{N}_0^n$ is initial vector, and $\theta \in \mathds{X}^n$ is vector of reference complexes for some $n \in \mathbb{N}$.
 \end{definition}
 
-Chemical reaction model is a simple model, where chemical reactions and initial state are vectors over integers. Moreover, there is a reference vector of complex agents, which serves for identification of the underlaying agent on particular position in the vectors (chemical reactions).
+Chemical reaction model is a simple model, where chemical reactions and initial state are vectors over integers. Moreover, there is a reference vector of complex agents, which serves for identification of the underlying agent on particular position in the vectors (chemical reactions).
 
 \begin{notation}\label{nonnegative}
 We denote $N(\vv{\mathtt{u}})$ condition $\forall i \in [1, \ldots, |\vv{\mathtt{u}}|]: \vv{\mathtt{u}}_i \in \mathbb{N}_0$.
@@ -1184,7 +1183,7 @@ Note some values in chemical reactions might be negative. When applying reaction
 \begin{definition}{Semantics of chemical reaction model}
 \label{states_creation}
 
-Let $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \theta)$ be a chemical reaction model. The \emph{semantics of chemical reaction model} $\mathcal{M}$ are given in terms of the labeled transition system, $LTS(\mathcal{M})$, is defined as a quadruple $(S, A, T, s_0)$ such that:
+Let $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \theta)$ be a chemical reaction model. The \emph{semantics of chemical reaction model} $\mathcal{M}$ are given in terms of the labelled transition system, $LTS(\mathcal{M})$, is defined as a quadruple $(S, A, T, s_0)$ such that:
 
 \begin{enumerate}
 	\item $ S $ is defined inductively:
@@ -1295,7 +1294,7 @@ The positive and negative parts of labels are treated independently. The negativ
 \begin{definition}{LTS of BCSL model}
 Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model and $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \theta)$ be a chemical reaction model constructed from model $\mathds{M}$.
 
-We define \emph{the labeled transition system of the BCSL model} $\mathds{M}$, $LTS(\mathds{M}) = (S, A, T, s_0)$, from the $LTS(\mathcal{M}) = (S', A', T', s'_0)$ such that:
+We define \emph{the labelled transition system of the BCSL model} $\mathds{M}$, $LTS(\mathds{M}) = (S, A, T, s_0)$, from the $LTS(\mathcal{M}) = (S', A', T', s'_0)$ such that:
 
 \begin{center}
 \begin{enumerate}
@@ -1545,11 +1544,11 @@ In the previous chapters, we defined BCS language. From the provided examples an
 
 However, descriptive properties are not enough for using computational methods in order to analyse particular processes. In this chapter we describe basic approaches we employ for our language and propose several methods which could be potentially used in context of static analysis.
 
-We distinguish two general approached in model analysis -- dynamic and static. Dynamic analysis is enabled by some form of executing the model. It requires either enumerating all possible scenarios of behavior of a model (called \emph{state space}) or applying assumptions in order to calculate an average behavior (such as simulation). Static analysis provides information without execution of the model, just by investigating its structure. Both approaches require to build particular mechanisms which enable application of the analysis.
+We distinguish two general approached in model analysis -- dynamic and static. Dynamic analysis is enabled by some form of executing the model. It requires either enumerating all possible scenarios of behaviour of a model (called \emph{state space}) or applying assumptions in order to calculate an average behaviour (such as simulation). Static analysis provides information without execution of the model, just by investigating its structure. Both approaches require to build particular mechanisms which enable application of the analysis.
 
 \section{Dynamic analysis}
 
-Dynamic analysis is a very common way how to analyse models written in formal representations. There are several types of analyses and they are usually trying to predict behavior of the modelled system using formal description of the system -- the model.
+Dynamic analysis is a very common way how to analyse models written in formal representations. There are several types of analyses and they are usually trying to predict behaviour of the modelled system using formal description of the system -- the model.
 
 \subsection{Model checking}
 
@@ -1571,9 +1570,9 @@ In the case when we consider reachability \emph{only} from the initial state $s_
 \subsection{Simulation}
 \label{simulation}
 
-Computer simulations reproduce the behavior of a system using a mathematical model. For the purpose of this thesis, the simulation is a numerical solution which tries to mimic the behavior of the real system over time. Once we want to simulate BCSL model, regardless the approach we choose, it is necessary to enrich the rules by kinetic rates~\cite{mcnaught1997compendium}. The rates basically express the speed of the rule.
+Computer simulations reproduce the behaviour of a system using a mathematical model. For the purpose of this thesis, the simulation is a numerical solution which tries to mimic the behaviour of the real system over time. Once we want to simulate BCSL model, regardless the approach we choose, it is necessary to enrich the rules by kinetic rates~\cite{mcnaught1997compendium}. The rates basically express the speed of the rule.
 
-Sssigning a rate to the rule is not a simple task. The simplest solution is to reference only fully defined objects in the kinetic rates. However, we would like to express the context of the rule also in the rate. That typically means changing context in rate and the rule accordingly. This approach is non-trivial and we keep it as a future work.
+Assigning a rate to the rule is not a simple task. The simplest solution is to reference only fully defined objects in the kinetic rates. However, we would like to express the context of the rule also in the rate. That typically means changing context in rate and the rule accordingly. This approach is non-trivial and we keep it as a future work.
 
 Assigning rates to the rules enables deterministic simulation~\cite{Poole2000} by translating rules to reactions and consequently construct Ordinary Differential Equations (ODEs) from them~\cite{higham2008modeling}. It is possible to enable also stochastic simulation, either by network-free simulators such as NFsim~\cite{sneddon2011efficient} or using indirect approach on generated reactions (e.g. Gillespie algorithm~\cite{GILLESPIE1976403}).
 
@@ -1701,7 +1700,7 @@ When we look at the process more theoretically, a set of appropriate complex age
 \subsection{Rule redundancy elimination}
 \label{rule_redundancy}
 
-There might be cases when there are redundant rules defined in a model (Definition~\ref{redundant_rule}). This might be done for example by inattention of modeller in combination with high level of abstraction language uses. These rules do not cause any semantical difference, but can possibly slow down dynamic and/or static analysis, eventually undesirably affect the results of analysis.
+There might be cases when there are redundant rules defined in a model (Definition~\ref{redundant_rule}). This might be done for example by inattention of modeller in combination with high level of abstraction language uses. These rules do not cause any semantic difference, but can possibly slow down dynamic and/or static analysis, eventually undesirably affect the results of analysis.
 
 \begin{definition}{Redundant rule expression}
 \label{redundant_rule}
@@ -1777,7 +1776,7 @@ K(S\{u\}, T\{i\}).K(S\{p\}, T\{i\})::cell \Rightarrow K(S\{p\}, T\{i\}).K(S\{p\}
 \subsection{Context-based reduction}
 \label{context_reduction}
 
-There might be cases when eliminating context of the given BCSL model preserves some properties while making the analysis of the model simpler. This is particularly case of dynamic analysis, where minor change in the model specification can dramatically affect the behavior. To make it possible, we have to define such a reduced model and show what kind of information does it preserve.
+There might be cases when eliminating context of the given BCSL model preserves some properties while making the analysis of the model simpler. This is particularly case of dynamic analysis, where minor change in the model specification can dramatically affect the behaviour. To make it possible, we have to define such a reduced model and show what kind of information does it preserve.
 
 \begin{definition}{Reduced model}
 \label{reduced_model}
@@ -1816,7 +1815,7 @@ such that $\mathscr{X} \subseteq \mathds{X}$ is a compatible set and $\mathtt{X}
 \begin{definition}{Over-approximation of LTS}
 \label{over_approximation}
 
-Let $LTS, LTS'$ be labeled transition systems of some BCSL models. The $LTS'$ is \emph{over-approximation} of $LTS$ if for every path $\mathtt{s}_1' \mathtt{s}_2' \mathtt{s}_3' \ldots \mathtt{s}_n'$ in $LTS'$ there exists a path $\mathtt{s}_1 \mathtt{s}_2 \mathtt{s}_3 \ldots \mathtt{s}_m$ in LTS such that:
+Let $LTS, LTS'$ be labelled transition systems of some BCSL models. The $LTS'$ is \emph{over-approximation} of $LTS$ if for every path $\mathtt{s}_1' \mathtt{s}_2' \mathtt{s}_3' \ldots \mathtt{s}_n'$ in $LTS'$ there exists a path $\mathtt{s}_1 \mathtt{s}_2 \mathtt{s}_3 \ldots \mathtt{s}_m$ in LTS such that:
 
 \begin{center}
 $\forall \mathtt{s}'_i, \mathtt{s}'_{i+1} \exists \mathtt{s}_k, \mathtt{s}_l : l > k \wedge \mathtt{s}_k \lhd \mathtt{s}'_i \wedge \mathtt{s}_l \lhd \mathtt{s}'_{i+1} $.
@@ -1903,7 +1902,7 @@ The BCSL model definition as given in Section~\ref{BCSl_model} can be reduced by
 
 The described process basically iterates through all rules and collects all atomic names and states associated with them. Similarly, it collects all structure names and appropriate names of atomic agents used in their partial compositions. In this case, atomic information has to be collected recursively because some atomic agents might be used only in partial composition, not independently in a complex.
 
-We can discuss the fact that desired signature might be in some manner \emph{larger} than the collected one. However, if for example we want to have more states defined for an atomic agent, they should be definitely used somewhere in the model. In other case, it does not play any role in the model behavior and therefore its definition is senseless. In other words, the described procedure guarantees collecting all signature details which play any role in the model.
+We can discuss the fact that desired signature might be in some manner \emph{larger} than the collected one. However, if for example we want to have more states defined for an atomic agent, they should be definitely used somewhere in the model. In other case, it does not play any role in the model behaviour and therefore its definition is senseless. In other words, the described procedure guarantees collecting all signature details which play any role in the model.
 
 % \begin{proof}
 % Let $\mathcal{M}$ be a BCSL model and $\Sigma$ its minimal signatures (i.e., all states and partial compositions defined in the signatures are actually used in the rules). Then, signatures $\Sigma'$ obtained by procedure (ref blah) has to be equal to the original signature $\Sigma$. In case its not, it means either there is some extra data in the $\Sigma'$ or some data is missing. Since we create $\Sigma'$ by iterating through all the rules, we construct complete signature with complete states used in the model. Therefore, if some data are missing in $\Sigma'$, then it follows given signature $\Sigma$ is not minimal. On the other hand, if there are some extra data in $\Sigma'$, then given signature $\Sigma$ is incorrect -- its missing some structure details which are being used in the model. $\QEDA$
@@ -1931,7 +1930,7 @@ Once the model is translated, we are allowed to apply all available types of ana
 \subsection{Minimal optimal bound of the system}
 \label{optimal_bound}
 
-Transition systems produced by semantics of BCSL models are infinite in general. Despite the fact the underlaying reaction networks are always finite (Section~\ref{optimal_bound}), there are types of reactions which can increase number of occurrences in a state with no limitations. Typically, such reactions form an interface between the modelled system and the environment.
+Transition systems produced by semantics of BCSL models are infinite in general. Despite the fact the underlying reaction networks are always finite (Section~\ref{optimal_bound}), there are types of reactions which can increase number of occurrences in a state with no limitations. Typically, such reactions form an interface between the modelled system and the environment.
 
 However, the process of applying vector reactions on states can be extended by a control system. This system does not allow to grow individual values inside the state vector above given \emph{bound} $\mathtt{B}$. Basically, if produced vector should obtain an integer higher than the bound, the action is not taken. This procedure is very similar to checking whether all values in the vector are positive. Instead of only lower bound, we have two bounds $<0, \mathtt{B}>$.
 
@@ -1980,7 +1979,7 @@ $ ?X = \{~KaiC6, KaiA2C6, KaiA4C6, KaiB6C6, KaiA4B6C6, KaiA6B6C6~\} $
 
 Another interesting aspect of the cyanobacterial circadian clock mechanism is formation of $KaiC$ hexamers. The condition that the $KaiC$ protein can be (de)phosphorylated \emph{only} inside a hexamer leads to one important fact -- it does not mean the hexamer must be assembled from (resp. dissociated to) unphosphorylated $KaiC$ proteins. The hexamer can be dissociated at any point in time, for example when three $KaiC$s are phosphorylated on the serine residue, other two are phosphorylated on both residues, and the last one is not phosphorylated. The number of possible combinations is quite huge.
 
-Rule-based languages including BCSL are very suitable for such cases. What we actually need to express is situation, when a complex is formed (or dissolveed) regardless the context (particular states) of the interacting entities (Figure~\ref{hexamer_rule}).
+Rule-based languages including BCSL are very suitable for such cases. What we actually need to express is situation, when a complex is formed (or dissolved) regardless the context (particular states) of the interacting entities (Figure~\ref{hexamer_rule}).
 
 \begin{figure}[!h]
 {\small
@@ -2002,11 +2001,11 @@ $ ps2(oec\{2+\}, yz\{+\})::tlm \Leftrightarrow ps2(oec\{3+\}, yz\{n\})::tlm $
 \caption{Oxidation of S2-state of the oxygen-evolving complex $oec{2+}$ by $Yz{+}$ in photosystem II. There are many more subparts of photosystem II. (e.g. chlorophyl, pheophytin), but their states are not important in this case.}\label{ps2_rule}
 \end{figure}
 
-We want to demonstrate practical purposes of a few types of static analyses defined in Section~\ref{static_analyses}. Yamada et al. 2004~\cite{yamada2004model} is a model of \emph{fibroblast growth factor} (FGF) signaling pathway. The model represents a signaling pathway, which is typically a cascade of signal transduction. It means if something goes wrong on a particular point in the cascade, it will influence the rest of the pathway. Entire model written in BCSL syntax is provided in Appendix~\ref{yamada_complete}. It consists of 20 entities interacting in 56 rules. Most of proteins can undergo phosphorylation (state change from $u$ to $p$ on some amino acid residues). We consider initial conditions such that there are all required entities in one or two repetitions (some complexes require multiplicity). In such case, the number of reachable state grows up to $2^{72}$, which too high to be effectively enumerated.
+We want to demonstrate practical purposes of a few types of static analyses defined in Section~\ref{static_analyses}. Yamada et al. 2004~\cite{yamada2004model} is a model of \emph{fibroblast growth factor} (FGF) signalling pathway. The model represents a signalling pathway, which is typically a cascade of signal transduction. It means if something goes wrong on a particular point in the cascade, it will influence the rest of the pathway. Entire model written in BCSL syntax is provided in Appendix~\ref{yamada_complete}. It consists of 20 entities interacting in 56 rules. Most of proteins can undergo phosphorylation (state change from $u$ to $p$ on some amino acid residues). We consider initial conditions such that there are all required entities in one or two repetitions (some complexes require multiplicity). In such case, the number of reachable state grows up to $2^{72}$, which too high to be effectively enumerated.
 
 In Figure~\ref{fgf_fragment}, there is the model defined in BCSL syntax. Note this model is a fragment of the entire model. Focus on the rule~(\ref{focus_rule}). It requires both Threonine residues ($Thr$) on $FGF$ proteins to be phosphorylated ($p$). Basically, it is not possible to create a complex from $FRS$ and unphosphorylated ($u$) $FGF$ proteins.
 
-For example, we want to check whether a given complex agent {\small $FRS(Thr\{u\}, Tyr\{u\}).FGF(Thr\{u\}).R.FGF(Thr\{u\}).R::cyt$} is reachable for the given model. The agent is formed from $FGF$ proteins which are unphosphorylated ($u$) on hreonine residues ($Thr$). In traditional approach, we have to enumerate entire state space of the model and then use dynamic model checking method to check it. In our case, we can use Theorem~\ref{static_reach} and check if it is non-reachable using static reachability analysis. It results to conclusion that there is no compatible agent on any right-hand side of the rules. It follows the complex agent is non-reachable.
+For example, we want to check whether a given complex agent {\small $FRS(Thr\{u\}, Tyr\{u\}).FGF(Thr\{u\}).R.FGF(Thr\{u\}).R::cyt$} is reachable for the given model. The agent is formed from $FGF$ proteins which are unphosphorylated ($u$) on threonine residues ($Thr$). In traditional approach, we have to enumerate entire state space of the model and then use dynamic model checking method to check it. In our case, we can use Theorem~\ref{static_reach} and check if it is non-reachable using static reachability analysis. It results to conclusion that there is no compatible agent on any right-hand side of the rules. It follows the complex agent is non-reachable.
 
 \begin{figure}[!h]
 {\footnotesize
@@ -2038,7 +2037,7 @@ $\vdots$
 \end{center}
 
 }
-\caption{A fragment of the model Yamada et al. 2004~\cite{yamada2004model} of FGF signaling pathway written in BCSL. The complete model can find in Appendix~\ref{yamada_complete}.}\label{fgf_fragment}
+\caption{A fragment of the model Yamada et al. 2004~\cite{yamada2004model} of FGF signalling pathway written in BCSL. The complete model can find in Appendix~\ref{yamada_complete}.}\label{fgf_fragment}
 \end{figure}
 
 Demonstration of context-based reduction (Section~\ref{context_reduction}) is provided on the same model as in the previous case. Now we can compute with entire model since we will reduce its context to minimum. In Figure~\ref{reduced_yamada} there are 16 bidirectional rules which we have created by applying Definition~\ref{reduced_model}. The size of state space has significantly decreased -- it has 606 states and 2015 edges.
@@ -2140,19 +2139,19 @@ The MatPlotLib provides visualisation of simulation results. It possible to zoom
 
 \chapter{Conclusions}
 
-In the first part of this thesis, we have explained the background of the work. Particularly, we provided explanation of the principles of rule-based modelling using schematic examples. Several existing rule-based languages have been introduced with their key features. Comprehensive modeling platform as a framework for modelling biochemical processes has been described with all its important modules such as Model repository and Biochemical Space.
+In the first part of this thesis, we have explained the background of the work. Particularly, we provided explanation of the principles of rule-based modelling using schematic examples. Several existing rule-based languages have been introduced with their key features. Comprehensive Modeling Platform as a framework for modelling biochemical processes has been described with all its important modules such as Model repository and Biochemical Space.
 
 In the second part, we have formally defined Biochemical Space Language as a description format for Biochemical Space. Together with very concise and \emph{human-readable} syntax we have defined operational semantics. An indirect approach has been chosen for practical purposes. Moreover, several syntactic extensions were defined to increase readability and maintenance of the language.
 
-In the third part, we have introduced analysing approaches which could be directly used on model defined using the language. Those include dynamic analyses such as model checking and simulation. We have also defined a few types of static analyses which can be use without enumerating entire behavior of the model.
+In the third part, we have introduced analysing approaches which could be directly used on model defined using the language. Those include dynamic analyses such as model checking and simulation. We have also defined a few types of static analyses which can be use without enumerating entire behaviour of the model.
 
-The last part was dedicated for practical usage of the language and provided analysis formalisms. Namely, in the case study we have demonstrated how can be abstractions of the language used in particular modelling situations. We have also shown practical impact of defined static analyses on investigating behavior of the model effectively. Finally, we have presented implementation of a software tool BCSgen, which was developed in order to provide support for maintenance and analysis of the models.
+The last part was dedicated for practical usage of the language and provided analysis formalisms. Namely, in the case study we have demonstrated how can be abstractions of the language used in particular modelling situations. We have also shown practical impact of defined static analyses on investigating behaviour of the model effectively. Finally, we have presented implementation of a software tool BCSgen, which was developed in order to provide support for maintenance and analysis of the models.
 
 As a future work, we want to improve specification of kinetic rates for the BCSL rules. In the current stage, we allow to reference only fully defined objects in the kinetic rates. This is a very limiting restriction, because it would be natural to change context in rate and the rule simultaneously.
 
 The next goal for the future work is to make some of the static analyses more general. Particularly, some of non-reachability analyses were defined only for a single complex agent. We want to promote these analyses in order to be applied on sets (or multisets) of agents.
 
-Finally, as a future work for the tool BCSgen we are planning to reimplement it to a web-based version. It should be integrated in Comprehensive modeling platform (Section~\ref{cmp}) to allow direct analysis of the models and appropriate parts of Biochemical Space. 
+Finally, as a future work for the tool BCSgen we are planning to reimplement it to a web-based version. It should be integrated in Comprehensive Modeling Platform (Section~\ref{cmp}) to allow direct analysis of the models and appropriate parts of Biochemical Space. 
 
 \bibliographystyle{citeStyle}
 {\small
@@ -2342,7 +2341,7 @@ $FRS(Tyr\{p\})::cyt $ & $\Rightarrow$ & $ FRS(Tyr\{u\})::cyt$\\
 \end{tabular}
 \end{center}
 }
-\caption{A complete model Yamada 2004~\cite{yamada2004model} of FGF signaling pathway written in BCSL. It consists of 20 entities interacting in 56 rules. To have this model complete, initial state has to be defined -- particularly, all entities have their subparts in unphosphorylated state and each of them is present once but $FGF$ and $R$ are present in two repetitions.}
+\caption{A complete model Yamada 2004~\cite{yamada2004model} of FGF signalling pathway written in BCSL. It consists of 20 entities interacting in 56 rules. To have this model complete, initial state has to be defined -- particularly, all entities have their subparts in unphosphorylated state and each of them is present once but $FGF$ and $R$ are present in two repetitions.}
 \end{figure}
 
 \end{document}
