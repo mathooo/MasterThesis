@@ -1,6 +1,6 @@
-\documentclass[12pt]{fithesis2}
+%\documentclass[12pt]{fithesis2}
 %\documentclass[12pt, draft]{fithesis2}   % a devel version
-%\documentclass[12pt, twoside]{fithesis2} % two-sided print version
+\documentclass[12pt, twoside]{fithesis2} % two-sided print version
 
 % ===== LOADING PACKAGES =====
 % language settings, main documnet language last
@@ -152,7 +152,7 @@ formal specification, biological systems, systems biology, rule-based language
 
 Modelling in computational systems biology often comprises studying a complex biochemical system involving a large number of interacting species. Conventional modelling approaches explicitly specify entire chemical reaction networks. Models have form of lists of biochemical species and their reactions. The issue with this approach is that it is not always effective or even possible to enumerate all the interactions. Typically, biological system contain a huge number of species with numerous interactions.
 
-Rule-based modelling approaches describe biological interactions in terms of rules, avoiding the combinatorial explosion of underlying system. Rules are patterns which define how groups of specie with some common properties behave in the given system. The rule-based model can be translated into a model such as Markov chains or differential equations, alternatively analysed in its original form. Rule-based modelling is especially effective in cases when the model contains a limited number of patterns. Typical representatives of such cases are biochemical models of living organisms.
+Rule-based modelling approaches describe biological interactions in terms of rules, avoiding the combinatorial explosion of underlying system. Rules are patterns which define how groups of species with some common properties behave in the given system. The rule-based model can be translated into a model such as Markov chains or differential equations, alternatively analysed in its original form. Rule-based modelling is especially effective in cases when the model contains a limited number of patterns. Typical representatives of such cases are biochemical models of living organisms.
 
 In this thesis we focus on development of a novel rule-based language called Biochemical Space language. The motivation was to establish a rule-based \emph{human-readable} language which is easy to read, write, and maintain by people even from other disciplines than computer science. It serves as description format for Biochemical Space~\cite{BCS}, a core part of Comprehensive Modeling Platform~\cite{cs2bio2013}. Since the language is used for specification of biochemical species and interactions within the platform, its dedicated purpose is to be directly presentable to the users.
 
@@ -215,7 +215,7 @@ The rules are patterns which describe behaviour of groups of objects. A rule has
 \caption{Examples of rules. Rule \textbf{(1)}: a {\large $\square$} and a $\bigcirc$ can form a complex {\large $\square$}--$\bigcirc$ regardless their colours. Rule \textbf{(2)}: a {\large $\square$} is allowed to change its colour from red to green only if is in a complex with a $\bigcirc$ regardless its colour. Rule \textbf{(3)}: the rule can disassemble the complex only if the $\bigcirc$ is yellow.}\label{rules:fig}
 \end{figure}
 
-The rule is mapped on a solution. Then it can be applied and a new solution is produced. The mapping is not always successful (Figure~\ref{solutions:fig}, application of rule \emph{c}). %By repeating map-apply action, we obtain a \emph{Labelled transition system} $\mathcal{L}$ (Definition~\ref{lts}).
+The rule is mapped on a solution. Then it can be applied and a new solution is produced. The mapping is not always successful (Figure~\ref{solutions:fig}, application of rule 3).
 
 The mapping of a rule on a solution can be understood as a particular moment when the objects in the solution have just the conformation suitable for the rule and therefore the rule can be applied. Since the distribution of objects is random, we can assume a sequence of objects needed for rule (if there are such objects) is always available.
 
@@ -242,22 +242,22 @@ The mapping of a rule on a solution can be understood as a particular moment whe
     {\hspace*{1.3cm}\includegraphics[scale=0.2]{pics/rule_reaction}}
 \end{minipage}
 \end{center}
-\caption{Example of a map-apply action. As a solution, we use the solution (a) from Figure~\ref{solutions:fig}. \textbf{(a)} Rule can be mapped on a {\large $\square$} and a $\bigcirc$ regardless their colours and form a complex {\large $\square$}--$\bigcirc$.  \textbf{(b)} We randomly choose the yellow {\large $\square$} and the green $\bigcirc$ from our solution. The rule was mapped on chosen objects and they were assigned to the left-hand side of the rule. \textbf{(c)} The rule was applied and new object (the yellow-green complex {\large $\square$}--$\bigcirc$) was created. We obtained the reaction describing the particular action which has just happened.}\label{map-apply:fig}
+\caption{Example of a map-apply action. As a solution, we use the solution \emph{(a)} from Figure~\ref{solutions:fig}. \textbf{(a)} Rule can be mapped on a {\large $\square$} and a $\bigcirc$ regardless their colours and form a complex {\large $\square$}--$\bigcirc$.  \textbf{(b)} We randomly choose the yellow {\large $\square$} and the green $\bigcirc$ from our solution. The rule was mapped on chosen objects and they were assigned to the left-hand side of the rule. \textbf{(c)} The rule was applied and new object (the yellow-green complex {\large $\square$}--$\bigcirc$) was created. We obtained the reaction describing the particular action which has just happened.}\label{map-apply:fig}
 \end{figure}
 
-The mapping can also be seen as assigning particular objects from the solution to types on the left-hand side of the rule. The rule application then represents the change of the mapped objects to new objects according to the right-hand side of the rule (i.e., particular objects are assigned to the right-hand side). As a by-product, we obtain an instance of the rule -- a reaction (Figure~\ref{map-apply:fig}). %This is how we construct the set of labels (reactions) $A$ in the LTS $\mathcal{L}$.
+The mapping can also be seen as assigning particular objects from the solution to types on the left-hand side of the rule. The rule application then represents the change of the mapped objects to new objects according to the right-hand side of the rule (i.e., particular objects are assigned to the right-hand side). As a by-product, we obtain an instance of the rule -- a reaction (Figure~\ref{map-apply:fig}).
 
 Since this kind of graphical representation is not very suitable for machine processing and analysis, we define a formal language which is built on principles described in this chapter.
 
 \section{Rule-based vs. reaction-based modelling}
 
-A rule is a generalised reaction (Figure~\ref{reaction_vs_rule}). This is how the difference can be characterised. From the application point of view, the reaction can be applied on a solution only in a particular way whilst the rule can be applied in multiple ways. It allows to write models where many similar processes might occur with the rules, by defining a pattern in which the action can happen. Since there might be many features we need to express, there are several languages focusing on different level of details.
+A rule is a generalised reaction (Figure~\ref{reaction_vs_rule}). This is how the difference can be characterised. From the application point of view, the reaction can be applied on a solution only in a particular way whilst the rule can be applied in multiple ways. It allows to write models where many similar processes might occur with the rules, by defining a pattern in which the action can happen. Since there can be many features we need to express, there are several languages focusing on different level of details.
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[scale=0.5]{pics/reaction_vs_rule}
 \end{center}
-\caption{Graphical comparison of the rule-based and the reaction-based approaches. There can be seen combinatorial explosion in the number of possible particular interactions (the reactions), which can be depicted in a few simple rules.}\label{reaction_vs_rule}
+\caption{Graphical comparison of the rule-based and the reaction-based approaches~\cite{sneddon2011efficient}. There can be seen combinatorial explosion in the number of possible particular interactions (the reactions), which can be depicted in a few simple rules.}\label{reaction_vs_rule}
 \end{figure}
 
 Analysing the rules directly is not the best choice. The main reason are \emph{side effects}, which might happen during the rule application. These side effects differ from language to language. There is no such thing for the reactions because the entire context is enumerated explicitly. Basically, we cannot directly know how exactly the rule will be used.
@@ -291,7 +291,7 @@ The general problem they have to handle in the Kappa language is too detailed de
 \subsection{BioNetGen Language}
 \label{bngl}
 
-BioNetGen Language (BNGL) \cite{BNGL} is very similar to Kappa language and also has similar disadvantages. There are a few general differences: 
+The BioNetGen Language (BNGL) \cite{BNGL} is very similar to the Kappa language and also has similar disadvantages. There are a few general differences: 
 
 \begin{enumerate}
 	\item it is allowed to define multiple binding sites with same name for an agent,
@@ -508,7 +508,7 @@ An entity in our interpretation is a bounded space (a so-called \emph{compartmen
 
 BCS extends the traditional concept of the compartmentalisation with a hierarchy at the level of entities. A particular entity can reside in several different compartments. Additionally, \emph{classification} specifies the type of an entity in the sense of functional or structural characterisation.
 
-An atomic entity can be a part of a structurally more complex entity. We consider two kinds of composite entities: \emph{structure} (Figure~\ref{structure_example}) and \emph{complex} entities. Structure entity represents partially specified composite species, for example a photosystem complex partially specified with prosthetic groups of interest. Complex entity represents fully specified composite species, for example, a homodimer of KaiC protein.
+An atomic entity can be a part of a structurally more complex entity. We consider two kinds of composite entities: \emph{structure} (Figure~\ref{structure_example}) and \emph{complex} entity. Structure entity represents partially specified composite species, for example a photosystem complex partially specified with prosthetic groups of interest. Complex entity represents fully specified composite species, for example, a homodimer of KaiC protein.
 
 \begin{figure}[!h]
 \begin{center}
@@ -531,7 +531,7 @@ An atomic entity can be a part of a structurally more complex entity. We conside
 \caption{Complete information given for a structure entity.}\label{structure_example}
 \end{figure}
 
-Rules are specified by \emph{rule equation} enriched with additional annotation information. When defining a rule equation, identifiers of substrates and products are used to make the notation of the rules compact. Every entity appearing in a \emph{rule equation} has to be followed by the localisation operator associating it with a particular compartment. This is important especially for rules that act on both sides of a membrane. That way, a rule is always precisely localised in or between the compartments. A natural stoichiometric coefficient can be placed before any entity in a rule equation. Irreversible and reversible rules are distinguished by the operators `$\Rightarrow$', `$\Leftrightarrow$'. The `$+$' symbol is used as a separator between individual substrates and individual products. A rule can also have an assigned classification. Rule classification assigns a list of higher level biophysical processes in which the rule is involved. For an example, see Figure~\ref{rule_example}.
+Rules are specified by \emph{rule equation} enriched with additional annotation information. When defining a rule equation, identifiers of substrates and products are used to make the notation of the rules compact. Every entity appearing in a rule equation has to be followed by the localisation operator associating it with a particular compartment. This is important especially for rules that act on both sides of a membrane. That way, a rule is always precisely localised in or between the compartments. A natural stoichiometric coefficient can be placed before any entity in a rule equation. Irreversible and reversible rules are distinguished by the operators `$\Rightarrow$', `$\Leftrightarrow$'. The `$+$' symbol is used as a separator between individual substrates and individual products. A rule can also have an assigned classification. Rule classification assigns a list of higher level biophysical processes in which the rule is involved. For an example, see Figure~\ref{rule_example}.
 
 In some cases, emphasis on a detailed description leads to a very complex BCS models. Abstraction of some processes is needed to keep BCS models as simple as possible. To this end, rules expressing enzymatic reactions are considered in a simplified form. In fact, there should be at least two different rules describing an enzymatic reaction (one for a substrate binding and another for a catalytic step). Instead, since an enzyme is not affected during the reaction, it is affiliated to the rule as a \emph{modifier}. However, it is difficult to define precise meaning of a modifier in this case. We rather treat the modifier attribute informally as an entity \emph{which has to be present} for the rule to be enabled. The exact reaction mechanism of an enzyme is not always clear and therefore it is abstracted out.
 
@@ -629,10 +629,13 @@ Let $O = (A, m)$ be a multiset. By $x \in O$ we usually denote the fact that the
 \emph{Projection} $\pi_i : X^n \rightarrow X $ is defined as follows:
 
 \begin{center}
-$ \pi_i(x_1, \ldots, x_n) = x_i $
+$ \pi_i(x_1, \ldots, x_n) = $
+  $\begin{cases}
+  ~x_i & \ldots~~~~ 1 \leq i \leq n\\
+  ~0 & \ldots~~~~ otherwise\\
+  \end{cases}
+  $
 \end{center}
-
-for some $i, n \in \mathbb{N}$ where $i \leq n$.
 \end{definition}
 
 \begin{definition}{Tuples concatenation}
@@ -852,7 +855,7 @@ We define \emph{rule} $\mathtt{R}$ as a quintuple $(\chi, \omega, \iota, \varphi
 where $n, m \in \mathbb{N}$.
 \end{definition}
 
-The reason for this particular definition of the rule is so-called \emph{practical} definition of semantics which can be seen in following sections. Also, it is necessary to capture relationship between left and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map between the agents in $\psi$. Another index map $\varphi$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, by index $\iota$ we determine the end of left-hand side of the rule.
+The reason for this particular definition of the rule is so-called \emph{practical} definition of semantics which can be seen in following sections. Also, it is necessary to capture relationship between left and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map between the agents in $\psi$. Another index map $\varphi$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, by index $\iota$ we determine the end of left-hand side of the rule. Note the index is zero in the situation when we have no agents on the right-hand side.
 
 \begin{notation}
 We use symbol $\mathds{R}$ to denote the universe of all possible rules.
@@ -928,7 +931,7 @@ where $n, m \in \mathbb{N}$.
 Reaction is similar structure than rule, but much simpler. The reaction is just mediate format for giving semantics to BCSL models and it only holds information about complex contents of the rule.
 
 \begin{notation}
-Let $\mathtt{r}$ be a reaction. We denote left-hand side of the reaction $(\pi_1(\mathtt{seq}), \ldots, \pi_{\iota}(\mathtt{seq}))$ as $LHS(\mathtt{r})$ and right-hand side of the reaction $(\pi_{\iota+1}(\mathtt{seq}), \ldots, \pi_n(\mathtt{seq}))$ as $RHS(\mathtt{r})$.
+Let $\mathtt{r}$ be a reaction. We denote left-hand side of the reaction $(\pi_1(\mathtt{seq}), \ldots, \pi_{\iota}(\mathtt{seq}))$ as $LHS(\mathtt{r})$ and right-hand side of the reaction $(\pi_{\iota+1}(\mathtt{seq}), \ldots, \pi_{|\mathtt{seq}|}(\mathtt{seq}))$ as $RHS(\mathtt{r})$.
 \end{notation}
 
 \section{Syntax}
@@ -1055,11 +1058,11 @@ $(\chi, \omega, \iota, \varphi, \psi) \in \mathds{R}$ :\\
 
 \item \begin{tabular}{l l}
 
-& \hspace*{-0.3cm} $\{~ (i,j) ~|~ i \in [1, \pi_\iota(\varphi)] \wedge j \in [\pi_{\iota+1}(\varphi), |\omega|] \wedge |i-j| \equiv \pi_\iota(\varphi)~\} ~\cup$ \\
+& \hspace*{-0.3cm} $\{~ (i,j) ~|~ i \in [1, \pi_\iota(\varphi)] \wedge j \in [\pi_{\iota}(\varphi) + 1, |\omega|] \wedge |i-j| \equiv \pi_\iota(\varphi)~\} ~\cup$ \\
 
 \hspace*{-0.3cm}$\psi =$ & \hspace*{-0.3cm} $\{~ (i, -) ~|~ i \in [k, \pi_\iota(\varphi)] \wedge k = | \omega | - \pi_\iota(\varphi) + 1 ~| ~\} ~\cup$\\
 
-& \hspace*{-0.3cm} $ \{~ (-, j) ~|~ j \in [k, |\omega|] \wedge k = 2 * \pi_{\iota+1}(\varphi) ~\}$
+& \hspace*{-0.3cm} $ \{~ (-, j) ~|~ j \in [k, |\omega|] \wedge k = 2 * \pi_{\iota}(\varphi) + 1 ~\}$
 \end{tabular}
 
 where $\psi$ is defined together with an ordering such that symbol $'-' > i$ for every $i \in \mathbb{N}$ and all descending intervals in definition of $\psi$ are ignored.
