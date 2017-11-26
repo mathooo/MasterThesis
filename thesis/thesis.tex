@@ -593,10 +593,10 @@ The indirect approach had several disadvantages. Kappa has only one type of agen
 \begin{center}
   \includegraphics[scale=0.35]{pics/abstraction}
 \end{center}
-\caption{Comparison of a complex in biology (on the left) to abstraction used in BCS (on the right). In biology, all possible graph isomorphisms must be considered which results from combinatorial options how edges can be placed to create a connected graph~\cite{Chartrand1985}. In BCS we neglect such details and see created structure only in the sense of coexistence (a multiset), which significantly reduces the number of possible derivations.}\label{abstraction_comparision}
+\caption{Comparison of a complex in biology (on the left) to abstraction used in BCS (on the right). In biology, all possible graph isomorphisms must be considered which results from combinatorial options how edges can be placed to create a connected graph~\cite{Chartrand1985} (additionally, we could consider the fact there might be multiple bonds between two entities). In BCS we neglect such details and see created structure only in the sense of coexistence (a multiset), which significantly reduces the number of possible derivations.}\label{abstraction_comparision}
 \end{figure}
 
-From the implementation point of view, executing models was delayed by the conversion to Kappa and then calling Kappa core to execute its semantics. Moreover, Kappa uses network-free simulator, which is very efficient for small models, because the rules are executed directly. Each rule is being matched on current state and then matched objects are replaced according to the rule. The problem is when the model is more complex. The number of rules does not cause significant difference, however the number of interacting agents does. Once there are many agents, the time of one \emph{match \& replace} step rises dramatically. Compared to indirect methods when at first the reaction network is enumerated, the initial step can be resources consuming, but then the rule application itself is fast regardless the number of agents.
+From the implementation point of view, executing models was delayed by the conversion to Kappa and then calling Kappa core to execute its semantics. Moreover, Kappa uses network-free simulator, which is very efficient for small models, because the rules are executed directly. Each rule is being matched on current state and then matched objects are replaced according to the rule. The problem is when the model is more complex. The number of rules does not cause any significant difference, however the number of interacting agents does. Once there are many agents, the time of one \emph{match \& replace} step rises dramatically. Compared to indirect methods when at first the reaction network is enumerated, the initial step can be resources consuming, but then the rule application itself is fast regardless the number of agents.
 
 For the reasons mentioned above we decided to redefine the BCSL language. Particularly, the syntax definition had to be refined in order to make the usability more clear. From semantic point of view, we needed a straightforward definition, which would have practical use in implementation. Experience from previous versions showed that using direct rule-based semantics were not very efficient mechanisms. For that reason, we have chosen an indirect definition via translation to reactions -- \emph{practical} definition (Section~\ref{formal_definition}). The practical part means that this approach can be efficiently used in implementation.
 
@@ -719,8 +719,8 @@ Signatures define a set of allowed states for an atomic name and an allowed set 
 
 \begin{example}{Signature}\label{example:signature}
 \begin{itemize}
-\item An atomic signature $(S, \{u, p\})$, $(Q, \{a, i\})$
-\item A structure signature $(KaiC, \{S, Q\})$
+\item An atomic signature $\big\{~ (S, \{u, p\})$, $(Q, \{a, i\}) ~\big\}$
+\item A structure signature $\big\{~ (KaiC, \{S, Q\}) ~\big\}$
 \end{itemize}
 \end{example}
 
@@ -818,7 +818,7 @@ Let $\mathtt{X}$ be a complex agent. We denote by $\mu(\mathtt{X})$ its sequence
 \end{notation}
 
 \begin{definition}{Equivalence of complex agents}\label{rule_equiv}
-Let $\mathtt{X}, \mathtt{X}'$ be complexes. $\mathtt{X}$ is \emph{equivalent} to $\mathtt{X}'$, written $\mathtt{X} \equiv \mathtt{X}'$, \emph{iff} $|\mu(\mathtt{X})| \equiv |\mu(\mathtt{X'})| \wedge \exists \mu' \in \sigma(\mu(\mathtt{X}'))$ such that $\forall i~\in~[1,~n]: \pi_i(\mu(\mathtt{X})) \equiv \pi_i(\mu') \wedge \mathtt{com}(\mathtt{X}) \equiv \mathtt{com}(\mathtt{X'})$.
+Let $\mathtt{X}, \mathtt{X}'$ be complex agents. $\mathtt{X}$ is \emph{equivalent} to $\mathtt{X}'$, written $\mathtt{X} \equiv \mathtt{X}'$, \emph{iff} $|\mu(\mathtt{X})| \equiv |\mu(\mathtt{X'})| \wedge \mathtt{com}(\mathtt{X}) \equiv \mathtt{com}(\mathtt{X'}) \wedge \exists \mu' \in \sigma(\mu(\mathtt{X}'))$ such that $\forall i~\in~[1,~n]: \pi_i(\mu(\mathtt{X})) \equiv \pi_i(\mu')$ such that $n = |\mu(\mathtt{X})|$.
 \end{definition}
 
 The key element of a complex agent is \emph{sequence} describing inductively constructed coexistence expressions from existing agents. In contrast to partial composition in structure agent, we allow replication at the level of sequence (an agent of a certain name can appear more than once in a sequence).
@@ -827,10 +827,10 @@ The key element of a complex agent is \emph{sequence} describing inductively con
 We use symbol $\mathds{X}$ to denote the universe of all possible structure agents. Additionally, $\mathds{U}~=~\mathds{A}~\cup~\mathds{T}~\cup~\mathds{X}$ denotes universe of all possible agents.
 \end{notation}
 
-\begin{example}{Complex}\label{example:complex}
+\begin{example}{Complex agent}\label{example:complex}
 
 \begin{itemize}
-\item A complex $\mathtt{X} = (\textcolor{green}{(}(K, \textcolor{red}{\{}(S, p), (Q, i)\textcolor{red}{\}}), (S, p)\textcolor{green}{)}, cytosol)$
+\item A complex agent $\mathtt{X} = (\textcolor{green}{(}(K, \textcolor{red}{\{}(S, p), (Q, i)\textcolor{red}{\}}), (S, p)\textcolor{green}{)}, cytosol)$
 \begin{itemize}
 	\item written as $K(S\{p\}, Q\{i\}).S\{p\}::cytosol$
 \end{itemize}
@@ -845,7 +845,7 @@ The complex agents encapsulate other agents -- an atomic or structure agent cann
 \label{rule_definition}
 We define \emph{rule} $\mathtt{R}$ as a quintuple $(\chi, \omega, \iota, \varphi, \psi)$ where:
 \begin{itemize}
-\item $\chi \in \mathds{X}^n$ is a sequence of complexes,
+\item $\chi \in \mathds{X}^n$ is a sequence of complex agents,
 \item $\omega \in (\mathds{A} \cup \mathds{T})^m$ is a sequence of atomic and structure agents,
 \item $\iota \in \{ 0, \ldots, n \}$ is an index determining the end of left side of $\chi$,
 \item $\varphi \in \mathbb{N}^m$ is an index map from $\omega$ to $\chi$,
@@ -855,7 +855,7 @@ We define \emph{rule} $\mathtt{R}$ as a quintuple $(\chi, \omega, \iota, \varphi
 where $n, m \in \mathbb{N}$.
 \end{definition}
 
-The reason for this particular definition of the rule is so-called \emph{practical} definition of semantics which can be seen in following sections. Also, it is necessary to capture relationship between left and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map between the agents in $\psi$. Another index map $\varphi$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, by index $\iota$ we determine the end of left-hand side of the rule. Note the index is zero in the situation when we have no agents on the right-hand side.
+The reason for this particular definition of the rule is so-called \emph{practical} definition of semantics which can be seen in following sections. Also, it is necessary to capture relationship between left and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map between the agents in $\psi$. Another index map $\varphi$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, by index $\iota$ we determine the end of left-hand side of the rule. Note the index is zero in the situation when we have no agents on the left-hand side.
 
 \begin{notation}
 We use symbol $\mathds{R}$ to denote the universe of all possible rules.
