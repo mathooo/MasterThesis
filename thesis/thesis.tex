@@ -922,13 +922,13 @@ We define \emph{reaction} $\mathtt{r}$ as a pair $(\mathtt{seq}, \iota)$ where:
 
 \begin{itemize}
 \item $\mathtt{seq} \in \mathds{X}^n$ is a sequence of complexes,
-\item $\iota \in \{ 0, \ldots, n \}$ is an index determining start of right-hand side
+\item $\iota \in \{ 0, \ldots, n \}$ is an index determining the end of left side of $\mathtt{seq}$
 \end{itemize}
 
-where $n, m \in \mathbb{N}$.
+where $n \in \mathbb{N}$.
 \end{definition}
 
-Reaction is similar structure than rule, but much simpler. The reaction is just mediate format for giving semantics to BCSL models and it only holds information about complex contents of the rule.
+Reaction is similar structure to rule, but much simpler. The reaction is just mediate format for giving semantics to BCSL models and it only holds information about complex contents of the rule.
 
 \begin{notation}
 Let $\mathtt{r}$ be a reaction. We denote left-hand side of the reaction $(\pi_1(\mathtt{seq}), \ldots, \pi_{\iota}(\mathtt{seq}))$ as $LHS(\mathtt{r})$ and right-hand side of the reaction $(\pi_{\iota+1}(\mathtt{seq}), \ldots, \pi_{|\mathtt{seq}|}(\mathtt{seq}))$ as $RHS(\mathtt{r})$.
@@ -971,7 +971,7 @@ When we have defined syntax of BCSL, we can proceed to BCSL model. We always con
 
 \begin{definition}{BCSL model}
 \label{BCSL_model}
-\emph{BCSL model} $\mathds{M}$ is a quadruple $(\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ where $\mathcal{R}$ is set of rule expressions, $\Sigma_\mathtt{A}$ is atomic signature, $\Sigma_\mathtt{T}$ is structure signature, and $\mathtt{init}$ is initial multiset of complex expressions.
+\emph{BCSL model} $\mathds{M}$ is a quadruple $(\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ where $\mathcal{R}$ is a set of rule expressions, $\Sigma_\mathtt{A}$ is an atomic signature, $\Sigma_\mathtt{T}$ is a structure signature, and $\mathtt{init}$ is an initial multiset of complex expressions.
 \end{definition}
 
 BCSL model is formed by a set of rule expressions $\mathcal{R}$, which define behaviour of the model. The initial multiset $\mathtt{init}$ defines the state of the model in the beginning. Atomic signature $\Sigma_\mathtt{A}$ define allowed states for all atomic agents used in the rules. Finally, structure signature $\Sigma_\mathtt{T}$ defines allowed atomic agents for all structure agents used in the rules.
@@ -990,14 +990,14 @@ Reassembly operation $\Xi$ is quite a simple action on tuples. We need to reorga
 
 \begin{definition}{Reassembly operation}
 
-Let $Y$ be a set of tuples of particular form, where each $y \in Y$ has particular form $((a_1, b_1), (a_2, b_2), \ldots, (a_n, b_n))$. Then \emph{reassembly operation} $\Xi$ is defined as follows:
+Let $Y$ be a set of tuples, where each tuple $y \in Y$ has a particular form $((a_1, b_1), (a_2, b_2), \ldots, (a_n, b_n))$ for some $n \in \mathbb{N}$. Then \emph{reassembly operation} $\Xi$ is defined as follows:
 
 \begin{center}
 $\Xi(Y) = \{~  x ~|~ y \in Y \wedge x = (\mdoubleplus_{i=1}^{|y|} \pi_1(y_i)) \mdoubleplus (\mdoubleplus_{i=1}^{|y|} \pi_2(y_i)) ~\}$
 \end{center}
 \end{definition}
 
-We need to define difference of partial compositions of structure agents $\gamma \ominus \gamma'$. This difference is not just set difference, because we are not comparing atomic agents by overall equality, only equality on agent names. This operation is necessary in process of generating reactions from rules, which basically means adding details to partial compositions according to defined signatures.
+We need to define difference of partial compositions of structure agents $\gamma \ominus \gamma'$. This difference is not just set difference, because we are not comparing atomic agents by overall equality, only equality on agent names. This operation is necessary in process of generating reactions from rules, which basically means adding details to partial compositions according to the defined signatures.
 
 \begin{definition}{Difference of partial compositions}
 
@@ -1039,10 +1039,10 @@ $\mathtt{F} \llbracket ~\eta\{s\}~ \rrbracket$ & = & $(\eta, s) \in \mathds{A}$\
 $\mathtt{F} \llbracket ~\eta(\varnothing)~ \rrbracket$ & = & $(\eta, \emptyset) \in \mathds{T}$\\
  & & \\
 $\mathtt{F} \llbracket ~\eta(\mathtt{a}_1, \ldots, \mathtt{a}_n)~ \rrbracket$ & = &
-$(\eta, \{~ \mathtt{F} \llbracket \mathtt{a}_1 \rrbracket, \ldots, \mathtt{F} \llbracket \mathtt{a}_n \rrbracket ~\}) \in \mathds{T}$\\
+$\big(\eta, \{~ \mathtt{F} \llbracket \mathtt{a}_1 \rrbracket, \ldots, \mathtt{F} \llbracket \mathtt{a}_n \rrbracket ~\}\big) \in \mathds{T}$\\
  & & \\
 $\mathtt{F} \llbracket ~\alpha_1~.~\ldots~.~\alpha_n :: c~ \rrbracket$ & = &
-$(~(\mathtt{F} \llbracket ~\alpha_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\alpha_n~ \rrbracket), ~c~) \in \mathds{X}$\\
+$\big(~(\mathtt{F} \llbracket ~\alpha_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\alpha_n~ \rrbracket), ~c \big) \in \mathds{X}$\\
  & & \\
 $\mathtt{F} \llbracket ~\Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \ldots + \Gamma_m~ \rrbracket$ & = &
 $(\chi, \omega, \iota, \varphi, \psi) \in \mathds{R}$ :\\
@@ -1051,18 +1051,18 @@ $(\chi, \omega, \iota, \varphi, \psi) \in \mathds{R}$ :\\
 
 \begin{center}
 \begin{itemize}
-\item $\chi = (\mathtt{F} \llbracket ~\Gamma_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_n~ \rrbracket, \mathtt{F} \llbracket ~\Gamma_{n+1}~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_m~ \rrbracket)$,
+\item $\chi = \big(\mathtt{F} \llbracket ~\Gamma_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_n~ \rrbracket, \mathtt{F} \llbracket ~\Gamma_{n+1}~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_m~ \rrbracket \big)$,
 \item $\omega = \mdoubleplus_{i=1}^{|\chi|} \mu(\pi_i(\chi))$,
 \item $\iota = n$,
 \item $\varphi = (J_1, \ldots, J_m): J_k = \sum\limits_{i=1}^{k} | \mu(\pi_i(\chi)) |$,
 
 \item \begin{tabular}{l l}
+& \hspace*{-0.3cm}{\small $\{~ (i,j) ~|~ i \in [1, \pi_\iota(\varphi)] \wedge j \in [\pi_{\iota}(\varphi) + 1, |\omega|] \wedge |i-j| \equiv \pi_\iota(\varphi)~\} ~\cup$ } \\
 
-& \hspace*{-0.3cm} $\{~ (i,j) ~|~ i \in [1, \pi_\iota(\varphi)] \wedge j \in [\pi_{\iota}(\varphi) + 1, |\omega|] \wedge |i-j| \equiv \pi_\iota(\varphi)~\} ~\cup$ \\
+\hspace*{-0.3cm}$\psi =$ & \hspace*{-0.3cm}{\small $\{~ (i, -) ~|~ i \in [k, \pi_\iota(\varphi)] \wedge k = | \omega | - \pi_\iota(\varphi) + 1 ~| ~\} ~\cup$ } \\
 
-\hspace*{-0.3cm}$\psi =$ & \hspace*{-0.3cm} $\{~ (i, -) ~|~ i \in [k, \pi_\iota(\varphi)] \wedge k = | \omega | - \pi_\iota(\varphi) + 1 ~| ~\} ~\cup$\\
+& \hspace*{-0.3cm}{\small $ \{~ (-, j) ~|~ j \in [k, |\omega|] \wedge k = 2 * \pi_{\iota}(\varphi) + 1 ~\}$}
 
-& \hspace*{-0.3cm} $ \{~ (-, j) ~|~ j \in [k, |\omega|] \wedge k = 2 * \pi_{\iota}(\varphi) + 1 ~\}$
 \end{tabular}
 
 where $\psi$ is defined together with an ordering such that symbol $'-' > i$ for every $i \in \mathbb{N}$ and all descending intervals in definition of $\psi$ are ignored.
@@ -1143,18 +1143,18 @@ Given a rule $\mathtt{R}$, we can produce appropriate reactions using ground for
 \begin{definition}{Construction of reactions}\label{generate_reactions}
 \begin{center}
 \begin{tabular}{ r@{\hskip 0.05cm}l }
-$\mathtt{Reactions}(\mathtt{R}) =$ & $\{~ \mathtt{r}(\mathtt{seq}, \iota) ~|~ y \in \Xi(\mathcal{G}(\mathtt{R})) ~\}$\\
+$\mathtt{Reactions}(\mathtt{R}) =$ & $\{~ (\mathtt{seq}, \iota) ~|~ y \in \Xi(\mathcal{G}(\mathtt{R})) ~\}$\\
 
 where $\mathtt{seq} =$ & $(\mathtt{X}_1, \mathtt{X}_2, \ldots, \mathtt{X}_n)$ such that\\
 
-$\forall i \in [1, \ldots, n]: $ & $\mathtt{X}_i = \big( (\pi_{\varphi_{i-1}+1}(y), \ldots, \pi_{\varphi_i}(y)), \mathtt{com}(\pi_i(\chi)) \big)$\\
+$\forall i \in [1, \ldots, n]: $ & $\mathtt{X}_i = \big( (\pi_{\pi_{i-1}(\varphi)+1}(y), \ldots, \pi_{\pi_i(\varphi)}(y)), \mathtt{com}(\pi_i(\chi)) \big)$\\
 
  & for $n = |\chi|$, $\varphi_0 = 0$, $ \iota \in \mathtt{R}$, $\chi \in \mathtt{R}$, $\varphi \in \mathtt{R}.$\\
 \end{tabular}
 \end{center}
 \end{definition}
 
-In Defintion~\ref{generate_reactions} we create the reassembled ground forms for a rule $\mathtt{R}$. Then, we create a set of reactions from created tuples of agents such that we preserve structure of original complex agents of rule $\mathtt{R}$. They are constructed using sequence of indices $\varphi$, which indicates the last positions in complex structures. In the case when for a particular complex agent $\mathtt{X}_i$ holds that $\pi_{\varphi_{i-1}+1}(y) = \pi_{\varphi_i}(y)$, the produced sequence $\mu$ is a singleton.
+In Defintion~\ref{generate_reactions} we create the reassembled ground forms for a rule $\mathtt{R}$. Then, we create a set of reactions from created tuples of agents such that we preserve structure of original complex agents of rule $\mathtt{R}$. They are constructed using sequence of indices $\varphi$, which indicates the last positions in complex structures. In the case when for a particular complex agent $\mathtt{X}_i$ holds that $\pi_{\pi_{i-1}(\varphi)+1}(y) = \pi_{\pi_i(\varphi)}(y)$, the produced sequence $\mu$ is a singleton.
 
 \section{Chemical reaction networks}
 
@@ -1181,7 +1181,7 @@ $(\vv{\upsilon}, \vv{\mathtt{r}}, \vv{\mathtt{u}}) \in \zeta \myeq \vv{\mathtt{u
 \end{center}
 \end{definition}
 
-Note some values in chemical reactions might be negative. When applying reaction on state, the resulting state cannot contain any negative values (negative number of entities does not give biological sense). Therefore, application is allowed only if the resulting vector contains non-negative values.
+Note some values in chemical reactions might be negative. When applying a reaction on a state, the resulting state cannot contain any negative values (negative number of entities does not give biological sense). Therefore, application is allowed only if the resulting vector contains non-negative values.
 
 \begin{definition}{Semantics of chemical reaction model}
 \label{states_creation}
@@ -1216,7 +1216,7 @@ Let $\Theta$ be a set of all possible unique complexes constructed from reaction
 
 $$\Theta = \{~ \mathtt{X} ~|~ \mathtt{X} \in \mathtt{seq}(\mathtt{r}) \wedge \mathtt{r} \in \bigcup_{\mathtt{R} \in \mathcal{R}} \mathtt{Reactions}(\mathtt{R}) ~\} $$
 
-\noindent Then, the \emph{reference vector} $\theta$ is a tuple $X \in \Theta^n$ such that $\forall i,j \leq n : \Theta_i \not\equiv \Theta_j$ and $n~=~|\Theta|$. Note there are $n!$ possibilities how to choose $\theta$, an arbitrary one can be chosen.
+\noindent Then, the \emph{reference vector} $\theta$ is a tuple $\theta \in \Theta^n$ such that $\forall i,j \leq n : \theta_i \not\equiv \theta_j$ and $n~=~|\theta|$. Note there are $n!$ possibilities how to choose $\theta$, an arbitrary one can be chosen.
 
 \end{definition}
 
@@ -1233,7 +1233,7 @@ $a_i$ =
   \end{cases}
   $
 \end{center}
-\hspace{15pt} where $n = |\theta|$ and $|\mathtt{S}(\pi_i)|$ is number of occurrences of agent $\pi_i$ in the multiset $\mathtt{S}$.
+\hspace{15pt} where $n = |\theta|$ and $|\mathtt{S}(\theta_i)|$ is number of occurrences of agent $\theta_i$ in the multiset $\mathtt{S}$.
 \end{definition}
 
 Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. In order to construct chemical reaction model $\mathcal{M} = (\mathfrak{R}, \vv{\nu}, \theta)$ from the model $\mathds{M}$, we need to apply the following steps:
@@ -1258,7 +1258,7 @@ In Definition~\ref{states_creation} we show how to create an LTS from a chemical
 \emph{Translation of a vector} $(a_1, a_2, \ldots, a_n) \in \mathbb{N}^n$ \emph{to a multiset} $\mathtt{S} = (A, \mathtt{m})$ is defined as follows:
 
 \begin{center}
-\begin{tabular}{r@{\hskip 0.05cm}l}
+\begin{tabular}{r@{\hskip 0.08cm}l}
 $\lambda^{-1}((a_1, a_2, \ldots, a_n), \theta) =$ & $ \mathtt{S}$ such that\\
 $A = $ & $ \{~ \theta_i ~|~ i \in [1, \ldots, n] \wedge a_i > 0 ~\}$\\
 
