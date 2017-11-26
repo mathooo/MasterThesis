@@ -1357,7 +1357,7 @@ Definition of $\Sigma_\mathtt{A}$: & Definition of $\Sigma_\mathtt{T}$:\\
 \noindent We omit $\mathtt{init}$ definition just for simplicity of the example.
 \end{runningExample}
 
-\subsection{Partial composition context elimination.}
+\subsection{Partial composition context elimination}
 
 It is possible to omit all atomic expressions with unspecified state $\varepsilon$ from partial compositions of structure agents. Such agent expressions do not give any additional information and whole partial composition can be reconstructed from the given signature.
 
@@ -1498,7 +1498,7 @@ We define necessary condition which must hold when semantic function $\mathtt{F}
 \end{enumerate}
 \end{definition}
 
-For each pair of agents $(\alpha, \beta)$ with allowed `::' operator between them $\alpha :: \beta$, we can construct just one agent $\beta'$ without the operator by taking the most left agent $\alpha'$ from full (resp. partial) composition of the agent $\beta$ such that it is \emph{compatible with} the agent $\alpha$ ($\alpha' \lhd \alpha$). Then, agent $\alpha'$ is simply replaced by agent $\alpha$ and agent $\beta'$ is constructed.
+For each pair of agents $(\alpha, \beta)$ with allowed `::' operator between them $\alpha :: \beta$, we can construct just one agent $\beta'$ without the operator by taking the most left agent $\alpha'$ from full (resp. partial) composition of the agent $\beta$ such that it is \emph{compatible with} the agent $\alpha$ ($\alpha' \lhd \alpha$). Then, agent $\alpha'$ is merged with agent $\alpha$ and agent $\beta'$ is constructed.
 
 \begin{runningExample}{The example model $\mathds{M}$}
 \label{run7}
@@ -1520,7 +1520,7 @@ You can see localisation operator allowed us to fully use the complex signatures
 
 In the Running example~\ref{run7} there are additional options for syntax reduction. Rule expressions 1 and 2 are very similar except context of complex expression they take place in. Therefore, we will substitute this context with a variable with a given domain.
 
-In a rule expression, one rule agent expression might be referenced using variable $\upsilon$ as a set of rule agent expressions it can be replaced with. Such a rule agent expression is referenced as $?X$. Moreover, in case when a $?X$ is used in a location, it must hold conditions from Definition~\ref{locations:conditions}.
+In a rule expression, one rule agent expression might be referenced using a variable as a set of rule agent expressions it can be replaced with. Such a rule agent expression is referenced as $?X$. Moreover, in case when a $?X$ is used in a location, it must hold conditions from Definition~\ref{locations:conditions}.
 
 Each rule expression associated with variable can be easily rewritten as several rule expressions where variable is replaced with agent expression from set of agent expressions attached to the variable. For simplicity, only one variable can be used per rule expression.
 
