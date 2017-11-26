@@ -613,7 +613,7 @@ The defined semantics is indirect, i.e. we do not give semantic sense to rules t
 
 \section{Formal preliminaries}
 
-Before we proceed, we provide some basic definitions and notations in order to build formal definition for the language.
+Before we proceed, we provide some basic definitions and notations in order to build the formal definition for the language.
 
 %We define projection $\pi_i$ to enable iterating through multidimensional structures.
 
@@ -661,7 +661,7 @@ A partition $\mathcal{P} = B_1/B_2/\ldots/B_k$ of $S = [1,\ldots,n]$ is \emph{no
 \end{definition}
 
 \begin{notation}
-Let $\vv{v} = (x_1, \ldots, x_n)$ be a vector. By $\sigma(\vv{v})$ we denote set of all possible permutations of length $n$ of the vector $\vv{v}$.
+Let $\vv{v} = (x_1, \ldots, x_n)$ be a vector. By $\sigma(\vv{v})$ we denote a set of all possible permutations of length $n$ of the vector $\vv{v}$.
 \end{notation}
 
 \begin{definition}{Labelled transition system}\label{lts}
@@ -703,9 +703,9 @@ We define \emph{Petri Net} as a quadruple $\mathcal{N} = (P, T, F, m_0)$ where:
 
 \section{Objects definition}
 
-Let $\mathcal{N}_{A}, \mathcal{N}_{T}, \mathcal{N}_{\delta}, \mathcal{N}_{c}$ be mutually exclusive finite sets of atomic names, structure names, states, and compartments respectively. Moreover, $\varepsilon$ is reserved symbol and does not belong to any of these sets.
+Let $\mathcal{N}_{A}, \mathcal{N}_{T}, \mathcal{N}_{\delta}, \mathcal{N}_{c}$ be mutually exclusive finite sets of atomic names, structure names, states, and compartments respectively. Moreover, $\varepsilon$ is a reserved symbol and does not belong to any of these sets.
 
-For better readability, we provide examples of syntax for most important object with their definition. The formal definition of syntax and the relation to the objects will be given in subsequent sections.
+For better readability, we provide examples of syntax for the most important object with their definitions. The formal definition of syntax and the relation to the objects will be given in subsequent sections.
 
 \subsection{Signature}
 
@@ -762,7 +762,7 @@ Atomic agents are usually used to express small biological entities which can ch
 \end{itemize}
 \end{example}
 
-Note state $\varepsilon$ does not mean the agent is in \emph{none} state, but rather the state is unknown or not important.
+Note the state $\varepsilon$ does not mean the agent is in \emph{none} state, but rather the state is unknown or not important.
 
 \subsection{Structure agent}
 
@@ -824,7 +824,7 @@ Let $\mathtt{X}, \mathtt{X}'$ be complex agents. $\mathtt{X}$ is \emph{equivalen
 The key element of a complex agent is \emph{sequence} describing inductively constructed coexistence expressions from existing agents. In contrast to partial composition in structure agent, we allow replication at the level of sequence (an agent of a certain name can appear more than once in a sequence).
 
 \begin{notation}
-We use symbol $\mathds{X}$ to denote the universe of all possible structure agents. Additionally, $\mathds{U}~=~\mathds{A}~\cup~\mathds{T}~\cup~\mathds{X}$ denotes universe of all possible agents.
+We use the symbol $\mathds{X}$ to denote the universe of all possible structure agents. Additionally, $\mathds{U}~=~\mathds{A}~\cup~\mathds{T}~\cup~\mathds{X}$ denotes universe of all possible agents.
 \end{notation}
 
 \begin{example}{Complex agent}\label{example:complex}
@@ -855,7 +855,7 @@ We define \emph{rule} $\mathtt{R}$ as a quintuple $(\chi, \omega, \iota, \varphi
 where $n, m \in \mathbb{N}$.
 \end{definition}
 
-The reason for this particular definition of the rule is so-called \emph{practical} definition of semantics which can be seen in following sections. Also, it is necessary to capture relationship between left and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map between the agents in $\psi$. Another index map $\varphi$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, by index $\iota$ we determine the end of left-hand side of the rule. Note the index is zero in the situation when we have no agents on the left-hand side.
+The reason for this particular definition of the rule is so-called \emph{practical} definition of semantics which can be seen in following sections. Also, it is necessary to capture the relationship between the left and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map between the agents in $\psi$. Another index map $\varphi$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, by index $\iota$ we determine the end of left-hand side of the rule. Note the index is zero in the situation when we have no agents on the left-hand side.
 
 \begin{notation}
 We use symbol $\mathds{R}$ to denote the universe of all possible rules.
@@ -898,7 +898,7 @@ $\Rightarrow K(S\{p\}).B(\varnothing).C(\varnothing)::cyt + D\{a\}.A\{\varepsilo
 \end{center}
 \end{example}
 
-Not every rule gives a sense. For example, a rule with no change or a rule with ambiguous relation of left and right-hand sides. In order to avoid such cases we need to specify when a rule is \emph{well-formed}, i.e. it gives semantically sense.
+Not every rule makes sense. For example, a rule with no change or a rule with ambiguous relation of left and right-hand sides. In order to avoid such cases we need to specify when a rule is \emph{well-formed}, i.e. it makes sense semantically.
 
 \begin{definition}{Well-formed rule}
 Let $\mathtt{R}$ be a rule and $i,j \in \mathbb{N}$ natural numbers. We say the rule $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi)$ is \emph{well-formed} if the following conditions hold:
@@ -910,7 +910,7 @@ Let $\mathtt{R}$ be a rule and $i,j \in \mathbb{N}$ natural numbers. We say the 
 
 \end{definition}
 
-A rule is well-formed if it does any action. It means, some change has to occur during rule application. This is ensured by condition~(\ref{cond1}), which requires at least one pair of complexes from left and right-hand side of the rule to be different. The second condition~(\ref{cond2}) has to hold on order to guarantee pairs of structure and atomic agents in $\omega$ of the rule have the same name. This condition is crucial for ground form function $\mathcal{G}$ defined in Section~\ref{ground_forms}, where adding context to different agents do not give a sense. 
+A rule is well-formed if it does any action. It means, some change has to occur during rule application. This is ensured by condition~(\ref{cond1}), which requires at least one pair of complexes from left and right-hand side of the rule to be different. The second condition~(\ref{cond2}) has to hold on order to guarantee pairs of structure and atomic agents in $\omega$ of the rule have the same name. This condition is crucial for ground form function $\mathcal{G}$ defined in Section~\ref{ground_forms}, where adding context to different agents do not make sense. 
 
 Please note the conditions for well-formed rules do not apply on those agents which do not have a pair on the other side of the rule.
 
@@ -937,7 +937,7 @@ Let $\mathtt{r}$ be a reaction. We denote left-hand side of the reaction $(\pi_1
 \section{Syntax}
 \label{syntax}
 
-In Definition~\ref{grammar}, we provide grammar defining syntax of the BCSL. As proposed in Section~\ref{problem_formulation}, the syntax must be simple and readable. It was already defined in~\cite{Ded201627}, here we provide an improved and simplified version of the definition.
+In Definition~\ref{grammar}, we provide a grammar defining syntax of the BCSL. As proposed in Section~\ref{problem_formulation}, the syntax must be simple and readable. It was already defined in~\cite{Ded201627}, here we provide an improved and simplified version of the definition.
 
 \begin{definition}{Grammar}
 \label{grammar}
