@@ -1547,7 +1547,7 @@ In the previous chapters, we defined BCS language. From the provided examples an
 
 However, descriptive properties are not enough for using computational methods in order to analyse particular processes. In this chapter we describe basic approaches we employ for our language and propose several methods which could be potentially used in context of static analysis.
 
-We distinguish two general approached in model analysis -- dynamic and static. Dynamic analysis is enabled by some form of executing the model. It requires either enumerating all possible scenarios of behaviour of a model (called \emph{state space}) or applying assumptions in order to calculate an average behaviour (such as simulation). Static analysis provides information without execution of the model, just by investigating its structure. Both approaches require to build particular mechanisms which enable application of the analysis.
+We distinguish two general approaches in model analysis -- dynamic and static. Dynamic analysis is enabled by some form of executing the model. It requires either enumerating all possible scenarios of behaviour of a model (called \emph{state space}) or applying assumptions in order to calculate an average behaviour (such as simulation). Static analysis provides information without execution of the model, just by investigating its structure. Both approaches require to build particular mechanisms which enable application of the analysis.
 
 \section{Dynamic analysis}
 
@@ -1563,7 +1563,7 @@ Reachability analysis is a particular task of model checking for determining whe
 
 \begin{definition}{Reachability relation}
 \label{reachability_relation}
-For an LTS $\mathcal{L} = (S, A, T, s_0)$ the \emph{reachability relation} of $\mathcal{L}$ is the transitive closure of $T$, which is a of all ordered pairs $(s,t)$ of states in $S$ for which there exists a sequence of states $s = s_0, s_1, s_2, \ldots, s_k = t$ such that the transition $(s_{i-1}, a, s_i)$ is in $T$ for all $1 \leq i \leq k$ and for some $a$ in $A$.
+For an LTS $\mathcal{L} = (S, A, T, s_0)$ the \emph{reachability relation} of $\mathcal{L}$ is the transitive closure of $T$, which is the set of all ordered pairs $(s,t)$ of states in $S$ for which there exists a sequence of states $s = s_0, s_1, s_2, \ldots, s_k = t$ such that the transition $(s_{i-1}, a, s_i)$ is in $T$ for all $1 \leq i \leq k$ and for some $a$ in $A$.
 \end{definition}
 
 In our case, reachability analysis can be generalised to checking whether for some multiset of complex agents $\mathtt{s}'$ there exists a reachable state $s \in S$ of an LTS $\mathcal{L}$ such that $\mathtt{s}' \subseteq s$. In other words, we are interested only in particular agents regardless other context in the reachable state. This might generally lead to multiple reachable states and then we can for example consider a shortest path.
@@ -1582,7 +1582,7 @@ Assigning rates to the rules enables deterministic simulation~\cite{Poole2000} b
 \section{Static analysis}
 \label{static_analyses}
 
-The BCS language offers interesting capabilities in order to provide static analysis of given models. We define \emph{compatibility} operator $\lhd$ for each type of agents, which will help us to formulate properties suitable for static analysis.
+The BCS language offers interesting capabilities in order to provide static analysis of given models. We define \emph{compatibility} operator $\lhd$ for each type of agents, which will help us to formulate properties suitable for the static analysis.
 
 \begin{definition}{Compatibility of atomic agents}
 Let $\mathtt{A}_1$, $\mathtt{A}_2$ be atomic agents. The agent $\mathtt{A}_1$ is \emph{compatible with} agent $\mathtt{A}_2$, written $\mathtt{A}_1 \lhd \mathtt{A}_2$, if either $\mathtt{A}_1 \equiv \mathtt{A}_2$ or $\eta(\mathtt{A}_1) \equiv \eta(\mathtt{A}_2) \wedge \delta(\mathtt{A}_1) \equiv \varepsilon $.
@@ -1597,7 +1597,7 @@ Let $\mathtt{T}_1, \mathtt{T}_2$ be structure agents. The agent $\mathtt{T}_1$ i
 Structure agents are compatible if we are able to create pairs from atomic agents of composition of left-hand side agent with the right-hand side ones such that these atomic agents are all unique. For such pairs, the agents in each pair must be compatible.
 
 \begin{definition}{Compatibility of complex agents}
-Let $\mathtt{X}_1$, $\mathtt{X}_2$ be complex agents. The agent $\mathtt{X}_1$ is \emph{compatible with} agent $\mathtt{X}_2$, written $\mathtt{X}_1 \lhd \mathtt{X}_2$, \emph{iff} either $\mathtt{X}_1 \equiv \mathtt{X}_2$ or $\mathtt{com}(\mathtt{X}_1) \equiv \mathtt{com}(\mathtt{X}_2) \wedge \exists \mu' \in \sigma(\mu(\mathtt{X}_2))$ such that $ \forall i \in [1, n] : \pi_i(\mu(\mathtt{X}_1)) \lhd \pi_i(\mu') $, where $n$ is length of sequence which is the same for both sequences.
+Let $\mathtt{X}_1$, $\mathtt{X}_2$ be complex agents. The complex agent $\mathtt{X}_1$ is \emph{compatible with} complex agent $\mathtt{X}_2$, written $\mathtt{X}_1 \lhd \mathtt{X}_2$, \emph{iff} either $\mathtt{X}_1 \equiv \mathtt{X}_2$ or $\mathtt{com}(\mathtt{X}_1) \equiv \mathtt{com}(\mathtt{X}_2) \wedge \exists \mu' \in \sigma(\mu(\mathtt{X}_2))$ such that $ \forall i \in [1, n] : \pi_i(\mu(\mathtt{X}_1)) \lhd \pi_i(\mu') $, where $n$ is length of sequence which is the same for both sequences.
 \end{definition}
 
 Complex agents are compatible if there exists a permutation of sequence of the first agent such that individual agents on the same position in both sequences are compatible.
@@ -1783,7 +1783,7 @@ There might be cases when eliminating context of the given BCSL model preserves 
 
 \begin{definition}{Reduced model}
 \label{reduced_model}
-Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. We define \emph{reduced model} $\widetilde{\mathds{M}}$ as a pair $(\widetilde{\mathcal{R}}, \mathtt{I})$ where $\widetilde{\mathcal{R}}$ is set of rule expression and $\mathtt{I}$ is initial multiset of complex agent expressions where the following conditions hold:
+Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{init})$ be a BCSL model. We define \emph{reduced model} $\widetilde{\mathds{M}}$ as a pair $(\widetilde{\mathcal{R}}, \mathtt{I})$ where $\widetilde{\mathcal{R}}$ is set of rule expressions and $\mathtt{I}$ is initial multiset of complex agent expressions where the following conditions hold:
 
 \begin{enumerate}
 	\item for every well-formed rule $\mathtt{F}(\varrho') = (\chi', \omega', \iota', \varphi', \psi') \in \mathds{R}$ such that $\varrho' \in \widetilde{\mathcal{R}}$ and appropriate original rule $\mathtt{F}(\varrho) = (\chi, \omega, \iota, \varphi, \psi) \in \mathds{R}$ such that $\varrho \in \mathcal{R}$ holds:
@@ -1802,7 +1802,7 @@ Let $\mathds{M} = (\mathcal{R}, \Sigma_\mathtt{A}, \Sigma_\mathtt{T}, \mathtt{in
 \end{enumerate}
 \end{definition}
 
-Reduced model $\widetilde{\mathds{M}}$ is created form given BCSL model by reducing context of complexes in rules to maximum level. This is achieved by taking supremum from compatible set $\mathscr{X}$. This procedure might produce rules with no action, i.e. not well-formed rules -- such rules are omitted. Then, only rules creating/destroying agents and complex formation/dissociation should remain, providing reduced network. Since we are reducing context, the resulting network can be equal or smaller than the original one.
+Reduced model $\widetilde{\mathds{M}}$ is created form the given BCSL model by reducing context of complexes in rules to maximum level. This is achieved by taking supremum from compatible set $\mathscr{X}$. This procedure might produce rules with no action, i.e. not well-formed rules -- such rules are omitted. Then, only rules creating/destroying agents and complex formation/dissociation should remain, providing reduced network. Since we are reducing context, the resulting network can be equal or smaller than the original one.
 
 \begin{definition}{Compatibility of states}
 Let $\mathds{M}$ be a BCSL model and $\mathtt{s}_1, \mathtt{s}_2 \in S$ of $LTS(\mathds{M})$ two states from its LTS. The state $\mathtt{s}_1$ is \emph{compatible with} state $\mathtt{s}_2$, written $\mathtt{s}_1 \lhd \mathtt{s}_2$, \emph{iff} 
