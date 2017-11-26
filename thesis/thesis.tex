@@ -576,10 +576,7 @@ The Experiments repository is a module for storage and presentation of time-seri
 \chapter{Problem formulation}
 \label{problem_formulation}
 
-Biochemical Space as described in Section~\ref{bcs_general} can grow to enormous size. To be able to detect inconsistency with
-automatic tools and enable further analysis of the space it is necessary to keep it on formal level.
-
-%It means keep it consistent on an informal level is almost impossible. It is necessary to be able to detect inconsistency with automatic tools and enable further analysis of the space.
+Biochemical Space as described in Section~\ref{bcs_general} can grow to enormous size. To be able to detect inconsistency with automatic tools and enable further analysis of the space it is necessary to keep it on formal level.
 
 In our last paper~\cite{Ded201627}, we defined Biochemical Space Language (BCSL) such that syntax was defined independently, but semantics were defined via translating to Kappa language~\cite{kappa_formal}. We wanted to keep the language as concise as possible. The rule-based approach was the best choice, because it is capable to capture required details for biological systems while keeping the description concise. It was supposed to be \emph{human-readable}, which in this context means easy to read, write, and maintain by humans even from other disciplines than computer science. However, there are many rule-based languages, and each of them is slightly different on syntactic and semantic level and also on the level of abstraction. After a research (Section~\ref{rule_based_languages}), we have evaluated all existing languages as not suitable for our purposes. The closest representation to the desired one was Kappa language (Section~\ref{kappa}). That is the reason why in first version we have chosen translation to Kappa for definition of semantics.
 
@@ -614,8 +611,6 @@ The defined semantics is indirect, i.e. we do not give semantic sense to rules t
 \section{Formal preliminaries}
 
 Before we proceed, we provide some basic definitions and notations in order to build the formal definition for the language.
-
-%We define projection $\pi_i$ to enable iterating through multidimensional structures.
 
 \begin{definition}{Multiset}
 We define a \emph{multiset} $O$ as a pair $(A, \mathtt{m})$ where $A$ is some set and $ \mathtt{m} : A \rightarrow \mathbb{N} $ is a function from $A$ to the set of positive integers. The set $A$ is called the \emph{underlying set of elements}. For each $a$ in $A$ the \emph{multiplicity} (that is, number of occurrences) of a is the number $\mathtt{m}(a)$.
@@ -778,8 +773,6 @@ Let $\mathtt{T}$ be a structure agent. We denote by $\eta(\mathtt{T})$ its name 
 
 \begin{definition}{Equivalence of structure agents}
 Let $\mathtt{T}, \mathtt{T}'$ be structure agents. $\mathtt{T}$ is \emph{equivalent} to $\mathtt{T}'$, written $\mathtt{T} \equiv \mathtt{T}'$, \emph{iff} $\eta(\mathtt{T}) \equiv \eta(\mathtt{T}') \wedge \gamma(\mathtt{T}) \equiv \gamma(\mathtt{T'})$.
-
-%\forall \mathtt{A} \in \gamma(\mathtt{T}) ~\exists \mathtt{A}' \in \gamma(\mathtt{T}') : \mathtt{A} \equiv \mathtt{A}' \wedge \forall \mathtt{A}' \in \gamma(\mathtt{T}') ~\exists \mathtt{A} \in \gamma(\mathtt{T}) : \mathtt{A}' \equiv \mathtt{A}$.
 \end{definition}
 
 The key construct of a structure agent is \emph{partial composition} defined as a set of atomic agents which are considered to be relevant parts of the structure agent. We allow this set to be empty with the meaning of a biological structure for which we do not know its composition.
@@ -1666,13 +1659,9 @@ For every complex agent $\mathtt{X}$ there exists exactly one compatible set $\m
 Let us assume a complex agent $\mathtt{X}$ belongs to two compatible sets, namely $\mathtt{X} \in \mathscr{X}_1, \mathscr{X}_2$. From the Definition~\ref{compatible_set} condition~(\ref{compatible_cond}) follows that there exists a $\mathtt{X}_1 \in \mathscr{X}_1$ such that $\mathtt{X} \lhd \mathtt{X}_1$. 
 
 Then, the condition~(\ref{non_compatible_cond}) claims that no complex agent from $\mathscr{X}_1$ and no complex agent from $\mathscr{X}_2$ can be compatible. Namely, $\mathtt{X}_1 \in \mathscr{X}_1$ cannot be compatible with $\mathtt{X} \in \mathscr{X}_2$. However, $\mathtt{X}$ and $\mathtt{X}_1$ are compatible (namely $\mathtt{X} \lhd \mathtt{X}_1$). It follows $\mathtt{X} \not\in \mathscr{X}_2$, what is a contradiction. $\QEDA$
-
-% via identity?
 \end{proof}
 
 Practically, compatible sets can be used for static analysis on level of complexes~\ref{context_reduction} and for finding non-trivial relationships between the rules~\ref{rule_redundancy}.
-
-%\vspace*{0.5cm}\noindent\textbf{Note:} There always exists a compatible set $\mathscr{X}$ for a complex agent $\mathtt{X}$ which follows from Lemma~\ref{exists_one_comp_set}.
 
 Note that there always exists a compatible set $\mathscr{X}$ for a complex agent $\mathtt{X}$ which follows from Lemma~\ref{exists_one_comp_set}.
 
@@ -1686,9 +1675,6 @@ $ \mkern2mu\overline{\mkern-4.5mu \mathscr{X}} \subseteq \mathscr{X}: \forall \m
 
 where $\mathtt{X}' \neq \mathtt{X}''$.
 \end{definition}
-
-
-%\vspace*{0.5cm}\noindent\textbf{Note:} For any complex agent $\mathtt{X}$ there exists just one compatible subset. The reason follows from Lemma~\ref{exists_one_comp_set} and the definition of the subset.
 
 Note that for any complex agent $\mathtt{X}$ there exists just one compatible subset. The reason follows from Lemma~\ref{exists_one_comp_set} and the definition of the subset (Definition~\ref{compatible_subset}).
 
@@ -1967,7 +1953,7 @@ Entire biochemical space of cyanobacteria is formed from over 1000 entities and 
 
 The circadian clock of cyanobacteria~\cite{CCR} is formed by three proteins $KaiA$, $KaiB$, and $KaiC$ (with additional presence of $ATP$). The key role plays $KaiC$. Compared to the other two proteins, it is physically the largest one. Its primary structure is a sequence of amino acids, where two particular are important for the modelling -- threonine 432 and serine 431. These two amino acids can be enriched by phosphoryl group in process commonly known as phosphorylation~\cite{cohen2002origins}. However, the sites are accessible only when the protein forms a homohexamer -- a structure of six $KaiC$ proteins. For the phosphorylation $KaiA$ proteins are responsible while $KaiB$ proteins inactivate $KaiA$s, which leads to autodephosphorylation of $KaiC$ protein. There are several complexes which can be formed from mentioned proteins according to current situation with the $KaiC$ hexamer (Figure~\ref{phospho_rule}).
 
-It is important to note the $KaiA$ and $KaiB$ proteins only \emph{enhance} (resp. \emph{suppress}) the phosphorylation process, but do not enable/disable it completely. When it comes to quantitative description of the system, it is necessary to depict all possible actions. Particularly, we need to express the fact the phosphorylation process happens regardless the particular complex $KaiC$ protein is currently in. 
+It is important to note the $KaiA$ and $KaiB$ proteins only \emph{enhance} (resp. \emph{suppress}) the phosphorylation process, but do not enable (resp. disable) it completely. When it comes to quantitative description of the system, it is necessary to depict all possible actions. Particularly, we need to express the fact the phosphorylation process happens regardless the particular complex $KaiC$ protein is currently in. 
 
 \begin{figure}[!h]
 {\small
@@ -2006,7 +1992,7 @@ $ ps2(oec\{2+\}, yz\{+\})::tlm \Leftrightarrow ps2(oec\{3+\}, yz\{n\})::tlm $
 
 We want to demonstrate practical purposes of a few types of static analyses defined in Section~\ref{static_analyses}. Yamada et al. 2004~\cite{yamada2004model} is a model of \emph{fibroblast growth factor} (FGF) signalling pathway. The model represents a signalling pathway, which is typically a cascade of signal transduction. It means if something goes wrong on a particular point in the cascade, it will influence the rest of the pathway. Entire model written in BCSL syntax is provided in Appendix~\ref{yamada_complete}. It consists of 20 entities interacting in 56 rules. Most of proteins can undergo phosphorylation (state change from $u$ to $p$ on some amino acid residues). We consider initial conditions such that there are all required entities in one or two repetitions (some complexes require multiplicity). In such case, the number of reachable state grows up to $2^{72}$, which too high to be effectively enumerated.
 
-In Figure~\ref{fgf_fragment}, there is the model defined in BCSL syntax. Note this model is a fragment of the entire model. Focus on the rule~(\ref{focus_rule}). It requires both Threonine residues ($Thr$) on $FGF$ proteins to be phosphorylated ($p$). Basically, it is not possible to create a complex from $FRS$ and unphosphorylated ($u$) $FGF$ proteins.
+In Figure~\ref{fgf_fragment}, there is the model defined in BCSL syntax. Note this model is a fragment of the entire model. The rule~(\ref{focus_rule}) requires both threonine residues ($Thr$) on $FGF$ proteins to be phosphorylated ($p$). Basically, it is not possible to create a complex from $FRS$ and unphosphorylated ($u$) $FGF$ proteins.
 
 For example, we want to check whether a given complex agent {\small $FRS(Thr\{u\}, Tyr\{u\}).FGF(Thr\{u\}).R.FGF(Thr\{u\}).R::cyt$} is reachable for the given model. The agent is formed from $FGF$ proteins which are unphosphorylated ($u$) on threonine residues ($Thr$). In traditional approach, we have to enumerate entire state space of the model and then use dynamic model checking method to check it. In our case, we can use Theorem~\ref{static_reach} and check if it is non-reachable using static reachability analysis. It results to conclusion that there is no compatible agent on any right-hand side of the rules. It follows the complex agent is non-reachable.
 
@@ -2076,9 +2062,9 @@ $ERK::cyt + FRS::cyt $ & $ \Leftrightarrow $ & $ ERK.FRS::cyt$\\
 \chapter{Implementation}
 \label{implementation}
 
-In order to support usability of the BCSL language, we developed a prototype software tool BCSgen. The general goal of the tool is to provide environment suitable for editing and maintenance of the BCSL models and provide functionality to analyse the models. The software was developed in several iterations. At first as a project MUNI33/092015 in \emph{Dean's Program of the Faculty of Informatics MU for support of student research and development projects}, later as part of the project MUNI33/062017 in the same program. It was finalized to current stage in this thesis.
+In order to support usability of the BCSL language, we developed a prototype software tool BCSgen. The general goal of the tool is to provide environment suitable for editing and maintenance of the BCSL models and provide functionality to analyse the models. The software was developed in several iterations. At first as a project MUNI33/092015 in \emph{Dean's Program of the Faculty of Informatics MU for support of student research and development projects}, later as part of the project MUNI33/062017 in the same program. It was finalised to current stage in this thesis.
 
-The tool is developed in Python language (version 2.7) as open-source desktop software build under GPL-3.0 license. The source code, a short tutorial for usage and installation, and current stable version as binary files are available on GitHub\footnotemark[1]\footnotetext[1]{\url{https://github.com/sybila/BCSgen}}.
+The tool is developed in Python language (version 2.7) as open-source desktop software build under GPL-3.0 license. The source code, a short tutorial for usage and installation, and current stable version are available on GitHub\footnotemark[1]\footnotetext[1]{\url{https://github.com/sybila/BCSgen}}.
 
 In the first version, there was no support for editing the models. The only functionality provided by the tool was import of the model from a text file (in a predefined format) and enumerating entire state space of the model. The implementation was done by translating to Kappa and it was rather slow and non-efficient. The single transaction (application of one rule) was delayed by translation to Kappa and then by exact matching and replacement, which might get quite complicated. However, it was a good start for the language and it was possible to analyse exported networks in external tools. There was simple GUI made in Tkinter~\cite{Tkinter}, which had several issues. The most important one was the fact that Tkinter was not designed for multithreading programming. For example, while computing a state space for the model, the whole GUI was not responsible.
 
@@ -2093,7 +2079,7 @@ In the second version, we focused on speed improvement and development of a user
 
 In the last version, which is part of this thesis, we focused on improvement of models maintenance, additional analysis services, and visualisation. We have integrated editor which is able to highlight syntax errors while building the model (Figure~\ref{gui_example}). To achieve this, we needed an efficient rule-parser which would be able to parse the rules very fast. The parser is able to parse even syntactic extensions defined in Section~\ref{syntactic_extensions}. The rules engine then translates the rule to ground form and creates reactions (in case there are no errors in the model). Since this engine runs in the background, user does not notice any increased performance. When reactions are computed, it is indicated by possibility to export them and generate state space of the model.
 
-We implemented some dynamic analysis -- model simulation and reachability analysis. For the simulation, we allow stochastic or deterministic form (Figure~\ref{gui_simulation}). In the first form, random rules are fired according to Poisson distribution while in latter average trace is computed by solving ODEs build from the reactions. For the stochastic case, there are options to choose number of runs and apply interpolation on resulting time series chart in order to achieve smoother results. It is important to note that only models with defined rates can be simulated. For simplicity, approach where only fully specified agents are used.
+We implemented some dynamic analysis -- model simulation and reachability analysis. For the simulation, we allow stochastic or deterministic form (Figure~\ref{gui_simulation}). In the first form, random rules are fired according to Poisson distribution while in latter average trace is computed by solving ODEs build from the reactions. For the stochastic case, there are options to choose number of runs and apply interpolation on resulting time series chart in order to achieve smoother results. It is important to note that only models with defined rates can be simulated. For simplicity, approach with only fully specified agents is used.
 
 \begin{figure}[!h]
 \begin{center}
@@ -2115,38 +2101,13 @@ The MatPlotLib provides visualisation of simulation results. It possible to zoom
 \end{center}
 \end{figure}
 
-% \chapter{Discussion}
-
-% \subsubsection{The difference between BCS and BCSL}
-
-% It is important to realise the difference between Biochemical Space and Biochemical Space Language which we are about to define.
-
-% The general goal of BCS is to provide knowledge base for mathematical models. In order to achieve that, Biochemical Space is formed by a database of biochemical entities. This allows us to describe particular objects with their attributes and properties and form space hierarchy. Each entity should be properly annotated by description and links to suitable external databases. However, entities are not enough for describing models since it requires also process hierarchy. Therefore, alongside with space hierarchy of entities, process hierarchy is build via interactive schemes. The hierarchy allows us to zoom on individual rules which present atomic operations happening on the entities.
-
-% To improve usability and verifiability of the BCS, we define Biochemical Space Language. The language formally describes the entities and the rules. It has rule-based semantics, what allows compact description of the objects. Moreover, the syntax was designed in order to be very concise and human-readable. Hence it is very suitable for our needs.
-
-% The whole BCS is defined in BCSL. This fact makes sure the entities and the rules are defined with all appropriate properties. Moreover, it helps us to relate objects from the models to BCS objects. Note that due to rule-based nature of the BCSL, in BCS there are defined only abstract objects representing types. Therefore, when relating for example an model variable to BCS entity, we might need to specify its properties. 
-
-% \begin{figure}[!h]
-% \begin{center}
-%   \includegraphics[scale=0.13]{pics/bcsl_vs_bcs.pdf}
-% \end{center}
-% \caption{BCS domain serves for improved BCSL models definition, which leads to better model readability and results.}
-% \end{figure}
-
-% Once BCS is build, we can use it to reference the models. It means to relate all the variables and reactions of the model and to entities and rules of BCS. In particular, each variable should have assigned an entity for BCS. It increases information value of the variable (due to annotation of BCS entity). Since reactions of the model are composed from its variables, this way we also rewrite general reactions to reactions written in BCSL. The result of relating all the entities is model written in BCSL. 
-
-% Model defined in BCSL has two main advantages -- formal analysis can be applied on the model and the biological meaning of the whole model is fully reconstructed.
-
-% To sum it up, BCS serves as definition domain for models written in BCSL (so called signature). It defines what can and what cannot be written in models and also increases rule compactness due to syntactic extensions. For example, some context might be omitted from the rule because it can be reconstructed from the signature.
-
 \chapter{Conclusions}
 
 In the first part of this thesis, we have explained the background of the work. Particularly, we provided explanation of the principles of rule-based modelling using schematic examples. Several existing rule-based languages have been introduced with their key features. Comprehensive Modeling Platform as a framework for modelling biochemical processes has been described with all its important modules such as Model repository and Biochemical Space.
 
 In the second part, we have formally defined Biochemical Space Language as a description format for Biochemical Space. Together with very concise and \emph{human-readable} syntax we have defined operational semantics. An indirect approach has been chosen for practical purposes. Moreover, several syntactic extensions were defined to increase readability and maintenance of the language.
 
-In the third part, we have introduced analysing approaches which could be directly used on model defined using the language. Those include dynamic analyses such as model checking and simulation. We have also defined a few types of static analyses which can be use without enumerating entire behaviour of the model.
+In the third part, we have introduced analysing approaches which could be directly used on model defined using the language. Those include dynamic analyses such as model checking and simulation. We have also defined a few types of static analyses which can be used without enumerating entire behaviour of the model.
 
 The last part was dedicated for practical usage of the language and provided analysis formalisms. Namely, in the case study we have demonstrated how can be abstractions of the language used in particular modelling situations. We have also shown practical impact of defined static analyses on investigating behaviour of the model effectively. Finally, we have presented implementation of a software tool BCSgen, which was developed in order to provide support for maintenance and analysis of the models.
 
@@ -2154,7 +2115,7 @@ As a future work, we want to improve specification of kinetic rates for the BCSL
 
 The next goal for the future work is to make some of the static analyses more general. Particularly, some of non-reachability analyses were defined only for a single complex agent. We want to promote these analyses in order to be applied on sets (or multisets) of agents.
 
-Finally, as a future work for the tool BCSgen we are planning to reimplement it to a web-based version. It should be integrated in Comprehensive Modeling Platform (Section~\ref{cmp}) to allow direct analysis of the models and appropriate parts of Biochemical Space. 
+Finally, as a future work for the tool BCSgen we are planning to reimplement it to a web-based version. It should be integrated in Comprehensive Modeling Platform (Section~\ref{cmp}) to allow direct analysis of the models and appropriate parts of Biochemical Space.
 
 \bibliographystyle{citeStyle}
 {\small
@@ -2237,46 +2198,6 @@ $\mathtt{S}$ & a multiset of agents\\
 $\lambda(\mathtt{S}, \theta)$ & multiset to vector translation\\
 \end{tabular}
 \end{center}
-
-% \chapter{Discussion about rates and how they could be solved}
-% \label{rates_discussion}
-
-% In order to provide numerical simulation, we need to assign a reaction rate to each rule. However, this is quite a challenging task and we will briefly explain why.
-
-% The general problem is that typical kinetic rules in biology require usage of concentration of an agent in volume of the system. This is often solved via absolute numbers (the number of repetitions). The number might be either natural number of we are working with stochastic simulation or even real number if we compute average traces such as in deterministic simulation (make this more precise with citations!!!).
-
-% Compared to reaction-based models, we work with fully defined objects which we can simply reference in the kinetics without any limitations. We can do the very same in rule-based models, but it is not desired solution. The thing is we would like to express the context of the rule also in the kinetics. That typically means when context in which the rule is being applied changes, we want appropriate change in the kinetics. To make this more clear, we provide an example.
-
-% Example goes here...
-
-% There are several solutions of this problem. However, none of them is an optimal one and therefore this remains an open problem. In other languages... they solved it as... finish this...
-
-% Another general problem which causes issues is stoichiometry. The problem is if we reference an agent which has multiple enumerations in the rule, it is not clear which one should be used as reference in kinetics. Therefore we distinguish two types of solutions:
-
-% \textbf{Solutions with forbidden stoichiometry}:
-
-% \begin{enumerate}
-% \item unique agents
-
-% In this case, we allow arbitrary kinetics, but with a restriction. It is not allowed to use two identical agents in the same rule (including both sides of the rule). Moreover, in kinetics it is allowed to use only agents which are already used in the rule (in the very same form). This restriction decreases the expressiveness of the rules -- for example, it is not possible to define agents which are required but not consumed in the rule. However, mapping between agents in rule and kinetics are clear.
-
-% \item almost optimal solution
-
-% In order to make sure the agent from kinetics and rule are connected properly, we would have to extend the syntax of the language itself. For example, and agent might be enriched by `$\sim\mathbb{N}$' in both places. Then, the mapping would be unambiguous. However, such s syntax extension leads to decreases readability of the language, which definitely not desired solution. Optionally, the numbering of agents might be implicit, what does not change syntax of the language, but makes it harder to write w.r.t. language simplicity.
-
-% \end{enumerate}
-
-
-% \textbf{Solutions with allowed stoichiometry}:
-
-% \begin{enumerate}
-% \item we allow only \emph{mass action} kinetics
-
-% The positive thing about this kinetics is that all it needs is a given parameter. The rate is computed as multiple of the parameter with all agents on the left-hand side of the rule. Since the stoichiometry is allowed in this case, the mapping is not always clear. For this reason we multiply all possible mappings together, which gives appropriate results.
-
-% \item the first left agent
-
-% Arbitrary kinetics might be used, but both rule and kinetics must be defined very carefully. The method for mapping rate agent to rule agent is very simple -- whenever an agent is referenced in kinetics, first suitable rule-agent from the left is chosen. This solution is very simple to use, but rules are not that easy to write.
 
 \chapter{Model Yamada et al. 2004}
 \label{yamada_complete}
