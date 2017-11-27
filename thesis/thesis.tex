@@ -2167,17 +2167,17 @@ $\mathds{R}$ & universe of all possible rules\\
 $\mathtt{r}$ & reaction\\
 $LHS(\mathtt{r})$ & left-hand side of the reaction\\
 $RHS(\mathtt{r})$ & right-hand side of the reaction\\
-\hline 
-$\alpha$ & atomic expression\\
-$\tau$ & structure expression\\
-$\Gamma$ & complex expression\\
-$\varrho$ & rule expression\\
-$\beta$ & atomic or structure expression\\
 \end{tabular}
 \end{center}
 
 \begin{center}
 \begin{tabular}{c | l}
+$\alpha$ & atomic expression\\
+$\tau$ & structure expression\\
+$\Gamma$ & complex expression\\
+$\varrho$ & rule expression\\
+$\beta$ & atomic or structure expression\\
+\hline 
 $\mathds{M}$ & BCSL model\\
 $\mathcal{R}$ & set of rule expressions\\
 $\mathtt{init}$ & initial multiset of complex expressions\\
@@ -2204,13 +2204,14 @@ $\lambda(\mathtt{S}, \theta)$ & multiset to vector translation\\
 \label{yamada_complete}
 
 \begin{figure}[!h]
-{\tiny
+{\scriptsize
 \begin{center}
-\begin{tabular}{ r c l }
+\bgroup
+\def\arraystretch{1.5}%
+\begin{tabular}{ l c l }
 $FGF::cyt + R::cyt $ & $\Leftrightarrow$ & $ FGF.R::cyt$\\
 $2~ FGF.R::cyt $ & $\Leftrightarrow$ & $ FGF.R.FGF.R::cyt$\\
 $FGF(Thr\{u\}).R.FGF.R::cyt $ & $\Leftrightarrow$ & $ FGF(Thr\{p\}).R.FGF.R::cyt$\\
-$FRS(Thr\{u\})::cyt + FGF(Thr\{p\}).R.FGF(Thr\{p\}).R::cyt $ & $\Rightarrow$ & $ FGF(Thr\{p\}).R.FGF(Thr\{p\}).R.FRS(Thr\{u\})::cyt$\\
 $FRS(Thr\{u\}).FGF.R.FGF.R::cyt $ & $\Rightarrow$ & $ FRS(Thr\{p\}).FGF.R.FGF.R::cyt$\\
 $FRS(Thr\{p\}).FGF.R.FGF.R::cyt $ & $\Rightarrow$ & $ FRS(Thr\{p\})::cyt + FGF.R.FGF.R::cyt$\\
 $FRS(Thr\{p\})::cyt + SHP::cyt $ & $\Rightarrow$ & $ SHP.FRS(Thr\{p\})::cyt$\\
@@ -2223,7 +2224,6 @@ $GS(Thr\{u\})::cyt + ERK(Tyr\{p\},Thr\{p\})::cyt $ & $\Rightarrow$ & $ ERK(Tyr\{
 $GS(Thr\{u\}).ERK::cyt $ & $\Rightarrow$ & $ GS(Thr\{p\}).ERK::cyt$\\
 $GS(Thr\{p\}).ERK::cyt $ & $\Rightarrow$ & $ GS(Thr\{p\})::cyt + ERK::cyt$\\
 $FRS(Thr\{p\},Tyr\{u\})::cyt + GS(Thr\{u\})::cyt $ & $\Leftrightarrow$ & $ FRS(Thr\{p\},Tyr\{u\}).GS(Thr\{u\})::cyt$\\
-$Ras(Thr\{u\})::cyt + FRS(Thr\{p\},Tyr\{u\}).GS(Thr\{u\})::cyt $ & $\Rightarrow$ & $ FRS(Thr\{p\},Tyr\{u\}).GS(Thr\{u\}).Ras(Thr\{u\})::cyt$\\
 $Ras(Thr\{u\}).FRS.GS::cyt $ & $\Rightarrow$ & $ Ras(Thr\{p\}).FRS.GS::cyt$\\
 $Ras(Thr\{p\}).FRS.GS::cyt $ & $\Rightarrow$ & $ Ras(Thr\{p\})::cyt + FRS.GS::cyt$\\
 $Ras(Thr\{p\})::cyt + GAP::cyt $ & $\Rightarrow$ & $ GAP.Ras(Thr\{p\})::cyt$\\
@@ -2241,6 +2241,20 @@ $MEK(Ser212\{p\}).Raf::cyt $ & $\Rightarrow$ & $ MEK(Ser212\{p\})::cyt + Raf::cy
 $MEK(Ser298\{u\})::cyt + Raf(Thr\{p\})::cyt $ & $\Rightarrow$ & $ Raf(Thr\{p\}).MEK(Ser298\{u\})::cyt$\\
 $MEK(Ser298\{u\}).Raf::cyt $ & $\Rightarrow$ & $ MEK(Ser298\{p\}).Raf::cyt$\\
 $MEK(Ser298\{p\}).Raf::cyt $ & $\Rightarrow$ & $ MEK(Ser298\{p\})::cyt + Raf::cyt$\\
+\end{tabular}
+\egroup
+\end{center}
+}
+\end{figure}
+
+\begin{figure}[!h]
+{\scriptsize
+\begin{center}
+\bgroup
+\def\arraystretch{1.5}%
+\begin{tabular}{ l c l }
+$Ras(Thr\{u\})::cyt + FRS(Thr\{p\},Tyr\{u\}).GS(Thr\{u\})::cyt $ & $\Rightarrow$ & $ FRS(Thr\{p\},Tyr\{u\}).GS(Thr\{u\}).Ras(Thr\{u\})::cyt$\\
+$FRS(Thr\{u\})::cyt + FGF(Thr\{p\}).R.FGF(Thr\{p\}).R::cyt $ & $\Rightarrow$ & $ FGF(Thr\{p\}).R.FGF(Thr\{p\}).R.FRS(Thr\{u\})::cyt$\\
 $MEK(Ser212\{p\})::cyt + XPP::cyt $ & $\Rightarrow$ & $ XPP.MEK(Ser212\{p\})::cyt$\\
 $MEK(Ser212\{p\}).XPP::cyt $ & $\Rightarrow$ & $ MEK(Ser212\{u\}).XPP::cyt$\\
 $MEK(Ser212\{u\}).XPP::cyt $ & $\Rightarrow$ & $ MEK(Ser212\{u\})::cyt + XPP::cyt$\\
@@ -2264,6 +2278,7 @@ $FRS(Tyr\{u\}).ERK::cyt $ & $\Rightarrow$ & $ FRS(Thr\{u\},Tyr\{p\}).ERK::cyt$\\
 $FRS(Thr\{u\},Tyr\{p\}).ERK::cyt $ & $\Rightarrow$ & $ FRS(Thr\{u\},Tyr\{p\})::cyt + ERK::cyt$\\
 $FRS(Tyr\{p\})::cyt $ & $\Rightarrow$ & $ FRS(Tyr\{u\})::cyt$\\
 \end{tabular}
+\egroup
 \end{center}
 }
 \caption{A complete model Yamada 2004~\cite{yamada2004model} of FGF signalling pathway written in BCSL. It consists of 20 entities interacting in 56 rules. To have this model complete, initial state has to be defined -- particularly, all entities have their subparts in unphosphorylated state and each of them is present once but $FGF$ and $R$ are present in two repetitions.}
