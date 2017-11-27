@@ -30,6 +30,7 @@
 \usepackage{bbm}
 \usepackage{braket}
 \usepackage{mathrsfs}
+\usepackage[titletoc,toc,page]{appendix}
 
 \newcounter{counter}[section]
 \renewcommand{\thecounter}{\thesection.\arabic{counter}}
@@ -2122,7 +2123,7 @@ Finally, as a future work for the tool BCSgen we are planning to reimplement it 
 \bibliography{papers}
 }
 
-\appendix
+\begin{appendices}
 
 \chapter{List of used notation}
 
@@ -2267,5 +2268,7 @@ $FRS(Tyr\{p\})::cyt $ & $\Rightarrow$ & $ FRS(Tyr\{u\})::cyt$\\
 }
 \caption{A complete model Yamada 2004~\cite{yamada2004model} of FGF signalling pathway written in BCSL. It consists of 20 entities interacting in 56 rules. To have this model complete, initial state has to be defined -- particularly, all entities have their subparts in unphosphorylated state and each of them is present once but $FGF$ and $R$ are present in two repetitions.}
 \end{figure}
+
+\end{appendices}
 
 \end{document}
