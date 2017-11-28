@@ -2208,7 +2208,7 @@ $\lambda(\mathtt{S}, \theta)$ & multiset to vector translation\\
 \begin{center}
 \bgroup
 \def\arraystretch{1.5}%
-\begin{tabular}{ l c l }
+\begin{tabular}{ r c l }
 $FGF::cyt + R::cyt $ & $\Leftrightarrow$ & $ FGF.R::cyt$\\
 $2~ FGF.R::cyt $ & $\Leftrightarrow$ & $ FGF.R.FGF.R::cyt$\\
 $FGF(Thr\{u\}).R.FGF.R::cyt $ & $\Leftrightarrow$ & $ FGF(Thr\{p\}).R.FGF.R::cyt$\\
@@ -2252,19 +2252,16 @@ $MEK(Ser298\{p\}).Raf::cyt $ & $\Rightarrow$ & $ MEK(Ser298\{p\})::cyt + Raf::cy
 \begin{center}
 \bgroup
 \def\arraystretch{1.5}%
-\begin{tabular}{ l c l }
-$Ras(Thr\{u\})::cyt + FRS(Thr\{p\},Tyr\{u\}).GS(Thr\{u\})::cyt $ & $\Rightarrow$ & $ FRS(Thr\{p\},Tyr\{u\}).GS(Thr\{u\}).Ras(Thr\{u\})::cyt$\\
-$FRS(Thr\{u\})::cyt + FGF(Thr\{p\}).R.FGF(Thr\{p\}).R::cyt $ & $\Rightarrow$ & $ FGF(Thr\{p\}).R.FGF(Thr\{p\}).R.FRS(Thr\{u\})::cyt$\\
+\begin{tabular}{ r c l }
 $MEK(Ser212\{p\})::cyt + XPP::cyt $ & $\Rightarrow$ & $ XPP.MEK(Ser212\{p\})::cyt$\\
 $MEK(Ser212\{p\}).XPP::cyt $ & $\Rightarrow$ & $ MEK(Ser212\{u\}).XPP::cyt$\\
 $MEK(Ser212\{u\}).XPP::cyt $ & $\Rightarrow$ & $ MEK(Ser212\{u\})::cyt + XPP::cyt$\\
 $MEK(Ser298\{p\})::cyt + XPP::cyt $ & $\Rightarrow$ & $ XPP.MEK(Ser298\{p\})::cyt$\\
 $MEK(Ser298\{p\}).XPP::cyt $ & $\Rightarrow$ & $ MEK(Ser298\{u\}).XPP::cyt$\\
 $MEK(Ser298\{u\}).XPP::cyt $ & $\Rightarrow$ & $ MEK(Ser298\{u\})::cyt + XPP::cyt$\\
-$ERK(Thr\{u\})::cyt + MEK(Ser212\{p\},Ser298\{p\})::cyt $ & $\Rightarrow$ & $ MEK(Ser212\{p\},Ser298\{p\}).ERK(Thr\{u\})::cyt$\\
+
 $ERK(Thr\{u\}).MEK::cyt $ & $\Rightarrow$ & $ ERK(Thr\{p\}).MEK::cyt$\\
 $ERK(Thr\{p\}).MEK::cyt $ & $\Rightarrow$ & $ ERK(Thr\{p\})::cyt + MEK::cyt$\\
-$ERK(Tyr\{u\})::cyt + MEK(Ser212\{p\},Ser298\{p\})::cyt $ & $\Rightarrow$ & $ MEK(Ser212\{p\},Ser298\{p\}).ERK(Tyr\{u\})::cyt$\\
 $ERK(Tyr\{u\}).MEK::cyt $ & $\Rightarrow$ & $ ERK(Tyr\{p\}).MEK::cyt$\\
 $ERK(Tyr\{p\}).MEK::cyt $ & $\Rightarrow$ & $ ERK(Tyr\{p\})::cyt + MEK::cyt$\\
 $ERK(Thr\{p\})::cyt + MKP::cyt $ & $\Rightarrow$ & $ MKP.ERK(Thr\{p\})::cyt$\\
@@ -2273,10 +2270,20 @@ $ERK(Thr\{u\}).MKP::cyt $ & $\Rightarrow$ & $ ERK(Thr\{u\})::cyt + MKP::cyt$\\
 $ERK(Tyr\{p\})::cyt + MKP::cyt $ & $\Rightarrow$ & $ MKP.ERK(Tyr\{p\})::cyt$\\
 $ERK(Tyr\{p\}).MKP::cyt $ & $\Rightarrow$ & $ ERK(Tyr\{u\}).MKP::cyt$\\
 $ERK(Tyr\{u\}).MKP::cyt $ & $\Rightarrow$ & $ ERK(Tyr\{u\})::cyt + MKP::cyt$\\
-$FRS(Tyr\{u\})::cyt + ERK(Tyr\{p\},Thr\{p\})::cyt $ & $\Rightarrow$ & $ ERK(Tyr\{p\},Thr\{p\}).FRS(Tyr\{u\})::cyt$\\
 $FRS(Tyr\{u\}).ERK::cyt $ & $\Rightarrow$ & $ FRS(Thr\{u\},Tyr\{p\}).ERK::cyt$\\
 $FRS(Thr\{u\},Tyr\{p\}).ERK::cyt $ & $\Rightarrow$ & $ FRS(Thr\{u\},Tyr\{p\})::cyt + ERK::cyt$\\
 $FRS(Tyr\{p\})::cyt $ & $\Rightarrow$ & $ FRS(Tyr\{u\})::cyt$\\
+
+$ERK(Thr\{u\})::cyt$ & + & $MEK(Ser212\{p\},Ser298\{p\})::cyt ~~\Rightarrow$\\
+ & $\Rightarrow$ & $ MEK(Ser212\{p\},Ser298\{p\}).ERK(Thr\{u\})::cyt$\\
+$Ras(Thr\{u\})::cyt$ & + & $FRS(Thr\{p\},Tyr\{u\}).GS(Thr\{u\})::cyt ~~\Rightarrow$\\
+ & $\Rightarrow$ & $ FRS(Thr\{p\},Tyr\{u\}).GS(Thr\{u\}).Ras(Thr\{u\})::cyt$\\
+$FRS(Thr\{u\})::cyt$ & + & $FGF(Thr\{p\}).R.FGF(Thr\{p\}).R::cyt ~~\Rightarrow$\\
+ & $\Rightarrow$ & $ FGF(Thr\{p\}).R.FGF(Thr\{p\}).R.FRS(Thr\{u\})::cyt$\\
+ $ERK(Tyr\{u\})::cyt$ & + & $MEK(Ser212\{p\},Ser298\{p\})::cyt ~~\Rightarrow$\\
+ & $\Rightarrow$ & $ MEK(Ser212\{p\},Ser298\{p\}).ERK(Tyr\{u\})::cyt$\\
+ $FRS(Tyr\{u\})::cyt$ & + & $ERK(Tyr\{p\},Thr\{p\})::cyt ~~\Rightarrow$\\
+  & $\Rightarrow$ & $ ERK(Tyr\{p\},Thr\{p\}).FRS(Tyr\{u\})::cyt$\\
 \end{tabular}
 \egroup
 \end{center}
