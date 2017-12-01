@@ -133,13 +133,13 @@ supporting me over the years. You have set an example of excellence as a mentor 
 \end{ThesisThanks}
 
 \begin{ThesisAbstract}
-In this thesis, we define a formal rule-based language suitable for description and analysis of biological systems as a formal part of Biochemical Space. Biochemical Space is a semi-formal notation for reaction networks of biological systems. It is developed as a part of Comprehensive Modeling Platform -- a web-based platform for modelling and analysis of biological processes. It provides a concise mapping of mathematical models to their biological description established at a desired level of abstraction. It is enabled by combining state-of-the-art rule-based techniques with meta-data formats developed in well-known annotation databases.
+In this thesis, we define a formal rule-based language suitable for description and analysis of biological systems as a formal part of Biochemical Space. Biochemical Space is a semi-formal notation for reaction networks of biological systems. It is developed as a part of Comprehensive Modelling Platform -- a web-based platform for modelling and analysis of biological processes. It provides a concise mapping of mathematical models to their biological description established at a desired level of abstraction. It is enabled by combining state-of-the-art rule-based techniques with meta-data formats developed in well-known annotation databases.
 \end{ThesisAbstract}
 
 % ---------------------------------------------------------
 % abstract in slovak
 
-% V tejto práci definujeme formálny modelovací jazyk založený na pravidlách ako formálnu časť Biochemického priestoru. Biochemický priestor je formát slúžiaci na popis reakčných sieti biologických procesov. Skladá sa z formálnej časti pre popis a neformálnej časti pre anotáciu dát. Biochemický priestor je vyvíjaný ako súčasť webovej platformy Comprehensive Modeling Platform slúžiacej na modelovanie a analýzu biologických systémov. Umožňuje vymedziť vzťah matemetických modelov voči ich biologickému významu na určitej úrovni abstrakcie. 
+% V tejto práci definujeme formálny modelovací jazyk založený na pravidlách ako formálnu časť Biochemického priestoru. Biochemický priestor je formát slúžiaci na popis reakčných sieti biologických procesov. Skladá sa z formálnej časti pre popis a neformálnej časti pre anotáciu dát. Biochemický priestor je vyvíjaný ako súčasť webovej platformy Comprehensive Modelling Platform slúžiacej na modelovanie a analýzu biologických systémov. Umožňuje vymedziť vzťah matemetických modelov voči ich biologickému významu na určitej úrovni abstrakcie. 
 % ---------------------------------------------------------
 
 \begin{ThesisKeyWords}
@@ -155,16 +155,16 @@ Modelling in computational systems biology often comprises studying a complex bi
 
 Rule-based modelling approaches describe biological interactions in terms of rules, avoiding the combinatorial explosion of underlying system. Rules are patterns which define how groups of species with some common properties behave in the given system. The rule-based model can be translated into a model such as Markov chains or differential equations, alternatively analysed in its original form. Rule-based modelling is especially effective in cases when the model contains a limited number of patterns. Typical representatives of such cases are biochemical models of living organisms.
 
-In this thesis we focus on development of a novel rule-based language called Biochemical Space language. The motivation was to establish a rule-based \emph{human-readable} language which is easy to read, write, and maintain by people even from other disciplines than computer science. It serves as description format for Biochemical Space~\cite{BCS}, a core part of Comprehensive Modeling Platform~\cite{cs2bio2013}. Since the language is used for specification of biochemical species and interactions within the platform, its dedicated purpose is to be directly presentable to the users.
+In this thesis we focus on development of a novel rule-based language called Biochemical Space language. The motivation was to establish a rule-based \emph{human-readable} language which is easy to read, write, and maintain by people even from other disciplines than computer science. It serves as description format for Biochemical Space~\cite{BCS}, a core part of Comprehensive Modelling Platform~\cite{cs2bio2013}. Since the language is used for specification of biochemical species and interactions within the platform, its dedicated purpose is to be directly presentable to the users.
 
 The goal of this thesis is to formally define syntax and semantics of Biochemical Space language and provide techniques to analyse models written in the language. 
 
-In Chapter~\ref{background} we provide an introduction to rule-based modelling, describe differences between the rule-based and the traditional approaches, reveal key features of existing rule-based formalisms, and explain purpose of Comprehensive Modeling Platform and its parts. In Chapter~\ref{problem_formulation} we specify particular tasks of this thesis in the context of preliminary work. In Chapter~\ref{formal_definition} we define syntax and semantics of Biochemical Space language and specify several syntactic extensions, which improve readability of the language. Chapter~\ref{analysis} provides brief description of dynamic analysis techniques and propose a few types of static analyses. Chapter~\ref{case_study} shows usability of the language on several case studies and then demonstrate usability of proposed static analyses in practice. In final Chapter~\ref{implementation} we explain history of development of BCSgen, a software tool to support the usage of the language. 
+In Chapter~\ref{background} we provide an introduction to rule-based modelling, describe differences between the rule-based and the traditional approaches, reveal key features of existing rule-based formalisms, and explain purpose of Comprehensive Modelling Platform and its parts. In Chapter~\ref{problem_formulation} we specify particular tasks of this thesis in the context of preliminary work. In Chapter~\ref{formal_definition} we define syntax and semantics of Biochemical Space language and specify several syntactic extensions, which improve readability of the language. Chapter~\ref{analysis} provides brief description of traditional dynamic analysis techniques and introduces several new static analysis techniques. Chapter~\ref{case_study} shows usability of the language on several case studies and then demonstrate usability of proposed static analyses in practice. In final Chapter~\ref{implementation} we describe development of BCSgen, a software tool to support the usage of the language. 
 
 \chapter{Background}
 \label{background}
 
-In this chapter, we introduce all relevant terms which will be used in the thesis. We give an introduction to the rule-based modelling and compare it to the usual reaction-based approach. Then we describe typical representatives of the rule-based languages and highlight their key features. We also introduce Comprehensive Modeling Platform with its core parts and provide motivation for Biochemical Space as a core module of the platform.
+In this chapter, we introduce all relevant terms which will be used in the thesis. We give an introduction to the rule-based modelling and compare it to the usual reaction-based approach. Then we describe typical representatives of the rule-based languages and highlight their key features. We also introduce Comprehensive Modelling Platform with its core parts and provide motivation for Biochemical Space as a core module of the platform.
 
 \section{Rule-based modelling}
 \label{Rule-based basics}
@@ -404,10 +404,10 @@ Rule(L(s=None) + R(s=None) <> L(s=1) % R(s=1), kf, kr)
 
 Systems Biology Markup Language (SBML)~\cite{hucka2003systems} is a standard established for systems biology. A SBML-multi package~\cite{zhang2015sbml} is able to describe all the necessary rule-based features and therefore it is possible to export each model in a rule-based language in this format. It is the most suitable format for exchange and storage of the models but less for analysis and direct representation to the users (it is an XML format). It serves as an intermediate language.
 
-\section{Comprehensive Modeling Platform}
+\section{Comprehensive Modelling Platform}
 \label{cmp}
 
-Comprehensive Modeling Platform (CMP)~\cite{cs2bio2013} is an online platform providing tools for public sharing, annotation, analysis, and visualisation of dynamical models and \emph{wet-lab} experiments related to domain-specific systems. The platform is unique in integrating abstract mathematical models with a precise consortium-agreed biochemical description provided in a rule-based formalism. The general aim is to stimulate collaboration between experimental and computational systems biologists to achieve better understanding of the domain-specific system.
+Comprehensive Modelling Platform (CMP)~\cite{cs2bio2013} is an online platform providing tools for public sharing, annotation, analysis, and visualisation of dynamical models and \emph{wet-lab} experiments related to domain-specific systems. The platform is unique in integrating abstract mathematical models with a precise consortium-agreed biochemical description provided in a rule-based formalism. The general aim is to stimulate collaboration between experimental and computational systems biologists to achieve better understanding of the domain-specific system.
 
 \begin{figure}[!h]
 \begin{center}
@@ -456,7 +456,7 @@ Comprehensive Modeling Platform (CMP)~\cite{cs2bio2013} is an online platform pr
 \draw[thick, dashed, draw=graybright, fill=graybright] (-4.5, 25) -- (7.5, 25);
 \end{tikzpicture}
 \end{center}
-\caption{An overview of Comprehensive Modeling Platform. It is composed of three layers: (1) input to the platform, all the relevant data; (2) Biochemical Space as an intermediate format for the data; (3) output of the platform, results of analysis and visualisation.}\label{cmp_overview}
+\caption{An overview of Comprehensive Modelling Platform. It is composed of three layers: (1) input to the platform, all the relevant data; (2) Biochemical Space as an intermediate format for the data; (3) output of the platform, results of analysis and visualisation.}\label{cmp_overview}
 \end{figure}
 
 \subsection{Biochemical Space}
@@ -579,13 +579,13 @@ The Experiments repository is a module for storage and presentation of time-seri
 
 Biochemical Space as described in Section~\ref{bcs_general} can grow to enormous size. To be able to detect inconsistency with automatic tools and enable further analysis of the space it is necessary to keep it on formal level.
 
-In our last paper~\cite{Ded201627}, we defined Biochemical Space Language (BCSL) such that syntax was defined independently, but semantics were defined via translating to Kappa language~\cite{kappa_formal}. We wanted to keep the language as concise as possible. The rule-based approach was the best choice, because it is capable to capture required details for biological systems while keeping the description concise. It was supposed to be \emph{human-readable}, which in this context means easy to read, write, and maintain by humans even from other disciplines than computer science. However, there are many rule-based languages, and each of them is slightly different on syntactic and semantic level and also on the level of abstraction. After a research (Section~\ref{rule_based_languages}), we have evaluated all existing languages as not suitable for our purposes. The closest representation to the desired one was Kappa language (Section~\ref{kappa}). That is the reason why in first version we have chosen translation to Kappa for definition of semantics.
+In our last paper~\cite{Ded201627}, we have defined Biochemical Space Language (BCSL) such that syntax has been defined independently, but semantics has been defined via translating to Kappa language~\cite{kappa_formal}. We wanted to keep the language as concise as possible. The rule-based approach was the best choice, because it was capable to capture required details for biological systems while keeping the description concise. It was supposed to be \emph{human-readable}, which in this context means easy to read, write, and maintain by humans even from other disciplines than computer science. However, there are many rule-based languages, and each of them is slightly different on syntactic and semantic level and also on the level of abstraction. After a research (Section~\ref{rule_based_languages}), we have evaluated all existing languages as not suitable for our purposes. The closest representation to the desired one was Kappa language (Section~\ref{kappa}). That is the reason why in first version we have chosen translation to Kappa for definition of semantics.
 
 However, this approach is not very beneficial since we are not fully using the expressive power of our language. The problem is Kappa operates purely on level of expressions. We want to promote our language to a higher level when it operates on objects in multisets. By translating to Kappa we loose such abstraction. 
 
 In the previous version of language development, both definition and implementation were made via translation to Kappa. It particularly means there was defined a translation function, which was able to convert BCSL expressions to Kappa expressions. The huge advantage was that the conversion was quite straightforward and this way we could apply all types of analyses Kappa language offers.
 
-The indirect approach had several disadvantages. Kappa has only one type of agent (no hierarchy). It follows all additional information encoded in different agent types are lost during the conversion. This particularly means atomic agents had to be considered as binding sites and structure agents as Kappa agents. But it was not always suitable, especially when atomic agents had an independent role in a rule. Complex treatment in Kappa requires explicit bonds between individual agents. Therefore, when translating our multiset-based complex agent to Kappa complex, we need to choose one of many possible isomorphisms (Figure~\ref{abstraction_comparision}, the biology corresponds to Kappa approach). Multiple default options are available, such as circular layout, linear layout etc. But it was not possible to express the fact that order does not matter.
+The indirect approach had several disadvantages. Kappa has only one type of agent (no hierarchy). It follows all additional information encoded in different agent types are lost during the conversion. This particularly means atomic agents had to be considered as binding sites and structure agents as Kappa agents. But it was not always suitable, especially when atomic agents had an independent role in a rule. Complex treatment in Kappa requires explicit bonds between individual agents. Therefore, when translating our multiset-based complex agent to Kappa complex, we need to choose one of many possible isomorphisms (Figure~\ref{abstraction_comparision}, the left-hand side of the figure corresponds to Kappa approach). Multiple default options are available, such as circular layout, linear layout etc. But it was not possible to express the fact that order does not matter.
 
 \begin{figure}[!h]
 \begin{center}
@@ -596,7 +596,7 @@ The indirect approach had several disadvantages. Kappa has only one type of agen
 
 From the implementation point of view, executing models was delayed by the conversion to Kappa and then calling Kappa core to execute its semantics. Moreover, Kappa uses network-free simulator, which is very efficient for small models, because the rules are executed directly. Each rule is being matched on current state and then matched objects are replaced according to the rule. The problem is when the model is more complex. The number of rules does not cause any significant difference, however the number of interacting agents does. Once there are many agents, the time of one \emph{match \& replace} step rises dramatically. Compared to indirect methods when at first the reaction network is enumerated, the initial step can be resources consuming, but then the rule application itself is fast regardless the number of agents.
 
-For the reasons mentioned above we decided to redefine the BCSL language. Particularly, the syntax definition had to be refined in order to make the usability more clear. From semantic point of view, we needed a straightforward definition, which would have practical use in implementation. Experience from previous versions showed that using direct rule-based semantics were not very efficient mechanisms. For that reason, we have chosen an indirect definition via translation to reactions -- \emph{practical} definition (Section~\ref{formal_definition}). The practical part means that this approach can be efficiently used in implementation.
+For the reasons mentioned above we decided to redefine the BCSL language. Particularly, the syntax definition had to be refined in order to make the usability more clear. From semantic point of view, we needed a straightforward definition, which would have practical use in implementation. Experience from previous versions showed that using direct rule-based semantics were not very efficient mechanisms. For that reason, we have chosen an indirect definition via translation to reactions -- \emph{practical} definition (Section~\ref{formal_definition}). The practical in this case means that this approach can be efficiently used in implementation.
 
 In Section~\ref{bcs_general}, we have motivated the level of abstraction we need to use in BCS. To achieve that, we decided to neglect structural details, i.e. we do not employ binding approach. We consider binding as too low level of details. Instead, we improved definition of interacting agents to higher level, when an agent might expresses some kind of structural description (Figure~\ref{abstraction_comparision}). This way we avoid complicated creation of complexes and reduce complicated syntax.
 
@@ -611,7 +611,7 @@ The defined semantics is indirect, i.e. we do not give semantic sense to rules t
 
 \section{Formal preliminaries}
 
-Before we proceed, we provide some basic definitions and notations in order to build the formal definition for the language.
+Before we proceed, we provide some basic definitions and notations in order to build the formal definition for the language. Note we usually use the colon to denote the condition in a logic formula.
 
 \begin{definition}{Multiset}
 We define a \emph{multiset} $O$ as a pair $(A, \mathtt{m})$ where $A$ is some set and $ \mathtt{m} : A \rightarrow \mathbb{N} $ is a function from $A$ to the set of positive integers. The set $A$ is called the \emph{underlying set of elements}. For each $a$ in $A$ the \emph{multiplicity} (that is, number of occurrences) of a is the number $\mathtt{m}(a)$.
@@ -998,7 +998,7 @@ We need to define difference of partial compositions of structure agents $\gamma
 Let $\gamma, \gamma'$ be two partial compositions. We define \emph{difference of partial compositions} as follows:
 
 \begin{center}
-$\gamma \ominus \gamma' \myeq \{ \eta_\alpha ~|~ \exists \mathtt{A}: (\mathtt{A} \in \gamma \wedge \eta(\mathtt{A}) \equiv \eta_\alpha ) \wedge \not\exists \mathtt{A}': (\mathtt{A}' \in \gamma' \wedge \eta(\mathtt{A}') \equiv \eta_\alpha)\}$
+$\gamma \ominus \gamma' \myeq \{ \eta_\alpha ~|~ \exists \mathtt{A}~ (\mathtt{A} \in \gamma \wedge \eta(\mathtt{A}) \equiv \eta_\alpha ) \wedge \not\exists \mathtt{A}'~ (\mathtt{A}' \in \gamma' \wedge \eta(\mathtt{A}') \equiv \eta_\alpha)\}$
 \end{center}
 \end{definition}
 
@@ -1009,7 +1009,7 @@ Similarly as in previous definition, we need to be able to find difference in co
 Let $\mathtt{T}$ be a structure agent, $\eta$ its name, and $\Sigma_T(\mathtt{T})$ appropriate signature. We define \emph{difference of partial composition} $\gamma(\mathtt{T})$ \emph{and structure signature} $\Sigma_T(\mathtt{T})$ as follows:
 
 \begin{center}
-$\Sigma_T(\mathtt{\eta}) \ominus \gamma(\mathtt{T}) \myeq \{ \eta_\Sigma ~|~ \eta_\Sigma \in \Sigma_T(\mathtt{\eta}) \wedge \not\exists \mathtt{A}: (\mathtt{A} \in \gamma(\mathtt{T}) \wedge \eta(\mathtt{A}) \equiv \eta_\Sigma)\}$
+$\Sigma_T(\mathtt{\eta}) \ominus \gamma(\mathtt{T}) \myeq \{ \eta_\Sigma ~|~ \eta_\Sigma \in \Sigma_T(\mathtt{\eta}) \wedge \not\exists \mathtt{A}~ (\mathtt{A} \in \gamma(\mathtt{T}) \wedge \eta(\mathtt{A}) \equiv \eta_\Sigma)\}$
 \end{center}
 \end{definition}
 
@@ -1039,7 +1039,7 @@ $\mathtt{F} \llbracket ~\alpha_1~.~\ldots~.~\alpha_n :: c~ \rrbracket$ & = &
 $\big(~(\mathtt{F} \llbracket ~\alpha_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\alpha_n~ \rrbracket), ~c \big) \in \mathds{X}$\\
  & & \\
 $\mathtt{F} \llbracket ~\Gamma_1 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \ldots + \Gamma_m~ \rrbracket$ & = &
-$(\chi, \omega, \iota, \varphi, \psi) \in \mathds{R}$ :\\
+$(\chi, \omega, \iota, \varphi, \psi) \in \mathds{R}$ such that\\
 \end{tabular}
 \end{center}
 
@@ -1048,7 +1048,7 @@ $(\chi, \omega, \iota, \varphi, \psi) \in \mathds{R}$ :\\
 \item $\chi = \big(\mathtt{F} \llbracket ~\Gamma_1~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_n~ \rrbracket, \mathtt{F} \llbracket ~\Gamma_{n+1}~ \rrbracket, \ldots, \mathtt{F} \llbracket ~\Gamma_m~ \rrbracket \big)$,
 \item $\omega = \mdoubleplus_{i=1}^{|\chi|} \mu(\pi_i(\chi))$,
 \item $\iota = n$,
-\item $\varphi = (J_1, \ldots, J_m): J_k = \sum\limits_{i=1}^{k} | \mu(\pi_i(\chi)) |$,
+\item $\varphi = (J_1, \ldots, J_m)$ ~where~ $J_k = \sum\limits_{i=1}^{k} | \mu(\pi_i(\chi)) |$,
 
 \item \begin{tabular}{l l}
 & \hspace*{-0.3cm}{\small $\{~ (i,j) ~|~ i \in [1, \pi_\iota(\varphi)] \wedge j \in [\pi_{\iota}(\varphi) + 1, |\omega|] \wedge |i-j| \equiv \pi_\iota(\varphi)~\} ~\cup$ } \\
@@ -1117,7 +1117,7 @@ $\mathds{R}$ & $\mathcal{G}(\mathtt{R})$ & $ \displaystyle \prod_{k = 1}^{|\math
 }
 \end{definition}
 
-In the Definition~\ref{ground_form}, objects (column \emph{notation}) of particular type (column \emph{type}) are transformed to their ground forms by ground form function $\mathcal{G}$ (column \emph{ground from}).
+In Definition~\ref{ground_form}, objects (column \emph{notation}) of particular type (column \emph{type}) are transformed to their ground forms by ground form function $\mathcal{G}$ (column \emph{ground from}).
 
 In case of single atomic agent $\mathtt{A}$, there are two options -- either the state is $\varepsilon$ or the state $\delta$ is given. In first case, we construct a set of all possible atomic agents according to the given atomic signature $\Sigma_A(\eta(\mathtt{A}))$. In the second case, we construct a set containing only the original agent itself.
 
@@ -1549,11 +1549,11 @@ Dynamic analysis is a very common way how to analyse models written in formal re
 
 \subsection{Model checking}
 
-Model checking is an approach of checking whether given model meets a given specification~\cite{clarke1999model}. Typically this is done by specifying given requirements in a temporal logic formula and then check whether a given structure satisfies the formula. There are two version of model checking -- explicit-state and symbolic.
+Model checking is an approach of checking whether given model meets a given specification~\cite{clarke1999model}. Typically this is done by specifying given requirements in a temporal logic formula and then check whether a given structure satisfies the formula.
 
-We will not discuss this approach any further since we have given semantics to the BCSL models, which are able to generate LTS (Definition~\ref{lts}). It is suitable for model checking analysis and can be applied in external tools including temporal properties specification.
+The model checking of BCSL models can be enabled because we are able to generate LTS (Definition~\ref{lts}), but it is not a goal of this thesis. However, we are interested in a particular subtask of model checking -- the reachability analysis.
 
-Reachability analysis is a particular task of model checking for determining whether a chosen state is reachable in the LTS of a model.
+The reachability analysis is a particular task of model checking for determining whether a chosen state is reachable in the LTS of a model.
 
 \begin{definition}{Reachability relation}
 \label{reachability_relation}
@@ -1571,7 +1571,7 @@ Computer simulations reproduce the behaviour of a system using a mathematical mo
 
 Assigning a rate to the rule is not a simple task. The simplest solution is to reference only fully defined objects in the kinetic rates. However, we would like to express the context of the rule also in the rate. That typically means changing context in rate and the rule accordingly. This approach is non-trivial and we keep it as a future work.
 
-Assigning rates to the rules enables deterministic simulation~\cite{Poole2000} by translating rules to reactions and consequently construct Ordinary Differential Equations (ODEs) from them~\cite{higham2008modeling}. It is possible to enable also stochastic simulation, either by network-free simulators such as NFsim~\cite{sneddon2011efficient} or using indirect approach on generated reactions (e.g. Gillespie algorithm~\cite{GILLESPIE1976403}).
+Assigning rates to the rules enables deterministic simulation~\cite{Poole2000} by translating rules to reactions and consequently construct Ordinary Differential Equations (ODEs) from them~\cite{higham2008Modelling}. It is possible to enable also stochastic simulation, either by network-free simulators such as NFsim~\cite{sneddon2011efficient} or using indirect approach on generated reactions (e.g. Gillespie algorithm~\cite{GILLESPIE1976403}).
 
 \section{Static analysis}
 \label{static_analyses}
@@ -1618,11 +1618,11 @@ The compatibility operator generates partial order of $\mathds{A}, \mathds{T}$, 
 A finite set $\mathscr{X} \subseteq \mathds{X}$ is a \emph{compatible set} if:
 \begin{center}
 \begin{enumerate}
-	\item \label{compatible_cond} $ \forall \mathtt{X}_1, \mathtt{X}_2 \in \mathscr{X} ~\exists~ \mathtt{X}' \in \mathscr{X}: \mathtt{X}_1 \lhd \mathtt{X}' \wedge \mathtt{X}_2 \lhd \mathtt{X}'$ such that $\mathtt{X}_1 \neq \mathtt{X}_2$,
+	\item \label{compatible_cond} $ \forall \mathtt{X}_1, \mathtt{X}_2 \in \mathscr{X} ~\exists \mathtt{X}' \in \mathscr{X}: \mathtt{X}_1 \lhd \mathtt{X}' \wedge \mathtt{X}_2 \lhd \mathtt{X}'$ such that $\mathtt{X}_1 \neq \mathtt{X}_2$,
 
  and for each finite set $\mathscr{X}' \subseteq \mathds{X}$ such that $\mathscr{X} \neq \mathscr{X}'$ holds:
 
-	\item \label{non_compatible_cond} $\forall \mathtt{X} \in \mathscr{X} \forall \mathtt{X}' \in \mathscr{X}': \neg (\mathtt{X} ~\Delta~ \mathtt{X}') $.
+	\item \label{non_compatible_cond} $\forall \mathtt{X} \in \mathscr{X} ~\forall \mathtt{X}' \in \mathscr{X}': \neg (\mathtt{X} ~\Delta~ \mathtt{X}') $.
 \end{enumerate}
 \end{center}
 
@@ -1657,7 +1657,7 @@ For every complex agent $\mathtt{X}$ there exists exactly one compatible set $\m
 \end{lemma}
 
 \begin{proof}
-Let us assume a complex agent $\mathtt{X}$ belongs to two compatible sets, namely $\mathtt{X} \in \mathscr{X}_1, \mathscr{X}_2$. From the Definition~\ref{compatible_set} condition~(\ref{compatible_cond}) follows that there exists a $\mathtt{X}_1 \in \mathscr{X}_1$ such that $\mathtt{X} \lhd \mathtt{X}_1$. 
+Let us assume a complex agent $\mathtt{X}$ belongs to two compatible sets, namely $\mathtt{X} \in \mathscr{X}_1, \mathscr{X}_2$. From Definition~\ref{compatible_set} condition~(\ref{compatible_cond}) follows that there exists a $\mathtt{X}_1 \in \mathscr{X}_1$ such that $\mathtt{X} \lhd \mathtt{X}_1$. 
 
 Then, the condition~(\ref{non_compatible_cond}) claims that no complex agent from $\mathscr{X}_1$ and no complex agent from $\mathscr{X}_2$ can be compatible. Namely, $\mathtt{X}_1 \in \mathscr{X}_1$ cannot be compatible with $\mathtt{X} \in \mathscr{X}_2$. However, $\mathtt{X}$ and $\mathtt{X}_1$ are compatible (namely $\mathtt{X} \lhd \mathtt{X}_1$). It follows $\mathtt{X} \not\in \mathscr{X}_2$, what is a contradiction. $\QEDA$
 \end{proof}
@@ -1671,7 +1671,7 @@ Note that there always exists a compatible set $\mathscr{X}$ for a complex agent
 Let $\mathscr{X} \subseteq \mathds{X}$ be a compatible set and $\mathtt{X} \in \mathscr{X}$ a complex agent. A set $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}} \subseteq \mathscr{X}$ is called \emph{compatible subset} of $\mathscr{X}$ w.r.t. $\mathtt{X}$ if the following holds:
 
 \begin{center}
-$ \mkern2mu\overline{\mkern-4.5mu \mathscr{X}} \subseteq \mathscr{X}: \forall \mathtt{X}' \in \mkern2mu\overline{\mkern-4.5mu \mathscr{X}}: (\mathtt{X}' \lhd \mathtt{X} \wedge \forall \mathtt{X}'' \in \mkern2mu\overline{\mkern-4.5mu \mathscr{X}}: \neg (\mathtt{X}'' \lhd \mathtt{X}') )$
+$ \forall \mathtt{X}' \in \mkern2mu\overline{\mkern-4.5mu \mathscr{X}}: (\mathtt{X}' \lhd \mathtt{X} \wedge \forall \mathtt{X}'' \in \mkern2mu\overline{\mkern-4.5mu \mathscr{X}}: \neg (\mathtt{X}'' \lhd \mathtt{X}') )$
 \end{center}
 
 where $\mathtt{X}' \neq \mathtt{X}''$.
@@ -1795,7 +1795,7 @@ Reduced model $\widetilde{\mathds{M}}$ is created form the given BCSL model by r
 Let $\mathds{M}$ be a BCSL model and $\mathtt{s}_1, \mathtt{s}_2 \in S$ of $LTS(\mathds{M})$ two states from its LTS. The state $\mathtt{s}_1$ is \emph{compatible with} state $\mathtt{s}_2$, written $\mathtt{s}_1 \lhd \mathtt{s}_2$, \emph{iff} 
 
 \begin{center}
-$\forall \mathtt{X}_1 \in \mathtt{s}_1 \exists \mathtt{X}_2 \in \mathtt{s}_2: \mathtt{sup}(\mathscr{X}) \equiv \mathtt{X}_2 $
+$\forall \mathtt{X}_1 \in \mathtt{s}_1 ~\exists \mathtt{X}_2 \in \mathtt{s}_2: \mathtt{sup}(\mathscr{X}) \equiv \mathtt{X}_2 $
 \end{center}
 
 such that $\mathscr{X} \subseteq \mathds{X}$ is a compatible set and $\mathtt{X}_1 \in \mathscr{X}$.
@@ -1805,10 +1805,10 @@ such that $\mathscr{X} \subseteq \mathds{X}$ is a compatible set and $\mathtt{X}
 \begin{definition}{Over-approximation of LTS}
 \label{over_approximation}
 
-Let $LTS, LTS'$ be labelled transition systems of some BCSL models. The $LTS'$ is \emph{over-approximation} of $LTS$ if for every path $\mathtt{s}_1' \mathtt{s}_2' \mathtt{s}_3' \ldots \mathtt{s}_n'$ in $LTS'$ there exists a path $\mathtt{s}_1 \mathtt{s}_2 \mathtt{s}_3 \ldots \mathtt{s}_m$ in LTS such that:
+Let $LTS(\mathds{M}), LTS(\mathds{M}')$ be labelled transition systems of some BCSL models. The $LTS(\mathds{M}')$ is \emph{over-approximation} of $LTS(\mathds{M})$ if for every path $\mathtt{s}_1' \mathtt{s}_2' \mathtt{s}_3' \ldots \mathtt{s}_n'$ in $LTS(\mathds{M}')$ there exists a path $\mathtt{s}_1 \mathtt{s}_2 \mathtt{s}_3 \ldots \mathtt{s}_m$ in $LTS(\mathds{M})$ such that:
 
 \begin{center}
-$\forall \mathtt{s}'_i, \mathtt{s}'_{i+1} \exists \mathtt{s}_k, \mathtt{s}_l : l > k \wedge \mathtt{s}_k \lhd \mathtt{s}'_i \wedge \mathtt{s}_l \lhd \mathtt{s}'_{i+1} $.
+$\forall \mathtt{s}'_i, \mathtt{s}'_{i+1} ~\exists \mathtt{s}_k, \mathtt{s}_l : (l > k \wedge \mathtt{s}_k \lhd \mathtt{s}'_i \wedge \mathtt{s}_l \lhd \mathtt{s}'_{i+1}) $.
 \end{center}
 
 \end{definition}
@@ -1835,10 +1835,10 @@ Since we have defined compatibility operator for agents, we can apply static rea
 
 \begin{theorem}
 \label{static_reach}
-Let $\mathcal{R}_f$ be a set of rules created from set of rule expressions $\mathcal{R}$ of given model $\mathds{M}$ using semantic function $\mathtt{F}$ and $\mathtt{X}$ be a complex agent. The complex agent $\mathtt{X}$ is non-reachable w.r.t. set of rules $\mathcal{R}_f$ \emph{if}:
+Let $\mathcal{R}_f$ be a set of rules created from set of rule expressions $\mathcal{R}$ of given model $\mathds{M}$ using semantic function $\mathtt{F}$. Let $\mathtt{X}$ be a complex agent. The complex agent $\mathtt{X}$ is non-reachable w.r.t. set of rules $\mathcal{R}_f$ if the following holds:
 
 \begin{center}
-$\forall~ \mathtt{R} \in \mathcal{R}_f: \forall i \in [\iota+1, \ldots, |\chi|] : \neg ( \pi_i(\chi) \lhd \mathtt{X})$
+$\forall~ \mathtt{R} \in \mathcal{R}_f ~\forall i \in [\iota+1, \ldots, |\chi|] : \neg ( \pi_i(\chi) \lhd \mathtt{X})$
 \end{center}
 
 \noindent such that $\mathtt{R} = (\chi, \omega, \iota, \varphi, \psi)$.
@@ -1854,7 +1854,7 @@ Let us assume we have a path of states constructed by applying corresponding rea
 It requires there has to be a complex agent $\mathtt{X}_2'$ in the rule which is compatible with the complex agent $\mathtt{X}_2$. If there is not such an agent, the agent $\mathtt{X}$ is non-reachable. $\QEDA$
 \end{proof}
 
-The Theorem~\ref{static_reach} states a very powerful fact in context of non-reachability analysis. Compared to dynamic non-reachability analysis, it completely avoids any combinatorial explosion and gives answer only by testing structural properties of rules.
+Theorem~\ref{static_reach} states a very powerful fact in context of non-reachability analysis. Compared to dynamic non-reachability analysis, it completely avoids any combinatorial explosion and gives answer only by testing structural properties of rules.
 
 This procedure can be extended for checking reachability of multiple complex agents. However, it does not consider stoichiometry.
 
@@ -2032,7 +2032,7 @@ $\vdots$
 
 Demonstration of context-based reduction (Section~\ref{context_reduction}) is provided on the same model as in the previous case. Now we can compute with entire model since we will reduce its context to minimum. In Figure~\ref{reduced_yamada} there are 16 bidirectional rules which we have created by applying Definition~\ref{reduced_model}. The size of state space has significantly decreased -- it has 606 states and 2015 edges.
 
-For the analysis itself, we could for example ask about reachability of a complex agent {\small $Raf(Thr\{p\}).ERK(Tyr\{p\},Thr\{p\})::cyt$} in the original model (Appendix~\ref{yamada_complete}). We can first check whether its supremum (from the corresponding compatible set $\mathscr{X}$) {\small $Raf.ERK::cyt$} is non-reachable in the reduced model. Since the state space of the model is relatively small, it is not a problem using dynamical model checking. Using the Theorem~\ref{non-reachability_in_reduced}, the answer is non-reachable.
+For the analysis itself, we could for example ask about reachability of a complex agent {\small $Raf(Thr\{p\}).ERK(Tyr\{p\},Thr\{p\})::cyt$} in the original model (Appendix~\ref{yamada_complete}). We can first check whether its supremum (from the corresponding compatible set $\mathscr{X}$) {\small $Raf.ERK::cyt$} is non-reachable in the reduced model. Since the state space of the model is relatively small, it is not a problem using dynamical model checking. Using Theorem~\ref{non-reachability_in_reduced}, the answer is non-reachable.
 
 \begin{figure}[!h]
 \begin{center}
@@ -2063,7 +2063,7 @@ $ERK::cyt$ & + & $FRS::cyt $ & $ \Leftrightarrow $ & $ ERK.FRS::cyt$\\
 \chapter{Implementation}
 \label{implementation}
 
-In order to support usability of the BCSL language, we developed a prototype software tool BCSgen. The general goal of the tool is to provide environment suitable for editing and maintenance of the BCSL models and provide functionality to analyse the models. The software was developed in several iterations. At first as a project MUNI33/092015 in \emph{Dean's Program of the Faculty of Informatics MU for support of student research and development projects}, later as part of the project MUNI33/062017 in the same program. It was finalised to current stage in this thesis.
+In order to support usability of the BCSL language, we developed a prototype software tool BCSgen. The general goal of the tool is to provide environment suitable for editing and maintenance of the BCSL models and provide functionality to analyse the models. The software was developed in several iterations. At first as a project MUNI33/092015 in \emph{Dean's Program of the Faculty of Informatics MU for support of student research and development projects}, later as part of the project MUNI33/062017 in the same program. It was further extended to current stage in this thesis.
 
 The tool is developed in Python language (version 2.7) as open-source desktop software build under GPL-3.0 license. The source code, a short tutorial for usage and installation, and current stable version are available on GitHub\footnotemark[1]\footnotetext[1]{\url{https://github.com/sybila/BCSgen}}.
 
@@ -2104,7 +2104,7 @@ The MatPlotLib provides visualisation of simulation results. It possible to zoom
 
 \chapter{Conclusions}
 
-In the first part of this thesis, we have explained the background of the work. Particularly, we provided explanation of the principles of rule-based modelling using schematic examples. Several existing rule-based languages have been introduced with their key features. Comprehensive Modeling Platform as a framework for modelling biochemical processes has been described with all its important modules such as Model repository and Biochemical Space.
+In the first part of this thesis, we have explained the background of the work. Particularly, we provided explanation of the principles of rule-based modelling using schematic examples. Several existing rule-based languages have been introduced with their key features. Comprehensive Modelling Platform as a framework for modelling biochemical processes has been described with all its important modules such as Model repository and Biochemical Space.
 
 In the second part, we have formally defined Biochemical Space Language as a description format for Biochemical Space. Together with very concise and \emph{human-readable} syntax we have defined operational semantics. An indirect approach has been chosen for practical purposes. Moreover, several syntactic extensions were defined to increase readability and maintenance of the language.
 
@@ -2116,7 +2116,7 @@ As a future work, we want to improve specification of kinetic rates for the BCSL
 
 The next goal for the future work is to make some of the static analyses more general. Particularly, some of non-reachability analyses were defined only for a single complex agent. We want to promote these analyses in order to be applied on sets (or multisets) of agents.
 
-Finally, as a future work for the tool BCSgen we are planning to reimplement it to a web-based version. It should be integrated in Comprehensive Modeling Platform (Section~\ref{cmp}) to allow direct analysis of the models and appropriate parts of Biochemical Space.
+Finally, as a future work for the tool BCSgen we are planning to reimplement it to a web-based version. It should be integrated in Comprehensive Modelling Platform (Section~\ref{cmp}) to allow direct analysis of the models and appropriate parts of Biochemical Space.
 
 \bibliographystyle{plain}
 {\small
