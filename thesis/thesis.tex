@@ -2037,23 +2037,23 @@ For the analysis itself, we could for example ask about reachability of a comple
 \begin{figure}[!h]
 \begin{center}
 {\small
-\begin{tabular}{r c l}
-$FGF::cyt + R::cyt $ & $ \Leftrightarrow $ & $ FGF.R::cyt$\\
-$FGF.R::cyt + FGF.R::cyt $ & $ \Leftrightarrow $ & $ FGF.R.FGF.R::cyt$\\
-$FRS::cyt + FGF.R.FGF.R::cyt $ & $ \Leftrightarrow $ & $ FGF.R.FGF.R.FRS::cyt$\\
-$FRS::cyt + SHP::cyt $ & $ \Leftrightarrow $ & $ FRS.SHP::cyt$\\
-$GS::cyt + GPP::cyt $ & $ \Leftrightarrow $ & $ GS.GPP::cyt$\\
-$GS::cyt + ERK::cyt $ & $ \Leftrightarrow $ & $ GS.ERK::cyt$\\
-$FRS::cyt + GS::cyt $ & $ \Leftrightarrow $ & $ FRS.GS::cyt$\\
-$Ras::cyt + FRS.GS::cyt $ & $ \Leftrightarrow $ & $ FRS.GS.Ras::cyt$\\
-$Ras::cyt + GAP::cyt $ & $ \Leftrightarrow $ & $ GAP.Ras::cyt$\\
-$Raf::cyt + Ras::cyt $ & $ \Leftrightarrow $ & $ Ras.Raf::cyt$\\
-$Raf::cyt + PP::cyt $ & $ \Leftrightarrow $ & $ PP.Raf::cyt$\\
-$MEK::cyt + Raf::cyt $ & $ \Leftrightarrow $ & $ Raf.MEK::cyt$\\
-$MEK::cyt + XPP::cyt $ & $ \Leftrightarrow $ & $ XPP.MEK::cyt$\\
-$ERK::cyt + MEK::cyt $ & $ \Leftrightarrow $ & $ MEK.ERK::cyt$\\
-$ERK::cyt + MKP::cyt $ & $ \Leftrightarrow $ & $ MKP.ERK::cyt$\\
-$ERK::cyt + FRS::cyt $ & $ \Leftrightarrow $ & $ ERK.FRS::cyt$\\
+\begin{tabular}{r c l c l}
+$FGF::cyt$ & + & $R::cyt $ & $ \Leftrightarrow $ & $ FGF.R::cyt$\\
+$FGF.R::cyt$ & + & $FGF.R::cyt $ & $ \Leftrightarrow $ & $ FGF.R.FGF.R::cyt$\\
+$FGF.R.FGF.R::cyt$ & + & $FRS::cyt$ & $ \Leftrightarrow $ & $ FGF.R.FGF.R.FRS::cyt$\\
+$FRS::cyt$ & + & $SHP::cyt $ & $ \Leftrightarrow $ & $ FRS.SHP::cyt$\\
+$GS::cyt$ & + & $GPP::cyt $ & $ \Leftrightarrow $ & $ GS.GPP::cyt$\\
+$GS::cyt$ & + & $ERK::cyt $ & $ \Leftrightarrow $ & $ GS.ERK::cyt$\\
+$FRS::cyt$ & + & $GS::cyt $ & $ \Leftrightarrow $ & $ FRS.GS::cyt$\\
+$FRS.GS::cyt$ & + & $Ras::cyt$ & $ \Leftrightarrow $ & $ FRS.GS.Ras::cyt$\\
+$GAP::cyt$ & + & $Ras::cyt$ & $ \Leftrightarrow $ & $ GAP.Ras::cyt$\\
+$Ras::cyt$ & + & $Raf::cyt$ & $ \Leftrightarrow $ & $ Ras.Raf::cyt$\\
+$PP::cyt$ & + & $Raf::cyt$ & $ \Leftrightarrow $ & $ PP.Raf::cyt$\\
+$Raf::cyt$ & + & $MEK::cyt $ & $ \Leftrightarrow $ & $ Raf.MEK::cyt$\\
+$XPP::cyt$ & + & $MEK::cyt $ & $ \Leftrightarrow $ & $ XPP.MEK::cyt$\\
+$ MEK::cyt$ & + & $ERK::cyt$ & $ \Leftrightarrow $ & $ MEK.ERK::cyt$\\
+$MKP::cyt$ & + & $ERK::cyt $ & $ \Leftrightarrow $ & $ MKP.ERK::cyt$\\
+$ERK::cyt$ & + & $FRS::cyt $ & $ \Leftrightarrow $ & $ ERK.FRS::cyt$\\
 \end{tabular}
 }
 \end{center}
@@ -2130,10 +2130,10 @@ Finally, as a future work for the tool BCSgen we are planning to reimplement it 
 \begin{center}
 \begin{tabular}{c | l}
 $\sigma(\vv{v})$ & set of permutations of vector $\vv{v}$ of length $|\vv{v}|$\\
+$\pi_i(\vv{v})$ & projection on dimension \emph{i} of vector $\vv{v}$\\
 $X \mdoubleplus Y$ & tuples concatenation\\
-$\mdoubleplus_{i=1}^n T_i$ & generalised concatenation\\
+$\mdoubleplus_{i=1}^n T_i$ & generalised tuples concatenation\\
 $\Xi(Y)$ & reassembly of tuples\\
-$\pi_i$ & projection on dimension i\\
 \hline 
 $\Sigma_{\mathtt{A}}$ & atomic signature \\
 $\Sigma_{\mathtt{T}}$ & structure signature \\
@@ -2214,31 +2214,31 @@ $2~ FGF.R::cyt $ & $\Leftrightarrow$ & $ FGF.R.FGF.R::cyt$\\
 $FGF(Thr\{u\}).R.FGF.R::cyt $ & $\Leftrightarrow$ & $ FGF(Thr\{p\}).R.FGF.R::cyt$\\
 $FRS(Thr\{u\}).FGF.R.FGF.R::cyt $ & $\Rightarrow$ & $ FRS(Thr\{p\}).FGF.R.FGF.R::cyt$\\
 $FRS(Thr\{p\}).FGF.R.FGF.R::cyt $ & $\Rightarrow$ & $ FRS(Thr\{p\})::cyt + FGF.R.FGF.R::cyt$\\
-$FRS(Thr\{p\})::cyt + SHP::cyt $ & $\Rightarrow$ & $ SHP.FRS(Thr\{p\})::cyt$\\
+$SHP::cyt + FRS(Thr\{p\})::cyt$ & $\Rightarrow$ & $ SHP.FRS(Thr\{p\})::cyt$\\
 $FRS(Thr\{p\}).SHP::cyt $ & $\Rightarrow$ & $ FRS(Thr\{u\}).SHP::cyt$\\
 $FRS(Thr\{u\}).SHP::cyt $ & $\Rightarrow$ & $ FRS(Thr\{u\})::cyt + SHP::cyt$\\
-$GS(Thr\{p\})::cyt + GPP::cyt $ & $\Rightarrow$ & $ GPP.GS(Thr\{p\})::cyt$\\
+$ GPP::cyt + GS(Thr\{p\})::cyt$ & $\Rightarrow$ & $ GPP.GS(Thr\{p\})::cyt$\\
 $GS(Thr\{p\}).GPP::cyt $ & $\Rightarrow$ & $ GS(Thr\{u\}).GPP::cyt$\\
 $GS(Thr\{u\}).GPP::cyt $ & $\Rightarrow$ & $ GS(Thr\{u\})::cyt + GPP::cyt$\\
-$GS(Thr\{u\})::cyt + ERK(Tyr\{p\},Thr\{p\})::cyt $ & $\Rightarrow$ & $ ERK(Tyr\{p\},Thr\{p\}).GS(Thr\{u\})::cyt$\\
+$ERK(Tyr\{p\},Thr\{p\})::cyt + GS(Thr\{u\})::cyt $ & $\Rightarrow$ & $ ERK(Tyr\{p\},Thr\{p\}).GS(Thr\{u\})::cyt$\\
 $GS(Thr\{u\}).ERK::cyt $ & $\Rightarrow$ & $ GS(Thr\{p\}).ERK::cyt$\\
 $GS(Thr\{p\}).ERK::cyt $ & $\Rightarrow$ & $ GS(Thr\{p\})::cyt + ERK::cyt$\\
 $FRS(Thr\{p\},Tyr\{u\})::cyt + GS(Thr\{u\})::cyt $ & $\Leftrightarrow$ & $ FRS(Thr\{p\},Tyr\{u\}).GS(Thr\{u\})::cyt$\\
 $Ras(Thr\{u\}).FRS.GS::cyt $ & $\Rightarrow$ & $ Ras(Thr\{p\}).FRS.GS::cyt$\\
 $Ras(Thr\{p\}).FRS.GS::cyt $ & $\Rightarrow$ & $ Ras(Thr\{p\})::cyt + FRS.GS::cyt$\\
-$Ras(Thr\{p\})::cyt + GAP::cyt $ & $\Rightarrow$ & $ GAP.Ras(Thr\{p\})::cyt$\\
+$GAP::cyt + Ras(Thr\{p\})::cyt$ & $\Rightarrow$ & $ GAP.Ras(Thr\{p\})::cyt$\\
 $Ras(Thr\{p\}).GAP::cyt $ & $\Rightarrow$ & $ Ras(Thr\{u\}).GAP::cyt$\\
 $Ras(Thr\{u\}).GAP::cyt $ & $\Rightarrow$ & $ Ras(Thr\{u\})::cyt + GAP::cyt$\\
-$Raf(Thr\{u\})::cyt + Ras(Thr\{p\})::cyt $ & $\Rightarrow$ & $ Ras(Thr\{p\}).Raf(Thr\{u\})::cyt$\\
+$Ras(Thr\{p\})::cyt + Raf(Thr\{u\})::cyt $ & $\Rightarrow$ & $ Ras(Thr\{p\}).Raf(Thr\{u\})::cyt$\\
 $Raf(Thr\{u\}).Ras::cyt $ & $\Rightarrow$ & $ Raf(Thr\{p\}).Ras::cyt$\\
 $Raf(Thr\{p\}).Ras::cyt $ & $\Rightarrow$ & $ Raf(Thr\{p\})::cyt + Ras::cyt$\\
-$Raf(Thr\{p\})::cyt + PP::cyt $ & $\Rightarrow$ & $ PP.Raf(Thr\{p\})::cyt$\\
+$PP::cyt + Raf(Thr\{p\})::cyt$ & $\Rightarrow$ & $ PP.Raf(Thr\{p\})::cyt$\\
 $Raf(Thr\{p\}).PP::cyt $ & $\Rightarrow$ & $ Raf(Thr\{u\}).PP::cyt$\\
 $Raf(Thr\{u\}).PP::cyt $ & $\Rightarrow$ & $ Raf(Thr\{u\})::cyt + PP::cyt$\\
-$MEK(Ser212\{u\})::cyt + Raf(Thr\{p\})::cyt $ & $\Rightarrow$ & $ Raf(Thr\{p\}).MEK(Ser212\{u\})::cyt$\\
+$Raf(Thr\{p\})::cyt + MEK(Ser212\{u\})::cyt$ & $\Rightarrow$ & $ Raf(Thr\{p\}).MEK(Ser212\{u\})::cyt$\\
 $MEK(Ser212\{u\}).Raf::cyt $ & $\Rightarrow$ & $ MEK(Ser212\{p\}).Raf::cyt$\\
 $MEK(Ser212\{p\}).Raf::cyt $ & $\Rightarrow$ & $ MEK(Ser212\{p\})::cyt + Raf::cyt$\\
-$MEK(Ser298\{u\})::cyt + Raf(Thr\{p\})::cyt $ & $\Rightarrow$ & $ Raf(Thr\{p\}).MEK(Ser298\{u\})::cyt$\\
+$Raf(Thr\{p\})::cyt + MEK(Ser298\{u\})::cyt$ & $\Rightarrow$ & $ Raf(Thr\{p\}).MEK(Ser298\{u\})::cyt$\\
 $MEK(Ser298\{u\}).Raf::cyt $ & $\Rightarrow$ & $ MEK(Ser298\{p\}).Raf::cyt$\\
 $MEK(Ser298\{p\}).Raf::cyt $ & $\Rightarrow$ & $ MEK(Ser298\{p\})::cyt + Raf::cyt$\\
 \end{tabular}
@@ -2253,10 +2253,10 @@ $MEK(Ser298\{p\}).Raf::cyt $ & $\Rightarrow$ & $ MEK(Ser298\{p\})::cyt + Raf::cy
 \bgroup
 \def\arraystretch{1.5}%
 \begin{tabular}{ r c l }
-$MEK(Ser212\{p\})::cyt + XPP::cyt $ & $\Rightarrow$ & $ XPP.MEK(Ser212\{p\})::cyt$\\
+$XPP::cyt + MEK(Ser212\{p\})::cyt $ & $\Rightarrow$ & $ XPP.MEK(Ser212\{p\})::cyt$\\
 $MEK(Ser212\{p\}).XPP::cyt $ & $\Rightarrow$ & $ MEK(Ser212\{u\}).XPP::cyt$\\
 $MEK(Ser212\{u\}).XPP::cyt $ & $\Rightarrow$ & $ MEK(Ser212\{u\})::cyt + XPP::cyt$\\
-$MEK(Ser298\{p\})::cyt + XPP::cyt $ & $\Rightarrow$ & $ XPP.MEK(Ser298\{p\})::cyt$\\
+$XPP::cyt + MEK(Ser298\{p\})::cyt $ & $\Rightarrow$ & $ XPP.MEK(Ser298\{p\})::cyt$\\
 $MEK(Ser298\{p\}).XPP::cyt $ & $\Rightarrow$ & $ MEK(Ser298\{u\}).XPP::cyt$\\
 $MEK(Ser298\{u\}).XPP::cyt $ & $\Rightarrow$ & $ MEK(Ser298\{u\})::cyt + XPP::cyt$\\
 
@@ -2264,10 +2264,10 @@ $ERK(Thr\{u\}).MEK::cyt $ & $\Rightarrow$ & $ ERK(Thr\{p\}).MEK::cyt$\\
 $ERK(Thr\{p\}).MEK::cyt $ & $\Rightarrow$ & $ ERK(Thr\{p\})::cyt + MEK::cyt$\\
 $ERK(Tyr\{u\}).MEK::cyt $ & $\Rightarrow$ & $ ERK(Tyr\{p\}).MEK::cyt$\\
 $ERK(Tyr\{p\}).MEK::cyt $ & $\Rightarrow$ & $ ERK(Tyr\{p\})::cyt + MEK::cyt$\\
-$ERK(Thr\{p\})::cyt + MKP::cyt $ & $\Rightarrow$ & $ MKP.ERK(Thr\{p\})::cyt$\\
+$MKP::cyt + ERK(Thr\{p\})::cyt $ & $\Rightarrow$ & $ MKP.ERK(Thr\{p\})::cyt$\\
 $ERK(Thr\{p\}).MKP::cyt $ & $\Rightarrow$ & $ ERK(Thr\{u\}).MKP::cyt$\\
 $ERK(Thr\{u\}).MKP::cyt $ & $\Rightarrow$ & $ ERK(Thr\{u\})::cyt + MKP::cyt$\\
-$ERK(Tyr\{p\})::cyt + MKP::cyt $ & $\Rightarrow$ & $ MKP.ERK(Tyr\{p\})::cyt$\\
+$ MKP::cyt + ERK(Tyr\{p\})::cyt $ & $\Rightarrow$ & $ MKP.ERK(Tyr\{p\})::cyt$\\
 $ERK(Tyr\{p\}).MKP::cyt $ & $\Rightarrow$ & $ ERK(Tyr\{u\}).MKP::cyt$\\
 $ERK(Tyr\{u\}).MKP::cyt $ & $\Rightarrow$ & $ ERK(Tyr\{u\})::cyt + MKP::cyt$\\
 $FRS(Tyr\{u\}).ERK::cyt $ & $\Rightarrow$ & $ FRS(Thr\{u\},Tyr\{p\}).ERK::cyt$\\
@@ -2275,15 +2275,15 @@ $FRS(Thr\{u\},Tyr\{p\}).ERK::cyt $ & $\Rightarrow$ & $ FRS(Thr\{u\},Tyr\{p\})::c
 $FRS(Tyr\{p\})::cyt $ & $\Rightarrow$ & $ FRS(Tyr\{u\})::cyt$\\
 
 $ERK(Thr\{u\})::cyt$ & + & $MEK(Ser212\{p\},Ser298\{p\})::cyt ~~\Rightarrow$\\
- & $\Rightarrow$ & $ MEK(Ser212\{p\},Ser298\{p\}).ERK(Thr\{u\})::cyt$\\
+ & $\Rightarrow$ & $ ERK(Thr\{u\}).MEK(Ser212\{p\},Ser298\{p\})::cyt$\\
 $Ras(Thr\{u\})::cyt$ & + & $FRS(Thr\{p\},Tyr\{u\}).GS(Thr\{u\})::cyt ~~\Rightarrow$\\
- & $\Rightarrow$ & $ FRS(Thr\{p\},Tyr\{u\}).GS(Thr\{u\}).Ras(Thr\{u\})::cyt$\\
+ & $\Rightarrow$ & $ Ras(Thr\{u\}).FRS(Thr\{p\},Tyr\{u\}).GS(Thr\{u\})::cyt$\\
 $FRS(Thr\{u\})::cyt$ & + & $FGF(Thr\{p\}).R.FGF(Thr\{p\}).R::cyt ~~\Rightarrow$\\
- & $\Rightarrow$ & $ FGF(Thr\{p\}).R.FGF(Thr\{p\}).R.FRS(Thr\{u\})::cyt$\\
+ & $\Rightarrow$ & $ FRS(Thr\{u\}).FGF(Thr\{p\}).R.FGF(Thr\{p\}).R::cyt$\\
  $ERK(Tyr\{u\})::cyt$ & + & $MEK(Ser212\{p\},Ser298\{p\})::cyt ~~\Rightarrow$\\
- & $\Rightarrow$ & $ MEK(Ser212\{p\},Ser298\{p\}).ERK(Tyr\{u\})::cyt$\\
+ & $\Rightarrow$ & $ ERK(Tyr\{u\}).MEK(Ser212\{p\},Ser298\{p\})::cyt$\\
  $FRS(Tyr\{u\})::cyt$ & + & $ERK(Tyr\{p\},Thr\{p\})::cyt ~~\Rightarrow$\\
-  & $\Rightarrow$ & $ ERK(Tyr\{p\},Thr\{p\}).FRS(Tyr\{u\})::cyt$\\
+  & $\Rightarrow$ & $ FRS(Tyr\{u\}).ERK(Tyr\{p\},Thr\{p\})::cyt$\\
 \end{tabular}
 \egroup
 \end{center}
