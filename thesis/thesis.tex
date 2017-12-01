@@ -159,7 +159,7 @@ In this thesis we focus on development of a novel rule-based language called Bio
 
 The goal of this thesis is to formally define syntax and semantics of Biochemical Space language and provide techniques to analyse models written in the language. 
 
-In Chapter~\ref{background} we provide an introduction to rule-based modelling, describe differences between the rule-based and the traditional approaches, reveal key features of existing rule-based formalisms, and explain purpose of Comprehensive Modelling Platform and its parts. In Chapter~\ref{problem_formulation} we specify particular tasks of this thesis in the context of preliminary work. In Chapter~\ref{formal_definition} we define syntax and semantics of Biochemical Space language and specify several syntactic extensions, which improve readability of the language. Chapter~\ref{analysis} provides brief description of traditional dynamic analysis techniques and introduces several new static analysis techniques. Chapter~\ref{case_study} shows usability of the language on several case studies and then demonstrate usability of proposed static analyses in practice. In final Chapter~\ref{implementation} we describe development of BCSgen, a software tool to support the usage of the language. 
+In Chapter~\ref{background} we give an introduction to rule-based modelling, describe differences between the rule-based and the traditional approaches, reveal key features of existing rule-based formalisms, and explain purpose of Comprehensive Modelling Platform and its parts. In Chapter~\ref{problem_formulation} we specify particular tasks of this thesis in the context of preliminary work. In Chapter~\ref{formal_definition} we define syntax and semantics of Biochemical Space language and specify several syntactic extensions, which improve readability of the language. Chapter~\ref{analysis} provides brief description of traditional dynamic analysis techniques and introduces several new static analysis techniques. Chapter~\ref{case_study} shows usability of the language on several case studies and then demonstrate usability of proposed static analyses in practice. In final Chapter~\ref{implementation} we describe development of BCSgen, a software tool to support the maintenance and analysis of models written in the language. 
 
 \chapter{Background}
 \label{background}
@@ -509,7 +509,7 @@ An entity in our interpretation is a bounded space (a so-called \emph{compartmen
 
 BCS extends the traditional concept of the compartmentalisation with a hierarchy at the level of entities. A particular entity can reside in several different compartments. Additionally, \emph{classification} specifies the type of an entity in the sense of functional or structural characterisation.
 
-An atomic entity can be a part of a structurally more complex entity. We consider two kinds of composite entities: \emph{structure} (Figure~\ref{structure_example}) and \emph{complex} entity. Structure entity represents partially specified composite species, for example a photosystem complex partially specified with prosthetic groups of interest. Complex entity represents fully specified composite species, for example, a homodimer of KaiC protein.
+An atomic entity can be a part of a structurally more complex entity. We consider two kinds of composite entities: \emph{structure} (Figure~\ref{structure_example}) and \emph{complex} entity. Structure entity represents partially specified composite species, for example a photosystem complex partially specified with prosthetic groups of interest. Complex entity represents fully specified composite species, for example, a homo-dimer of KaiC protein.
 
 \begin{figure}[!h]
 \begin{center}
@@ -559,7 +559,7 @@ Higher abstraction comes into account when several electrons play `musical chair
 
 When describing particular process or object we can go almost infinitely deep into the details. Even if the depth is not infinite, it is deep enough to lead into state when the description is larger than object itself. Imagine that you want to describe a molecule as position of each atom. You definitely need more space to store such information than the molecule itself occupies.
 
-When creating BCS for a system, we choose a level of details which we do not exceed. This ensures the size of BCS will not exponentially increase with additional details. The problem can occur when we try to map a model which uses more detailed description of the system than BCS does. However, we simply allow relating multiple model objects to BCS objects and vice versa. For example, multiple model reactions might be mapped on one BCS rule denoting the fact the process represented by the rule can be described in more details by the reactions. On the other hand, model might neglect some details. Then for example, a reaction can be mapped on multiple rules with similar meaning than in the previous case.
+When creating BCS for a system, we choose a level of details which we do not exceed. This ensures the size of BCS will not exponentially increase with additional details. The problem can occur when we try to map a model which uses more detailed description of the system than BCS does. However, we simply allow relating multiple model objects to BCS objects and vice versa. For example, multiple model reactions might be mapped on a single BCS rule denoting the fact the process represented by the rule can be described in more details by the reactions. On the other hand, model might neglect some details. Then for example, a reaction can be mapped on multiple rules with similar meaning than in the previous case.
 
 Since CMP allows export of models in SBML format, we employ resolvable identifier links~\cite{juty2011identifiers}. These links are included in generated SBML file and point to appropriate rules and entities in BCS.
 
@@ -579,13 +579,13 @@ The Experiments repository is a module for storage and presentation of time-seri
 
 Biochemical Space as described in Section~\ref{bcs_general} can grow to enormous size. To be able to detect inconsistency with automatic tools and enable further analysis of the space it is necessary to keep it on formal level.
 
-In our last paper~\cite{Ded201627}, we have defined Biochemical Space Language (BCSL) such that syntax has been defined independently, but semantics has been defined via translating to Kappa language~\cite{kappa_formal}. We wanted to keep the language as concise as possible. The rule-based approach was the best choice, because it was capable to capture required details for biological systems while keeping the description concise. It was supposed to be \emph{human-readable}, which in this context means easy to read, write, and maintain by humans even from other disciplines than computer science. However, there are many rule-based languages, and each of them is slightly different on syntactic and semantic level and also on the level of abstraction. After a research (Section~\ref{rule_based_languages}), we have evaluated all existing languages as not suitable for our purposes. The closest representation to the desired one was Kappa language (Section~\ref{kappa}). That is the reason why in first version we have chosen translation to Kappa for definition of semantics.
+In our last paper~\cite{Ded201627}, we have defined Biochemical Space Language (BCSL) such that syntax has been defined independently, but semantics has been defined via translating to Kappa language~\cite{kappa_formal}. We wanted to keep the language as concise as possible. The rule-based approach was the best choice, because it was capable to capture required details for biological systems while keeping the description concise. It was supposed to be \emph{human-readable}, which in this context means easy to read, write, and maintain by humans even from other disciplines than computer science. However, there are many rule-based languages, and each of them is slightly different on syntactic and semantic level and also on the level of abstraction. After a research (Section~\ref{rule_based_languages}), we have evaluated all existing languages as not suitable for our purposes. The closest representation to the desired one was Kappa language (Section~\ref{kappa}). That is the reason why in the first version we have chosen translation to Kappa for definition of semantics.
 
-However, this approach is not very beneficial since we are not fully using the expressive power of our language. The problem is Kappa operates purely on level of expressions. We want to promote our language to a higher level when it operates on objects in multisets. By translating to Kappa we loose such abstraction. 
+However, this approach is not very beneficial since we are not fully using the expressive power of our language. The problem is that Kappa operates purely on expression levels. We want to promote our language to a higher level when it operates on objects in multisets. By translating to Kappa we loose such abstraction. 
 
-In the previous version of language development, both definition and implementation were made via translation to Kappa. It particularly means there was defined a translation function, which was able to convert BCSL expressions to Kappa expressions. The huge advantage was that the conversion was quite straightforward and this way we could apply all types of analyses Kappa language offers.
+In the previous version of language development, both definition and implementation were made via translation to Kappa. It particularly means there was defined a translation function, which was able to convert BCSL expressions to Kappa expressions. The main advantage was that the conversion was quite straightforward and that way we could apply all types of analyses Kappa language offers.
 
-The indirect approach had several disadvantages. Kappa has only one type of agent (no hierarchy). It follows all additional information encoded in different agent types are lost during the conversion. This particularly means atomic agents had to be considered as binding sites and structure agents as Kappa agents. But it was not always suitable, especially when atomic agents had an independent role in a rule. Complex treatment in Kappa requires explicit bonds between individual agents. Therefore, when translating our multiset-based complex agent to Kappa complex, we need to choose one of many possible isomorphisms (Figure~\ref{abstraction_comparision}, the left-hand side of the figure corresponds to Kappa approach). Multiple default options are available, such as circular layout, linear layout etc. But it was not possible to express the fact that order does not matter.
+The indirect approach had several disadvantages. Kappa has only one type of agent (no hierarchy). It follows all additional information encoded in different agent types are lost during the conversion. This particularly means atomic agents had to be considered as binding sites and structure agents as Kappa agents. But it was not always suitable, especially when atomic agents had an independent role in a rule. Treatment of complexes in Kappa requires explicit bonds between individual agents. Therefore, when translating our multiset-based complex agent to a Kappa complex, we need to choose one of many possible isomorphisms (Figure~\ref{abstraction_comparision}, the left-hand side of the figure corresponds to Kappa approach). Multiple default options are available, such as circular layout, linear layout etc. But it was not possible to express the fact that the order does not matter.
 
 \begin{figure}[!h]
 \begin{center}
@@ -594,13 +594,13 @@ The indirect approach had several disadvantages. Kappa has only one type of agen
 \caption{Comparison of a complex in biology (on the left) to abstraction used in BCS (on the right). In biology, all possible graph isomorphisms must be considered which results from combinatorial options how edges can be placed to create a connected graph~\cite{Chartrand1985} (additionally, we could consider the fact there might be multiple bonds between two entities). In BCS we neglect such details and see created structure only in the sense of coexistence (a multiset), which significantly reduces the number of possible derivations.}\label{abstraction_comparision}
 \end{figure}
 
-From the implementation point of view, executing models was delayed by the conversion to Kappa and then calling Kappa core to execute its semantics. Moreover, Kappa uses network-free simulator, which is very efficient for small models, because the rules are executed directly. Each rule is being matched on current state and then matched objects are replaced according to the rule. The problem is when the model is more complex. The number of rules does not cause any significant difference, however the number of interacting agents does. Once there are many agents, the time of one \emph{match \& replace} step rises dramatically. Compared to indirect methods when at first the reaction network is enumerated, the initial step can be resources consuming, but then the rule application itself is fast regardless the number of agents.
+From the implementation point of view, execution of the models was delayed by the conversion to Kappa and then calling Kappa core to execute its semantics. Moreover, Kappa uses network-free simulator, which is very efficient for small models, because the rules are executed directly. Each rule is being matched on current state and then matched objects are replaced according to the rule. The problem is when the model is more complex. The number of rules does not cause any significant difference, however the number of interacting agents does. Once there are many agents, the time of one \emph{match \& replace} step rises dramatically. Compared to indirect methods when at first the reaction network is enumerated, the initial step can be resources consuming, but then the rule application itself is fast regardless the number of agents.
 
-For the reasons mentioned above we decided to redefine the BCSL language. Particularly, the syntax definition had to be refined in order to make the usability more clear. From semantic point of view, we needed a straightforward definition, which would have practical use in implementation. Experience from previous versions showed that using direct rule-based semantics were not very efficient mechanisms. For that reason, we have chosen an indirect definition via translation to reactions -- \emph{practical} definition (Section~\ref{formal_definition}). The practical in this case means that this approach can be efficiently used in implementation.
+For the reasons mentioned above we decided to redefine the BCSL language. Particularly, the syntax definition had to be refined in order to make the usability more clear. From semantic point of view, we needed a straightforward definition, which would have practical use in implementation. Experience from previous versions showed that using direct rule-based semantics was not very efficient mechanisms. For that reason, we have chosen an indirect definition via translation to reactions -- \emph{practical} definition (Section~\ref{formal_definition}). The practical in this case means that this approach can be efficiently used in implementation.
 
-In Section~\ref{bcs_general}, we have motivated the level of abstraction we need to use in BCS. To achieve that, we decided to neglect structural details, i.e. we do not employ binding approach. We consider binding as too low level of details. Instead, we improved definition of interacting agents to higher level, when an agent might expresses some kind of structural description (Figure~\ref{abstraction_comparision}). This way we avoid complicated creation of complexes and reduce complicated syntax.
+In Section~\ref{bcs_general}, we have motivated the level of abstraction we need to use in BCS. To achieve that, we decided to neglect structural details, i.e. we do not employ binding approach. We consider the binding as too low level of details. Instead, we improved definition of interacting agents to higher level, when an agent might expresses some kind of structural description (Figure~\ref{abstraction_comparision}). This way we avoid complicated creation of complexes and reduce complicated syntax.
 
-Also, we determine two types of complexes. None of them is literally a complex, we rather see it as a coexistence. It allows us to express even other types of interaction. We also determine whether the expressed complex is complete, i.e. the enumerated subparts are all which form the complex. The other type of complex expresses the fact that subparts play an important role in the complex, but there are more parts which we do not model, but this fact is important for semantics of the model.
+We determine two types of complexes. None of them is literally a complex, we rather see it as a coexistence. It allows us to express even other types of interaction. We also determine whether the expressed complex is complete, i.e. the enumerated subparts are all which form the complex. The other type of complex expresses the fact that subparts play an important role in the complex, but there are more parts which we do not model, and this fact is important for semantics of the model.
 
 \chapter{Formal definition}
 \label{formal_definition}
@@ -1055,7 +1055,7 @@ $(\chi, \omega, \iota, \varphi, \psi) \in \mathds{R}$ such that\\
 
 \hspace*{-0.3cm}$\psi =$ & \hspace*{-0.3cm}{\small $\{~ (i, -) ~|~ i \in [k, \pi_\iota(\varphi)] \wedge k = | \omega | - \pi_\iota(\varphi) + 1 ~| ~\} ~\cup$ } \\
 
-& \hspace*{-0.3cm}{\small $ \{~ (-, j) ~|~ j \in [k, |\omega|] \wedge k = 2 * \pi_{\iota}(\varphi) + 1 ~\}$}
+& \hspace*{-0.3cm}{\small $ \{~ (-, j) ~|~ j \in [k, |\omega|] \wedge k = 2 \times \pi_{\iota}(\varphi) + 1 ~\}$}
 
 \end{tabular}
 
@@ -1129,12 +1129,12 @@ For a pair of structure agents $\mathtt{T}, \mathtt{T}'$ we expand both partial 
 
 Finally, ground form of a rule $\mathtt{R}$ is a Cartesian product of sets created for each pair of agents by applying ground from function. The pairs are given by order in index map $\psi$.
 
-\section{Construction of reactions}
+\section{Reactions construction}
 \label{Generating reactions}
 
 Given a rule $\mathtt{R}$, we can produce appropriate reactions using ground forms and subsequent application of reassembly operation $\Xi$.
 
-\begin{definition}{Construction of reactions}\label{generate_reactions}
+\begin{definition}{Reactions construction}\label{generate_reactions}
 \begin{center}
 \begin{tabular}{ r@{\hskip 0.05cm}l }
 $\mathtt{Reactions}(\mathtt{R}) =$ & $\{~ (\mathtt{seq}, \iota) ~|~ y \in \Xi(\mathcal{G}(\mathtt{R})) ~\}$\\
@@ -1200,7 +1200,7 @@ The quantitative semantics of model $\mathcal{M}$ are given in terms of a \emph{
 
 CRM semantics might lead to possibly infinite LTS. This process can be limited by a global bound, which makes sure the produced LTS is finite (Section~\ref{optimal_bound}).
 
-\section{Construction of model}
+\section{Model construction}
 
 In this section, we define relation between CRM and BCSL models and show how can their LTSs be translated to each other.
 
@@ -1448,11 +1448,11 @@ $\beta_1::\mathtt{c} + \beta_2::\mathtt{c} + \ldots + \beta_n::\mathtt{c} \Right
 we might reorder both sides such that we get non-crossing partition $\mathcal{P} = B_1/B_2/\ldots/B_k$ from its indices $[1,\ldots,n]$ such that:
 
 \begin{center}
-$\forall B \in \mathcal{P}: \forall i,j \in B: \beta_i \equiv \beta_j$ 
+$\forall B \in \mathcal{P} ~\forall i,j \in B: \beta_i \equiv \beta_j$ 
 
 and
 
-$\forall B, B' \in \mathcal{P}: \forall \beta \in B ~\forall \beta' \in B': \beta \not\equiv \beta'$.
+$\forall B, B' \in \mathcal{P} ~\forall \beta \in B ~\forall \beta' \in B': \beta \not\equiv \beta'$.
 \end{center}
 
 For the left-hand side $\beta_1::\mathtt{c} + \beta_2::\mathtt{c} + \ldots + \beta_n::\mathtt{c}$ of the reordered rule expression we can replace all rule expressions $[\beta_i, \ldots, \beta_j]$ which belong to the same non-crossing partition $B$ by notation $`k~\beta'$, where $\beta$ is a representative from $\beta_i, \ldots, \beta_j$ (they are all equivalent) and $k$ is number of the expressions in partition $B$.
@@ -1537,11 +1537,11 @@ This is final syntactic extension. Compared to the original model (Running examp
 \chapter{Analysis}
 \label{analysis}
 
-In the previous chapters, we defined BCS language. From the provided examples and case study (Section~\ref{case_study}) it should be clear that it provides concise and readable notation when it comes to describing biological systems. Moreover, accompanied with relevant annotation information, it is suitable for building huge models.
+In the previous chapters, we defined BCS language. From the provided examples and the case study (Section~\ref{case_study}) it should be clear that it provides concise and readable notation when it comes to describing biological systems. Moreover, accompanied with relevant annotation information, it is suitable for building huge models.
 
 However, descriptive properties are not enough for using computational methods in order to analyse particular processes. In this chapter we describe basic approaches we employ for our language and propose several methods which could be potentially used in context of static analysis.
 
-We distinguish two general approaches in model analysis -- dynamic and static. Dynamic analysis is enabled by some form of executing the model. It requires either enumerating all possible scenarios of behaviour of a model (called \emph{state space}) or applying assumptions in order to calculate an average behaviour (such as simulation). Static analysis provides information without execution of the model, just by investigating its structure. Both approaches require to build particular mechanisms which enable application of the analysis.
+We distinguish two general approaches in model analysis -- dynamic and static. Dynamic analysis is enabled by some form of model execution. It requires either enumerating all possible scenarios of behaviour of a model (called \emph{state space}) or applying assumptions in order to calculate an average behaviour (such as simulation). Static analysis provides information without execution of the model, just by investigating its structure. Both approaches require to build particular mechanisms which enable application of the analysis.
 
 \section{Dynamic analysis}
 
@@ -1549,18 +1549,18 @@ Dynamic analysis is a very common way how to analyse models written in formal re
 
 \subsection{Model checking}
 
-Model checking is an approach of checking whether given model meets a given specification~\cite{clarke1999model}. Typically this is done by specifying given requirements in a temporal logic formula and then check whether a given structure satisfies the formula.
+Model checking is an approach of checking whether a given model meets a given specification~\cite{clarke1999model}. Typically this is done by specifying given requirements in a temporal logic formula and then check whether a given structure satisfies the formula.
 
 The model checking of BCSL models can be enabled because we are able to generate LTS (Definition~\ref{lts}), but it is not a goal of this thesis. However, we are interested in a particular subtask of model checking -- the reachability analysis.
 
-The reachability analysis is a particular task of model checking for determining whether a chosen state is reachable in the LTS of a model.
+The reachability analysis is a particular task of model checking for determining whether a chosen state is reachable in the LTS of a model from a given set of initial states.
 
 \begin{definition}{Reachability relation}
 \label{reachability_relation}
 For an LTS $\mathcal{L} = (S, A, T, s_0)$ the \emph{reachability relation} of $\mathcal{L}$ is the transitive closure of $T$, which is the set of all ordered pairs $(s,t)$ of states in $S$ for which there exists a sequence of states $s = s_0, s_1, s_2, \ldots, s_k = t$ such that the transition $(s_{i-1}, a, s_i)$ is in $T$ for all $1 \leq i \leq k$ and for some $a$ in $A$.
 \end{definition}
 
-In our case, reachability analysis can be generalised to checking whether for some multiset of complex agents $\mathtt{s}'$ there exists a reachable state $s \in S$ of an LTS $\mathcal{L}$ such that $\mathtt{s}' \subseteq s$. In other words, we are interested only in particular agents regardless other context in the reachable state. This might generally lead to multiple reachable states and then we can for example consider a shortest path.
+In our case, reachability analysis can be generalised to checking whether for some multiset of complex agents $\mathtt{s}'$ there exists a reachable state $s \in S$ of an LTS $\mathcal{L}$ such that $\mathtt{s}' \subseteq s$. In other words, we are interested only in particular agents regardless other context in the reachable state. In general, it might lead to multiple reachable states and then we can for example consider a shortest path.
 
 In the case when we consider reachability \emph{only} from the initial state $s_0$, the task becomes simpler. The reason is all other states are actually reachable, because the entire state space was generated from this state. Then we are only searching for a state $s \in S$ such that $\mathtt{s}' \subseteq s$ if we are not interested in \emph{how} was the state reached (the particular path).
 
@@ -1637,7 +1637,7 @@ A compatible set $\mathscr{X}$ contains partially ordered complex agents. Assumi
 
 \begin{lemma}
 \label{global_supremum}
-In every compatible set $\mathscr{X}$, there always exists a global supremum $\mathtt{sup}(\mathscr{X})$, what is an ancestor of all the remaining agents in the set (Remark~\ref{order_in_compat_set}).
+In every compatible set $\mathscr{X}$, there always exists a global supremum $\mathtt{sup}(\mathscr{X})$, which is an ancestor of all the remaining agents in the set (Remark~\ref{order_in_compat_set}).
 \end{lemma}
 
 \begin{proof}
@@ -1703,7 +1703,7 @@ The redundant rule expression $\varrho$ does not add any semantic information to
 
 \begin{theorem}
 \label{redundant_if}
-Let $\varrho, \varrho'$ be two rule expressions of form:
+Let $\varrho, \varrho'$ be two rule expressions of the form:
 \begin{center}
 $ \Gamma_1 + \Gamma_2 + \ldots + \Gamma_n \Rightarrow \Gamma_{n+1} + \Gamma_{n+2} + \ldots + \Gamma_{m} $
 \end{center}
@@ -1813,7 +1813,7 @@ $\forall \mathtt{s}'_i, \mathtt{s}'_{i+1} ~\exists \mathtt{s}_k, \mathtt{s}_l : 
 
 \end{definition}
 
-A reduced model $\widetilde{\mathds{M}}$ is actually an over-approximation of a BCSL model $\mathds{M}$ in context of their LTSs (Definition~\ref{over_approximation}). It can be used for some types of analyses which avoid combinatorial explosion of the original model $\mathds{M}$.
+A reduced model $\widetilde{\mathds{M}}$ is actually an over-approximation of a BCSL model $\mathds{M}$ in the context of their LTSs (Definition~\ref{over_approximation}). It can be used for some types of analyses which avoid combinatorial explosion of the original model $\mathds{M}$.
 
 \begin{theorem}
 \label{non-reachability_in_reduced}
@@ -1831,11 +1831,11 @@ If we are checking whether an agent is reachable in $LTS(\mathds{M})$ for given 
 \subsection{Static reachability analysis}
 \label{static_reachability_analysis}
 
-Since we have defined compatibility operator for agents, we can apply static reachability analysis before enumerating whole state space of the model $\mathds{M}$. This analysis has its limitations, but can serve for checking whether a complex agent $\mathtt{X}$ is \emph{non-reachable} (similar to Section~\ref{context_reduction}).
+Since we have defined compatibility operator for agents, we can apply static reachability analysis before enumerating whole state space of the model $\mathds{M}$. This analysis has its limitations but can serve for checking whether a complex agent $\mathtt{X}$ is \emph{non-reachable} (similar to Section~\ref{context_reduction}).
 
 \begin{theorem}
 \label{static_reach}
-Let $\mathcal{R}_f$ be a set of rules created from set of rule expressions $\mathcal{R}$ of given model $\mathds{M}$ using semantic function $\mathtt{F}$. Let $\mathtt{X}$ be a complex agent. The complex agent $\mathtt{X}$ is non-reachable w.r.t. set of rules $\mathcal{R}_f$ if the following holds:
+Let $\mathcal{R}_f$ be a set of rules created from a set of rule expressions $\mathcal{R}$ of given model $\mathds{M}$ using semantic function $\mathtt{F}$. Let $\mathtt{X}$ be a complex agent. The complex agent $\mathtt{X}$ is non-reachable w.r.t. set of rules $\mathcal{R}_f$ if the following holds:
 
 \begin{center}
 $\forall~ \mathtt{R} \in \mathcal{R}_f ~\forall i \in [\iota+1, \ldots, |\chi|] : \neg ( \pi_i(\chi) \lhd \mathtt{X})$
@@ -1898,7 +1898,7 @@ We can discuss the fact that desired signature might be in some manner \emph{lar
 % Let $\mathcal{M}$ be a BCSL model and $\Sigma$ its minimal signatures (i.e., all states and partial compositions defined in the signatures are actually used in the rules). Then, signatures $\Sigma'$ obtained by procedure (ref blah) has to be equal to the original signature $\Sigma$. In case its not, it means either there is some extra data in the $\Sigma'$ or some data is missing. Since we create $\Sigma'$ by iterating through all the rules, we construct complete signature with complete states used in the model. Therefore, if some data are missing in $\Sigma'$, then it follows given signature $\Sigma$ is not minimal. On the other hand, if there are some extra data in $\Sigma'$, then given signature $\Sigma$ is incorrect -- its missing some structure details which are being used in the model. $\QEDA$
 % \end{proof}
 
-\subsection{Translation to Petri Net}
+\subsection{Translation to Petri Nets}
 
 By generating reaction-based model from rule-based, which is always possible (Section~\ref{Generating reactions}), we can furthermore translate such model to a Petri Net~\cite{petri}.
 
@@ -2063,9 +2063,9 @@ $ERK::cyt$ & + & $FRS::cyt $ & $ \Leftrightarrow $ & $ ERK.FRS::cyt$\\
 \chapter{Implementation}
 \label{implementation}
 
-In order to support usability of the BCSL language, we developed a prototype software tool BCSgen. The general goal of the tool is to provide environment suitable for editing and maintenance of the BCSL models and provide functionality to analyse the models. The software was developed in several iterations. At first as a project MUNI33/092015 in \emph{Dean's Program of the Faculty of Informatics MU for support of student research and development projects}, later as part of the project MUNI33/062017 in the same program. It was further extended to current stage in this thesis.
+In order to support usability of the BCSL language, we developed a prototype software tool BCSgen. The general goal of the tool is to provide environment suitable for editing and maintenance of the BCSL models and provide functionality to analyse the models. The software was developed in several iterations. At first as a project MUNI33/092015 in \emph{Dean's Program of the Faculty of Informatics MU for support of student research and development projects}, later as a part of the project MUNI33/062017 in the same program. It was further extended to the current stage in this thesis.
 
-The tool is developed in Python language (version 2.7) as open-source desktop software build under GPL-3.0 license. The source code, a short tutorial for usage and installation, and current stable version are available on GitHub\footnotemark[1]\footnotetext[1]{\url{https://github.com/sybila/BCSgen}}.
+The tool is developed in Python language (version 2.7) as open-source desktop software under GPL-3.0 license. The source code, a short tutorial for usage and installation, and current stable version are available on GitHub\footnotemark[1]\footnotetext[1]{\url{https://github.com/sybila/BCSgen}}.
 
 In the first version, there was no support for editing the models. The only functionality provided by the tool was import of the model from a text file (in a predefined format) and enumerating entire state space of the model. The implementation was done by translating to Kappa and it was rather slow and non-efficient. The single transaction (application of one rule) was delayed by translation to Kappa and then by exact matching and replacement, which might get quite complicated. However, it was a good start for the language and it was possible to analyse exported networks in external tools. There was simple GUI made in Tkinter~\cite{Tkinter}, which had several issues. The most important one was the fact that Tkinter was not designed for multithreading programming. For example, while computing a state space for the model, the whole GUI was not responsible.
 
@@ -2118,10 +2118,10 @@ The next goal for the future work is to make some of the static analyses more ge
 
 Finally, as a future work for the tool BCSgen we are planning to reimplement it to a web-based version. It should be integrated in Comprehensive Modelling Platform (Section~\ref{cmp}) to allow direct analysis of the models and appropriate parts of Biochemical Space.
 
-\bibliographystyle{plain}
-{\small
+\bibliographystyle{siam} %plain ?
+%{\small
 \bibliography{papers}
-}
+%}
 
 \begin{appendices}
 
