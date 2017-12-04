@@ -580,7 +580,7 @@ The Experiments repository is a module for storage and presentation of time-seri
 
 Biochemical Space as described in Section~\ref{bcs_general} can grow to enormous size. To be able to detect inconsistency with automatic tools and enable further analysis of the space it is necessary to keep it on a formal level.
 
-In our last paper~\cite{Ded201627}, we have defined Biochemical Space Language (BCSL) such that syntax has been defined independently, but semantics has been defined via translating to the Kappa language~\cite{kappa_formal}. We wanted to keep the language as concise as possible. The rule-based approach was the best choice, because it was capable to capture required details for biological systems while keeping the description concise. It was supposed to be \emph{human-readable}, which in this context means easy to read, write, and maintain by humans even from other disciplines than computer science. However, there are many rule-based languages, and each of them is slightly different on syntactic and semantic level and also on the level of abstraction. After some research (Section~\ref{rule_based_languages}), we have evaluated all the existing languages as not suitable for our purposes. The closest representation to the desired one was Kappa language (Section~\ref{kappa}). That is the reason why in the first version we have chosen translation to Kappa for definition of semantics.
+In our last paper~\cite{Ded201627}, we have defined Biochemical Space Language (BCSL) such that syntax has been defined independently, but semantics has been defined via translating to the Kappa language~\cite{kappa_formal}. We wanted to keep the language as concise as possible. The rule-based approach was the best choice, because it was capable to capture required details for biological systems while keeping the description concise. It was supposed to be \emph{human-readable}, which in this context means easy to read, write, and maintain by humans even from other disciplines than computer science. However, there are many rule-based languages, and each of them is slightly different on syntactic and semantic level and also on the level of abstraction. After some research (Section~\ref{rule_based_languages}), we have evaluated all the existing languages as not suitable for our purposes. The closest representation to the desired one was the Kappa language (Section~\ref{kappa}). That is the reason why in the first version we have chosen translation to Kappa for definition of semantics.
 
 However, this approach is not very beneficial since we are not fully using the expressive power of our language. The problem is that Kappa operates purely on expression levels. We want to promote our language to a higher level and have it operate on objects in multisets. By translating to Kappa we loose such abstraction. 
 
@@ -597,7 +597,7 @@ The indirect approach had several disadvantages. Kappa has only one type of agen
 
 From the implementation point of view, execution of the models was delayed by the conversion to Kappa and then calling Kappa core to execute its semantics. Moreover, Kappa uses a network-free simulator, which is very efficient for small models, because the rules are executed directly. Each rule is being matched on current state and then matched objects are replaced according to the rule. The problem arises when the model is more complex. The number of rules does not cause any significant difference, however the number of interacting agents does. Once there are many agents, the time of one \emph{match \& replace} step rises dramatically. Compared to indirect methods when at first the reaction network is enumerated, the initial step can be resources consuming, but then the rule application itself is fast regardless the number of agents.
 
-For the reasons mentioned above we decided to redefine the BCSL language. Particularly, the syntax definition had to be refined in order to make the usability more clear. From the semantic point of view, we needed a straightforward definition, which would have a practical use in implementation. Experience from previous versions showed that using the direct rule-based semantics was not very efficient mechanisms. For that reason, we have chosen an indirect definition via translation to reactions -- \emph{practical} definition (Section~\ref{formal_definition}). Practical in this case means that this approach can be efficiently used in implementation.
+For the reasons mentioned above we decided to redefine the BCS language. Particularly, the syntax definition had to be refined in order to make the usability more clear. From the semantic point of view, we needed a straightforward definition, which would have a practical use in implementation. Experience from previous versions showed that using the direct rule-based semantics was not very efficient mechanisms. For that reason, we have chosen an indirect definition via translation to reactions -- \emph{practical} definition (Section~\ref{formal_definition}). Practical in this case means that this approach can be efficiently used in implementation.
 
 In Section~\ref{bcs_general}, we have motivated the level of abstraction we need to use in BCS. To achieve that, we decided to neglect structural details, i.e. we do not employ binding approach. We consider the binding as a too low level of details. Instead, we improved the definition of interacting agents to higher level, when an agent might express some kind of structural description (Figure~\ref{abstraction_comparision}). This way we avoid complicated creation of complexes and reduce complicated syntax.
 
@@ -615,7 +615,7 @@ The defined semantics is indirect, i.e. we do not give semantic sense to rules t
 Before we proceed, we provide some basic definitions and notations in order to build the formal definition for the language. Note we usually use the colon to denote the condition in a logic formula.
 
 \begin{definition}{Multiset}
-We define a \emph{multiset} $O$ as a pair $(A, \mathtt{m})$ where $A$ is some set and $ \mathtt{m} : A \rightarrow \mathbb{N} $ is a function from $A$ to the set of natural numbers. The set $A$ is called the \emph{underlying set of elements}. For each $a$ in $A$ the \emph{multiplicity} (that is, number of occurrences) of a is the number $\mathtt{m}(a)$.
+We define a \emph{multiset} $O$ as a pair $(A, \mathtt{m})$ where $A$ is a set and $ \mathtt{m} : A \rightarrow \mathbb{N} $ is a function from $A$ to the set of natural numbers. The set $A$ is called the \emph{underlying set of elements}. For each $\mathtt{a}$ in $A$ the \emph{multiplicity} (that is, number of occurrences) of $\mathtt{a}$ is the number $\mathtt{m}(\mathtt{a})$.
 \end{definition}
 
 \begin{notation}
@@ -665,10 +665,10 @@ Let $\vv{v} = (x_1, \ldots, x_n)$ be a vector. By $\sigma(\vv{v})$ we denote a s
 \emph{Labelled transition system} (LTS) $\mathcal{L}$ is a quadruple $(S, A, T, s_0)$ where:
 
 \begin{itemize}
-  \item $S$ is a (potentially infinite) set of states (solutions),
-  \item $A$ is a set of labels (reactions),
-  \item $T \subseteq S \times A \times S$ is a transition relation (the map-apply action),
-  \item $s_0 \in S$ is the initial state (initial solution).
+  \item $S$ is a (potentially infinite) set of states,
+  \item $A$ is a set of labels,
+  \item $T \subseteq S \times A \times S$ is a transition relation,
+  \item $s_0 \in S$ is the initial state.
 \end{itemize}
 \end{definition}
 
@@ -825,7 +825,7 @@ We use the symbol $\mathds{X}$ to denote the universe of all possible structure 
 \begin{example}{Complex agent}\label{example:complex}
 
 \begin{itemize}
-\item A complex agent $\mathtt{X} = (\textcolor{green}{(}(K, \textcolor{red}{\{}(S, p), (Q, i)\textcolor{red}{\}}), (S, p)\textcolor{green}{)}, cytosol)$
+\item A complex agent $\mathtt{X} = \big(\textcolor{green}{(}(K, \textcolor{red}{\{}(S, p), (Q, i)\textcolor{red}{\}}), (S, p)\textcolor{green}{)}, cytosol \big)$
 \begin{itemize}
 	\item written as $K(S\{p\}, Q\{i\}).S\{p\}::cytosol$
 \end{itemize}
@@ -850,7 +850,7 @@ We define a \emph{rule} $\mathtt{R}$ as a quintuple $(\chi, \omega, \iota, \varp
 where $n, m \in \mathbb{N}$.
 \end{definition}
 
-The reason for this particular definition of the rule is a so-called \emph{practical} approach of semantics which can be seen in following sections. Also, it is necessary to capture the relationship between the left and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map between the agents in $\psi$. Another index map $\varphi$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, by index $\iota$ we determine the end of left-hand side of the rule. Note the index is zero in the situation when we have no agents on the left-hand side.
+The reason for this particular definition of the rule is a so-called \emph{practical} approach of semantics which can be seen in following sections. Also, it is necessary to capture the relationship between the left and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map $\psi$ between the agents in $\omega$. Another index map $\varphi$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, by index $\iota$ we determine the end of left-hand side of the rule. Note the index is zero in the situation when we have no agents on the left-hand side.
 
 \begin{notation}
 We use symbol $\mathds{R}$ to denote the universe of all possible rules.
