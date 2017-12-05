@@ -183,7 +183,7 @@ The rules are patterns which describe behaviour of groups of objects. A rule has
 \hspace*{1cm}
 \subfloat[]{\includegraphics[scale=0.23]{pics/solution_second}\label{sol:s2}}
 \end{center}
-\caption{Examples of solutions. \textbf{(a)} An example of graphical representation of a solution. \textbf{(b)} Updated solution after the rules from Figure~\ref{rules:fig} were applied. The first rule \emph{(1)} was applied on the yellow {\large $\square$} and the green $\bigcirc$ and produced the yellow-green complex {\large $\square$}--$\bigcirc$. Note there are more options how the rule could be mapped -- each combination of free {\large $\square$} and $\bigcirc$. The second rule \emph{(2)} was applied on the red-cyan complex {\large $\square$}--$\bigcirc$ where the colour of {\large $\square$} was changed from red to green. The third rule \emph{(3)} couldn't be applied because there is no such complex with a yellow $\bigcirc$. }\label{solutions:fig}
+\caption{Examples of solutions. \textbf{(a)} An example of graphical representation of a solution. \textbf{(b)} Updated solution after the rules from Figure~\ref{rules:fig} were applied. The first rule (1) was applied on the yellow {\large $\square$} and the green $\bigcirc$ and produced the yellow-green complex {\large $\square$}--$\bigcirc$. Note there are more options how the rule could be mapped -- each combination of free {\large $\square$} and $\bigcirc$. The second rule (2) was applied on the red-cyan complex {\large $\square$}--$\bigcirc$ where the colour of {\large $\square$} was changed from red to green. The third rule (3) couldn't be applied because there is no such complex with a yellow $\bigcirc$. }\label{solutions:fig}
 \end{figure}
 
 % replace all 
@@ -213,7 +213,7 @@ The rules are patterns which describe behaviour of groups of objects. A rule has
     {\hspace*{1.3cm}\includegraphics[scale=0.2]{pics/rule_diss}}
 \end{minipage}
 \end{center}
-\caption{Examples of rules. Rule \textbf{(1)}: a {\large $\square$} and a $\bigcirc$ can form a complex {\large $\square$}--$\bigcirc$ regardless their colours. Rule \textbf{(2)}: a {\large $\square$} is allowed to change its colour from red to green only if is in a complex with a $\bigcirc$ regardless its colour. Rule \textbf{(3)}: the rule can disassemble the complex only if the $\bigcirc$ is yellow.}\label{rules:fig}
+\caption{Examples of rules. Rule \textbf{(1)}: a {\large $\square$} and a $\bigcirc$ can form a complex {\large $\square$}--$\bigcirc$ regardless their colours. Rule \textbf{(2)}: a {\large $\square$} is allowed to change its colour from red to green only if it is in a complex with a $\bigcirc$ regardless its colour. Rule \textbf{(3)}: the rule can disassemble the complex only if the $\bigcirc$ is yellow.}\label{rules:fig}
 \end{figure}
 
 The rule is mapped on a solution. Then it can be applied and a new solution is produced. The mapping is not always successful (Figure~\ref{solutions:fig}, application of rule 3).
@@ -243,7 +243,7 @@ The mapping of a rule on a solution can be understood as a particular moment whe
     {\hspace*{1.3cm}\includegraphics[scale=0.2]{pics/rule_reaction}}
 \end{minipage}
 \end{center}
-\caption{Example of a map-apply action. As a solution, we use the solution \emph{(a)} from Figure~\ref{solutions:fig}. \textbf{(a)} Rule can be mapped on a {\large $\square$} and a $\bigcirc$ regardless their colours and form a complex {\large $\square$}--$\bigcirc$.  \textbf{(b)} We randomly choose the yellow {\large $\square$} and the green $\bigcirc$ from our solution. The rule was mapped on chosen objects and they were assigned to the left-hand side of the rule. \textbf{(c)} The rule was applied and new object (the yellow-green complex {\large $\square$}--$\bigcirc$) was created. We obtained the reaction describing the particular action which has just happened.}\label{map-apply:fig}
+\caption{Example of a map-apply action. As a solution, we use the solution (a) from Figure~\ref{solutions:fig}. \textbf{(a)} Rule can be mapped on a {\large $\square$} and a $\bigcirc$ regardless their colours and form a complex {\large $\square$}--$\bigcirc$.  \textbf{(b)} We randomly choose the yellow {\large $\square$} and the green $\bigcirc$ from our solution. The rule was mapped on chosen objects and they were assigned to the left-hand side of the rule. \textbf{(c)} The rule was applied and new object (the yellow-green complex {\large $\square$}--$\bigcirc$) was created. We obtained the reaction describing the particular action which has just happened.}\label{map-apply:fig}
 \end{figure}
 
 The mapping can also be seen as assigning particular objects from the solution to types on the left-hand side of the rule. The rule application then represents the change of the mapped objects to new objects according to the right-hand side of the rule (i.e., particular objects are assigned to the right-hand side). As a by-product, we obtain an instance of the rule -- a reaction (Figure~\ref{map-apply:fig}).
@@ -260,8 +260,9 @@ A rule is a generalised reaction (Figure~\ref{reaction_vs_rule}). This is how th
 \end{center}
 \caption{Graphical comparison of the rule-based and the reaction-based approaches~\cite{sneddon2011efficient}. There can be seen combinatorial explosion in the number of possible particular interactions (the reactions), which can be depicted in a few simple rules.}\label{reaction_vs_rule}
 \end{figure}
+\vspace*{-0.1cm}
 
-Analysing the rules directly is not the best choice. The main reason are \emph{side effects}, which might happen during the rule application. These side effects differ from language to language. There is no such thing for the reactions because the entire context is enumerated explicitly. Basically, we cannot directly know how exactly the rule will be used.
+Analysing the rules directly is not the best choice. The main reason are \emph{side effects}, which might happen during the rule application. These side effects differ from language to language. There is no such thing for the reactions because the entire context is enumerated explicitly. We cannot know how exactly the rule will be used before it is applied.
 
 The rule and the reaction differ in the level of abstraction. In this context we mean how stringent it is, not what sort of features a particular language uses. This is the universal attribute for all rule-based languages -- the rule is always more abstract than its instance -- the reaction. The analysis of such abstract objects statically is a challenge. The reason is that most of the structural information is encoded in the rules implicitly. Explicit data are more suitable for static analysis.
 
@@ -552,12 +553,12 @@ In some cases, emphasis on detailed description leads to a very complex BCS mode
 \end{tabular}}
 }
 \end{center}
-\caption{A rule employing structure entity state change. A Threonine ($Thr$) amino acid residue of a $FGF$ protein inside a $FGFR2$ complex can change its state from unphosphorylated ($u$) to phosphorylated ($p$) (and vice versa).}\label{rule_example}
+\caption{A rule employing entity state change. A threonine ($Thr$) amino acid residue of a $FGF$ protein inside a $FGFR2$ complex can change its state from unphosphorylated ($u$) to phosphorylated ($p$) (and vice versa).}\label{rule_example}
 \end{figure}
 
-Higher abstraction comes into account when several electrons play `musical chairs' inside protein complexes. The issue is that parts of the processing protein complex can have different unstable states during a short period of time. When one tries to define all rules among these proteins, combinatorial explosion of the number of states of the complex arises. Not all of these combinations are biologically correct. Even when excluding biologically inadmissible cases, the number of states is still enormous. For the purpose of BCS, we introduce a solution -- we treat a protein complex as a structure entity on which structurally simpler atomic entities change their states (not necessarily proteins) and we abstract out the background processes.
+Higher abstraction comes into account when several electrons play `musical chairs' inside protein complexes. The issue is that parts of the processing protein complex can have different unstable states during a short period of time. When one tries to define all rules among these proteins, combinatorial explosion of the number of states of the complex arises. Not all of these combinations are biologically correct. Even when excluding biologically inadmissible cases, the number of states is still enormous. For the purpose of BCS, we introduce a solution -- we treat a protein complex as a structure entity on which atomic entities change their states (not necessarily proteins) and we abstract out the background processes.
 
-When describing particular process or object we can go almost infinitely deep into the details. Even if the depth is not infinite, it is deep enough to lead into a state when the description is larger than object itself. Imagine that you want to describe a molecule as the position of each atom. You definitely need more space to store such information than the molecule itself occupies.
+When describing particular process or object we can go almost infinitely deep into the details. Even if the depth is not infinite, it is deep enough to lead into a state when the description is larger than object itself. Imagine that you want to describe a molecule as the position of each atom. You might need more space to store such information than the molecule itself occupies.
 
 When creating BCS for a system, we choose a level of detail which we do not exceed. This ensures the size of BCS will not exponentially increase with additional details. The problem can occur when we try to map a model which uses more detailed description of the system than BCS does. However, we simply allow relating multiple model objects to BCS objects and vice versa. For example, multiple model reactions might be mapped on a single BCS rule denoting the fact that the process represented by the rule can be described in more details by the reactions. On the other hand, the model might neglect some details. Then for example, a reaction can be mapped on multiple rules with similar meaning than in the previous case.
 
@@ -566,7 +567,7 @@ Since CMP allows export of models in SBML format, we employ resolvable identifie
 \subsection{Model Repository}
 \label{model}
 
-The Model repository is a collection of implemented mathematical models describing particular parts of the biological processes. Each model is represented as a set of ordinary differential equations generated from the model reaction network. Models are integrated within BCS. In particular, each model component should be related to some BCS entity and each model reaction should be related to some BCS rule. The model is associated with some parameter value sets (\emph{data sets}) that enable simulation in a particular biologically-relevant scenarios. Additionally, several basic non-parameter-specific static analysis techniques based on model stoichiometry are also provided.
+The Model repository is a collection of implemented mathematical models describing particular parts of the biological processes. Each model is represented as a set of ordinary differential equations generated from the model reaction network. Models are integrated within BCS. In particular, each model component should be related to some BCS entity and each model reaction should be related to some BCS rule. The model is associated with some parameter value sets (\emph{data sets}) that enable simulation in a particular biologically-relevant scenarios.
 
 An implemented model then includes complete biological annotation of all components and reactions that is provided by a mapping to BCS. This can help to find connections and overlaps among models. Further, implemented model can be exported to SBML.
 
@@ -579,7 +580,7 @@ The Experiments repository is a module for storage and presentation of time-seri
 
 Biochemical Space as described in Section~\ref{bcs_general} can grow to enormous size. To be able to detect inconsistency with automatic tools and enable further analysis of the space it is necessary to keep it on a formal level.
 
-In our last paper~\cite{Ded201627}, we have defined Biochemical Space Language (BCSL) such that syntax has been defined independently, but semantics has been defined via translating to the Kappa language~\cite{kappa_formal}. We wanted to keep the language as concise as possible. The rule-based approach was the best choice, because it was capable to capture required details for biological systems while keeping the description concise. It was supposed to be \emph{human-readable}, which in this context means easy to read, write, and maintain by humans even from other disciplines than computer science. However, there are many rule-based languages, and each of them is slightly different on syntactic and semantic level and also on the level of abstraction. After some research (Section~\ref{rule_based_languages}), we have evaluated all the existing languages as not suitable for our purposes. The closest representation to the desired one was Kappa language (Section~\ref{kappa}). That is the reason why in the first version we have chosen translation to Kappa for definition of semantics.
+In our last paper~\cite{Ded201627}, we have defined Biochemical Space Language (BCSL) such that syntax has been defined independently, but semantics has been defined via translating to the Kappa language~\cite{kappa_formal}. We wanted to keep the language as concise as possible. The rule-based approach was the best choice, because it was capable to capture required details for biological systems while keeping the description concise. It was supposed to be \emph{human-readable}, which in this context means easy to read, write, and maintain by humans even from other disciplines than computer science. However, there are many rule-based languages, and each of them is slightly different on syntactic and semantic level and also on the level of abstraction. After some research (Section~\ref{rule_based_languages}), we have evaluated all the existing languages as not suitable for our purposes. The closest representation to the desired one was the Kappa language (Section~\ref{kappa}). That is the reason why in the first version we have chosen translation to Kappa for definition of semantics.
 
 However, this approach is not very beneficial since we are not fully using the expressive power of our language. The problem is that Kappa operates purely on expression levels. We want to promote our language to a higher level and have it operate on objects in multisets. By translating to Kappa we loose such abstraction. 
 
@@ -596,7 +597,7 @@ The indirect approach had several disadvantages. Kappa has only one type of agen
 
 From the implementation point of view, execution of the models was delayed by the conversion to Kappa and then calling Kappa core to execute its semantics. Moreover, Kappa uses a network-free simulator, which is very efficient for small models, because the rules are executed directly. Each rule is being matched on current state and then matched objects are replaced according to the rule. The problem arises when the model is more complex. The number of rules does not cause any significant difference, however the number of interacting agents does. Once there are many agents, the time of one \emph{match \& replace} step rises dramatically. Compared to indirect methods when at first the reaction network is enumerated, the initial step can be resources consuming, but then the rule application itself is fast regardless the number of agents.
 
-For the reasons mentioned above we decided to redefine the BCSL language. Particularly, the syntax definition had to be refined in order to make the usability more clear. From the semantic point of view, we needed a straightforward definition, which would have a practical use in implementation. Experience from previous versions showed that using the direct rule-based semantics was not very efficient mechanisms. For that reason, we have chosen an indirect definition via translation to reactions -- \emph{practical} definition (Section~\ref{formal_definition}). Practical in this case means that this approach can be efficiently used in implementation.
+For the reasons mentioned above we decided to redefine the BCS language. Particularly, the syntax definition had to be refined in order to make the usability more clear. From the semantic point of view, we needed a straightforward definition, which would have a practical use in implementation. Experience from previous versions showed that using the direct rule-based semantics was not very efficient mechanisms. For that reason, we have chosen an indirect definition via translation to reactions -- \emph{practical} definition (Section~\ref{formal_definition}). Practical in this case means that this approach can be efficiently used in implementation.
 
 In Section~\ref{bcs_general}, we have motivated the level of abstraction we need to use in BCS. To achieve that, we decided to neglect structural details, i.e. we do not employ binding approach. We consider the binding as a too low level of details. Instead, we improved the definition of interacting agents to higher level, when an agent might express some kind of structural description (Figure~\ref{abstraction_comparision}). This way we avoid complicated creation of complexes and reduce complicated syntax.
 
@@ -614,7 +615,7 @@ The defined semantics is indirect, i.e. we do not give semantic sense to rules t
 Before we proceed, we provide some basic definitions and notations in order to build the formal definition for the language. Note we usually use the colon to denote the condition in a logic formula.
 
 \begin{definition}{Multiset}
-We define a \emph{multiset} $O$ as a pair $(A, \mathtt{m})$ where $A$ is some set and $ \mathtt{m} : A \rightarrow \mathbb{N} $ is a function from $A$ to the set of natural numbers. The set $A$ is called the \emph{underlying set of elements}. For each $a$ in $A$ the \emph{multiplicity} (that is, number of occurrences) of a is the number $\mathtt{m}(a)$.
+We define a \emph{multiset} $O$ as a pair $(A, \mathtt{m})$ where $A$ is a set and $ \mathtt{m} : A \rightarrow \mathbb{N} $ is a function from $A$ to the set of natural numbers. The set $A$ is called the \emph{underlying set of elements}. For each $\mathtt{a}$ in $A$ the \emph{multiplicity} (that is, number of occurrences) of $\mathtt{a}$ is the number $\mathtt{m}(\mathtt{a})$.
 \end{definition}
 
 \begin{notation}
@@ -664,10 +665,10 @@ Let $\vv{v} = (x_1, \ldots, x_n)$ be a vector. By $\sigma(\vv{v})$ we denote a s
 \emph{Labelled transition system} (LTS) $\mathcal{L}$ is a quadruple $(S, A, T, s_0)$ where:
 
 \begin{itemize}
-  \item $S$ is a (potentially infinite) set of states (solutions),
-  \item $A$ is a set of labels (reactions),
-  \item $T \subseteq S \times A \times S$ is a transition relation (the map-apply action),
-  \item $s_0 \in S$ is the initial state (initial solution).
+  \item $S$ is a (potentially infinite) set of states,
+  \item $A$ is a set of labels,
+  \item $T \subseteq S \times A \times S$ is a transition relation,
+  \item $s_0 \in S$ is the initial state.
 \end{itemize}
 \end{definition}
 
@@ -824,7 +825,7 @@ We use the symbol $\mathds{X}$ to denote the universe of all possible structure 
 \begin{example}{Complex agent}\label{example:complex}
 
 \begin{itemize}
-\item A complex agent $\mathtt{X} = (\textcolor{green}{(}(K, \textcolor{red}{\{}(S, p), (Q, i)\textcolor{red}{\}}), (S, p)\textcolor{green}{)}, cytosol)$
+\item A complex agent $\mathtt{X} = \big(\textcolor{green}{(}(K, \textcolor{red}{\{}(S, p), (Q, i)\textcolor{red}{\}}), (S, p)\textcolor{green}{)}, cytosol \big)$
 \begin{itemize}
 	\item written as $K(S\{p\}, Q\{i\}).S\{p\}::cytosol$
 \end{itemize}
@@ -849,7 +850,7 @@ We define a \emph{rule} $\mathtt{R}$ as a quintuple $(\chi, \omega, \iota, \varp
 where $n, m \in \mathbb{N}$.
 \end{definition}
 
-The reason for this particular definition of the rule is a so-called \emph{practical} approach of semantics which can be seen in following sections. Also, it is necessary to capture the relationship between the left and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map between the agents in $\psi$. Another index map $\varphi$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, by index $\iota$ we determine the end of left-hand side of the rule. Note the index is zero in the situation when we have no agents on the left-hand side.
+The reason for this particular definition of the rule is a so-called \emph{practical} approach of semantics which can be seen in following sections. Also, it is necessary to capture the relationship between the left and right-hand side of the rule. This is done by enumerating all atomic and structure agents in $\omega$ and consequently creating index map $\psi$ between the agents in $\omega$. Another index map $\varphi$ serves for relating agents from $\omega$ back to original sequence of complexes $\chi$. Finally, by index $\iota$ we determine the end of left-hand side of the rule. Note the index is zero in the situation when we have no agents on the left-hand side.
 
 \begin{notation}
 We use symbol $\mathds{R}$ to denote the universe of all possible rules.
