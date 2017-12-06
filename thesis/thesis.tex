@@ -764,7 +764,7 @@ Note the state $\varepsilon$ does not mean the agent is in \emph{none} state, bu
 \subsection{Structure agent}
 
 \begin{definition}{Structure agent}
-We define a \emph{structure agent} $\mathtt{T}$ as a pair $(\eta, \gamma)$ where $\eta \in \mathcal{N}_{T}$ is a name and $\gamma \subseteq \mathds{A}$ is a set of atomic agents called partial composition.
+We define a \emph{structure agent} $\mathtt{T}$ as a pair $(\eta, \gamma)$ where $\eta \in \mathcal{N}_{T}$ is a name and $\gamma \subseteq \mathds{A}$ is a set of atomic agents called partial composition such that $\forall \mathtt{A}, \mathtt{A}' \in \gamma : \eta(\mathtt{A}) \neq \eta(\mathtt{A}')$.
 \end{definition}
 
 A structure agent represents a biochemical object that is composed of several known atomic agents while we know that a composition is abstract and not necessarily complete. To incorporate this kind of abstraction into our language, a structure agent is defined to be labelled with a unique name and it is constructed only from atomic agents considered in the same physical compartment.
@@ -1540,11 +1540,11 @@ This is the final syntactic extension. Compared to the original model (Running e
 \chapter{Analysis}
 \label{analysis}
 
-In the previous chapters, we defined the BCS language. From the provided examples and the case study (Section~\ref{case_study}) it should be clear that it provides concise and readable notation when it comes to describing biological systems. Moreover, accompanied with relevant annotation information, it is suitable for building huge models.
+In the previous chapters, we defined the BCS language. From the provided examples and the case study (Section~\ref{case_study}) it should be clear that it provides concise and readable notation when it comes to describing biological systems. Moreover, accompanied with relevant annotation information, it is suitable for building extensive models.
 
 However, descriptive properties are not enough for using computational methods in order to analyse particular processes. In this chapter we describe basic approaches we employ for our language and propose several methods which could be potentially used in the context of static analysis.
 
-We distinguish two general approaches in model analysis -- dynamic and static. Dynamic analysis is enabled by some form of model execution. It requires either enumerating all the possible scenarios of behaviour of a model (called \emph{state space}) or applying assumptions in order to calculate an average behaviour (such as simulation). Static analysis provides information without execution of the model, just by investigating its structure. Both approaches require to build particular mechanisms which enable application of the analysis.
+We distinguish two general approaches in model analysis -- dynamic and static. Dynamic analysis is enabled by some form of model execution. It requires either enumerating all the possible scenarios of behaviour of a model (called \emph{state space}) or applying assumptions in order to calculate an average behaviour (such as deterministic simulation). Static analysis provides information without execution of the model, just by investigating its structure. Both approaches require to build particular mechanisms which enable application of the analysis.
 
 \section{Dynamic analysis}
 
@@ -1554,9 +1554,7 @@ Dynamic analysis is a very common way for analysing models written in formal rep
 
 Model checking is an approach of checking whether a given model meets a given specification~\cite{clarke1999model}. Typically this is done by specifying given requirements in a temporal logic formula and then checking whether a given structure satisfies the formula.
 
-The model checking of BCSL models can be enabled because we are able to generate LTS (Definition~\ref{lts}), but it is not a goal of this thesis. However, we are interested in a particular subtask of model checking -- the reachability analysis.
-
-The reachability analysis is a particular task of model checking for determining whether a chosen state is reachable in the LTS of a model from a given set of initial states.
+The model checking of BCSL models can be enabled because we are able to generate LTS (Definition~\ref{lts}), but it is not a goal of this thesis. However, we are interested in reachability analysis, what is a particular task of model checking for determining whether a chosen state is reachable in the LTS of a model from a given set of initial states.
 
 \begin{definition}{Reachability relation}
 \label{reachability_relation}
@@ -1565,16 +1563,16 @@ For an LTS $\mathcal{L} = (S, A, T, s_0)$ the \emph{reachability relation} of $\
 
 In our case, reachability analysis can be generalised to checking whether for some multiset of complex agents $\mathtt{s}'$ there exists a reachable state $s \in S$ of an LTS $\mathcal{L}$ such that $\mathtt{s}' \subseteq s$. In other words, we are interested only in particular agents regardless of other context in the reachable state. In general, it might lead to multiple reachable states and then we can for example consider a shortest path.
 
-In the case when we consider reachability \emph{only} from the initial state $s_0$, the task becomes simpler. The reason is all other states are actually reachable, because the entire state space was generated from this state. Then we are only searching for a state $s \in S$ such that $\mathtt{s}' \subseteq s$ if we are not interested in \emph{how} was the state reached (the particular path).
+In the case when we consider reachability \emph{only} from the initial state $s_0$, the task becomes simpler. The reason is all other states are actually reachable, because the entire state space was generated from this initial state. Then we are only searching for a state $s \in S$ such that $\mathtt{s}' \subseteq s$ in the case when we are not interested in \emph{how} was the state reached (the particular path).
 
 \subsection{Simulation}
 \label{simulation}
 
-Computer simulations reproduce the behaviour of a system using a mathematical model. For the purpose of this thesis, the simulation is a numerical solution which tries to mimic the behaviour of the real system over time. Once we want to simulate BCSL model, regardless the approach we choose, it is necessary to enrich the rules by kinetic rates~\cite{mcnaught1997compendium}. The rates basically express the speed of the rule.
+Computer simulations reproduce the behaviour of a system using a mathematical model. For the purpose of this thesis, the simulation is a numerical solution which tries to mimic the behaviour of the real system over time. Once we want to simulate BCSL model, regardless the approach we choose, it is necessary to enrich the rules by kinetic rates~\cite{mcnaught1997compendium}. The rates basically express the speed of the rule or the probability that the rule will be performed.
 
 Assigning a rate to the rule is not a simple task. The simplest solution is to reference only fully defined objects in the kinetic rates. However, we would like to express the context of the rule also in the rate. That typically means changing context in rate and the rule accordingly. This approach is non-trivial and we keep it as a future work.
 
-Assigning rates to the rules enables deterministic simulation~\cite{Poole2000} by translating rules to reactions and consequently construct Ordinary Differential Equations (ODEs) from them~\cite{higham2008Modelling}. It is possible to enable also stochastic simulation, either by network-free simulators such as NFsim~\cite{sneddon2011efficient} or using indirect approach on generated reactions (e.g. Gillespie algorithm~\cite{GILLESPIE1976403}).
+Assigning rates to the rules enables deterministic simulation~\cite{Poole2000} by translating rules to reactions and consequently construct Ordinary Differential Equations (ODEs) from them~\cite{higham2008modeling}. It is possible to enable also stochastic simulation, either by network-free simulators such as NFsim~\cite{sneddon2011efficient} or using indirect approach on generated reactions (e.g. Gillespie algorithm~\cite{GILLESPIE1976403}).
 
 \section{Static analysis}
 \label{static_analyses}
@@ -1611,10 +1609,10 @@ Let $x_1, x_2 \in P$ be agents and $P$ a universe of agents. Agents $x_1$ and $x
 \end{definition}
 
 \begin{notation}
-The universe of complex agents $\mathds{X}$ ordered by partial order reduction $\leq$ is denoted as $\mathds{X}_\leq$.
+The universe of complex agents $\mathds{X}$ ordered by partial order relation $\leq$ is denoted as $\mathds{X}_\leq$.
 \end{notation}
 
-The compatibility operator generates partial order on the $\mathds{A}, \mathds{T}$, and $\mathds{X}$ sets. For our purposes, partially ordered set $\mathds{X}_\leq$ is relevant. The reason is that complex agents actually encapsulate all other agent types including compartments. However, partial order of entire universe of complex agents is not very useful, since most of agents cannot be compared. We are interested in particular subsets which are formed from all complexes of the same type, i.e. those sets where each pair of complexes holds the compatibility conditions (in arbitrary direction).
+The compatibility operator generates partial order on the $\mathds{A}, \mathds{T}$, and $\mathds{X}$ sets. For our purposes, partially ordered set $\mathds{X}_\leq$ is relevant. The reason is that complex agents actually encapsulate all other agent types. However, partial order of entire universe of complex agents is not very useful, since most of agents cannot be compared. We are interested in particular subsets which are formed from all complexes of the same type, i.e. those sets where for each pair of complexes exists another one such that they are compatible with this complex.
 
 \begin{definition}{Compatible set}
 \label{compatible_set}
@@ -1686,7 +1684,7 @@ Note that for any complex agent $\mathtt{X}$ there exists just one compatible su
 \label{generating_vs_compatibility}
 In the process of generating reactions from the rules (Section~\ref{Generating reactions}), we are using ground form function (Definition~\ref{ground_form}). The function basically adds context to individual complex agents (and their substructures). In the definition of the function we provided exact procedure how to generate such agents.
 
-When we look at the process more theoretically, a set of appropriate complex agents is generated for every complex agent $\mathtt{X}$ in the rule $\mathtt{R}$ and then they are connected to multiple unique reactions. This set is actually a compatible subset $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}}$ of compatible set $\mathscr{X}$ such that $\mathtt{X} \in \mathscr{X}$. In other words, agents of $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}}$ are the minimal elements of set $\mathscr{X}$ w.r.t. compatibility with complex agent $\mathtt{X}$.
+When we look at the process more theoretically, a set of appropriate complex agents is generated for every complex agent $\mathtt{X}$ in the rule $\mathtt{R}$ and then they are connected to multiple unique reactions. This set is actually a compatible subset $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}}$ of compatible set $\mathscr{X}$ such that $\mathtt{X} \in \mathscr{X}$. In other words, agents of ~$\mkern2mu\overline{\mkern-4.5mu \mathscr{X}}$ are the minimal elements of set $\mathscr{X}$ w.r.t. compatibi-lity with complex agent $\mathtt{X}$.
 
 \end{remark}
 
@@ -1715,11 +1713,11 @@ for some $m,n \in \mathbb{N}$ such that $\mathtt{F}(\varrho), \mathtt{F}(\varrho
 \end{theorem}
 
 \begin{proof}
-The problem whether the elimination of a redundant rule expression preserves semantics can be reduced to a simple question -- if it holds for single pair of complex agents for a position $k$ in the appropriate rules, then it generally holds for entire rule, because the condition of redundancy holds for each pair of complexes independently.
+The problem whether the elimination of a redundant rule expression preserves semantics can be reduced to a simple question -- if it holds for single pair of complex agents for a position \emph{k} in the appropriate rules, then it generally holds for entire rule, because the condition of redundancy holds for each pair of complexes independently.
 
 The complex agents $\mathtt{X}_k = \mathtt{F}(\Gamma_k)$ and $\mathtt{X}'_k = \mathtt{F}(\Gamma'_k)$ both belong to the same compatible set $\mathscr{X}$ since $\mathtt{X}_k \lhd \mathtt{X}'_k$, which follows from the condition of the theorem. 
 
-Then, we can create subsets $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}},~ \mkern2mu\overline{\mkern-4.5mu \mathscr{X}'} \subseteq \mathscr{X}$ for both complex agents respectively (Definition~\ref{compatible_subset}). Because the complex agents are compatible ($\mathtt{X}_k \lhd \mathtt{X}'_k$ ), the subset $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}}$ of agent $\mathtt{X}_k$ is either subset or equal to set $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}'}$ of agent $\mathtt{X}'_k$:
+Then, we can create subsets $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}},~ \mkern2mu\overline{\mkern-4.5mu \mathscr{X}'} \subseteq \mathscr{X}$ for both complex agents respectively (Definition~\ref{compatible_subset}). Because the complex agents are compatible ($\mathtt{X}_k \lhd \mathtt{X}'_k$ ), the subset $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}}$ of agent $\mathtt{X}_k$ is either subset or equal to set $\mkern2mu\overline{\mkern-4.5mu \mathscr{X}'}$ of agent $\mathtt{X}'_k$ :
 
 $$\mkern2mu\overline{\mkern-4.5mu \mathscr{X}} \subseteq ~\mkern2mu\overline{\mkern-4.5mu \mathscr{X}'}.$$
 
@@ -1752,7 +1750,7 @@ K(S\{u\}, T\{i\}).K(S\{p\}, T\{i\})::cell \Rightarrow K(S\{p\}, T\{i\}).K(S\{p\}
 \end{center}
 }
 
-while the rule expression (\ref{rule_red_2}) produces set of reaction which a subset of the previous one:
+while the rule expression (\ref{rule_red_2}) produces set of four reactions which is a subset of the previous one:
 
 {\small
 \begin{center}
@@ -1808,7 +1806,7 @@ such that $\mathscr{X} \subseteq \mathds{X}$ is a compatible set and $\mathtt{X}
 \begin{definition}{Over-approximation of LTS}
 \label{over_approximation}
 
-Let $LTS(\mathds{M}), LTS(\mathds{M}')$ be labelled transition systems of some BCSL models. The $LTS(\mathds{M}')$ is \emph{over-approximation} of $LTS(\mathds{M})$ if for every path $\mathtt{s}_1' \mathtt{s}_2' \mathtt{s}_3' \ldots \mathtt{s}_n'$ in $LTS(\mathds{M}')$ there exists a path $\mathtt{s}_1 \mathtt{s}_2 \mathtt{s}_3 \ldots \mathtt{s}_m$ in $LTS(\mathds{M})$ such that:
+Let $LTS(\mathds{M}), LTS(\mathds{M}')$ be labelled transition systems of some BCSL models $\mathds{M}, \mathds{M}'$. The $LTS(\mathds{M}')$ is \emph{over-approximation} of $LTS(\mathds{M})$ if for every path $\mathtt{s}_1' \mathtt{s}_2' \mathtt{s}_3' \ldots \mathtt{s}_n'$ in $LTS(\mathds{M}')$ there exists a path $\mathtt{s}_1 \mathtt{s}_2 \mathtt{s}_3 \ldots \mathtt{s}_m$ in $LTS(\mathds{M})$ such that:
 
 \begin{center}
 $\forall \mathtt{s}'_i, \mathtt{s}'_{i+1} ~\exists \mathtt{s}_k, \mathtt{s}_l : (l > k \wedge \mathtt{s}_k \lhd \mathtt{s}'_i \wedge \mathtt{s}_l \lhd \mathtt{s}'_{i+1}) $.
@@ -1834,7 +1832,7 @@ If we are checking whether an agent is reachable in $LTS(\mathds{M})$ for given 
 \subsection{Static reachability analysis}
 \label{static_reachability_analysis}
 
-Since we have defined the compatibility operator for agents, we can apply static reachability analysis before enumerating whole state space of the model $\mathds{M}$. This analysis has its limitations but can serve for checking whether a complex agent $\mathtt{X}$ is \emph{non-reachable} (similar to Section~\ref{context_reduction}).
+Since we have defined the compatibility operator for agents, we can apply static reachability analysis before enumerating the entire state space of the model $\mathds{M}$. This analysis has its limitations but can serve for checking whether a complex agent $\mathtt{X}$ is \emph{non-reachable} (similar to Section~\ref{context_reduction}).
 
 \begin{theorem}
 \label{static_reach}
@@ -1895,11 +1893,7 @@ The BCSL model definition as given in Section~\ref{BCSl_model} can be reduced by
 
 The described process basically iterates through all rules and collects all atomic names and states associated with them. Similarly, it collects all structure names and appropriate names of atomic agents used in their partial compositions. In this case, atomic information has to be collected recursively because some atomic agents might be used only in partial composition, not independently in a complex.
 
-We can discuss the fact that desired signature might be in some manner \emph{larger} than the collected one. However, if, for example we want to have more states defined for an atomic agent, they should be definitely used somewhere in the model. In other case, it does not play any role in the model behaviour and therefore its definition is senseless. In other words, the described procedure guarantees collecting all signature details which play any role in the model.
-
-% \begin{proof}
-% Let $\mathcal{M}$ be a BCSL model and $\Sigma$ its minimal signatures (i.e., all states and partial compositions defined in the signatures are actually used in the rules). Then, signatures $\Sigma'$ obtained by procedure (ref blah) has to be equal to the original signature $\Sigma$. In case its not, it means either there is some extra data in the $\Sigma'$ or some data is missing. Since we create $\Sigma'$ by iterating through all the rules, we construct complete signature with complete states used in the model. Therefore, if some data are missing in $\Sigma'$, then it follows given signature $\Sigma$ is not minimal. On the other hand, if there are some extra data in $\Sigma'$, then given signature $\Sigma$ is incorrect -- its missing some structure details which are being used in the model. $\QEDA$
-% \end{proof}
+We can discuss the fact that desired signature might be in some manner \emph{larger} than the collected one. However, for example, if we want to have more states defined for an atomic agent, they should be definitely used somewhere in the model. In other case, it does not play any role in the model behaviour and therefore its definition is senseless. In other words, the described procedure guarantees collecting all signature details which play any role in the model.
 
 \subsection{Translation to Petri Nets}
 
