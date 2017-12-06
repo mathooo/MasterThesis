@@ -1,5 +1,3 @@
-%\documentclass[12pt]{fithesis2}
-%\documentclass[12pt, draft]{fithesis2}   % a devel version
 \documentclass[12pt, twoside]{fithesis2} % two-sided print version
 
 % ===== LOADING PACKAGES =====
@@ -159,7 +157,7 @@ In this thesis we focus on development of a novel rule-based language called Bio
 
 The goal of this thesis is to formally define the syntax and semantics of Biochemical Space language and provide techniques to analyse models written in the language. 
 
-In Chapter~\ref{background} we give an introduction to rule-based modelling, describe differences between the rule-based and traditional approaches, reveal key features of existing rule-based formalisms, and explain purpose of Comprehensive Modelling Platform and its parts. In Chapter~\ref{problem_formulation} we specify particular tasks of this thesis in the context of preliminary work. In Chapter~\ref{formal_definition} we define syntax and semantics of Biochemical Space language and specify several syntactic extensions, which improve readability of the language. Chapter~\ref{analysis} provides brief description of traditional dynamic analysis techniques and introduces several new static analysis techniques. Chapter~\ref{case_study} shows usability of the language on several case studies and then demonstrate usability of proposed static analyses in practice. In the final Chapter~\ref{implementation} we describe development of BCSgen, a software tool to support the maintenance and analysis of models written in the language. 
+In Chapter~\ref{background} we give an introduction to rule-based modelling, describe differences between the rule-based and traditional approaches, reveal key features of existing rule-based formalisms, and explain purpose of Comprehensive Modelling Platform and its sub-parts. In Chapter~\ref{problem_formulation} we specify particular tasks of this thesis in the context of preliminary work. In Chapter~\ref{formal_definition} we define syntax and semantics of Biochemical Space language and specify several syntactic extensions, which improve readability of the language. Chapter~\ref{analysis} provides brief description of traditional dynamic analysis techniques and introduces several new static analysis techniques. Chapter~\ref{case_study} shows usability of the language on several case studies and then demonstrate usability of proposed static analyses in practice. In the final Chapter~\ref{implementation} we describe development of BCSgen, a software tool to support the maintenance and analysis of models written in the language. 
 
 \chapter{Background}
 \label{background}
@@ -556,7 +554,7 @@ In some cases, emphasis on detailed description leads to a very complex BCS mode
 \caption{A rule employing entity state change. A threonine ($Thr$) amino acid residue of a $FGF$ protein inside a $FGFR2$ complex can change its state from unphosphorylated ($u$) to phosphorylated ($p$) (and vice versa).}\label{rule_example}
 \end{figure}
 
-Higher abstraction comes into account when several electrons play `musical chairs' inside protein complexes. The issue is that parts of the processing protein complex can have different unstable states during a short period of time. When one tries to define all rules among these proteins, combinatorial explosion of the number of states of the complex arises. Not all of these combinations are biologically correct. Even when excluding biologically inadmissible cases, the number of states is still enormous. For the purpose of BCS, we introduce a solution -- we treat a protein complex as a structure entity on which atomic entities change their states (not necessarily proteins) and we abstract out the background processes.
+Higher abstraction comes into account when several electrons play `musical chairs' inside protein complexes. The issue is that parts of the processing protein complex can have different unstable states during a short period of time. When one tries to define all rules among these proteins the combinatorial explosion of the number of states of the complex arises. Not all of these combinations are biologically correct. Even when excluding biologically inadmissible cases, the number of states is still enormous. For the purpose of BCS, we introduce a solution -- we treat a protein complex as a structure entity on which atomic entities change their states (not necessarily proteins) and we abstract out the background processes.
 
 When describing particular process or object we can go almost infinitely deep into the details. Even if the depth is not infinite, it is deep enough to lead into a state when the description is larger than object itself. Imagine that you want to describe a molecule as the position of each atom. You might need more space to store such information than the molecule itself occupies.
 
@@ -1503,7 +1501,7 @@ In the Running example~\ref{run7} there are additional options for syntax reduct
 
 In a rule expression, one rule agent expression might be referenced using a variable as a set of rule agent expressions it can be replaced with. Such a rule agent expression is referenced as $?X$. Moreover, in the case when a $?X$ is used in a location, it must hold conditions from Definition~\ref{locations:conditions}.
 
-Each rule expression associated with a variable can be easily rewritten as several rule expressions where the variable is replaced with agent expression from the set of agent expressions attached to the variable. For simplicity, only one variable can be used per rule expression.
+Each rule expression associated with a variable can be easily written as several rule expressions where the variable is replaced with agent expression from the set of agent expressions attached to the variable. For simplicity, only one variable can be used per rule expression.
 
 \begin{runningExample}{The example model $\mathds{M}$}
 \label{run8}
@@ -1528,7 +1526,7 @@ In the previous chapters, we defined the BCS language. From the provided example
 
 However, descriptive properties are not enough for using computational methods in order to analyse particular processes. In this chapter we describe basic approaches we employ for our language and propose several methods which could be potentially used in the context of static analysis.
 
-We distinguish two general approaches in model analysis -- dynamic and static. Dynamic analysis is enabled by some form of model execution. It requires either enumerating all the possible scenarios of behaviour of a model (called \emph{state space}) or applying assumptions in order to calculate an average behaviour (such as deterministic simulation). Static analysis provides information without execution of the model, just by investigating its structure. Both approaches require to build particular mechanisms which enable application of the analysis.
+We distinguish two general approaches in model analysis -- dynamic and static. Dynamic analysis is enabled by some form of model execution. It requires either enumerating all the possible scenarios of behaviour of a model (called \emph{transition system}) or applying assumptions in order to calculate an average behaviour (such as deterministic simulation). Static analysis provides information without execution of the model, just by investigating its structure. Both approaches require to build particular mechanisms which enable application of the analysis.
 
 \section{Dynamic analysis}
 
@@ -1547,7 +1545,7 @@ For an LTS $\mathcal{L} = (S, A, T, s_0)$ the \emph{reachability relation} of $\
 
 In our case, reachability analysis can be generalised to checking whether for some multiset of complex agents $\mathtt{s}'$ there exists a reachable state $s \in S$ of an LTS $\mathcal{L}$ such that $\mathtt{s}' \subseteq s$. In other words, we are interested only in particular agents regardless of other context in the reachable state. In general, it might lead to multiple reachable states and then we can for example consider a shortest path.
 
-In the case when we consider reachability \emph{only} from the initial state $s_0$, the task becomes simpler. The reason is all other states are actually reachable, because the entire state space was generated from this initial state. Then we are only searching for a state $s \in S$ such that $\mathtt{s}' \subseteq s$ in the case when we are not interested in \emph{how} was the state reached (the particular path).
+In the case when we consider reachability \emph{only} from the initial state $s_0$, the task becomes simpler. The reason is all other states are actually reachable, because the entire transition system was generated from this initial state. Then we are only searching for a state $s \in S$ such that $\mathtt{s}' \subseteq s$ in the case when we are not interested in \emph{how} was the state reached (the particular path).
 
 \subsection{Simulation}
 \label{simulation}
@@ -1596,7 +1594,7 @@ Let $x_1, x_2 \in P$ be agents and $P$ a universe of agents. Agents $x_1$ and $x
 The universe of complex agents $\mathds{X}$ ordered by partial order relation $\leq$ is denoted as $\mathds{X}_\leq$.
 \end{notation}
 
-The compatibility operator generates partial order on the $\mathds{A}, \mathds{T}$, and $\mathds{X}$ sets. For our purposes, partially ordered set $\mathds{X}_\leq$ is relevant. The reason is that complex agents actually encapsulate all other agent types. However, partial order of entire universe of complex agents is not very useful, since most of agents cannot be compared. We are interested in particular subsets which are formed from all complexes of the same type, i.e. those sets where for each pair of complexes exists another one such that they are compatible with this complex.
+The compatibility operator generates partial order on the $\mathds{A}, \mathds{T}$, and $\mathds{X}$ sets. For our purposes, partially ordered set $\mathds{X}_\leq$ is relevant. The reason is that complex agents actually encapsulate all the other agent types. However, partial order of entire universe of complex agents is not very useful, since most of agents cannot be compared. We are interested in particular subsets which are formed from all complexes of the same type, i.e. those sets where for each pair of complexes exists another one such that they are compatible with this complex.
 
 \begin{definition}{Compatible set}
 \label{compatible_set}
@@ -1816,7 +1814,7 @@ If we are checking whether an agent is reachable in $LTS(\mathds{M})$ for given 
 \subsection{Static reachability analysis}
 \label{static_reachability_analysis}
 
-Since we have defined the compatibility operator for agents, we can apply static reachability analysis before enumerating the entire state space of the model $\mathds{M}$. This analysis has its limitations but can serve for checking whether a complex agent $\mathtt{X}$ is \emph{non-reachable} (similar to Section~\ref{context_reduction}).
+Since we have defined the compatibility operator for agents, we can apply static reachability analysis before enumerating the entire transition system of the model $\mathds{M}$. This analysis has its limitations but can serve for checking whether a complex agent $\mathtt{X}$ is \emph{non-reachable} (similar to Section~\ref{context_reduction}).
 
 \begin{theorem}
 \label{static_reach}
@@ -1975,7 +1973,7 @@ We want to demonstrate practical purposes of a few types of static analyses defi
 
 In Figure~\ref{fgf_fragment}, there is the model defined in BCSL syntax. Note this model is a fragment of the entire model. The rule~(\ref{focus_rule}) requires both threonine residues ($Thr$) on $FGF$ proteins to be phosphorylated ($p$). Basically, it is not possible to create a complex from $FRS$ and unphosphorylated ($u$) $FGF$ proteins.
 
-For example, we want to check whether a given complex agent {\small $FRS(Thr\{u\}, Tyr\{u\}).FGF(Thr\{u\}).R.FGF(Thr\{u\}).R::cyt$} is reachable for the given model. The agent is formed from $FGF$ proteins which are unphosphorylated ($u$) on threonine residues ($Thr$). With the traditional approach, we have to enumerate entire state space of the model and then use dynamic model checking method to check it. In our case, we can use Theorem~\ref{static_reach} and check if it is non-reachable using static reachability analysis. The conclusion is that there is no compatible agent on any right-hand side of the rules. It follows the complex agent is non-reachable.
+For example, we want to check whether a given complex agent {\small $FRS(Thr\{u\}, Tyr\{u\}).FGF(Thr\{u\}).R.FGF(Thr\{u\}).R::cyt$} is reachable for the given model. The agent is formed from $FGF$ proteins which are unphosphorylated ($u$) on threonine residues ($Thr$). With the traditional approach, we have to enumerate entire transition system of the model and then use dynamic model checking method to check it. In our case, we can use Theorem~\ref{static_reach} and check if it is non-reachable using static reachability analysis. The conclusion is that there is no compatible agent on any right-hand side of the rules. It follows the complex agent is non-reachable.
 
 \begin{figure}[!h]
 {\footnotesize
@@ -2010,9 +2008,9 @@ $\vdots$
 \caption{A fragment of the model Yamada et al. 2004~\cite{yamada2004model} of FGF signalling pathway written in BCSL. The complete model can be seen in Appendix~\ref{yamada_complete}.}\label{fgf_fragment}
 \end{figure}
 
-Demonstration of context-based reduction (Section~\ref{context_reduction}) is provided on the same model as in the previous case. Now we can compute with the entire model since we will reduce its context to minimum. In Figure~\ref{reduced_yamada} there are 16 bidirectional rules which we have created by applying Definition~\ref{reduced_model}. The size of state space has significantly decreased -- it has 606 states and 2015 edges.
+Demonstration of context-based reduction (Section~\ref{context_reduction}) is provided on the same model as in the previous case. Now we can compute with the entire model since we will reduce its context to minimum. In Figure~\ref{reduced_yamada} there are 16 bidirectional rules which we have created by applying Definition~\ref{reduced_model}. The size of transition system has significantly decreased -- it has 606 states and 2015 edges.
 
-For the analysis itself, we could, for example, ask about the reachability of a complex agent {\small $Raf(Thr\{p\}).ERK(Tyr\{p\},Thr\{p\})::cyt$} in the original model (Appendix~\ref{yamada_complete}). We can first check whether its supremum (from the corresponding compatible set $\mathscr{X}$) {\small $Raf.ERK::cyt$} is non-reachable in the reduced model. Since the state space of the model is relatively small, it is not a problem using dynamical model checking. Using Theorem~\ref{non-reachability_in_reduced}, the answer is non-reachable.
+For the analysis itself, we could, for example, ask about the reachability of a complex agent {\small $Raf(Thr\{p\}).ERK(Tyr\{p\},Thr\{p\})::cyt$} in the original model (Appendix~\ref{yamada_complete}). We can first check whether its supremum (from the corresponding compatible set $\mathscr{X}$) {\small $Raf.ERK::cyt$} is non-reachable in the reduced model. Since the transition system of the model is relatively small, it is not a problem using dynamical model checking. Using Theorem~\ref{non-reachability_in_reduced}, the answer is non-reachable.
 
 \begin{figure}[!h]
 \begin{center}
@@ -2047,7 +2045,7 @@ In order to support usability of the BCSL language, we developed a prototype sof
 
 The tool is developed in Python language (version 2.7) as open-source desktop software under GPL-3.0 license. The source code, a short tutorial for usage and installation, and current stable version are available on GitHub\footnotemark[1]\footnotetext[1]{\url{https://github.com/sybila/BCSgen}}.
 
-In the first version, there was no support for editing the models. The only functionality provided by the tool was import of the model from a text file (in a predefined format) and enumerating entire state space of the model. The implementation was done by translating to Kappa and it was rather slow and non-efficient. The single transaction (application of one rule) was delayed by translation to Kappa and then by exact matching and replacement, which might get quite complicated. However, it was a good start for the language and it was possible to analyse exported networks in external tools. There was a simple GUI made in Tkinter~\cite{Tkinter}, which had several issues. The most important one was the fact that Tkinter was not designed for multithreading programming. For example, while computing a state space for the model, the whole GUI was not responsible.
+In the first version, there was no support for editing the models. The only functionality provided by the tool was import of the model from a text file (in a predefined format) and enumerating entire transition system of the model. The implementation was done by translating to Kappa and it was rather slow and non-efficient. The single transaction (application of one rule) was delayed by translation to Kappa and then by exact matching and replacement, which might get quite complicated. However, it was a good start for the language and it was possible to analyse exported networks in external tools. There was a simple GUI made in Tkinter~\cite{Tkinter}, which had several issues. The most important one was the fact that Tkinter was not designed for multithreading programming. For example, while computing a transition system for the model, the whole GUI was not responsible.
 
 In the second version, we focused on speed improvement and development of a user-friendly GUI. For the speed improvement, we implemented semantics as defined in this thesis (Section~\ref{semantic_function}). Compared to previous version, in this case there was no exact rule-based execution of the rule -- we rather translated the rules to the reactions and subsequently encoded as vector operations over integers. Therefore, one transaction was just addition of one vector (left-hand side) and subtraction of another one (right-hand side). The GUI was reimplemented in PyQt4~\cite{summerfield2007rapid}, which naturally works with multithreading. It was significant improvement from the performance point of the view. Moreover, we improved input/output formats. For input we defined BCSL model format, which serves for import. As output format we have chosen JSON~\cite{json}, which is very suitable for its simplicity and support by many external tools.
 
@@ -2058,20 +2056,20 @@ In the second version, we focused on speed improvement and development of a user
 \end{center}
 \end{figure}
 
-In the last version, which is part of this thesis, we focused on improvement of models maintenance, additional analysis services, and visualisation. We have integrated an editor which is able to highlight syntax errors while building the model (Figure~\ref{gui_example}). To achieve this, we needed an efficient rule-parser which would be able to parse the rules very fast. The parser is able to parse even syntactic extensions defined in Section~\ref{syntactic_extensions}. The rules engine then translates the rule to ground form and creates reactions (in case there are no errors in the model). Since this engine runs in the background, user does not notice any decrease in performance. When the reactions are computed, it is indicated by the possibility to export them and generate state space of the model.
+In the last version, which is part of this thesis, we focused on improvement of models maintenance, additional analysis services, and visualisation. We have integrated an editor which is able to highlight syntax errors while building the model (Figure~\ref{gui_example}). To achieve this, we needed an efficient rule-parser which would be able to parse the rules very fast. The parser is able to parse even syntactic extensions defined in Section~\ref{syntactic_extensions}. The rules engine then translates the rule to ground form and creates reactions (in case there are no errors in the model). Since this engine runs in the background, user does not notice any decrease in performance. When the reactions are computed, it is indicated by the possibility to export them and generate transition system of the model.
 
-We implemented some dynamic analysis -- model simulation and reachability analysis. For the simulation, we allow stochastic or deterministic form (Figure~\ref{gui_simulation}). In the first form, random rules are fired according to Poisson distribution while in the latter average trace is computed by solving ODEs build from the reactions. For the stochastic case, there are options to choose number of runs and apply interpolation on the resulting time series chart in order to achieve smoother results. It is important to note that only models with defined rates can be simulated. For simplicity, approach with only fully specified agents is used.
+From dynamical analysis techniques, we implemented model simulation and reachability analysis. For the model simulation, we allow stochastic or deterministic approach (Figure~\ref{gui_simulation}). In the first case, random rules are fired according to Poisson distribution while in the latter average trace is computed by solving ODEs build from the reactions. For the stochastic case, there are options to choose number of runs and apply interpolation on the resulting time series chart in order to achieve smoother results. It is important to note that only models with defined rates can be simulated. For simplicity, approach with only fully specified agents is used.
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[scale=0.23]{pics/BCSgen_simulation}
-\caption{Example of a deterministic simulation for simple repressilator model. For the simulation to be enabled, the rates for individual rules have to be defined. In the right panel, deterministic approach and the maximum simulation time is chosen.}\label{gui_simulation}
+\caption{Example of a deterministic simulation for simple repressilator model. For the simulation to be enabled, the rates for individual rules have to be defined. In the right panel, deterministic approach and the maximum simulation time are chosen.}\label{gui_simulation}
 \end{center}
 \end{figure}
 
 Since there are some graphs and charts generated in BCSgen, we decided to integrate visualisation tools into it. We used two libraries -- vis.js~\cite{almende2016vis} for interactive networks visualisation and MatPlotLib~\cite{hunter2007matplotlib}, a Python library suitable for visualisation of time series.
 
-Vis.js is used for exploration of state space with highlighting the chosen node and announcing content of the node. It is possible to display paths from the initial state to other states, which satisfy reachability condition given in reachability analysis part (Figure~\ref{gui_reach}). This is very demonstrative and suitable for educational purposes. However, such visualisation has its limitations. For example, huge graphs are very difficult to display -- on the other hand, for a high number of nodes it is not even useful.
+Vis.js is used for exploration of transition system with highlighting the chosen node and announcing content of the node. It is possible to display paths from the initial state to other states, which satisfy reachability condition given in reachability analysis part (Figure~\ref{gui_reach}). This is very demonstrative and suitable for educational purposes. However, such visualisation has its limitations. For example, huge graphs are very difficult to display -- on the other hand, for a high number of nodes it is not even useful.
 
 The MatPlotLib provides a visualisation of simulation results. It possible to zoom the chart, hide/show individual curves, and export the current view as a picture.
 
@@ -2084,24 +2082,22 @@ The MatPlotLib provides a visualisation of simulation results. It possible to zo
 
 \chapter{Conclusions}
 
-In the first part of this thesis, we have explained the background of the work. Particularly, we provided explanation of the principles of rule-based modelling using schematic examples. Several existing rule-based languages have been introduced, together with their key features. Comprehensive Modelling Platform as a framework for modelling biochemical processes has been described with all its important modules such as Model repository and Biochemical Space.
+In the first part of this thesis, we have explained the background of the work. Particularly, we provided explanation of the principles of rule-based modelling using schematic examples. Several existing rule-based languages have been introduced, together with their key features. Comprehensive Modelling Platform as a framework for the modelling biochemical processes has been described with all its important modules such as Model repository and Biochemical Space.
 
 In the second part, we have formally defined Biochemical Space Language as a description format for Biochemical Space. Together with very concise and \emph{human-readable} syntax we have defined operational semantics. An indirect approach has been chosen for practical purposes. Moreover, several syntactic extensions were defined to increase readability and maintenance of the language.
 
-In the third part, we have introduced analysing approaches which could be directly used on models defined using the language. Those include dynamic analyses such as model checking and simulation. We have also defined a few types of static analyses which can be used without enumerating entire behaviour of the model.
+In the third part, we have introduced analysing approaches which could be directly used on models defined using the language. Those include dynamic analysis techniques such as model checking and simulation. We have also defined a few types of static analysis techniques which can be used without explicitly enumerating entire behaviour of the model.
 
-The last part was dedicated to practical usage of the language and provided analysis formalisms. Namely, in the case study we have demonstrated how can be abstractions of the language used in particular modelling situations. We have also shown practical impact of defined static analyses on investigating behaviour of the model effectively. Finally, we have presented implementation of a software tool BCSgen, which was developed in order to provide support for maintenance and analysis of the models.
+The last part was dedicated to practical usage of the language and provided analysis formalisms. Namely, in the case study we have demonstrated how can be abstractions of the language used in particular modelling situations. We have also shown practical impact of defined static analysis techniques on investigating behaviour of the model effectively. Finally, we have presented implementation of a software tool BCSgen, which was developed in order to provide support for maintenance and analysis of the models.
 
-As a future work, we want to improve specification of kinetic rates for the BCSL rules. In the current stage, we allow to reference only fully defined objects in the kinetic rates. This is a very limiting restriction, because it would be natural to change context in rate and the rule simultaneously. Also we want to develop some additional static analyses, since the capabilities of the language are wide in this area. Particularly, we would like to define some properties suitable for reachability analysis, because non-reachability is not always practical.
+As a future work, we want to improve specification of kinetic rates for the BCSL rules. In the current stage, we allow to reference only fully defined objects in the kinetic rates. This is a very limiting restriction, because it would be natural to change context in rate and the rule simultaneously. Also we want to develop some additional static analysis techniques, since the capabilities of the language are wide in this area. Particularly, we would like to define some properties solving reachability analysis instead non-reachability.
 
-The next goal for the future work is to make some of the static analyses more general. Particularly, some of non-reachability analyses were defined only for a single complex agent. We want to promote these analyses in order to be applied on sets (or multisets) of agents.
+The next goal is to make some of the static analysis techniques more general. Particularly, some of the non-reachability techniques were defined only for a single complex agent. We want to promote these techniques in order to be applied on sets of agents.
 
 Finally, as a future work for the tool BCSgen we are planning to reimplement it to a web-based version. It should be integrated in Comprehensive Modelling Platform (Section~\ref{cmp}) to allow direct analysis of the models and appropriate parts of Biochemical Space.
 
-\bibliographystyle{plain} %siam ?
-%{\small
+\bibliographystyle{plain}
 \bibliography{papers}
-%}
 
 \begin{appendices}
 
