@@ -1330,7 +1330,7 @@ For better demonstration we provide a running example, which will go through all
 
 $\Rightarrow KaiC(S\{p\}, T\{\varepsilon\}).KaiC(S\{\varepsilon\}, T\{\varepsilon\}).KaiC(S\{\varepsilon\}, T\{\varepsilon\})::cyt$
 
-\item $KaiC(S\{u\}, T\{\varepsilon\}).KaiB::cyt \Rightarrow KaiC(S\{p\}, T\{\varepsilon\}).KaiB::cyt$
+\item $KaiC(S\{u\}, T\{\varepsilon\}).KaiB(\varnothing)::cyt \Rightarrow KaiC(S\{p\}, T\{\varepsilon\}).KaiB(\varnothing)::cyt$
 \item $KaiC(S\{\varepsilon\}, T\{\varepsilon\})::cyt + KaiC(S\{\varepsilon\}, T\{\varepsilon\})::cyt + KaiC(S\{\varepsilon\}, T\{\varepsilon\})::cyt \Rightarrow$ 
 
 $ \Rightarrow KaiC(S\{\varepsilon\}, T\{\varepsilon\}).KaiC(S\{\varepsilon\}, T\{\varepsilon\}).KaiC(S\{\varepsilon\}, T\{\varepsilon\})::cyt$
@@ -1363,7 +1363,7 @@ It is possible to omit all atomic expressions with unspecified state $\varepsilo
 {\footnotesize
 \begin{enumerate}
 \item $KaiC(S\{u\}).KaiC(\varnothing).KaiC(\varnothing)::cyt \Rightarrow KaiC(S\{p\}).KaiC(\varnothing).KaiC(\varnothing)::cyt$
-\item $KaiC(S\{u\}).KaiB::cyt \Rightarrow KaiC(S\{p\}).KaiB::cyt$
+\item $KaiC(S\{u\}).KaiB(\varnothing)::cyt \Rightarrow KaiC(S\{p\}).KaiB(\varnothing)::cyt$
 \item $KaiC(\varnothing)::cyt + KaiC(\varnothing)::cyt + KaiC(\varnothing)::cyt \Rightarrow$
 
 $ \Rightarrow KaiC(\varnothing).KaiC(\varnothing).KaiC(\varnothing)::cyt$
@@ -1400,7 +1400,7 @@ We extend the model definition by complex signature $\Sigma_\mathtt{X}$. In this
 \begin{runningExample}{The example model $\mathds{M}$}
 \label{run4}
 
-\noindent Definitions of complex signatures:
+\noindent Definition of complex signature $\Sigma_\mathtt{X}$:
 \begin{enumerate}
 \item $KaiC3::cyt = KaiC.KaiC.KaiC::cyt$
 \item $KaiBC::cyt = KaiC.KaiB::cyt$
@@ -1436,7 +1436,7 @@ We allow rule expressions to be bi-directional -- it is just a shortcut for two 
 }
 \end{runningExample}
 
-\noindent Definition of rules 3 and 4 from Running example~\ref{run4} was replaced by one bi-directional rule (Running example~\ref{run5}, rule 3).
+\noindent Definition of rules 3 and 4 from Running example~\ref{run4} was replaced by one bi-directional rule 3 in Running example~\ref{run5}.
 
 \subsection{Stoichiometry}
 
@@ -1454,6 +1454,8 @@ $\forall B \in \mathcal{P} ~\forall i,j \in B: \beta_i \equiv \beta_j$
 and
 
 $\forall B, B' \in \mathcal{P} ~\forall \beta \in B ~\forall \beta' \in B': \beta \not\equiv \beta'$.
+
+such that $B \neq B'$.
 \end{center}
 
 For the left-hand side $\beta_1::\mathtt{c} + \beta_2::\mathtt{c} + \ldots + \beta_n::\mathtt{c}$ of the reordered rule expression we can replace all rule expressions $[\beta_i, \ldots, \beta_j]$ which belong to the same non-crossing partition $B$ by notation $`k~\beta'$, where $\beta$ is a representative from $\beta_i, \ldots, \beta_j$ (they are all equivalent) and $k$ is the number of the expressions in partition $B$.
@@ -1493,7 +1495,7 @@ We define necessary condition which must hold when semantic function $\mathtt{F}
 \end{enumerate}
 \end{definition}
 
-For each pair of agents $(\alpha, \beta)$ with allowed `::' operator between them $\alpha :: \beta$, we can construct just one agent $\beta'$ without the operator by taking the most left agent $\alpha'$ from full (resp. partial) composition of the agent $\beta$ such that it is \emph{compatible with} the agent $\alpha$ ($\alpha' \lhd \alpha$). Then, agent $\alpha'$ is merged with agent $\alpha$ and agent $\beta'$ is constructed.
+For each pair of agents $(\alpha, \beta)$ with allowed `::' operator between them, we can construct just one agent $\beta'$ without the operator by taking the most left agent $\alpha'$ from full (resp. partial) composition of the agent $\beta$ such that it is \emph{compatible with} the agent $\alpha$ ($\alpha' \lhd \alpha$). Then, agent $\alpha'$ is merged with agent $\alpha$ and agent $\beta'$ is constructed.
 
 \begin{runningExample}{The example model $\mathds{M}$}
 \label{run7}
