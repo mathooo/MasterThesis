@@ -147,7 +147,8 @@ formal specification, biological systems, systems biology, rule-based language
 \MainMatter
 \tableofcontents
 
-\chapter{Introduction}
+\chapter*{Introduction}
+\addcontentsline{toc}{chapter}{\textbf{Introduction}}  
 
 Modelling in computational systems biology often comprises studying a complex biochemical system involving a large number of interacting species. Conventional modelling approaches explicitly specify entire chemical reaction networks. Models have the form of lists of biochemical species and their reactions. The issue with this approach is that it is not always effective or even possible to enumerate all the interactions. Typically, a biological system contains a huge number of species with numerous interactions.
 
@@ -248,7 +249,7 @@ The mapping can also be seen as assigning particular objects from the solution t
 
 Since this kind of graphical representation is not very suitable for machine processing and analysis, we define a formal language which is built on principles described in this chapter.
 
-\section{Rule-based vs. reaction-based modelling}
+\section{Rule-based versus reaction-based modelling}
 
 A rule is a generalised reaction (Figure~\ref{reaction_vs_rule}). This is how the difference can be characterised. From the application point of view, the reaction can be applied on a solution only in a particular way whilst the rule can be applied in multiple ways. It allows to write models where many similar processes might occur with the rules, by defining a pattern in which the action can happen. Since there can be many features we need to express, there are several languages focusing on different level of details.
 
