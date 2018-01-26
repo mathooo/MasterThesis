@@ -2,20 +2,66 @@
 \usepackage[utf8]{inputenc}
 \usepackage[czech]{babel}
 \usepackage[abs]{overpic}
-\usepackage{color}
-\usepackage{tikz}
 
-\usetheme[faculty=fi]{fibeamer}
+\usetheme[progressbar=frametitle]{metropolis}
+\usepackage{appendixnumberbeamer}
 
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+\definecolor{mSybilaRed}{HTML}{870004}
+
+\setbeamercolor{title separator}{
+  fg=mSybilaRed
+}
+
+\setbeamercolor{progress bar}{%
+  fg=mSybilaRed,
+  bg=mSybilaRed!90!black!30
+}
+
+\setbeamercolor{progress bar in section page}{
+  use=progress bar,
+  parent=progress bar
+}
+
+\setbeamercolor{alerted text}{%
+  fg=mSybilaRed
+}
 \usepackage{color}
 
 \definecolor{mygreen}{RGB}{51, 169, 54}
 
-\title{Formal Biochemical Space for Specification and Analysis of Biochemical Processes} 
+\title{Formálny biochemický priestor pre špecifikáciu a analýzu biochemických procesov}
+%Formal Biochemical Space for Specification and Analysis of Biochemical Processes} 
 \subtitle{Obhajoba diplomovej práce}
 \author[Matej Troják]{Matej Troják}
+\date{Fakulta Informatiky, Brno, 5.2.2018}
 
-\newcommand{\header}{IV120: Úvod do problematiky a informace o kurzu}
+\titlegraphic{\hfill\includegraphics[height=0.6cm]{sybila-simple.png}}
+
+\setbeamertemplate{footline}
+{
+  \leavevmode
+  \hbox{
+  \begin{beamercolorbox}[wd=.15\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}
+
+  \begin{beamercolorbox}[wd=.7\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}
+    \usebeamerfont{author in head/foot}\insertshorttitle
+  \end{beamercolorbox}
+
+  \begin{beamercolorbox}[wd=.15\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}
+    \insertframenumber{} / \inserttotalframenumber
+  \end{beamercolorbox}
+  }
+}
 
 \begin{document}
 
@@ -262,7 +308,7 @@ $\Leftrightarrow$ R\textcolor{red}{(}$\mathtt{enzyme}$\{\textcolor{mygreen}{unav
 % -------------------------------------------------------------
 
 \frame{
-\frametitle{BCS domána umožňuje syntaktické rozširenia}
+\frametitle{BCS doména umožňuje syntaktické rozšírenia}
 
 \begin{columns}
 \begin{column}{0.5\textwidth}
@@ -326,6 +372,8 @@ KaiC(S\{\textcolor{mygreen}{u}\}).KaiC.~\ldots~.KaiC::cyt $\Rightarrow$ KaiC(S\{
 }
 
 % -------------------------------------------------------------
+
+\appendix
 
 \frame{
 \frametitle{Otázky oponenta}
