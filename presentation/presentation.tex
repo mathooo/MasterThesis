@@ -75,7 +75,7 @@
 \frame{
 \frametitle{Motivácia}
 
-Časté problémy s modelmi:
+Časté problémy s (biologickými) modelmi:
 
 \begin{itemize}
 \item rekonštrukcia -- "spustiteľný" ~model
@@ -88,34 +88,12 @@
 \end{center}
 
 }
-
 % -------------------------------------------------------------
 
 \frame{
-\frametitle{Riešenie}
+\frametitle{Riešenie -- Comprehensive Modelling Platform}
 
-\textbf{Biochemical Space} (BCS) je doména biologických znalostí s formálnymi prvkami, ktorá poskytuje 
-
-\begin{itemize}
-\item popis,
-\item anotáciu,
-\item zdieľanie
-\end{itemize}
-
-špecificky zameraných biologických modelov.
-
-\vspace{1cm}
-
-\textbf{Motto}: \emph{formalizácia biologického popisu a anotácia modelov.}
-
-}
-
-% -------------------------------------------------------------
-
-\frame{
-\frametitle{Comprehensive Modelling Platform}
-
-Webový framework pre integráciu biologických znalostí s výpočetnými modelmi a experimentami.
+Webový framework pre \textbf{integráciu} biologických znalostí s výpočetnými modelmi a experimentami.
 
 \begin{center}
 \begin{columns}
@@ -149,10 +127,41 @@ Webový framework pre integráciu biologických znalostí s výpočetnými model
 % -------------------------------------------------------------
 
 \frame{
-\frametitle{BCS formát}
+\frametitle{Biochemický priestor}
+
+\textbf{Biochemický priestor} (Biochemical Space -- BCS) je doména biologických znalostí s formálnymi prvkami, ktorá poskytuje 
+
+\begin{itemize}
+\item \textbf{popis},
+\item anotáciu,
+\item zdieľanie
+\end{itemize}
+
+špecificky zameraných biologických modelov.
+
+\vspace{1cm}
+
+\textbf{Motto}: \emph{formalizácia biologického popisu a anotácia modelov.}
+
+}
+
+% -------------------------------------------------------------
+
+\frame{
+\frametitle{Ciele práce}
   
 \begin{center}
- \hspace*{-0.7cm}\includegraphics[width=1.1\textwidth]{equation}
+\begin{itemize}
+	\item formálna definícia jazyka Biochemického priestoru,
+	\begin{itemize}
+		\item kompaktný zápis chemických reakcií tzv. \emph{rule-based} prístupom,
+		\item abstrakcia od detailov chemických väzieb,
+		\item hierarchické usporiadanie individuálych látok,
+		\item spustiteľná sémantika,
+	\end{itemize}
+	\item návrh analyzačných techník pre tento jazyk,
+	\item prototypová implementácia na editovanie a analyzovanie modelov zapísaných v tomto jazyku.
+\end{itemize}
 \end{center}
 
 }
@@ -160,23 +169,11 @@ Webový framework pre integráciu biologických znalostí s výpočetnými model
 % -------------------------------------------------------------
 
 \frame{
-\frametitle{Prečo nový jazyk?}
- 
-Biochemical Space \textbf{Language} (BCSL)
-
-\begin{itemize}
-
-\item reprezentácia ľahko editovateľná a spravovateľná,
-
-\item \emph{rule-based} -- zníženie náročnosti na pamäť a spracovanie,
-
-\item čisto textový formát -- nie grafická reprezentácia,
-
-\item priama interpretácia užívateľovi,
-
-\item anotácia aj operačná sémantika pre analýzu.
-
-\end{itemize}
+\frametitle{Rule-based vs. reaction-based}
+  
+\begin{center}
+ \hspace*{-0.7cm}\includegraphics[width=0.9\textwidth]{reaction_vs_rule}
+\end{center}
 
 }
 
@@ -187,6 +184,28 @@ Biochemical Space \textbf{Language} (BCSL)
   
 \begin{center}
  \hspace*{-0.7cm}\includegraphics[width=1.1\textwidth]{annot}
+\end{center}
+
+}
+
+% -------------------------------------------------------------
+
+\frame{
+\frametitle{Databáza}
+
+\begin{center}
+\includegraphics[width=1\textwidth]{bcs_database.png}
+\end{center}
+
+}
+
+% -------------------------------------------------------------
+
+\frame{
+\frametitle{BCS formát}
+  
+\begin{center}
+ \hspace*{-0.7cm}\includegraphics[width=1.1\textwidth]{equation}
 \end{center}
 
 }
@@ -233,7 +252,7 @@ Biochemical Space \textbf{Language} (BCSL)
 \frame{
 \frametitle{Abstrakcia komplexu}
   
-\includegraphics[width=1\textwidth]{abstracton}
+\includegraphics[width=1\textwidth]{abstraction}
 
 }
 
@@ -340,49 +359,135 @@ KaiC(S\{\textcolor{mygreen}{u}\}).KaiC.~\ldots~.KaiC::cyt $\Rightarrow$ KaiC(S\{
 
 % -------------------------------------------------------------
 
-\frame{
-\frametitle{Záver}
+\begin{frame}[standout]
+\thispagestyle{empty}
+  {\huge Demo \\}
+\end{frame}
 
-\begin{itemize}
-\item \emph{Biochemical Space} -- framework for process modeling
-\item not strictly in the very same configuration
+% -------------------------------------------------------------
 
-\begin{itemize}
-\item usage of alternative representation
-\end{itemize}
-\end{itemize}
+\begin{frame}[standout]
+\thispagestyle{empty}
+  {\huge Ďakujem za pozornosť. \\}
 
-\noindent\makebox[\linewidth]{\rule{1.1\textwidth}{0.4pt}}
+  \vspace{2cm}
 
-\begin{itemize}
-\item independent operational semantics / improved representation
-\item custom analysis tool for BCSL models
-
-\begin{itemize}
-\item efficient static analysis
-\end{itemize}
-
-\item \emph{BCS numbers} extension
-
-\begin{itemize}
-\item annotation of parameters
-\end{itemize}
-\end{itemize}
-
-}
+  {\huge Otázky? \\}
+\end{frame}
 
 % -------------------------------------------------------------
 
 \appendix
+
+% -------------------------------------------------------------
 
 \frame{
 \frametitle{Otázky oponenta}
 
 \begin{itemize}
 
-\item V druhej kapitole sa spomína, že jazyk Kappa nedokáže vyjadriť obecný vzťah koexistenie bez udania štruktúry, je preto nutné zvoliť nejakú kruhovú/lineárnu štruktúru. Nedala by sa ale takáto vlastnosť vyjadriť úplným grafom?
+\item Vo druhej kapitole sa spomína, že jazyk Kappa nedokáže vyjadriť obecný vzťah koexistenie bez udania štruktúry, je preto nutné zvoliť nejakú kruhovú/lineárnu štruktúru. Nedala by sa ale takáto vlastnosť vyjadriť úplným grafom?
+
+\end{itemize}
+
+\alt<1>{
+\begin{center}
+\includegraphics[width=0.8\textwidth]{abstraction}
+\end{center}
+}
+
+\alt<2>{
+\begin{center}
+\includegraphics[width=0.8\textwidth]{abstraction_kappa}
+\end{center}
+}
+
+\alt<3>{
+
+\begin{columns}[T] % align columns
+\begin{column}{.48\textwidth}
+
+\begin{center}
+\includegraphics[width=0.4\textwidth]{Complete_graph_K2}
+
+Node(bs!1), Node(bs!1)
+\end{center}
+
+\end{column}%
+\hfill%
+\begin{column}{.48\textwidth}
+
+\begin{center}
+\includegraphics[width=0.4\textwidth]{Complete_graph_K3}
+
+Node(bs1!1, bs2!2), 
+
+Node(bs1!1, bs2!3), 
+
+Node(bs1!3, bs2!2)
+\end{center}
+
+\end{column}%
+\end{columns}
+
+}
+
+\alt<4>{
+
+\begin{columns}[T] % align columns
+\begin{column}{.29\textwidth}
+
+\vspace{2cm}
+{\hspace*{2cm}\huge \ldots \\}
+
+\end{column}%
+\hfill%
+\begin{column}{.69\textwidth}
+
+\begin{center}
+\includegraphics[width=0.3\textwidth]{Complete_graph_K6}
+
+Node(bs1!1, bs2!2, bs3!3, bs4!4, bs5!5), 
+
+Node(bs1!5, bs2!6, bs3!7, bs4!8, bs5!9), 
+
+Node(bs1!9, bs2!4, bs3!10, bs4!11, bs5!12),
+
+Node(bs1!12, bs2!8, bs3!3, bs4!13, bs5!14),
+
+Node(bs1!14, bs2!11, bs3!7, bs4!2, bs5!15),
+
+Node(bs1!15, bs2!13, bs3!10, bs4!6, bs5!1)
+\end{center}
+
+\end{column}%
+\end{columns}
+
+}
+
+}
+
+% -------------------------------------------------------------
+
+\frame{
+\frametitle{Otázky oponenta}
+
+\begin{itemize}
 
 \item Je nejaký dôvod prečo komplexný agent vo svojej definícií nedefinuje ako multiset, ale ako sekvenciu, ak (pokiaľ dobre vidím) sa všade aj tak táto sekvencia uvažuje len vzhľadom k všetkým jej permutáciám?
+
+\end{itemize}
+
+
+
+}
+
+% -------------------------------------------------------------
+
+\frame{
+\frametitle{Otázky oponenta}
+
+\begin{itemize}
 
 \item Nebolo by jednoduššie využiť v definícií grounding function kompatibilitu agentov (a zvlášť kompatibilnú podmnožinu agenta) tak ako je definovaná v nasledujúcej kapitole?
 
