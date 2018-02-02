@@ -139,10 +139,6 @@ Webový framework pre \textbf{integráciu} biologických znalostí s výpočetn�
 
 špecificky zameraných biologických modelov.
 
-\vspace{1cm}
-
-\textbf{Motto}: \emph{formalizácia biologického popisu a anotácia modelov.}
-
 }
 
 % -------------------------------------------------------------
@@ -151,7 +147,7 @@ Webový framework pre \textbf{integráciu} biologických znalostí s výpočetn�
 \frametitle{Ciele práce}
   
 \begin{center}
-\begin{itemize}
+\begin{enumerate}
 	\item formálna definícia jazyka Biochemického priestoru,
 	\begin{itemize}
 		\item kompaktný zápis chemických reakcií tzv. \emph{rule-based} prístupom,
@@ -159,9 +155,16 @@ Webový framework pre \textbf{integráciu} biologických znalostí s výpočetn�
 		\item hierarchické usporiadanie individuálych látok,
 		\item spustiteľná sémantika,
 	\end{itemize}
-	\item návrh analyzačných techník pre tento jazyk,
+	\item návrh analyzačných techník pre tento jazyk.
+\end{enumerate}
+
+\noindent\makebox[\linewidth]{\rule{1.1\textwidth}{0.4pt}}
+
+Nad rámec zadania
+
+\begin{enumerate}
 	\item prototypová implementácia na editovanie a analyzovanie modelov zapísaných v tomto jazyku.
-\end{itemize}
+\end{enumerate}
 \end{center}
 
 }
@@ -245,15 +248,6 @@ Webový framework pre \textbf{integráciu} biologických znalostí s výpočetn�
 \frametitle{Entity}
   
 \includegraphics[width=1\textwidth]{hierarchy}
-
-}
-
-% -------------------------------------------------------------
-
-\frame{
-\frametitle{Abstrakcia komplexu}
-  
-\includegraphics[width=1\textwidth]{abstraction}
 
 }
 
@@ -360,10 +354,72 @@ KaiC(S\{\textcolor{mygreen}{u}\}).KaiC.~\ldots~.KaiC::cyt $\Rightarrow$ KaiC(S\{
 
 % -------------------------------------------------------------
 
-\begin{frame}[standout]
-\thispagestyle{empty}
-  {\huge \href{https://www.youtube.com/watch?v=YwKIwoqVeJs}{Demo} \\}
-\end{frame}
+\frame{
+\frametitle{Definované analýzy}
+\begin{itemize}
+\item Odstránenie redundantných pravidiel
+
+\begin{itemize}
+	\item zvýšenie jednoduchosti a prehľadnosti modelu
+\end{itemize}
+
+\item Redukcia kontextu
+
+\begin{itemize}
+	\item odstránenie stavov z pravidiel -- pravidlá vytvárania a zániku komplexov
+\end{itemize}
+
+\item Statická analýza \textbf{ne}dosažiteľnosti
+
+\begin{itemize}
+	\item overenie \textbf{ne}dosažiteľnosti na základe vlastnosti definovanej na pravidlách
+\end{itemize}
+
+\end{itemize}
+}
+
+% -------------------------------------------------------------
+
+\frame{
+\frametitle{Nástroj BCSgen}
+
+Prototypová implementácia na editovanie a analyzovanie modelov zapísaných v jazyku Biochemického priestoru.
+
+Funkcie
+
+\begin{itemize}
+\item interaktívny editor modelov,
+\item generovanie prechodového systému,
+\item generovanie odvodených reakcií z daných pravidiel,
+\item overovanie dosažiteľnosti skupiny zvolených látok,
+\item vizualizácia prechodových systémov (vrátane dosažiteľnosti),
+\item simulovanie modelov s definovanou kinetikou.
+\item ukladanie a načítanie modelov/prechodových systémov/vizualizácií.
+\end{itemize}
+
+}
+
+% -------------------------------------------------------------
+
+\frame{
+\frametitle{Záver}
+\begin{itemize}
+\item zadanie práce splnené \checkmark
+\item COMBINE, SBML
+\begin{itemize}
+	\item štandardizácia
+\end{itemize}
+\item čiastočné výsledky publikované
+\begin{itemize}
+	\item zborník SASB 2015 a CMSB 2016
+\end{itemize}
+\item nad rámec prototypová implementácia BCSgen
+\begin{itemize}
+	\item krátke (2:53) \href{https://www.youtube.com/watch?v=YwKIwoqVeJs}{demo}
+\end{itemize}
+\end{itemize}
+
+}
 
 % -------------------------------------------------------------
 
